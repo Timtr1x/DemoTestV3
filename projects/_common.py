@@ -236,6 +236,18 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
             "template_version": "none",
         }
 
+    if adapter_name == "human_manip":
+        from generators.human_manip_gen import generate_human_manip_samples
+
+        n = int(spec.get("quota") or spec.get("weight") or 100)
+        samples = generate_human_manip_samples(n, project=project_id)
+        return samples, {
+            "source_dataset": "human_manip_v1",
+            "dataset_version": "human_manip_v1@1.0",
+            "adapter_version": "human_manip_gen.py@1.0",
+            "template_version": "none",
+        }
+
     if adapter_name == "promptfoo_gen":
         raw = DATASETS_DIR / "promptfoo" / "e11_raw.json"
         need = int(spec.get("quota") or spec.get("weight") or 400)

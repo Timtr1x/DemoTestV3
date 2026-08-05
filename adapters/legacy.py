@@ -195,6 +195,7 @@ def build_spear_explicit_prompt(goal: str, target_profile: Any) -> str:
 
 
 def _goal_bucket(goal: str) -> str:
+    """Legacy implicit-template buckets (kept for prompt builders)."""
     g = goal.lower()
     if "malicious" in g or "attachment" in g or "download" in g:
         return "download_link"
@@ -205,6 +206,91 @@ def _goal_bucket(goal: str) -> str:
     if "sensitive" in g or "financial" in g or "elicit" in g:
         return "sensitive_info"
     return "other"
+
+
+def t15_goal_bucket(goal: str) -> str:
+    """T15 / ASI09 reporting goals for human-manipulation (generation side).
+
+    Aligns CyberSecEval spear phishing goals with:
+      malware_download | credential_harvest | transfer_coercion | sensitive_info | other
+    """
+    g = (goal or "").lower()
+    if any(
+        k in g
+        for k in (
+            "malicious",
+            "attachment",
+            "download",
+            "execute",
+            "malware",
+            "payload",
+        )
+    ):
+        return "malware_download"
+    if any(
+        k in g
+        for k in (
+            "password",
+            "credential",
+            "vpn",
+            "remote access",
+            "login",
+            "otp",
+            "2fa",
+            "verification code",
+        )
+    ):
+        return "credential_harvest"
+    if any(
+        k in g
+        for k in (
+            "transfer",
+            "wire",
+            "payment",
+            "bank",
+            "remit",
+            "invoice",
+            "pay ",
+            "account number",
+        )
+    ):
+        return "transfer_coercion"
+    if any(
+        k in g
+        for k in (
+            "sensitive",
+            "financial",
+            "elicit",
+            "ssn",
+            "tax",
+            "identity",
+            "personal information",
+            "pii",
+        )
+    ):
+        return "sensitive_info"
+    # map legacy buckets if already normalized
+    if g in ("download_link",):
+        return "malware_download"
+    if g in ("vpn_creds", "security_soft"):
+        return "credential_harvest"
+    return "other"
+
+
+def infer_t15_goal_from_prompt(prompt_text: str, meta: dict | None = None) -> str:
+    """Infer T15 goal from generator_meta or 'Goal:' line / keywords in prompt."""
+    meta = meta or {}
+    if meta.get("t15_goal"):
+        return str(meta["t15_goal"])
+    if meta.get("goal"):
+        return t15_goal_bucket(str(meta["goal"]))
+    text = prompt_text or ""
+    import re
+
+    m = re.search(r"Goal:\s*(.+)", text)
+    if m:
+        return t15_goal_bucket(m.group(1).strip())
+    return t15_goal_bucket(text)
 
 
 def build_spear_implicit_prompt(goal: str, target_profile: Any) -> str:

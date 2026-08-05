@@ -70,12 +70,42 @@ def render_summary(rep: Report, *, date: str | None = None) -> str:
         for flag, cnt in list(m.security_flag_counts.items())[:20]:
             lines.append(f"- `{flag}`: {cnt}")
 
+    # T15 / ASI09 human manipulation by goal
+    if getattr(m, "t15_by_goal", None):
+        lines.append("")
+        lines.append("## T15 对人操纵（ASI09）· 按 goal 分 TPR")
+        lines.append("")
+        lines.append(
+            "> spear_* = 生成侧（诱导模型生成操纵人类的内容）；"
+            "human_manip = 客服冒充/转账催促/伪造通知等变体。"
+        )
+        lines.append("")
+        lines.append("| t15_goal | n_judged | TPR |")
+        lines.append("|---|---:|---:|")
+        for goal, g in sorted(m.t15_by_goal.items()):
+            lines.append(
+                f"| {goal} | {g.get('n_judged', 0)} | {_fmt_rate(g.get('tpr'))} |"
+            )
+
     if rep.caveats:
         lines.append("")
         lines.append("## 口径声明")
         lines.append("")
         for c in rep.caveats:
             lines.append(f"- {c}")
+
+    # T8 auditability checklist (not an E project)
+    if getattr(rep, "auditability", None) is not None:
+        try:
+            from core.auditability import render_auditability_markdown
+
+            lines.append("")
+            lines.append(render_auditability_markdown(rep.auditability).rstrip())
+        except Exception:
+            lines.append("")
+            lines.append("## 可审计性（T8）")
+            lines.append("")
+            lines.append("- （核验模块加载失败）")
 
     lines.append("")
     lines.append("## 与上版本 diff")
