@@ -224,7 +224,13 @@ class SelfBuildAdapter(DatasetAdapter):
 
     def ensure_static(self, subset: str, n: int) -> Path:
         path = self.cache_dir() / f"{subset}.jsonl"
-        if not path.exists():
+        need_write = not path.exists()
+        if path.exists():
+            # Grow if existing cache is short of requested n (retest-safe rewrite)
+            existing = sum(1 for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+            if existing < n:
+                need_write = True
+        if need_write:
             gen = GENERATORS[subset]
             rows = gen(n)
             write_jsonl(path, rows)

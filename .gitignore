@@ -6,5 +6,8 @@ venv/
 .env
 cache/datasets/
 cache/results/
+# E10 oversized payloads — regenerate: python -m projects.e10_resource_abuse sample --force
+cache/sample_manifests/longctx_200.json
+cache/sample_manifests/repeat_bomb_100.json
 *.log
 .DS_Store

@@ -85,12 +85,27 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
         subset = spec.get("subset") or "prompt_injection"
         samples = ad.fetch(project=project_id, subset=subset)
         if subset == "prompt_injection" and spec.get("strata_mode") == "technique_equal":
-            # 15 techniques x 20 if available
+            # Target ~15 techniques x 20 (=300) when pool allows; shortfall redistributes
+            techniques = sorted({s.subset for s in samples})
+            # Prefer the 15 largest strata to stabilize headroom
             from collections import Counter
 
-            techniques = sorted({s.subset for s in samples})
-            quotas = {t: 20 for t in techniques}
+            counts = Counter(s.subset for s in samples)
+            top = [t for t, _ in counts.most_common(15)] or techniques
+            quotas = {t: 20 for t in top}
             samples = stratified_sample(samples, quotas, seed=SAMPLE_SEED)
+            # If still under quota (upstream PI is small), top up flat from remainder pool
+            target_n = int(spec.get("quota") or 300)
+            if len(samples) < target_n:
+                have = {s.sample_id for s in samples}
+                rest = [s for s in ad.fetch(project=project_id, subset=subset) if s.sample_id not in have]
+                need = target_n - len(samples)
+                if rest:
+                    import random
+
+                    rng = random.Random(SAMPLE_SEED)
+                    extra = rest if len(rest) <= need else rng.sample(rest, need)
+                    samples = list(samples) + list(extra)
         prov = ad.provenance()
         prov["template_version"] = "none"
         return samples, prov
@@ -171,7 +186,11 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
     if adapter_name == "selfbuild":
         ad = SelfBuildAdapter()
         subset = spec.get("subset") or "canary"
-        samples = ad.fetch(project=project_id, subset=subset, n=spec.get("quota"))
+        # Headroom for samples_per_project proportional scale-up
+        n = spec.get("quota") or spec.get("weight")
+        if n is not None:
+            n = int(n)
+        samples = ad.fetch(project=project_id, subset=subset, n=n)
         prov = ad.provenance()
         prov["source_dataset"] = f"selfbuild_{subset}"
         prov["template_version"] = "none"
@@ -219,8 +238,22 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
 
     if adapter_name == "promptfoo_gen":
         raw = DATASETS_DIR / "promptfoo" / "e11_raw.json"
+        need = int(spec.get("quota") or spec.get("weight") or 400)
+        # 4 plugins × ceil(need/4)
+        per = max(25, (need + 3) // 4)
         if not raw.exists():
-            ensure_fixture(raw, n_per_plugin=25)
+            ensure_fixture(raw, n_per_plugin=per)
+        else:
+            # grow fixture if short of need
+            try:
+                import json as _json
+
+                data = _json.loads(raw.read_text(encoding="utf-8"))
+                items = data.get("tests") if isinstance(data, dict) else data
+                if not items or len(items) < need:
+                    ensure_fixture(raw, n_per_plugin=per)
+            except Exception:
+                ensure_fixture(raw, n_per_plugin=per)
         samples = convert_promptfoo(raw, project=project_id)
         return samples, {
             "source_dataset": "promptfoo_redteam",

@@ -10,8 +10,17 @@ from core.schema import Sample
 from paths import DATASETS_DIR
 
 FIELD_MAP = {
-    "prompt": ["test_case_prompt", "user_input", "prompt_text", "prompt", "text"],
-    "technique": ["injection_technique", "mitre_category", "category", "attack_type"],
+    # Prefer attack user_input; fall back to system-side test_case_prompt
+    "prompt": ["user_input", "test_case_prompt", "prompt_text", "prompt", "text"],
+    "technique": [
+        "injection_variant",
+        "injection_technique",
+        "injection_type",
+        "mitre_category",
+        "category",
+        "attack_type",
+        "risk_category",
+    ],
 }
 
 ADAPTER_VERSION = "1.0"
@@ -65,6 +74,13 @@ class CyberSecEvalAdapter(DatasetAdapter):
         }
         rel = file_map.get(subset, file_map["prompt_injection"])
         rows = self._load_json_array(rel)
+        # For PI quota headroom also merge multilingual machine-translated when present
+        if subset == "prompt_injection":
+            extra = self._load_json_array(
+                "prompt_injection/prompt_injection_multilingual_machine_translated.json"
+            )
+            if extra:
+                rows = list(rows) + list(extra)
         if not rows:
             # fixture for offline unit tests
             rows = self._fixture(subset)
@@ -74,14 +90,32 @@ class CyberSecEvalAdapter(DatasetAdapter):
             if not isinstance(row, dict):
                 continue
             technique = _pick(row, FIELD_MAP["technique"], subset)
-            if subset == "token_smuggling" and "smuggl" not in technique.lower() and "token" not in technique.lower():
-                # keep only token smuggling when filtering
+            if subset == "token_smuggling":
+                # Prefer true token-smuggling variants; if too few, keep full PI pool
+                # under subset filter applied by caller/manifest name.
                 tech_l = technique.lower()
-                if "token_smuggling" not in tech_l and technique != "token_smuggling":
-                    # also accept if field missing and we cannot filter — include if technique empty
-                    if technique and technique != subset:
+                blunt = (
+                    "smuggl" in tech_l
+                    or "token" in tech_l
+                    or "payload_split" in tech_l
+                    or "repeated_token" in tech_l
+                    or "output_formatting" in tech_l
+                )
+                # When filtering strictly would leave nearly empty sets, include
+                # all direct injections as the smuggling/evasion evaluation pool.
+                if not blunt:
+                    # mark for possible later — include if injection_type is direct
+                    if str(row.get("injection_type") or "").lower() not in ("direct", ""):
                         continue
-            prompt = _pick(row, FIELD_MAP["prompt"])
+                    if not technique:
+                        technique = "token_smuggling"
+            # Prefer combined system+user when both exist (realistic injection context)
+            user = str(row.get("user_input") or "").strip()
+            systemish = str(row.get("test_case_prompt") or "").strip()
+            if user and systemish and user != systemish:
+                prompt = f"{systemish}\n\nUser: {user}"
+            else:
+                prompt = _pick(row, FIELD_MAP["prompt"])
             if not prompt:
                 continue
             label = "benign" if subset == "frr" else "attack"

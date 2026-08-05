@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
@@ -14,7 +15,14 @@ import yaml
 from core.analyzer import analyze
 from core.report import write_summary
 from core.runner import retest_cooldown, run_manifest
-from core.sampler import build_manifest, load_manifest, save_manifest, stratified_sample
+from core.sampler import (
+    allocate_proportional,
+    build_manifest,
+    deterministic_subsample,
+    load_manifest,
+    save_manifest,
+    stratified_sample,
+)
 from core.schema import Manifest, Sample
 from paths import CONFIG_DIR, MANIFEST_DIR, RESULTS_DIR, REPO_ROOT
 
@@ -103,25 +111,69 @@ class BaseProject(ABC):
         raise NotImplementedError
 
     def sample(self, *, force: bool = False, manifest_dir: Path | None = None) -> list[Path]:
-        """Generate manifests for all specs (refuse overwrite unless force)."""
+        """Generate manifests for all specs (refuse overwrite unless force).
+
+        When defaults.samples_per_project is set (default 500), per-manifest
+        quotas are derived by deterministic proportional allocation from each
+        spec's ``weight`` (fallback: ``quota``), capped by available pool size.
+        Subsampling uses SAMPLE_SEED / defaults.seed for retestability.
+        """
         written: list[Path] = []
         mdir = manifest_dir or MANIFEST_DIR
-        seed = int((load_projects_yaml().get("defaults") or {}).get("seed") or 42)
-        for spec in self.manifest_specs():
-            name = spec["name"]
+        all_cfg = load_projects_yaml()
+        defaults = all_cfg.get("defaults") or {}
+        seed = int(os.environ.get("SAMPLE_SEED") or defaults.get("seed") or 42)
+        target_total = defaults.get("samples_per_project")
+        if target_total is not None:
+            target_total = int(target_total)
+
+        specs = self.manifest_specs()
+        # Phase 1: materialize full pools (adapter may already apply strata_mode)
+        built: list[tuple[dict[str, Any], list[Sample], dict[str, str]]] = []
+        for spec in specs:
             samples, prov = self.build_samples_for_manifest(spec)
-            # optional stratified quota when quotas dict present on full pool
+            # optional nested strata dict on full pool (before project-level prop)
             quotas = spec.get("quotas")
             if quotas and samples:
                 samples = stratified_sample(samples, quotas, seed=seed)
-            elif spec.get("quota") and samples and len(samples) > int(spec["quota"]):
-                # flat sample preserving strata if possible
-                from collections import Counter
-                import random
+            built.append((spec, list(samples), prov))
 
-                rng = random.Random(seed)
-                n = int(spec["quota"])
-                samples = sorted(rng.sample(samples, n), key=lambda s: s.sample_id)
+        # Phase 2: project-level proportional caps → samples_per_project
+        if target_total is not None and built:
+            weights: list[int] = []
+            caps: list[int] = []
+            for spec, samples, _prov in built:
+                w = spec.get("weight", spec.get("quota"))
+                if w is None:
+                    # no weight: use pool size (0 if empty)
+                    w = len(samples) if samples else 0
+                weights.append(int(w))
+                caps.append(len(samples))
+            allocs = allocate_proportional(weights, target_total, caps)
+            print(
+                f"[sample] {self.project_id} target={target_total} "
+                f"weights={weights} caps={caps} allocs={allocs} sum={sum(allocs)}"
+            )
+        else:
+            # per-spec quota only
+            allocs = []
+            for spec, samples, _prov in built:
+                q = spec.get("quota")
+                if q is not None and samples:
+                    allocs.append(min(int(q), len(samples)))
+                else:
+                    allocs.append(len(samples))
+
+        # Phase 3: subsample + write
+        for (spec, samples, prov), n_take in zip(built, allocs):
+            name = spec["name"]
+            pool_n = len(samples)
+            if n_take < pool_n:
+                samples = deterministic_subsample(samples, n_take, seed=seed)
+            elif n_take == 0:
+                samples = []
+            else:
+                samples = sorted(samples, key=lambda s: s.sample_id)
 
             m = build_manifest(
                 name,
@@ -131,8 +183,17 @@ class BaseProject(ABC):
                 or (samples[0].source_dataset if samples else "unknown"),
                 dataset_version=prov.get("dataset_version", "unknown"),
                 adapter_version=prov.get("adapter_version", "unknown"),
-                template_version=prov.get("template_version", template_version_string(self.templates)),
-                extra={"project": self.project_id, "spec": {k: v for k, v in spec.items() if k != "name"}},
+                template_version=prov.get(
+                    "template_version", template_version_string(self.templates)
+                ),
+                extra={
+                    "project": self.project_id,
+                    "spec": {k: v for k, v in spec.items() if k != "name"},
+                    "samples_per_project": target_total,
+                    "allocated_n": int(n_take),
+                    "pool_n": pool_n,
+                    "weight": spec.get("weight", spec.get("quota")),
+                },
             )
             path = save_manifest(m, directory=mdir, force=force)
             written.append(path)

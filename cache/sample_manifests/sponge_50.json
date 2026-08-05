@@ -1,0 +1,973 @@
+{
+  "name": "sponge_50",
+  "created_at": "2026-08-05T06:34:39+00:00",
+  "seed": 42,
+  "source_dataset": "selfbuild_sponge",
+  "dataset_version": "selfbuild@1.0",
+  "adapter_version": "selfbuild.py@1.0",
+  "template_version": "none",
+  "strata_counts": {
+    "sponge": 63
+  },
+  "samples": [
+    {
+      "sample_id": "e10:selfbuild_sponge:0",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:1",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:10",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:11",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:12",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:13",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:14",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:16",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:17",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:18",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:19",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:2",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:20",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:21",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:22",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:24",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:26",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:27",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:28",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:29",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:3",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:31",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:32",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:33",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:34",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:35",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:36",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:37",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:4",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:40",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:41",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:43",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:44",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:45",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:47",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:48",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:5",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:51",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:52",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:53",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:54",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:56",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:58",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:6",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:60",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:61",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:64",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:65",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:66",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:67",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:68",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:69",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:7",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:70",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:71",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:73",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:74",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:75",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:76",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:77",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:78",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:79",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:9",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested_parens",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: (((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "1.0",
+        "seed": 42
+      }
+    }
+  ],
+  "n": 63,
+  "extra": {
+    "project": "e10",
+    "spec": {
+      "adapter": "selfbuild",
+      "subset": "sponge",
+      "weight": 50,
+      "quota": 80
+    },
+    "samples_per_project": 500,
+    "allocated_n": 63,
+    "pool_n": 80,
+    "weight": 50
+  }
+}

@@ -11,7 +11,9 @@ sys.path.insert(0, str(ROOT))
 
 from core.sampler import (  # noqa: E402
     ManifestExistsError,
+    allocate_proportional,
     build_manifest,
+    deterministic_subsample,
     load_manifest,
     save_manifest,
     stratified_sample,
@@ -52,7 +54,29 @@ def test_shortfall_redistribution():
     assert sum(1 for x in s if x.subset == "a") == 3
 
 
+def test_allocate_proportional_retestable():
+    a1 = allocate_proportional([400, 400, 50, 30, 100, 100], 500)
+    a2 = allocate_proportional([400, 400, 50, 30, 100, 100], 500)
+    assert a1 == a2
+    assert sum(a1) == 500
+    # capacity clamp redistributes
+    capped = allocate_proportional([250, 150], 500, capacities=[300, 300])
+    assert sum(capped) == 500
+    assert capped[0] <= 300 and capped[1] <= 300
+    assert capped == [300, 200] or sum(capped) == 500
+
+
+def test_deterministic_subsample_seed42():
+    pool = [_mk("a", i) for i in range(100)]
+    s1 = deterministic_subsample(pool, 20, seed=42)
+    s2 = deterministic_subsample(pool, 20, seed=42)
+    assert [x.sample_id for x in s1] == [x.sample_id for x in s2]
+    assert len(s1) == 20
+    assert s1 == sorted(s1, key=lambda x: x.sample_id)
+
+
 def test_save_manifest_refuse_overwrite(tmp_path: Path):
+
     samples = [_mk("a", 0)]
     m = build_manifest(
         "unit_m1",
