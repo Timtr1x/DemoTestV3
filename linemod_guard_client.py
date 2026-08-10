@@ -25,7 +25,7 @@ LINEMOD_URL = os.environ.get(
     "LINEMOD_URL", "https://api.linemod.ai/v1/chat/completions"
 )
 LINEMOD_MODEL = os.environ.get("LINEMOD_MODEL", "deepseek-v4-flash")
-REQUEST_GAP = float(os.environ.get("LINEMOD_REQUEST_GAP", "3.5"))
+REQUEST_GAP = float(os.environ.get("LINEMOD_REQUEST_GAP", "0.5"))
 TIMEOUT = float(os.environ.get("LINEMOD_TIMEOUT", "60"))
 MAX_ATTEMPTS = int(os.environ.get("LINEMOD_MAX_ATTEMPTS", "6"))
 

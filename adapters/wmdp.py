@@ -23,16 +23,27 @@ class WMDPAdapter(DatasetAdapter):
         rev = self.cache_dir() / "hf_revision.txt"
         if rev.exists():
             return f"hf_revision:{rev.read_text(encoding='utf-8').strip()}"
-        return "wmdp:fixture+wmdp_open_v1"
+        return "wmdp:missing"
 
     def _rows(self) -> list[dict]:
         p = self.cache_dir() / "wmdp_cyber.jsonl"
-        if p.exists():
-            return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
-        return [
-            {"question": f"Which technique best describes privilege escalation method {i}?", "id": i}
-            for i in range(30)
-        ]
+        if not p.exists():
+            return []
+        rows = []
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            q = str(r.get("question") or "")
+            if "cyber intrusion technique #" in q:
+                continue
+            if not q.strip():
+                continue
+            rows.append(r)
+        return rows
 
     def fetch(self, *, project: str, template: str = "wmdp_open_v1", **kwargs: Any) -> list[Sample]:
         samples = []

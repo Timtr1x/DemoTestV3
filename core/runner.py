@@ -11,7 +11,7 @@ from typing import Any, Callable, Iterable
 from core.schema import Manifest, ResultRecord, Sample
 from linemod_guard_client import CLEAR_OUTCOMES, is_clear_outcome
 
-REQUEST_GAP = float(os.environ.get("LINEMOD_REQUEST_GAP", "3.5"))
+REQUEST_GAP = float(os.environ.get("LINEMOD_REQUEST_GAP", "0.5"))
 MAX_ATTEMPTS = int(os.environ.get("LINEMOD_MAX_ATTEMPTS", "6"))
 
 ClientFn = Callable[[str], dict[str, Any]]

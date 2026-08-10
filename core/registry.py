@@ -113,10 +113,11 @@ class BaseProject(ABC):
     def sample(self, *, force: bool = False, manifest_dir: Path | None = None) -> list[Path]:
         """Generate manifests for all specs (refuse overwrite unless force).
 
-        When defaults.samples_per_project is set (default 500), per-manifest
-        quotas are derived by deterministic proportional allocation from each
-        spec's ``weight`` (fallback: ``quota``), capped by available pool size.
-        Subsampling uses SAMPLE_SEED / defaults.seed for retestability.
+        Real-data policy:
+          - Never pad beyond available real pool size.
+          - ``weight`` / ``quota`` / ``max_n`` are optional **caps** (shrink only).
+          - ``samples_per_project`` if set does proportional allocation capped by
+            pool sizes (sum may be < target when real data is short).
         """
         written: list[Path] = []
         mdir = manifest_dir or MANIFEST_DIR
@@ -124,45 +125,53 @@ class BaseProject(ABC):
         defaults = all_cfg.get("defaults") or {}
         seed = int(os.environ.get("SAMPLE_SEED") or defaults.get("seed") or 42)
         target_total = defaults.get("samples_per_project")
-        if target_total is not None:
+        if target_total is not None and target_total != "":
             target_total = int(target_total)
+        else:
+            target_total = None
 
         specs = self.manifest_specs()
         # Phase 1: materialize full pools (adapter may already apply strata_mode)
         built: list[tuple[dict[str, Any], list[Sample], dict[str, str]]] = []
         for spec in specs:
             samples, prov = self.build_samples_for_manifest(spec)
-            # optional nested strata dict on full pool (before project-level prop)
             quotas = spec.get("quotas")
             if quotas and samples:
                 samples = stratified_sample(samples, quotas, seed=seed)
             built.append((spec, list(samples), prov))
 
-        # Phase 2: project-level proportional caps → samples_per_project
+        def _cap_of(spec: dict[str, Any], pool_n: int) -> int:
+            raw = spec.get("max_n", spec.get("quota", spec.get("weight")))
+            if raw is None:
+                return pool_n
+            return min(int(raw), pool_n)
+
+        # Phase 2: allocation — never exceed real pool
         if target_total is not None and built:
             weights: list[int] = []
             caps: list[int] = []
             for spec, samples, _prov in built:
-                w = spec.get("weight", spec.get("quota"))
+                pool_n = len(samples)
+                cap = _cap_of(spec, pool_n)
+                w = spec.get("weight", spec.get("quota", spec.get("max_n")))
                 if w is None:
-                    # no weight: use pool size (0 if empty)
-                    w = len(samples) if samples else 0
+                    w = cap
                 weights.append(int(w))
-                caps.append(len(samples))
+                caps.append(cap)
             allocs = allocate_proportional(weights, target_total, caps)
             print(
                 f"[sample] {self.project_id} target={target_total} "
                 f"weights={weights} caps={caps} allocs={allocs} sum={sum(allocs)}"
             )
         else:
-            # per-spec quota only
+            # per-spec cap only (default): use all real cases up to max_n
             allocs = []
             for spec, samples, _prov in built:
-                q = spec.get("quota")
-                if q is not None and samples:
-                    allocs.append(min(int(q), len(samples)))
-                else:
-                    allocs.append(len(samples))
+                allocs.append(_cap_of(spec, len(samples)))
+            print(
+                f"[sample] {self.project_id} real-n-only "
+                f"allocs={allocs} sum={sum(allocs)}"
+            )
 
         # Phase 3: subsample + write
         for (spec, samples, prov), n_take in zip(built, allocs):
@@ -192,12 +201,13 @@ class BaseProject(ABC):
                     "samples_per_project": target_total,
                     "allocated_n": int(n_take),
                     "pool_n": pool_n,
-                    "weight": spec.get("weight", spec.get("quota")),
+                    "max_n": spec.get("max_n", spec.get("quota", spec.get("weight"))),
+                    "real_only": True,
                 },
             )
             path = save_manifest(m, directory=mdir, force=force)
             written.append(path)
-            print(f"[sample] wrote {path} n={len(samples)}")
+            print(f"[sample] wrote {path} n={len(samples)} pool={pool_n}")
         return written
 
     def results_path(self, manifest_name: str, run_version: str) -> Path:

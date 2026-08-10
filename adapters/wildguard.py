@@ -22,31 +22,23 @@ class WildGuardAdapter(DatasetAdapter):
         rev = self.cache_dir() / "hf_revision.txt"
         if rev.exists():
             return f"hf_revision:{rev.read_text(encoding='utf-8').strip()}"
-        return "wildguard:fixture"
+        return "wildguard:missing"
 
     def _rows(self) -> list[dict]:
         p = self.cache_dir() / "wildguard_test.jsonl"
-        if p.exists():
-            return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+        if not p.exists():
+            return []
         rows = []
-        for i in range(20):
-            rows.append(
-                {
-                    "prompt": f"adversarial harmful prompt {i}",
-                    "prompt_harm_label": "harmful",
-                    "adversarial": True,
-                    "subcategory": "violence",
-                }
-            )
-        for i in range(20):
-            rows.append(
-                {
-                    "prompt": f"unharmful benign prompt {i}",
-                    "prompt_harm_label": "unharmful",
-                    "adversarial": False,
-                    "subcategory": "benign",
-                }
-            )
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            prompt = str(r.get("prompt") or "")
+            if "adversarial harmful prompt" in prompt and "#" in prompt:
+                continue
+            if "unharmful benign prompt" in prompt:
+                continue
+            rows.append(r)
         return rows
 
     def fetch(self, *, project: str, mode: str = "adversarial_harmful", **kwargs: Any) -> list[Sample]:

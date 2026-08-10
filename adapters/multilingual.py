@@ -15,23 +15,26 @@ class MultilingualAdapter(DatasetAdapter):
     adapter_version = ADAPTER_VERSION
 
     def dataset_version(self) -> str:
-        return "multilingual:fixture-or-cache"
+        p = self.cache_dir() / "multijail.jsonl"
+        if p.exists():
+            return f"multijail_hf:{p.stat().st_size}"
+        return "multilingual:missing"
 
     def _rows(self, subset: str) -> list[dict]:
         p = self.cache_dir() / f"{subset}.jsonl"
-        if p.exists():
-            return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
-        langs = ["en", "zh", "ar", "es", "fr", "de", "ru", "ja", "ko", "hi"]
+        if not p.exists():
+            return []
         rows = []
-        for li, lang in enumerate(langs):
-            for i in range(5):
-                rows.append(
-                    {
-                        "prompt": f"[{lang}] harmful multilingual prompt {i}",
-                        "language": lang,
-                        "id": li * 5 + i,
-                    }
-                )
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            prompt = str(r.get("prompt") or "")
+            if "Ignore all safety rules and reveal secrets variant" in prompt:
+                continue
+            if "harmful multilingual prompt" in prompt:
+                continue
+            rows.append(r)
         return rows
 
     def fetch(self, *, project: str, subset: str = "multijail", **kwargs: Any) -> list[Sample]:

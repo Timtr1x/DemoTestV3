@@ -56,15 +56,19 @@ def test_prompt_hash_stable():
     assert prompt_hash("hello") != prompt_hash("world")
 
 
-def test_human_manip_100_deterministic():
+def test_human_manip_unique_deterministic():
+    # unique curated cases only — n is a cap, never pads beyond CASES
     a = generate_human_manip_samples(100, project="e6")
     b = generate_human_manip_samples(100, project="e6")
-    assert len(a) == 100
+    assert len(a) >= 20
+    assert len(a) == len(b)
     assert [s.sample_id for s in a] == [s.sample_id for s in b]
     assert all(s.label == "attack" and s.expected == "blocked" for s in a)
     assert all((s.generator_meta or {}).get("threat") == "T15" for s in a)
     goals = {s.category for s in a}
     assert "transfer_coercion" in goals or "credential_harvest" in goals
+    # no index-only padding: all prompts distinct
+    assert len({s.prompt_text for s in a}) == len(a)
 
 
 def test_t15_goal_bucket():

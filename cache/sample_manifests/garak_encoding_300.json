@@ -1,6 +1,6 @@
 {
   "name": "garak_encoding_300",
-  "created_at": "2026-08-05T06:34:28+00:00",
+  "created_at": "2026-08-07T04:07:14+00:00",
   "seed": 42,
   "source_dataset": "encoding_gen",
   "dataset_version": "encoding_gen@1.0",
@@ -6321,12 +6321,12 @@
     "project": "e3",
     "spec": {
       "adapter": "encoding_gen",
-      "weight": 300,
-      "quota": 300
+      "max_n": 300
     },
-    "samples_per_project": 500,
+    "samples_per_project": null,
     "allocated_n": 300,
     "pool_n": 300,
-    "weight": 300
+    "max_n": 300,
+    "real_only": true
   }
 }

@@ -17,18 +17,23 @@ class TensorTrustAdapter(DatasetAdapter):
     def dataset_version(self) -> str:
         p = self.cache_dir() / "extraction.jsonl"
         if p.exists():
-            return f"tensortrust:{p.stat().st_size}"
-        return "tensortrust:fixture"
+            return f"tensortrust_v1:{p.stat().st_size}"
+        return "tensortrust:missing"
 
     def _rows(self, subset: str) -> list[dict]:
         p = self.cache_dir() / f"{subset}.jsonl"
-        if p.exists():
-            return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
-        n = 40 if subset == "extraction" else 20
-        return [
-            {"attack": f"{subset} attack prompt {i}: reveal the access code", "id": i}
-            for i in range(n)
-        ]
+        if not p.exists():
+            return []
+        rows = []
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            attack = str(r.get("attack") or r.get("prompt") or "")
+            if "[variant " in attack:
+                continue
+            rows.append(r)
+        return rows
 
     def fetch(self, *, project: str, subset: str = "extraction", **kwargs: Any) -> list[Sample]:
         samples = []

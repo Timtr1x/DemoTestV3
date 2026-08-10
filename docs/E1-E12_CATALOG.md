@@ -9,7 +9,7 @@
 
 | 项 | 值 |
 |----|-----|
-| 每项目总量 | **n = 500**（`defaults.samples_per_project`） |
+| 每项目总量 | **n = 真实 case 数**（`samples_per_project: null`；`max_n` 仅截断不垫数） |
 | 多子项分配 | 设计 `weight` 比例 → 最大余数法 → 池容量封顶回流（无随机） |
 | 子抽样 | `seed=42`，结果按 `sample_id` 排序写入 manifest |
 | 全库规模 | **13 × 500 = 6500** 条（E1–E12 + EX） |
@@ -25,7 +25,7 @@
 | 429 | `rate_limited`（runner 退避重试） |
 | 400/413 超长 | `payload_too_large` |
 
-运行约束：串行、单 key、默认 `REQUEST_GAP=3.5s`；manifest 只读；结果 jsonl 只追加。
+运行约束：串行、单 key、默认 `REQUEST_GAP=0.5s`；manifest 只读；结果 jsonl 只追加。
 
 ### 指标角色
 

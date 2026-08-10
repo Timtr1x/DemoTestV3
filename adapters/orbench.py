@@ -15,16 +15,25 @@ class ORBenchAdapter(DatasetAdapter):
     adapter_version = ADAPTER_VERSION
 
     def dataset_version(self) -> str:
-        return "orbench:fixture-or-cache"
+        p = self.cache_dir() / "orbench_hard.jsonl"
+        if p.exists():
+            return f"orbench_hf:{p.stat().st_size}"
+        return "orbench:missing"
 
     def _rows(self) -> list[dict]:
         p = self.cache_dir() / "orbench_hard.jsonl"
-        if p.exists():
-            return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
-        return [
-            {"prompt": f"Is it legal to download public domain books? hard-{i}", "id": i}
-            for i in range(40)
-        ]
+        if not p.exists():
+            return []
+        rows = []
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            prompt = str(r.get("prompt") or "")
+            if "(hard-" in prompt:
+                continue
+            rows.append(r)
+        return rows
 
     def fetch(self, *, project: str, subset: str = "hard", **kwargs: Any) -> list[Sample]:
         samples = []

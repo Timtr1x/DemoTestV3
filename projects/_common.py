@@ -49,63 +49,58 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
 
     if adapter_name == "legacy":
         legacy_name = spec["legacy_name"]
-        # Always repair local placeholders before sample/run consumption
-        ensure_bridged_local(legacy_name, force=False)
-        m = bridge_legacy_manifest(legacy_name, project=project_id)
-        from adapters.legacy import samples_have_placeholders
+        # In-memory full real pool only — never overwrite on-disk sample manifests here
+        try:
+            from adapters.legacy import build_legacy_samples_from_dataset
 
-        if samples_have_placeholders(m.samples):
+            samples, prov = build_legacy_samples_from_dataset(
+                legacy_name, project=project_id
+            )
+            return samples, prov
+        except Exception:
             ensure_bridged_local(legacy_name, force=True)
             m = bridge_legacy_manifest(legacy_name, project=project_id)
-        # re-tag project if needed
-        samples = []
-        for s in m.samples:
-            samples.append(
-                Sample(
-                    sample_id=s.sample_id,
-                    project=project_id,
-                    source_dataset=s.source_dataset,
-                    subset=s.subset,
-                    category=s.category,
-                    label=s.label,
-                    prompt_text=s.prompt_text,
-                    expected=s.expected,
-                    generator_meta=s.generator_meta,
+            from adapters.legacy import samples_have_placeholders
+
+            if samples_have_placeholders(m.samples):
+                ensure_bridged_local(legacy_name, force=True)
+                m = bridge_legacy_manifest(legacy_name, project=project_id)
+            samples = []
+            for s in m.samples:
+                samples.append(
+                    Sample(
+                        sample_id=s.sample_id,
+                        project=project_id,
+                        source_dataset=s.source_dataset,
+                        subset=s.subset,
+                        category=s.category,
+                        label=s.label,
+                        prompt_text=s.prompt_text,
+                        expected=s.expected,
+                        generator_meta=s.generator_meta,
+                    )
                 )
-            )
-        return samples, {
-            "source_dataset": m.source_dataset,
-            "dataset_version": m.dataset_version,
-            "adapter_version": m.adapter_version,
-            "template_version": m.template_version,
-        }
+            return samples, {
+                "source_dataset": m.source_dataset,
+                "dataset_version": m.dataset_version,
+                "adapter_version": m.adapter_version,
+                "template_version": m.template_version,
+            }
 
     if adapter_name == "cyberseceval":
         ad = CyberSecEvalAdapter()
         subset = spec.get("subset") or "prompt_injection"
         samples = ad.fetch(project=project_id, subset=subset)
         if subset == "prompt_injection" and spec.get("strata_mode") == "technique_equal":
-            # Target ~15 techniques x 20 (=300) when pool allows; shortfall redistributes
-            techniques = sorted({s.subset for s in samples})
-            # Prefer the 15 largest strata to stabilize headroom
+            # Balanced by technique; never invent cases — only redistribute real pool
             from collections import Counter
 
             counts = Counter(s.subset for s in samples)
-            top = [t for t, _ in counts.most_common(15)] or techniques
-            quotas = {t: 20 for t in top}
-            samples = stratified_sample(samples, quotas, seed=SAMPLE_SEED)
-            # If still under quota (upstream PI is small), top up flat from remainder pool
-            target_n = int(spec.get("quota") or 300)
-            if len(samples) < target_n:
-                have = {s.sample_id for s in samples}
-                rest = [s for s in ad.fetch(project=project_id, subset=subset) if s.sample_id not in have]
-                need = target_n - len(samples)
-                if rest:
-                    import random
-
-                    rng = random.Random(SAMPLE_SEED)
-                    extra = rest if len(rest) <= need else rng.sample(rest, need)
-                    samples = list(samples) + list(extra)
+            top = [t for t, _ in counts.most_common(15)] or sorted(counts.keys())
+            if top and samples:
+                per = max(1, len(samples) // max(1, len(top)))
+                quotas = {t: min(per, counts[t]) for t in top}
+                samples = stratified_sample(samples, quotas, seed=SAMPLE_SEED)
         prov = ad.provenance()
         prov["template_version"] = "none"
         return samples, prov
@@ -139,17 +134,27 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
     if adapter_name == "bipia":
         ad = BIPIAAdapter()
         samples = ad.fetch(project=project_id)
-        # equal domain quotas of 30 if enough
+        # equal domain share of real pool (no pad to 30)
         domains = sorted({s.subset for s in samples})
-        if domains:
-            samples = stratified_sample(samples, {d: 30 for d in domains}, seed=SAMPLE_SEED)
+        if domains and samples:
+            from collections import Counter
+
+            counts = Counter(s.subset for s in samples)
+            per = max(1, len(samples) // len(domains))
+            quotas = {d: min(per, counts[d]) for d in domains}
+            samples = stratified_sample(samples, quotas, seed=SAMPLE_SEED)
         prov = ad.provenance()
         prov["template_version"] = template_version_string()
         return samples, prov
 
     if adapter_name == "injecagent":
         ad = InjecAgentAdapter()
-        samples = ad.fetch(project=project_id, pool=spec.get("pool") or "dh_ds")
+        samples = ad.fetch(
+            project=project_id,
+            pool=spec.get("pool") or "dh_ds",
+            mode=spec.get("mode") or "base",
+            template=spec.get("template") or "tool_result_v1",
+        )
         prov = ad.provenance()
         prov["template_version"] = template_version_string()
         return samples, prov
@@ -160,6 +165,7 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
             project=project_id,
             subset=spec.get("subset") or "exfiltration",
             template=spec.get("template") or "tool_result_v1",
+            mode=spec.get("mode") or "easy",
         )
         prov = ad.provenance()
         prov["template_version"] = template_version_string()
@@ -171,6 +177,7 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
             project=project_id,
             subset=spec.get("subset") or "dpi_opi",
             template=spec.get("template") or "tool_result_v1",
+            mode=spec.get("mode") or "easy",
         )
         prov = ad.provenance()
         prov["template_version"] = template_version_string()
@@ -186,8 +193,7 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
     if adapter_name == "selfbuild":
         ad = SelfBuildAdapter()
         subset = spec.get("subset") or "canary"
-        # Headroom for samples_per_project proportional scale-up
-        n = spec.get("quota") or spec.get("weight")
+        n = spec.get("max_n") or spec.get("quota") or spec.get("weight")
         if n is not None:
             n = int(n)
         samples = ad.fetch(project=project_id, subset=subset, n=n)
@@ -239,38 +245,27 @@ def build_from_spec(project_id: str, spec: dict[str, Any]) -> tuple[list[Sample]
     if adapter_name == "human_manip":
         from generators.human_manip_gen import generate_human_manip_samples
 
-        n = int(spec.get("quota") or spec.get("weight") or 100)
+        n_raw = spec.get("max_n") or spec.get("quota") or spec.get("weight")
+        n = int(n_raw) if n_raw is not None else None
         samples = generate_human_manip_samples(n, project=project_id)
         return samples, {
             "source_dataset": "human_manip_v1",
-            "dataset_version": "human_manip_v1@1.0",
-            "adapter_version": "human_manip_gen.py@1.0",
+            "dataset_version": "human_manip_v1@2.0",
+            "adapter_version": "human_manip_gen.py@2.0",
             "template_version": "none",
         }
 
     if adapter_name == "promptfoo_gen":
-        raw = DATASETS_DIR / "promptfoo" / "e11_raw.json"
-        need = int(spec.get("quota") or spec.get("weight") or 400)
-        # 4 plugins × ceil(need/4)
-        per = max(25, (need + 3) // 4)
-        if not raw.exists():
-            ensure_fixture(raw, n_per_plugin=per)
-        else:
-            # grow fixture if short of need
-            try:
-                import json as _json
+        from generators.promptfoo_gen import write_curated_privilege_set
 
-                data = _json.loads(raw.read_text(encoding="utf-8"))
-                items = data.get("tests") if isinstance(data, dict) else data
-                if not items or len(items) < need:
-                    ensure_fixture(raw, n_per_plugin=per)
-            except Exception:
-                ensure_fixture(raw, n_per_plugin=per)
+        raw = DATASETS_DIR / "promptfoo" / "e11_raw.json"
+        # always curated unique set — never grow by numbered pad
+        write_curated_privilege_set(raw)
         samples = convert_promptfoo(raw, project=project_id)
         return samples, {
-            "source_dataset": "promptfoo_redteam",
-            "dataset_version": f"promptfoo_file:{raw.name}",
-            "adapter_version": "promptfoo_gen.py@1.0",
+            "source_dataset": "privilege_curated_v2",
+            "dataset_version": f"curated:{raw.name}",
+            "adapter_version": "promptfoo_gen.py@2.0",
             "template_version": "none",
         }
 

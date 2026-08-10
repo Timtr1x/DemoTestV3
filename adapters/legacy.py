@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from core.schema import Manifest, Sample
-from paths import LEGACY_DEMOTEST_ROOT, MANIFEST_DIR
+from paths import CACHE_DIR, LEGACY_DEMOTEST_ROOT, MANIFEST_DIR, REPO_ROOT
 
 LEGACY_META: dict[str, dict[str, str]] = {
     "mitre_400": {
@@ -397,15 +397,34 @@ def _index_dataset(
     return mapping
 
 
+def _resolve_dataset_path(dataset_file: str, root: Path | None = None) -> Path | None:
+    """Find materialised CSE flat file under V2 cache or legacy root."""
+    candidates = []
+    if root is not None:
+        candidates.append(root / "cache" / dataset_file)
+    candidates.extend(
+        [
+            CACHE_DIR / dataset_file,
+            REPO_ROOT / "cache" / dataset_file,
+            LEGACY_DEMOTEST_ROOT / "cache" / dataset_file,
+        ]
+    )
+    for p in candidates:
+        if p.exists() and p.stat().st_size > 100:
+            return p
+    return None
+
+
 def load_prompt_map_from_dataset_cache(
     name: str, root: Path | None = None
 ) -> dict[str, str]:
-    """Load real prompt texts from DemoTest cache datasets (suite-compatible)."""
-    base = root if root is not None else LEGACY_DEMOTEST_ROOT
+    """Load real prompt texts from local CSE materialization (suite-compatible)."""
     meta = LEGACY_META.get(name)
     if not meta:
         return {}
-    path = base / "cache" / meta["dataset_file"]
+    path = _resolve_dataset_path(meta["dataset_file"], root)
+    if path is None:
+        return {}
     rows = _load_json_list(path)
     if not rows:
         return {}
@@ -520,8 +539,8 @@ def bridge_legacy_manifest(
             # try to pull category from index
             try:
                 idx = int(sid.split(":")[-1])
-                ds_path = (root or LEGACY_DEMOTEST_ROOT) / "cache" / "mitre_dataset.json"
-                if ds_path.exists():
+                ds_path = _resolve_dataset_path("mitre_dataset.json", root)
+                if ds_path is not None:
                     rows = _load_json_list(ds_path)
                     if 0 <= idx < len(rows):
                         category = str(rows[idx].get("mitre_category") or category)
@@ -587,6 +606,113 @@ def samples_have_placeholders(samples: list[Any]) -> bool:
     return False
 
 
+def build_legacy_samples_from_dataset(
+    name: str,
+    *,
+    project: str | None = None,
+) -> tuple[list[Sample], dict[str, str]]:
+    """Build full real-case samples from materialised CSE files (in-memory only).
+
+    Uses **all** rows in the local dataset (no pad). Does **not** write manifests —
+    callers subsample then ``save_manifest``.
+    """
+    if name not in LEGACY_META:
+        raise KeyError(f"unknown legacy name {name}")
+    meta = LEGACY_META[name]
+    ds_path = _resolve_dataset_path(meta["dataset_file"])
+    if ds_path is None:
+        raise FileNotFoundError(
+            f"No real dataset file for {name} ({meta['dataset_file']}). "
+            f"Run prepare_all_data first."
+        )
+    rows = _load_json_list(ds_path)
+    if not rows:
+        raise ValueError(f"Empty dataset for {name}: {ds_path}")
+
+    prompt_fn = {
+        "mitre_400": _mitre_prompt,
+        "mitre_200": _mitre_prompt,
+        "mitre_frr_400": _frr_prompt,
+        "interpreter_500": _interpreter_prompt,
+        "spear_phishing_400": _spear_explicit_from_row,
+        "spear_implicit_50": _spear_implicit_from_row,
+        "spear_explicit_30": _spear_explicit_from_row,
+        "autocomplete_400": _autocomplete_prompt,
+    }[name]
+
+    prefix = meta["id_prefix"]
+    proj = project or meta["project"]
+    samples: list[Sample] = []
+    for i, row in enumerate(rows):
+        prompt = prompt_fn(row)
+        if not prompt or not str(prompt).strip():
+            continue
+        if name == "autocomplete_400":
+            pid = row.get("prompt_id", i)
+            sid = f"{prefix}{pid}"
+        else:
+            sid = f"{prefix}{i}"
+        category = meta["category"]
+        if name.startswith("mitre") and name != "mitre_frr_400":
+            category = str(row.get("mitre_category") or category)
+        gmeta: dict[str, Any] = {"source": "cse_real", "dataset_file": meta["dataset_file"]}
+        if name.startswith("spear"):
+            goal = str(row.get("goal") or "")
+            gmeta["goal"] = goal
+            gmeta["t15_goal"] = t15_goal_bucket(goal)
+            category = gmeta["t15_goal"]
+        samples.append(
+            Sample(
+                sample_id=sid,
+                project=proj,
+                source_dataset=meta["source_dataset"],
+                subset=meta["subset"],
+                category=category,
+                label=meta["label"],
+                prompt_text=str(prompt),
+                expected=meta["expected"],
+                generator_meta=gmeta,
+            )
+        )
+    if not samples:
+        raise ValueError(f"No real prompts built for {name}")
+    prov = {
+        "source_dataset": meta["source_dataset"],
+        "dataset_version": f"cse_real:{ds_path.name}:n={len(samples)}",
+        "adapter_version": "legacy.py@2.0",
+        "template_version": "none",
+    }
+    return samples, prov
+
+
+def rebuild_from_local_dataset(
+    name: str,
+    *,
+    force: bool = False,
+    directory: Path | None = None,
+    project: str | None = None,
+) -> Path:
+    """Build + write full real pool (for prepare scripts / explicit repair only)."""
+    from core.sampler import SAMPLE_SEED, build_manifest, save_manifest
+
+    samples, prov = build_legacy_samples_from_dataset(name, project=project)
+    m = build_manifest(
+        name,
+        samples,
+        seed=SAMPLE_SEED,
+        source_dataset=prov["source_dataset"],
+        dataset_version=prov["dataset_version"],
+        adapter_version=prov["adapter_version"],
+        template_version=prov["template_version"],
+        extra={
+            "legacy": True,
+            "real_full_pool": True,
+            "pool_n": len(samples),
+        },
+    )
+    return save_manifest(m, directory=directory or MANIFEST_DIR, force=True)
+
+
 def ensure_bridged_local(
     name: str,
     *,
@@ -596,8 +722,8 @@ def ensure_bridged_local(
 ) -> Path:
     """Write bridged canonical manifest into MANIFEST_DIR.
 
-    Always re-bridges when the local file is missing, force=True, or the
-    existing file still contains placeholder prompts (``[legacy:...]``).
+    Prefers full rebuild from local real CSE files. Falls back to id-bridge
+    only when a legacy sample_ids file exists.
     """
     from core.sampler import load_manifest, save_manifest
 
@@ -615,11 +741,19 @@ def ensure_bridged_local(
             need_write = True
     if not need_write:
         return out
+
+    # Prefer full real pool rebuild
+    if name in LEGACY_META:
+        try:
+            return rebuild_from_local_dataset(name, force=True, directory=out_dir)
+        except Exception:
+            pass
+
     m = bridge_legacy_manifest(name, root=root)
     if samples_have_placeholders(m.samples):
         raise RuntimeError(
             f"Bridge produced placeholder prompts for {name}; "
-            f"check LEGACY_DEMOTEST_ROOT dataset caches."
+            f"check local CSE cache (run prepare_all_data)."
         )
     return save_manifest(m, directory=out_dir, force=True)
 
