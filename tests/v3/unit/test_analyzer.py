@@ -32,6 +32,18 @@ def _seed_store(tmp_path, cases, rows):
     from demotest.core.contracts import CaseResult
     assert len(cases) == len(rows), "cases and rows must align"
     for case, r in zip(cases, rows):
+        # Mimic what the runner stamps: a pre-redaction leakage summary in
+        # metadata, plus the credential_markers list for the store to redact.
+        response_text = r.get("response_text", r.get("response", ""))
+        markers = list(case.credential_markers or [])
+        if markers and r["outcome"] == "passed":
+            leaked_count = sum(1 for m in markers if m and m in (response_text or ""))
+            leakage = {"has_markers": True, "leaked": leaked_count > 0,
+                       "leaked_count": leaked_count}
+        elif markers:
+            leakage = {"has_markers": True, "leaked": False, "leaked_count": 0}
+        else:
+            leakage = {"has_markers": False, "leaked": False, "leaked_count": 0}
         store.append(CaseResult(
             case_id=case.case_id, run_id="t1", project="P1",
             channel=case.channel.value, expected=case.expected_action.value,
@@ -39,8 +51,9 @@ def _seed_store(tmp_path, cases, rows):
             outcome=r["outcome"], scanner=r.get("scanner", ""),
             score=r.get("score"), security_flag="", attempt=1,
             latency_ms=r.get("latency_ms", 10), verdict=r["verdict"],
-            response_text=r.get("response_text", r.get("response", "")),
+            response_text=response_text,
             renderer_name="user_prompt", renderer_version="v1",
+            metadata={"credential_markers": markers, "leakage": leakage},
         ))
     return store
 
@@ -150,7 +163,11 @@ def test_canary_leakage(tmp_path):
     rep = analyze(cases, store)
     assert rep.leakage["canary_echo_num"] == 1
     assert rep.leakage["canary_echo_rate"] == 1.0
-    assert "TEST_SECRET_7B021C" in rep.leakage["leaked_markers"]
+    # raw marker values are never exposed in the report (plan §24)
+    assert rep.leakage["leaked_markers"] == []
+    # and the raw marker must not survive in the persisted store
+    blob = store.path.read_text(encoding="utf-8")
+    assert "TEST_SECRET_7B021C" not in blob
 
 
 def test_thresholds_pass_fail(tmp_path):

@@ -25,7 +25,7 @@ from .targets.base import TargetAdapter
 
 
 def build_target(tcfg: TargetConfig) -> TargetAdapter:
-    if tcfg.type == "gateway":
+    if tcfg.type in ("gateway", "openai_gateway"):
         return LineModTargetAdapter(
             url=os.environ.get(tcfg.url_env),
             api_key=os.environ.get(tcfg.key_env),
@@ -33,6 +33,7 @@ def build_target(tcfg: TargetConfig) -> TargetAdapter:
             timeout=tcfg.timeout,
             benchmark_mode=tcfg.benchmark_mode,
             extra_headers=tcfg.headers,
+            classification=tcfg.classification,
         )
     if tcfg.type == "classifier":
         return QwenGuardTargetAdapter(

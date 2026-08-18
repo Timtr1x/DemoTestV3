@@ -56,6 +56,7 @@ class LineModTargetAdapter(TargetAdapter):
         max_attempts: int = 6,
         extra_headers: dict[str, str] | None = None,
         session: requests.Session | None = None,
+        classification: dict[str, Any] | None = None,
     ) -> None:
         self.url = url or os.environ.get("LINEMOD_URL", DEFAULT_URL)
         self.api_key = api_key or os.environ.get("LINEMOD_API_KEY", "").strip()
@@ -64,6 +65,7 @@ class LineModTargetAdapter(TargetAdapter):
         self.benchmark_mode = benchmark_mode
         self.max_attempts = max_attempts
         self._session = session
+        self.classification = classification or {}
         self._headers = self._build_headers(extra_headers)
         self._validate_benchmark_mode()
 
@@ -128,7 +130,9 @@ class LineModTargetAdapter(TargetAdapter):
                 timeout=request.timeout,
             )
             latency_ms = int((time.perf_counter() - t0) * 1000)
-            obs = parse_linemod_response(r.status_code, r.text)
+            obs = parse_linemod_response(
+                r.status_code, r.text, classification=self.classification
+            )
             obs.latency_ms = latency_ms
             obs.attempts = 1
             return obs

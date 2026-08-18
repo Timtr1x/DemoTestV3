@@ -34,11 +34,14 @@ def run(args) -> int:
             key = os.environ.get(tcfg.key_env, "").strip()
             if not key:
                 errors.append(f"env {tcfg.key_env} is not set (use --no-key-check to skip)")
-        # 3. No-Failover enforced in benchmark mode
+        # 3. No-Failover enforced in benchmark mode (plan §10)
         if tcfg.benchmark_mode:
-            nf = (tcfg.headers or {}).get("X-LineMod-No-Failover", "true").lower()
-            if nf != "true":
-                errors.append("benchmark_mode=True requires X-LineMod-No-Failover=true")
+            nf = (tcfg.headers or {}).get("X-LineMod-No-Failover", "")
+            if nf.lower() != "true":
+                errors.append(
+                    "benchmark_mode=True requires X-LineMod-No-Failover=true "
+                    "explicitly in target headers (plan §10)"
+                )
     # 4. project config exists
     projects = load_projects()
     if args.project not in projects:

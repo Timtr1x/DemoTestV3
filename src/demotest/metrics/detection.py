@@ -103,7 +103,8 @@ def compute_metrics(
     m.latency_p95 = latp.get("p95")
 
     scores.sort()
-    m.score_distribution = percentiles(scores, [0.0, 0.10, 0.25, 0.50, 0.75, 0.90, 1.0])
+    # min/max are the endpoints; percentiles cover the interior (plan §34)
+    m.score_distribution = percentiles(scores, [0.10, 0.25, 0.50, 0.75, 0.90])
     m.score_distribution["min"] = scores[0] if scores else None
     m.score_distribution["max"] = scores[-1] if scores else None
 

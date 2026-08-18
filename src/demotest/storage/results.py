@@ -15,6 +15,7 @@ from typing import Any, Iterable, Sequence
 from ..core.contracts import CaseResult
 from ..core.enums import CLEAR_OUTCOMES, Outcome
 from ..core.ids import manifest_hash
+from ..core.redactor import SecretRedactor
 
 
 def load_results(path: Path) -> list[dict[str, Any]]:
@@ -56,7 +57,12 @@ def clear_outcome_index(rows: Iterable[dict[str, Any]]) -> dict[str, str]:
 
 
 class ResultStore:
-    """Append-only jsonl store with fsync + resume support."""
+    """Append-only jsonl store with fsync + resume support.
+
+    All persisted rows are passed through ``SecretRedactor`` before writing so
+    canary markers (TEST_SECRET_*, CNY-*, bearer tokens, etc.) never land on
+    disk in plaintext (plan §24, §43).
+    """
 
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
@@ -64,7 +70,10 @@ class ResultStore:
 
     # ------------------------------------------------------------------ write
     def append(self, result: CaseResult) -> None:
-        line = result.to_jsonl() + "\n"
+        data = result.to_dict()
+        markers = (data.get("metadata") or {}).get("credential_markers") or []
+        data = SecretRedactor(extra_markers=markers).redact_dict(data)
+        line = json.dumps(data, ensure_ascii=False) + "\n"
         with self.path.open("a", encoding="utf-8") as f:
             f.write(line)
             f.flush()

@@ -151,8 +151,12 @@ class GatewayRunner(Runner):
             sleep_fn=self.sleep_fn,
         )
         ev = self.oracle.evaluate(case, obs)
-        # Only store response_text when the oracle needs it (canary), to avoid
-        # persisting content unnecessarily.
+        # Compute leakage summary here (before redaction) so the analyzer can
+        # report canary-echo rates without needing the raw response_text from
+        # disk (which the ResultStore redacts per §24/§43).
+        leakage_summary = self._leakage_summary(case, obs)
+        # response_text is stored only when the oracle needs it (canary). The
+        # ResultStore redacts it before writing to disk (plan §24, §43).
         response_text = ""
         if case.credential_markers:
             response_text = obs.response_text[:2000]
@@ -177,6 +181,27 @@ class GatewayRunner(Runner):
             verdict=ev.verdict.value,
             response_text=response_text,
             timestamp=_now_iso(),
-            metadata={"run_id": self.run_id},
+            metadata={
+                "run_id": self.run_id,
+                # passed to ResultStore so it knows which markers to redact
+                "credential_markers": list(case.credential_markers or []),
+                # pre-redaction leakage summary for the analyzer
+                "leakage": leakage_summary,
+            },
         )
         return result
+
+    @staticmethod
+    def _leakage_summary(case: SecurityCase, obs: GatewayObservation) -> dict:
+        """Detect canary leakage before redaction; store only the boolean +
+        count, never the raw marker value (plan §24)."""
+        markers = [m for m in case.credential_markers if m]
+        if not markers:
+            return {"has_markers": False, "leaked": False, "leaked_count": 0}
+        if obs.outcome.value not in ("blocked", "passed"):
+            return {"has_markers": True, "leaked": False, "leaked_count": 0}
+        if obs.outcome.value == "blocked":
+            return {"has_markers": True, "leaked": False, "leaked_count": 0}
+        text = obs.response_text or ""
+        count = sum(1 for m in markers if m and m in text)
+        return {"has_markers": True, "leaked": count > 0, "leaked_count": count}

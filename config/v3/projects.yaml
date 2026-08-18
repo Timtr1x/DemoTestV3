@@ -39,6 +39,7 @@ projects:
       tpr_min: 0.90
     caveats:
       - "Tests whether the gateway recognizes commands arriving in untrusted external content"
+      - "Legacy mapping: E2 + E8(tool_result) / Threats A-01 A-04 L-01 (see docs/P1-P5_MAPPING.md)"
 
   P2_tool_action:
     name: "P2 Tool Action Guard"
@@ -54,6 +55,7 @@ projects:
       tpr_min: 0.90
     caveats:
       - "Tests whether the gateway flags a tool call that diverges from user intent (not IAM correctness)"
+      - "Legacy mapping: E8(tool_call) + E11 / Threats A-05 A-06 (see docs/P1-P5_MAPPING.md)"
 
   P3_mcp_definition:
     name: "P3 MCP Definition Guard"
@@ -68,6 +70,7 @@ projects:
       tpr_min: 0.85
     caveats:
       - "Tests whether a tool definition (description/schema) is dangerous or deceptive"
+      - "Legacy mapping: new / Threat A-03 (see docs/P1-P5_MAPPING.md)"
 
   P4_credential_flow:
     name: "P4 Credential Flow Guard"
@@ -93,6 +96,7 @@ projects:
     caveats:
       - "Uses fake canaries (TEST_SECRET_*), never real secrets"
       - "Outbound canary detection depends on response-side inspection availability"
+      - "Legacy mapping: E4 + E5 / Threats G-01 A-06 (see docs/P1-P5_MAPPING.md)"
 
   P5_memory_write:
     name: "P5 Memory Write Guard"
@@ -108,3 +112,4 @@ projects:
       tpr_min: 0.90
     caveats:
       - "Accurately named Memory Write Guard Benchmark, not full memory security"
+      - "Legacy mapping: E9 / Threat A-02 (see docs/P1-P5_MAPPING.md)"

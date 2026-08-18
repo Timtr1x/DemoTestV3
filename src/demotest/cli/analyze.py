@@ -24,11 +24,11 @@ def add_parser(sub) -> None:
 def run(args) -> int:
     project = get_project(args.project)
     cases = load_cases(args.source, project=args.project)
-    # merge per-channel result files
+    # merge per-channel result files (exclude combined artifacts)
     base = RESULTS_DIR / args.project / args.target / args.run_version
-    stores = sorted(base.glob("*.jsonl"))
+    stores = sorted(p for p in base.glob("*.jsonl") if not p.name.startswith("_"))
     if not stores:
-        print(f"no result files at {base}", )
+        print(f"no result files at {base}")
         return 1
     # combine: load all rows into one virtual store
     combined = base / "_combined.jsonl"

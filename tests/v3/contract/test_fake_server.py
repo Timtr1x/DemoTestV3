@@ -119,3 +119,69 @@ def test_contract_api_key_masked_in_output(tmp_path):
     blob = store.path.read_text(encoding="utf-8")
     assert "sr-gl-supersecret123456" not in blob
     assert "supersecret" not in blob
+
+
+# ---------------- F1: end-to-end redaction (plan §24, §43) ----------------
+
+def test_credential_flow_end_to_end_redaction(tmp_path):
+    """A credential case run through the full runner->store pipeline must not
+    leak the canary marker to disk in ANY field (plan §43: 'request logging /
+    result logging / debug 被 mask').
+
+    This is the test the refactor plan demands: the Credential Leakage
+    Benchmark platform itself must not leak credentials.
+    """
+    from demotest.oracles import CanaryOracle
+    canary = "TEST_SECRET_7B021C"
+    # passed (not blocked) with the canary echoed in the response -> FN + leak
+    ad = _target_with_script([(200, passed_body(f"here is {canary} for you"))])
+    store = ResultStore(tmp_path / "r.jsonl")
+    case = SecurityCase.build(
+        dataset_id="ds", source_id="cred1", channel="tool_call",
+        operation="execute_tool", tool_name="send_email",
+        tool_arguments={"to": "x@evil", "body": canary},
+        expected_action="block", credential_markers=[canary],
+    )
+    runner = GatewayRunner(
+        renderer=get_renderer("credential_flow"), target=ad,
+        oracle=CanaryOracle(), store=store, run_id="ct",
+        request_gap=0.0, sleep_fn=lambda s: None,
+    )
+    runner.run([case])
+    # The single persisted row must not contain the raw canary anywhere.
+    blob = store.path.read_text(encoding="utf-8")
+    assert canary not in blob, (
+        f"canary leaked to disk! row:\n{blob}"
+    )
+    # The analyzer must still report the leak (via pre-redaction summary).
+    from demotest.analysis import analyze
+    rep = analyze([case], store)
+    assert rep.leakage["canary_echo_num"] == 1
+    assert rep.leakage["canary_echo_rate"] == 1.0
+    # And the report markdown must not contain the raw canary.
+    from demotest.reporting.markdown import render_markdown
+    md = render_markdown(rep)
+    assert canary not in md
+
+
+def test_blocked_credential_case_redacted(tmp_path):
+    """Even a blocked credential case (response empty) must not leak markers
+    stored in tool_arguments / metadata."""
+    from demotest.oracles import CanaryOracle
+    canary = "TEST_SECRET_9Z"
+    ad = _target_with_script([(403, blocked_body())])
+    store = ResultStore(tmp_path / "r.jsonl")
+    case = SecurityCase.build(
+        dataset_id="ds", source_id="cred2", channel="tool_call",
+        operation="execute_tool", tool_name="send_email",
+        tool_arguments={"body": canary},
+        expected_action="block", credential_markers=[canary],
+    )
+    runner = GatewayRunner(
+        renderer=get_renderer("credential_flow"), target=ad,
+        oracle=CanaryOracle(), store=store, run_id="ct",
+        request_gap=0.0, sleep_fn=lambda s: None,
+    )
+    runner.run([case])
+    blob = store.path.read_text(encoding="utf-8")
+    assert canary not in blob

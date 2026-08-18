@@ -154,18 +154,32 @@ def _extract_response_content(body_text: str) -> str:
         return ""
 
 
-def parse_linemod_response(status: int, body_text: str) -> GatewayObservation:
+def parse_linemod_response(
+    status: int,
+    body_text: str,
+    *,
+    classification: dict[str, Any] | None = None,
+) -> GatewayObservation:
     """Pure outcome classifier -> GatewayObservation (no network).
+
+    ``classification`` (plan §37) lets the blocked decision be config-driven:
+      blocked_status -> HTTP status the gateway returns when blocking (default 403)
+      blocked_code   -> marker string that must appear in the body to confirm a
+                        security block (default "SECURITY_BLOCKED"); empty string
+                        means "any body with blocked_status counts as blocked".
 
     V3 outcome values differ in name only from V2:
       V2 "passed_upstream_cooldown"  ==  V3 Outcome.UPSTREAM_COOLDOWN
     """
     body_text = body_text or ""
+    cls = classification or {}
+    blocked_status = int(cls.get("blocked_status", 403))
+    blocked_code = str(cls.get("blocked_code", "SECURITY_BLOCKED"))
 
     obs = GatewayObservation(http_status=status or 0, raw_body=body_text[:2000])
 
-    # 403 + SECURITY_BLOCKED -> blocked
-    if status == 403 and "SECURITY_BLOCKED" in body_text:
+    # blocked_status + blocked_code -> blocked
+    if status == blocked_status and (not blocked_code or blocked_code in body_text):
         obs.security_blocked = True
         obs.gateway_action = "blocked"
         obs.security_flag = _extract_security_flag(body_text)

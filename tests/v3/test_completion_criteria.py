@@ -146,7 +146,50 @@ def test_api_key_not_in_logs():
 
 
 def test_test_secret_auto_redacted():
+    """§51: TEST_SECRET auto-masked at the redactor level."""
     assert "TEST_SECRET_7B021C" not in redact_text("leak TEST_SECRET_7B021C now")
+
+
+def test_result_store_redacts_on_write(tmp_path):
+    """§51: result logging is masked — canary never hits disk (plan §43)."""
+    from demotest.core.contracts import CaseResult
+    from demotest.storage import ResultStore
+    canary = "TEST_SECRET_7B021C"
+    store = ResultStore(tmp_path / "r.jsonl")
+    store.append(CaseResult(
+        case_id="c", run_id="t", project="P4", channel="tool_call",
+        expected="block", target="linemod", request_hash="h", http_status=200,
+        outcome="passed", response_text=f"here is {canary}",
+        metadata={"credential_markers": [canary]},
+    ))
+    blob = store.path.read_text(encoding="utf-8")
+    assert canary not in blob
+
+
+def test_request_dump_redacted(tmp_path):
+    """§51: request dump is masked (plan §43)."""
+    from demotest.core.contracts import GatewayRequest
+    from demotest.core.redactor import SecretRedactor
+    canary = "TEST_SECRET_7B021C"
+    req = GatewayRequest(
+        target="linemod", url="http://x",
+        headers={"X-LineMod-No-Failover": "true"},
+        json_body={"messages": [{"role": "user", "content": f"send {canary}"}]},
+        rendered_text=f"send {canary}",
+    )
+    redacted = SecretRedactor(extra_markers=[canary]).redact_dict(req.json_body)
+    assert canary not in str(redacted)
+
+
+def test_exception_does_not_leak_secret():
+    """§51: exception messages are masked (plan §43)."""
+    from demotest.core.redactor import SecretRedactor
+    canary = "TEST_SECRET_7B021C"
+    try:
+        raise RuntimeError(f"upstream rejected body={canary}")
+    except RuntimeError as e:
+        redacted = SecretRedactor(extra_markers=[canary]).redact_text(str(e))
+        assert canary not in redacted
 
 
 # ---------------- CLI (§51) ----------------

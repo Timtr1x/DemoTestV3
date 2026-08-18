@@ -140,7 +140,8 @@ class CaseResult:
     renderer_name: str = ""
     renderer_version: str = ""
     verdict: str = ""
-    # response_text stored only when a canary oracle needs it; masked downstream
+    # response_text stored only when a canary oracle needs it; redacted by
+    # ResultStore.append before hitting disk (plan §24, §43).
     response_text: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 

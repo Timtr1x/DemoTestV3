@@ -26,7 +26,10 @@ def run(args) -> int:
     project = get_project(args.project)
     cases = load_cases(args.source, project=args.project)
     base = RESULTS_DIR / args.project / args.target / args.run_version
-    stores = sorted(base.glob("*.jsonl"))
+    stores = sorted(p for p in base.glob("*.jsonl") if not p.name.startswith("_"))
+    if not stores:
+        print(f"no result files at {base}")
+        return 1
     combined = base / "_combined.jsonl"
     combined.write_text("", encoding="utf-8")
     store = ResultStore(combined)

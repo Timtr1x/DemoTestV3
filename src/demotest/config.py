@@ -35,6 +35,7 @@ class TargetConfig:
     benchmark_mode: bool = True
     headers: dict[str, str] = field(default_factory=dict)
     request: dict[str, Any] = field(default_factory=dict)
+    classification: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -66,6 +67,7 @@ def load_targets(path: Path | None = None) -> dict[str, TargetConfig]:
             benchmark_mode=bool(cfg.get("benchmark_mode", True)),
             headers=dict(cfg.get("headers") or {}),
             request=dict(cfg.get("request") or {}),
+            classification=dict(cfg.get("classification") or {}),
         )
     return targets
 

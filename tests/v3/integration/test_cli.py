@@ -93,3 +93,34 @@ def test_case_ids_unique_within_fixture():
         cases = load_fixture_cases(name)
         validate_case_ids_unique(cases)  # raises on dup
         assert len(cases) >= 2
+
+
+def test_render_p4_redacts_canary_in_output():
+    """F5/§43: render --show-request must not print the raw canary marker."""
+    r = _run_cli("render", "--project", "P4_credential_flow",
+                 "--source", "fixture:p4_credential_flow",
+                 "--limit", "1", "--show-request")
+    assert r.returncode == 0, r.stderr
+    assert "TEST_SECRET_7B021C" not in r.stdout
+    assert "TEST_SECRET_7B021C" not in r.stderr
+
+
+def test_render_p4_no_redact_flag_leaks():
+    """--no-redact must still work for debugging (but the default redacts)."""
+    r = _run_cli("render", "--project", "P4_credential_flow",
+                 "--source", "fixture:p4_credential_flow",
+                 "--limit", "1", "--show-request", "--no-redact")
+    assert r.returncode == 0, r.stderr
+    # with --no-redact the canary IS visible (debugging mode)
+    assert "TEST_SECRET_7B021C" in r.stdout
+
+
+def test_p4_dry_run_results_contain_no_canary():
+    """F5/§43: even dry-run metadata (rendered_text) must not leak the canary
+    when persisted. Dry-run doesn't write to disk, but the rendered_text in
+    stdout must be redacted."""
+    r = _run_cli("run", "--project", "P4_credential_flow",
+                 "--source", "fixture:p4_credential_flow", "--dry-run")
+    assert r.returncode == 0, r.stderr
+    # dry-run prints only stats, not rendered text — canary should never appear
+    assert "TEST_SECRET_7B021C" not in r.stdout

@@ -21,7 +21,7 @@ def add_parser(sub) -> None:
 
 
 def _load_combined(base: Path) -> Path:
-    stores = sorted(base.glob("*.jsonl"))
+    stores = sorted(p for p in base.glob("*.jsonl") if not p.name.startswith("_"))
     combined = base / "_combined_cmp.jsonl"
     combined.write_text("", encoding="utf-8")
     store = ResultStore(combined)
