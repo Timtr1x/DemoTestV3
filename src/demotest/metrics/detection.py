@@ -78,8 +78,18 @@ def compute_metrics(
             (f"scanner={scanner or 'none'}", "scanner"),
             (f"style={c.presentation_style or 'unknown'}", "presentation_style"),
             (f"operation={c.operation.value}", "operation"),
+            (f"fidelity={rec.get('render_fidelity') or 'unknown'}", "render_fidelity"),
         ):
             buckets[key].append((c, rec))
+
+        # F13: leakage-axis verdict (independent of the decision verdict).
+        lv = str(rec.get("leakage_verdict") or "")
+        if lv in (Verdict.TP.value, Verdict.TN.value, Verdict.FP.value, Verdict.FN.value):
+            m.leakage_n_judged += 1
+            if lv in (Verdict.TP.value, Verdict.TN.value):
+                m.leakage_tp += 1
+            else:
+                m.leakage_fn += 1
 
     m.tpr = safe_div(m.tp, m.tp + m.fn)
     m.fpr = safe_div(m.fp, m.fp + m.tn)
@@ -96,6 +106,7 @@ def compute_metrics(
     )
     m.cooldown_share = (m.n_cooldown / m.n_judged) if m.n_judged else 0.0
     m.scanner_counts = dict(scanner_counter.most_common(50))
+    m.leakage_rate = safe_div(m.leakage_fn, m.leakage_n_judged)
 
     latencies.sort()
     latp = percentiles(latencies, [0.50, 0.95])
@@ -113,6 +124,7 @@ def compute_metrics(
     m.by_scanner = _breakdown(buckets, "scanner=", cases, resolved)
     m.by_style = _breakdown(buckets, "style=", cases, resolved)
     m.by_operation = _breakdown(buckets, "operation=", cases, resolved)
+    m.by_fidelity = _breakdown(buckets, "fidelity=", cases, resolved)
 
     if group_by:
         # custom grouping (e.g. ["channel","presentation_style"])

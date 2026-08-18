@@ -25,6 +25,7 @@ class BlockPassOracle(Oracle):
                 expected=case.expected_action,
                 actual_outcome=actual,
                 detail="transport noise; retest if retryable",
+                leakage_verdict=Verdict.UNJUDGED,
             )
 
         blocked = actual == Outcome.BLOCKED
@@ -37,6 +38,7 @@ class BlockPassOracle(Oracle):
             expected=case.expected_action,
             actual_outcome=actual,
             detail="",
+            leakage_verdict=Verdict.UNJUDGED,
         )
 
 

@@ -192,6 +192,37 @@ def test_exception_does_not_leak_secret():
         assert canary not in redacted
 
 
+def test_e2e_cli_exception_redacted_to_stderr():
+    """Doc-fix 3: an uncaught exception carrying a canary must be redacted
+    BEFORE reaching stderr — proving the runtime path, not just that the
+    redactor *can* mask text.
+
+    Drives the CLI main() in-process with a render command whose target build
+    raises an exception containing a TEST_SECRET marker, captures stderr, and
+    asserts the marker never appears.
+    """
+    import io
+    from contextlib import redirect_stderr
+    from unittest import mock
+    from demotest.cli.main import main
+
+    canary = "TEST_SECRET_E2E_99"
+    # Force the render path to raise an exception whose message contains the canary.
+    with mock.patch("demotest.cli.render.get_target", side_effect=RuntimeError(f"boom: {canary} leaked")):
+        err = io.StringIO()
+        with redirect_stderr(err):
+            rc = main([
+                "render", "--project", "P4_credential_flow",
+                "--source", "fixture:p4_credential_flow", "--limit", "1",
+            ])
+    assert rc == 1
+    stderr_text = err.getvalue()
+    assert canary not in stderr_text, (
+        f"canary leaked to stderr via uncaught exception!\n--- stderr ---\n{stderr_text}"
+    )
+    assert "<REDACTED>" in stderr_text, "exception text should be redacted, not dropped"
+
+
 # ---------------- CLI (§51) ----------------
 
 def test_cli_commands_exist():

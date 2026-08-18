@@ -22,6 +22,9 @@ def add_parser(sub) -> None:
     p.add_argument("--dry-run", action="store_true",
                    help="render + validate + serialize but do NOT call the API")
     p.add_argument("--max-attempts", type=int, default=6)
+    p.add_argument("--fidelity", default="labeled",
+                   choices=["raw", "structured", "labeled"],
+                   help="render fidelity tier (F8): raw=headline, structured=transport, labeled=enhancement")
     p.set_defaults(func=run)
 
 
@@ -38,7 +41,7 @@ def run(args) -> int:
 
     run_version = args.run_version or compute_run_id(
         target.target_name,
-        config_hash({"p": args.project, "t": args.target}),
+        config_hash({"p": args.project, "t": args.target, "f": args.fidelity}),
         "multi",
         ",".join(sorted(by_channel.keys())),
     )
@@ -47,20 +50,20 @@ def run(args) -> int:
     total_skipped = 0
     for channel, group in sorted(by_channel.items()):
         rname = resolve_renderer_name(project, channel)
-        renderer = get_renderer(rname)
+        renderer = get_renderer(rname, fidelity=args.fidelity)
         store_path = RESULTS_DIR / args.project / args.target / run_version / f"{channel}.jsonl"
         runner = build_runner(
             project, target, renderer, store_path, run_version,
-            request_gap=args.gap,
+            request_gap=args.gap, target_cfg=tcfg,
         )
         runner.max_attempts = args.max_attempts
         rr = runner.run(group, dry_run=args.dry_run)
         total_ran += rr.ran
         total_skipped += rr.skipped
         label = "dry-run" if args.dry_run else "ran"
-        print(f"[run] {channel} ({rname}): {label}={rr.ran} skipped={rr.skipped} written={rr.written}")
+        print(f"[run] {channel} ({rname}/{args.fidelity}): {label}={rr.ran} skipped={rr.skipped} written={rr.written}")
 
     print(f"[run] total: ran={total_ran} skipped={total_skipped} "
-          f"run_version={run_version} dry_run={args.dry_run}")
+          f"run_version={run_version} dry_run={args.dry_run} fidelity={args.fidelity}")
     print(f"[run] results: {RESULTS_DIR / args.project / args.target / run_version}")
     return 0

@@ -34,6 +34,12 @@ def render_markdown(rep: AnalysisReport) -> str:
         lines.append(
             f"- canary泄露: `{m.canary_echo_num}/{m.canary_echo_den}` (rate=`{_fmt(m.canary_echo_rate)}`)"
         )
+    # F13: decision correctness and credential leakage reported separately.
+    if m.leakage_n_judged:
+        lines.append(
+            f"- 凭证泄露轴(F13): judged=`{m.leakage_n_judged}` leakage_rate=`{_fmt(m.leakage_rate)}` "
+            f"(决策正确率与泄露率分开，不把\"未拦截\"等同于\"已泄露\")"
+        )
     lines.append(f"- 延迟: p50=`{m.latency_p50}`ms p95=`{m.latency_p95}`ms")
 
     if rep.thresholds:
@@ -62,6 +68,18 @@ def render_markdown(rep: AnalysisReport) -> str:
                   "| style | n | TP | FN | TPR |", "|---|---:|---:|---:|---:|"]
         for st, g in sorted(m.by_style.items()):
             lines.append(f"| {st} | {g['n_judged']} | {g['tp']} | {g['fn']} | {_fmt(g['tpr'])} |")
+
+    # Fidelity breakdown (F8) — RAW must be the headline; LABELED is enhancement.
+    if m.by_fidelity:
+        lines += ["", "## 按 Render Fidelity 分 (F8)", "",
+                  "> RAW=主分（无安全标签，最接近真实流量）；STRUCTURED=真实传输信封；",
+                  "> LABELED=显式安全标签（增强实验，不得作为头条分数）。", "",
+                  "| fidelity | n | TP | FN | TPR |", "|---|---:|---:|---:|---:|"]
+        # RAW first, then STRUCTURED, then LABELED
+        order = ["raw", "structured", "labeled"]
+        keys = sorted(m.by_fidelity.keys(), key=lambda k: order.index(k) if k in order else 99)
+        for fi, g in [(k, m.by_fidelity[k]) for k in keys]:
+            lines.append(f"| {fi} | {g['n_judged']} | {g['tp']} | {g['fn']} | {_fmt(g['tpr'])} |")
 
     # Score distribution (plan §34)
     if m.score_distribution and any(v is not None for v in m.score_distribution.values()):

@@ -17,7 +17,7 @@ from .core.ids import compute_run_id, config_hash
 from .oracles import BlockPassOracle, CanaryOracle, CompositeOracle
 from .oracles.base import Oracle
 from .renderers import get_renderer
-from .renderers.base import CaseRenderer
+from .renderers.base import CaseRenderer, RenderFidelity
 from .runners import GatewayRunner
 from .storage.results import ResultStore
 from .targets import LineModTargetAdapter, QwenGuardTargetAdapter
@@ -84,9 +84,18 @@ def build_runner(
     *,
     request_gap: float = 0.5,
     sleep_fn=time.sleep,
+    target_cfg: TargetConfig | None = None,
 ) -> GatewayRunner:
+    """Assemble a GatewayRunner.
+
+    F11: the generation profile (temperature / max_tokens) is resolved as
+    project.generation > target.request > default(8). Passing ``target_cfg``
+    lets the CLI wire the target's profile through; without it the runner falls
+    back to the V2 default (max_tokens=8), preserving regression parity.
+    """
     oracle = build_oracle(project.oracle)
     store = ResultStore(store_path)
+    gen = project.generation_profile(target_cfg)
     return GatewayRunner(
         renderer=renderer,
         target=target,
@@ -96,4 +105,6 @@ def build_runner(
         project=project.project_id,
         request_gap=request_gap,
         sleep_fn=sleep_fn,
+        temperature=gen["temperature"],
+        max_tokens=gen["max_tokens"],
     )

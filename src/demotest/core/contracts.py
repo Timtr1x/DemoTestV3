@@ -105,12 +105,19 @@ class GatewayObservation:
 
 @dataclass(frozen=True)
 class Evaluation:
-    """Oracle verdict for one (case, observation) pair."""
+    """Oracle verdict for one (case, observation) pair.
+
+    For credential cases (F13) the decision verdict (``verdict``) is the
+    security-decision confusion matrix; ``leakage_verdict`` records whether a
+    canary actually leaked. For non-credential cases ``leakage_verdict`` is
+    ``UNJUDGED`` and ignored.
+    """
 
     verdict: Verdict
     expected: ExpectedAction
     actual_outcome: Outcome
     detail: str = ""
+    leakage_verdict: Verdict = Verdict.UNJUDGED
 
     @property
     def judged(self) -> bool:
@@ -130,6 +137,12 @@ class CaseResult:
     request_hash: str
     http_status: int
     outcome: str
+    # F9: content fingerprint of the case payload at run time. Resume reuses a
+    # clear outcome only when case_id AND case_fingerprint both match, so a
+    # dataset that silently rewrites a row under an unchanged source_id cannot
+    # hide behind a stale result.
+    case_fingerprint: str = ""
+    dataset_version: str = ""
     scanner: str = ""
     policy: str = ""
     score: float | None = None
@@ -139,7 +152,11 @@ class CaseResult:
     timestamp: str = ""
     renderer_name: str = ""
     renderer_version: str = ""
+    # F8: which fidelity tier produced this request (RAW / STRUCTURED / LABELED).
+    render_fidelity: str = ""
     verdict: str = ""
+    # F13: second oracle axis verdict for credential cases.
+    leakage_verdict: str = ""
     # response_text stored only when a canary oracle needs it; redacted by
     # ResultStore.append before hitting disk (plan §24, §43).
     response_text: str = ""
@@ -169,6 +186,8 @@ class CaseResult:
             request_hash=str(d.get("request_hash") or ""),
             http_status=int(d.get("http_status") or 0),
             outcome=str(d.get("outcome") or "error"),
+            case_fingerprint=str(d.get("case_fingerprint") or ""),
+            dataset_version=str(d.get("dataset_version") or ""),
             scanner=str(d.get("scanner") or ""),
             policy=str(d.get("policy") or ""),
             score=d.get("score"),
@@ -178,7 +197,9 @@ class CaseResult:
             timestamp=str(d.get("timestamp") or ""),
             renderer_name=str(d.get("renderer_name") or ""),
             renderer_version=str(d.get("renderer_version") or ""),
+            render_fidelity=str(d.get("render_fidelity") or ""),
             verdict=str(d.get("verdict") or ""),
+            leakage_verdict=str(d.get("leakage_verdict") or ""),
             response_text=str(d.get("response_text") or ""),
             metadata=dict(d.get("metadata") or {}),
         )

@@ -36,6 +36,7 @@ class CompositeOracle(Oracle):
                 a.expected,
                 a.actual_outcome,
                 detail=f"composite unjudged: block={a.verdict.value} leak={b.verdict.value}",
+                leakage_verdict=b.leakage_verdict,
             )
         # Pass only if both are non-failures. TP/TN pass; FN/FP fail.
         ok = {Verdict.TP, Verdict.TN}
@@ -45,4 +46,5 @@ class CompositeOracle(Oracle):
             a.expected,
             a.actual_outcome,
             detail=f"block={a.verdict.value} leak={b.verdict.value}",
+            leakage_verdict=b.leakage_verdict,
         )

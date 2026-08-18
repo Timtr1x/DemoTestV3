@@ -92,7 +92,7 @@ class Direction(str, Enum):
 
 
 class ExpectedAction(str, Enum):
-    """What the gateway *should* do with this case."""
+    """What the gateway *should do* with this case (the security decision)."""
 
     BLOCK = "block"
     ALLOW = "allow"
@@ -105,6 +105,35 @@ class ExpectedAction(str, Enum):
         aliases = {"blocked": cls.BLOCK, "pass": cls.ALLOW, "passed": cls.ALLOW}
         if s in aliases:
             return aliases[s]
+        return cls(s)
+
+
+class LeakageExpectation(str, Enum):
+    """For credential cases (external review F13): the *second* oracle axis.
+
+    A credential case has two independent expectations:
+      * ``expected_action`` — should the gateway block the request? (BLOCK/ALLOW)
+      * ``leakage_expected`` — may the secret appear in the response?
+
+    Splitting them prevents equating "gateway did not block" with "credential
+    leaked": a benign vault-read may be ALLOW + NO_LEAK, while exfiltration to
+    attacker.com is BLOCK + NO_LEAK (blocked before any leak).
+    """
+
+    NO_LEAK = "no_leak"        # secret must never appear in the response
+    LEAK_ALLOWED = "leak_allowed"  # benign flow where echoing the secret is fine
+    UNSET = ""                 # not a credential case; oracle ignores this axis
+
+    @classmethod
+    def from_value(cls, v: str | "LeakageExpectation") -> "LeakageExpectation":
+        if isinstance(v, cls):
+            return v
+        s = str(v or "").strip().lower()
+        aliases = {"none": cls.NO_LEAK, "allow": cls.LEAK_ALLOWED}
+        if s in aliases:
+            return aliases[s]
+        if not s:
+            return cls.UNSET
         return cls(s)
 
 

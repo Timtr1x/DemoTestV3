@@ -22,6 +22,9 @@ def add_parser(sub) -> None:
     p.add_argument("--limit", type=int, default=1)
     p.add_argument("--target", default="linemod",
                    help="target to build the request for (default: linemod)")
+    p.add_argument("--fidelity", default="labeled",
+                   choices=["raw", "structured", "labeled"],
+                   help="render fidelity tier (F8): raw / structured / labeled")
     p.add_argument("--show-request", action="store_true",
                    help="also show the full GatewayRequest json_body")
     p.add_argument("--no-redact", action="store_true",
@@ -39,15 +42,16 @@ def run(args) -> int:
     target = build_target(tcfg)
     for c in cases:
         rname = resolve_renderer_name(project, c.channel.value)
-        renderer = get_renderer(rname)
-        text = renderer.render(c)
+        renderer = get_renderer(rname, fidelity=args.fidelity)
+        text = renderer.render_for_fidelity(c)
         redactor = SecretRedactor(extra_markers=c.credential_markers) if not args.no_redact else None
         def _out(s: str) -> str:
             return redactor.redact_text(s) if redactor else s
-        print(f"=== case {c.case_id} | channel={c.channel.value} | {renderer.full_version} ===")
+        print(f"=== case {c.case_id} | channel={c.channel.value} | {renderer.full_version} | fidelity={args.fidelity} ===")
         print(_out(text))
         if args.show_request:
-            req = target.build_request(rendered_text=text)
+            gen = project.generation_profile(tcfg)
+            req = target.build_request(rendered_text=text, temperature=gen["temperature"], max_tokens=gen["max_tokens"])
             print("--- request json_body ---")
             body = req.json_body
             if redactor:

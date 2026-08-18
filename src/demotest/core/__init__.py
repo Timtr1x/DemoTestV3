@@ -7,6 +7,7 @@ from .enums import (
     Channel,
     Direction,
     ExpectedAction,
+    LeakageExpectation,
     Operation,
     Outcome,
 )
@@ -19,6 +20,7 @@ from .exceptions import (
 )
 from .ids import (
     config_hash,
+    compute_case_fingerprint,
     compute_case_id,
     compute_run_id,
     manifest_hash,
@@ -37,6 +39,7 @@ __all__ = [
     "Channel",
     "Direction",
     "ExpectedAction",
+    "LeakageExpectation",
     "Operation",
     "Outcome",
     "CLEAR_OUTCOMES",
@@ -47,6 +50,7 @@ __all__ = [
     "RendererError",
     "TargetError",
     "compute_case_id",
+    "compute_case_fingerprint",
     "compute_run_id",
     "request_hash",
     "config_hash",

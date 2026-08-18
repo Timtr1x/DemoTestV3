@@ -23,10 +23,12 @@ def registered_renderers() -> dict[str, Type[CaseRenderer]]:
     return dict(_RENDERERS)
 
 
-def get_renderer(name: str, **kwargs) -> CaseRenderer:
+def get_renderer(name: str, fidelity: str | None = None, **kwargs) -> CaseRenderer:
     registry = registered_renderers()
     if name not in registry:
         raise ConfigError(
             f"unknown renderer {name!r}; known: {sorted(registry)}"
         )
+    if fidelity is not None:
+        kwargs["fidelity"] = fidelity
     return registry[name](**kwargs)

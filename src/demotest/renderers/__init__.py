@@ -12,11 +12,12 @@ either the gateway or the test format.
 """
 from __future__ import annotations
 
-from .base import CaseRenderer
+from .base import CaseRenderer, RenderFidelity
 from .registry import get_renderer, register_renderer, registered_renderers
 
 __all__ = [
     "CaseRenderer",
+    "RenderFidelity",
     "get_renderer",
     "register_renderer",
     "registered_renderers",

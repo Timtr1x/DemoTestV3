@@ -1,9 +1,14 @@
 """Deterministic, content-addressed identifiers.
 
-Design rules (refactor plan §20, §22):
+Design rules (refactor plan §20, §22, external review F9):
   * ``case_id`` is a stable hash of the *case identity* only — never of the
     renderer / target / model version. Same case → same id forever, so results
-    stay comparable across renderer revisions.
+    stay comparable across renderer revisions. It is also content-independent
+    by design: the same ``source_id`` with rewritten content keeps the id.
+  * ``case_fingerprint`` hashes the *actual payload* (content + context). It is
+    the resume guard: a clear outcome is reused only when ``case_id`` AND
+    ``case_fingerprint`` both match, so a dataset that silently rewrites a row
+    under an unchanged ``source_id`` cannot hide behind a stale result.
   * ``run_id`` aggregates run-time provenance (target, config, renderer, manifest).
   * Renderer / target / model versions live in run metadata, not in the id.
 """
@@ -41,6 +46,36 @@ def compute_case_id(
         ]
     )
     return f"case-{_stable_sha(raw)}"
+
+
+def compute_case_fingerprint(payload: Mapping[str, Any]) -> str:
+    """Content-addressed fingerprint of a SecurityCase's mutable payload.
+
+    Complements ``case_id`` (which is identity-only and content-independent by
+    design, plan §20): ``case_fingerprint`` hashes the *actual case content* so
+    resume can detect that a dataset re-issued a row under the same ``source_id``
+    with different content (external review F9). Without this, a stale clear
+    outcome would silently mask the new, never-tested payload.
+
+    The identity fields that ``case_id`` already covers (``dataset_id``,
+    ``source_id``, ``channel``, ``operation``, ``threat_id``) are excluded so a
+    pure identity re-derivation does not churn the fingerprint; everything that
+    is actual case *data* (content, tool args, mcp schema, memory target,
+    credential markers, expected action, authorization context, leakage
+    expectation, presentation style, labels, metadata) is included.
+    """
+    excluded = {
+        "case_id",
+        "dataset_id",
+        "source_id",
+        "channel",
+        "operation",
+        "threat_id",
+        "project_id",
+    }
+    canonical = {k: v for k, v in dict(payload).items() if k not in excluded}
+    blob = json.dumps(canonical, sort_keys=True, ensure_ascii=False, default=str)
+    return f"fp-{_stable_sha(blob)}"
 
 
 def compute_run_id(

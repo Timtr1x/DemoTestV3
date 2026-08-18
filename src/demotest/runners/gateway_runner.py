@@ -65,15 +65,29 @@ class GatewayRunner(Runner):
 
     # ------------------------------------------------------------------ run
     def run(self, cases: list[SecurityCase], *, dry_run: bool = False) -> RunResult:
-        """Run cases serially; append-only; skip clear (resume)."""
+        """Run cases serially; append-only; skip clear (resume).
+
+        Resume guard (F9): a case is skipped only when it has a clear outcome
+        AND its ``case_fingerprint`` matches the stored one. A row the dataset
+        silently rewrote under an unchanged ``source_id`` has the same case_id
+        but a different fingerprint, so it is re-tested instead of masked by a
+        stale result.
+        """
         rr = RunResult(total=len(cases))
-        clear_ids = self.store.clear_case_ids()
+        clear_keys = self.store.clear_case_keys() if not dry_run else set()
+        clear_ids = self.store.clear_case_ids() if not dry_run else set()
 
         for case in cases:
             rr.total += 0  # already counted
-            if case.case_id in clear_ids:
-                rr.skipped += 1
-                continue
+            if not dry_run:
+                fp = case.fingerprint()
+                if f"{case.case_id}|{fp}" in clear_keys:
+                    rr.skipped += 1
+                    continue
+                # Legacy rows without a fingerprint fall back to case_id-only skip.
+                if not fp and case.case_id in clear_ids:
+                    rr.skipped += 1
+                    continue
 
             result = self._run_one(case, dry_run=dry_run)
             if result is not None:
@@ -114,13 +128,17 @@ class GatewayRunner(Runner):
 
     # ------------------------------------------------------------------ one
     def _run_one(self, case: SecurityCase, *, dry_run: bool) -> CaseResult | None:
-        rendered_text = self.renderer.render(case)
+        rendered_text = self.renderer.render_for_fidelity(case)
         request = self.target.build_request(
             rendered_text=rendered_text,
             temperature=self.temperature,
             max_tokens=self.max_tokens,
         )
         req_hash = request.request_hash()
+        # F9: content fingerprint so resume can tell a rewritten row from a
+        # genuinely identical one.
+        case_fingerprint = case.fingerprint()
+        dataset_version = str((case.metadata or {}).get("dataset_version") or "")
 
         if dry_run:
             # Build a placeholder result for inspection; not persisted.
@@ -136,9 +154,13 @@ class GatewayRunner(Runner):
                 request_hash=req_hash,
                 http_status=-1,
                 outcome="dry_run",
+                case_fingerprint=case_fingerprint,
+                dataset_version=dataset_version,
                 renderer_name=self.renderer.renderer_name,
                 renderer_version=self.renderer.renderer_version,
+                render_fidelity=self.renderer.fidelity_tag,
                 verdict=ev.verdict.value,
+                leakage_verdict=ev.leakage_verdict.value,
                 response_text="",
                 metadata={"rendered_text": rendered_text},
             )
@@ -170,6 +192,8 @@ class GatewayRunner(Runner):
             request_hash=req_hash,
             http_status=obs.http_status,
             outcome=obs.outcome.value,
+            case_fingerprint=case_fingerprint,
+            dataset_version=dataset_version,
             scanner=obs.scanner,
             policy=obs.policy,
             score=obs.score,
@@ -178,7 +202,9 @@ class GatewayRunner(Runner):
             latency_ms=obs.latency_ms,
             renderer_name=self.renderer.renderer_name,
             renderer_version=self.renderer.renderer_version,
+            render_fidelity=self.renderer.fidelity_tag,
             verdict=ev.verdict.value,
+            leakage_verdict=ev.leakage_verdict.value,
             response_text=response_text,
             timestamp=_now_iso(),
             metadata={

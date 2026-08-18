@@ -56,6 +56,29 @@ def clear_outcome_index(rows: Iterable[dict[str, Any]]) -> dict[str, str]:
     return clear
 
 
+def clear_fingerprint_index(rows: Iterable[dict[str, Any]]) -> set[str]:
+    """Set of ``case_id|case_fingerprint`` for latest clear outcomes (F9).
+
+    Resume reuses a clear outcome ONLY when both case_id AND case_fingerprint
+    match, so a dataset that silently rewrites a row under an unchanged
+    source_id cannot hide behind a stale result.
+    """
+    latest = latest_outcomes(rows)
+    clear_vals = {o.value for o in CLEAR_OUTCOMES}
+    out: set[str] = set()
+    for cid, rec in latest.items():
+        oc = rec.get("outcome") or ""
+        if oc not in clear_vals:
+            continue
+        fp = str(rec.get("case_fingerprint") or "")
+        # Only fingerprint-bearing rows participate in the strict guard; legacy
+        # rows without a fingerprint fall back to case_id-only skip via the
+        # clear_case_ids path, preserving V2/V3 back-compat.
+        if fp:
+            out.add(f"{cid}|{fp}")
+    return out
+
+
 class ResultStore:
     """Append-only jsonl store with fsync + resume support.
 
@@ -106,6 +129,10 @@ class ResultStore:
 
     def clear_case_ids(self) -> set[str]:
         return set(clear_outcome_index(self.load()).keys())
+
+    def clear_case_keys(self) -> set[str]:
+        """Set of ``case_id|case_fingerprint`` for strict resume (F9)."""
+        return clear_fingerprint_index(self.load())
 
     def cooldown_case_ids(self) -> set[str]:
         """case_ids whose latest outcome is upstream_cooldown (need retest)."""

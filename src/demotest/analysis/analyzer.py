@@ -7,6 +7,7 @@ from typing import Any, Sequence
 
 from ..core.models import SecurityCase
 from ..metrics import Metrics, canary_leakage, compute_metrics
+from ..metrics.common import safe_div
 from ..storage.results import ResultStore
 
 
@@ -39,9 +40,15 @@ class AnalysisReport:
             "by_scanner": m.by_scanner,
             "by_style": m.by_style,
             "by_operation": m.by_operation,
+            "by_fidelity": m.by_fidelity,
             "score_distribution": m.score_distribution,
             "scanner_counts": m.scanner_counts,
             "leakage": self.leakage,
+            # F13: decision-correctness and leakage reported separately.
+            "gateway_decision_correctness": safe_div(m.tp + m.tn, m.tp + m.tn + m.fp + m.fn)
+            if (m.tp + m.tn + m.fp + m.fn) else None,
+            "credential_leakage_rate": m.leakage_rate,
+            "leakage_n_judged": m.leakage_n_judged,
             "pass_fail": self.pass_fail,
             "manifest_name": self.manifest_name,
         }

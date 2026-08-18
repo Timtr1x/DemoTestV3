@@ -18,10 +18,11 @@ from .enums import (
     Channel,
     Direction,
     ExpectedAction,
+    LeakageExpectation,
     Operation,
 )
 from .exceptions import ValidationError
-from .ids import compute_case_id
+from .ids import compute_case_id, compute_case_fingerprint
 
 # Channels whose content is inherently outbound (leaving the agent / gateway).
 _OUTBOUND_CHANNELS = frozenset(
@@ -66,6 +67,17 @@ class SecurityCase:
 
     # --- credential context ---
     credential_markers: list[str] = field(default_factory=list)
+    # F13: second oracle axis for credential cases — may the secret leak?
+    leakage_expected: LeakageExpectation = LeakageExpectation.UNSET
+
+    # --- authorization context (F12) ---
+    # Optional structured privilege info so P2 can test whether the gateway
+    # catches an off-scope / escalated tool call, instead of reducing AuthBench
+    # to dangerous-tool keyword detection. NOT full IAM: the gateway only sees
+    # these as text; the test exercises "given an obvious over-privileged call,
+    # does the gateway flag it?". Keys: subject, role, granted_permissions,
+    # task_scope, resource, requested_action.
+    authorization_context: dict[str, Any] = field(default_factory=dict)
 
     # --- presentation / provenance ---
     presentation_style: str = ""  # explicit | structured | stealth | natural
@@ -83,6 +95,11 @@ class SecurityCase:
             self, "expected_action", ExpectedAction.from_value(self.expected_action)
         )
         object.__setattr__(self, "direction", Direction.from_value(self.direction))
+        object.__setattr__(
+            self,
+            "leakage_expected",
+            LeakageExpectation.from_value(self.leakage_expected),
+        )
 
         if not self.case_id:
             object.__setattr__(
@@ -121,6 +138,15 @@ class SecurityCase:
     def is_benign(self) -> bool:
         return self.expected_action == ExpectedAction.ALLOW
 
+    def fingerprint(self) -> str:
+        """Content-addressed fingerprint of this case's mutable payload (F9).
+
+        Distinct from ``case_id`` (which is identity-only). Two cases with the
+        same ``source_id`` but rewritten content share ``case_id`` but differ in
+        fingerprint — the resume guard uses this to force a retest.
+        """
+        return compute_case_fingerprint(self.to_dict())
+
     def redacted_view(self) -> dict[str, Any]:
         """A log-safe dict (no credential markers expanded)."""
         d = self.to_dict()
@@ -154,6 +180,8 @@ class SecurityCase:
             "memory_target": self.memory_target,
             "memory_operation": self.memory_operation,
             "credential_markers": list(self.credential_markers or []),
+            "leakage_expected": self.leakage_expected.value,
+            "authorization_context": dict(self.authorization_context or {}),
             "presentation_style": self.presentation_style,
             "labels": dict(self.labels or {}),
             "metadata": dict(self.metadata or {}),
@@ -186,6 +214,8 @@ class SecurityCase:
             memory_target=str(d.get("memory_target") or ""),
             memory_operation=str(d.get("memory_operation") or ""),
             credential_markers=list(d.get("credential_markers") or []),
+            leakage_expected=LeakageExpectation.from_value(d.get("leakage_expected") or ""),
+            authorization_context=dict(d.get("authorization_context") or {}),
             presentation_style=str(d.get("presentation_style") or ""),
             labels=dict(d.get("labels") or {}),
             metadata=dict(d.get("metadata") or {}),

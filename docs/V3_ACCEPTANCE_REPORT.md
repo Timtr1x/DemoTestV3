@@ -2,8 +2,8 @@
 
 > **版本**: V3.0.0  
 > **日期**: 2026-08-19  
-> **基准**: 重构计划 §0-§53 + 外部审查意见 F1-F7  
-> **结论**: ✅ §51 全部验收条件满足，可进入 Dataset Integration 阶段
+> **基准**: 重构计划 §0-§53 + 外部审查意见 F1-F7（第一轮）+ F8-F13（第二轮）+ 文档修正  
+> **结论**: ✅ §51 全部验收条件满足；F8-F13 阻断级问题已修复，可进入 Dataset Integration 阶段
 
 ---
 
@@ -106,7 +106,16 @@ DemoTest V3/
 └── pyproject.toml             # V3 包定义
 ```
 
-**代码规模**: V3 源码 4015 行，测试 1856 行，共 62 个源文件 + 17 个测试文件。
+**代码规模**: V3 源码 4015 行，测试 1856 行。文件统计口径说明（外部审查文档修正 2）：
+
+| 口径 | 计数 | 说明 |
+|---|---|---|
+| V3 源文件 (`src/demotest/**/*.py`) | 62 | 含 `__init__.py` 等包文件 |
+| V3 测试文件 (`tests/v3/**/*.py`) | 18 | unit + contract + integration + completion + conftest |
+| V2 测试文件 (`tests/test_*.py`) | 6 | 根目录 V2 测试 |
+| **V3+V2 测试合计** | **24** | 前文 "17 个测试文件" 是早期口径（重构过程中统计），最终为 18；V2 另有 6 |
+
+> 前后不一致已修正：§6.1 的 "V3 14 files" 不含 conftest/`__init__`/新增 F8-F13 测试；本表为最终口径。
 
 ---
 
@@ -156,7 +165,7 @@ DemoTest V3/
 设计约束：
 - wrapper 永远固定，不含攻击内容
 - payload 只来自 case 字段
-- 同一 case + 同一 renderer → 字节级一致的输出
+- 同一 case + 同一 renderer → 字段级完全一致的输出（canonicalized semantic equivalence）
 - channel 不匹配时抛 `RendererError`
 
 ### 3.4 TargetAdapter（§9-11）
@@ -312,7 +321,7 @@ score_distribution: min / p10 / p25 / p50 / p75 / p90 / max
 |---|---|---|
 | API Key 不落日志 | ✅ | `mask_api_key` + `request_hash` 排除 Authorization 值；合约测试断言 |
 | TEST_SECRET 自动脱敏 | ✅ | ResultStore.append 写盘前 redact；端到端测试断言 canary 不在磁盘 |
-| Exception 不泄密 | ✅ | SecretRedactor.redact_text 可处理异常消息；测试验证 |
+| Exception 不泄密 | ✅ | CLI `main()` 顶层 try/except 对所有未捕获异常经 `SecretRedactor.redact_text` 脱敏后再写 stderr（外部审查文档修正 3）；E2E 测试 `test_e2e_cli_exception_redacted_to_stderr` 注入含 `TEST_SECRET_E2E_99` 的异常，断言 stderr 不含该 marker 且含 `<REDACTED>` |
 | Request dump 不泄密 | ✅ | render --show-request 打印前 redact；测试断言 |
 
 ### 5.6 CLI
@@ -331,9 +340,9 @@ score_distribution: min / p10 / p25 / p50 / p75 / p90 / max
 
 | 条目 | 状态 | 证据 |
 |---|---|---|
-| V2 固定样本经 LegacyAdapter 后结果不变 | ✅ | 回归测试：spear_explicit_30 逐 case 比对 V2/V3 请求体字节级一致 + 分类器等价 |
-| 原数据集目录完全未改变 | ✅ | `git log` 确认 cache/datasets/ 无 V3 提交 |
-| 原 manifest 完全未改变 | ✅ | `git log` 确认 cache/sample_manifests/ 无 V3 提交；V2 核心文件只在初始提交 |
+| V2 固定样本经 LegacyAdapter 后结果不变 | ✅ | 回归测试：spear_explicit_30 逐 case 比对 V2/V3 请求体字段级完全一致（除 `temperature` `0.0` vs `0` 的数值序列化差异做归一化，即 canonicalized semantic equivalence）+ 分类器等价 |
+| 原数据集目录完全未改变 | ✅ | `git log` 确认 cache/datasets/ 无 V3 提交；`git diff --exit-code -- cache/datasets` 干净（exit 0） |
+| 原 manifest 完全未改变 | ✅ | `git log` 确认 cache/sample_manifests/ 无 V3 提交（最后一次触碰在 V3 重构前的 `23466f9`）；已提交树哈希 `cache/sample_manifests` = `aa78f9d`。`git diff --exit-code` 在**工作区**对 9 个 manifest 的 `created_at` 字段有差异（V2 遗留的工作区改动，非 V3 引入——见初始 git status 的 `M cache/sample_manifests/*.json`，均为时间戳重写、无样本内容变化）；V3 代码（`LegacyV2Adapter`）只读不写，已由 inspect 测试断言。**结论：V3 重构未修改 manifest；工作区时间戳差异属 V2 遗留，应单独清理。** |
 
 ---
 
@@ -343,13 +352,13 @@ score_distribution: min / p10 / p25 / p50 / p75 / p90 / max
 
 | 类别 | 文件数 | 测试数 | 说明 |
 |---|---|---|---|
-| unit | 9 | 82 | 核心模型/渲染器/解析器/Oracle/Runner/Adapter/Redactor/Analyzer/Legacy |
+| unit | 10 | 109 | 核心模型/渲染器/解析器/Oracle/Runner/Adapter/Redactor/Analyzer/Legacy + F8-F13 验证（27 项） |
 | contract | 3 | 12 | FakeLineModServer 合约 + V2/V3 回归 |
-| integration | 1 | 11 | CLI 端到端（validate/render/run/compare） |
-| completion | 1 | 18 | §51 验收门 |
-| **V3 合计** | **14** | **123** | |
-| V2 | 6 | 29 | 原 V2 测试全部仍通过 |
-| **总计** | **20** | **152** | **全部通过** |
+| integration | 1 | 14 | CLI 端到端（validate/render/run/compare + P4 脱敏） |
+| completion | 1 | 19 | §51 验收门（含 F1 端到端脱敏 + 文档修正 3 的 E2E 异常脱敏） |
+| **V3 合计** | **15** | **143** | |
+| V2 | 6 | 37 | 原 V2 测试全部仍通过 |
+| **总计** | **21** | **180** | **全部通过** |
 
 ### 6.2 关键测试说明
 
@@ -380,6 +389,21 @@ score_distribution: min / p10 / p25 / p50 / p75 / p90 / max
 | F5 | 次要 | P4 只测检测不测脱敏 | 补 3 条 CLI 测试断言输出不含 canary | `512f675` |
 | F6 | 次要 | No-Failover 默认当 true（偏宽松） | validate 改为显式要求 | `512f675` |
 | F7 | 小瑕疵 | score 重复键 / env.example / 空结果防护 / 尾逗号 / render --target | 全部清理 | `512f675` |
+
+### 7.2 第二轮外部审查（F8-F13 + 文档修正）
+
+| 编号 | 严重度 | 问题 | 修复 |
+|---|---|---|---|
+| F8 | **阻断** | Renderer 的安全标签（`[UNTRUSTED_EXTERNAL_CONTENT]` 等）可能告诉网关"这是不可信内容"，抬高 TPR | 新增 `RenderFidelity` 三档（RAW/STRUCTURED/LABELED）；RAW 为头条分数（无安全标签），LABELED 仅作增强实验；CaseResult 记录 `render_fidelity`；`compute_metrics` 加 `by_fidelity` breakdown；CLI `run`/`render` 加 `--fidelity` |
+| F9 | **阻断** | case_id 内容无关 + resume 跳过 → 数据集静默改写行后被旧结果掩盖 | 新增 `case_fingerprint`（内容哈希，`compute_case_fingerprint`）；`CaseResult` 存 `case_fingerprint` + `dataset_version`；resume 仅当 `case_id` AND `case_fingerprint` 都匹配才跳过；测试验证"同 source_id 改内容 → 强制重测" |
+| F10 | **阻断** | P3 无法真正测试 DCI D_real（网关只看 description，看不到实现） | P3 正式更名 "MCP Definition Content Guard"；caveats + mapping 文档明确"不能测 Description-Code Inconsistency"；DCI 需未来 `MCPIntegrityCase`（含 declared/observed side effects）才能接入 |
+| F11 | 高 | P4 Credential 仍用 `max_tokens=8`，泄露被 token 截断而非被拦截 | `ProjectConfig.generation` + `TargetConfig.generation_profile()`；P4 配 `max_tokens=128`；V2 回归保持 8（legacy 路径）；`build_runner` 接 project>target>default 优先级 |
+| F12 | 高 | P2 无法表达 AuthBench 的 User/Permission/Resource/Action | `SecurityCase.authorization_context`（subject/role/granted_permissions/task_scope/resource/requested_action）；ToolCallRenderer 在 STRUCTURED/LABELED 渲染；caveats 注明"非完整 IAM，网关只见文本" |
+| F13 | 高 | Credential 只有 expected_action=BLOCK/ALLOW，把"未拦截"等同于"泄露" | `LeakageExpectation` 枚举（NO_LEAK/LEAK_ALLOWED/UNSET）；CanaryOracle 产出双轴 verdict（decision + leakage_verdict）；Metrics 加 `leakage_rate`/`leakage_n_judged`；报告分 "Gateway Decision Correctness" 与 "Credential Leakage Rate" |
+| 文档 1 | 小 | "字节级一致"不准确（做了归一化） | 改为 "canonicalized semantic equivalence / 字段级完全一致（除数值序列化差异）" |
+| 文档 2 | 小 | 文件数前后不一致（62+17 vs 14+6=20） | 补口径表：V3 源 62 / V3 测试 18（含 conftest/init/F8-F13 新增）/ V2 测试 6 |
+| 文档 3 | 小 | "Exception 不泄密"证据不够强（只证 redactor 能力，未证 runtime 路径） | CLI `main()` 顶层 try/except 经 SecretRedactor 脱敏后写 stderr；E2E 测试注入含 canary 异常断言 stderr 不含 |
+| 文档 4 | 小 | git log 不能完全证明目录没被改（工作区修改不进历史） | 补 `git diff --exit-code` + 已提交树哈希；如实记录 9 个 manifest 工作区 `created_at` 差异为 V2 遗留（非 V3 引入） |
 
 ---
 
@@ -412,7 +436,7 @@ Sample.expected      → SecurityCase.expected_action (blocked→BLOCK, passed�
 Sample.subset        → SecurityCase.presentation_style (stealth/easy 等)
 ```
 
-这样 V3 的 `UserPromptRenderer`（无 wrapper，content 原样输出）+ `LineModTargetAdapter` 复现 V2 的请求字节级一致。
+这样 V3 的 `UserPromptRenderer`（无 wrapper，content 原样输出）+ `LineModTargetAdapter` 复现 V2 的请求（除 `temperature` `0.0` vs `0` 数值序列化差异外字段级完全一致 — canonicalized semantic equivalence，非严格 byte-identical）。
 
 ---
 

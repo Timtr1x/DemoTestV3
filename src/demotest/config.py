@@ -37,6 +37,19 @@ class TargetConfig:
     request: dict[str, Any] = field(default_factory=dict)
     classification: dict[str, Any] = field(default_factory=dict)
 
+    def generation_profile(self) -> dict[str, Any]:
+        """The request generation params (temperature / max_tokens) for this target.
+
+        F11: V2 regression keeps ``max_tokens=8``; P4 credential/outbound cases
+        need a larger budget (e.g. 128) so a leak is not silently truncated by
+        the token cap rather than blocked by the gateway.
+        """
+        req = self.request or {}
+        return {
+            "temperature": float(req.get("temperature", 0.0)),
+            "max_tokens": int(req.get("max_tokens", 8)),
+        }
+
 
 @dataclass
 class ProjectConfig:
@@ -49,6 +62,20 @@ class ProjectConfig:
     thresholds: dict[str, Any] = field(default_factory=dict)
     caveats: list[str] = field(default_factory=list)
     manifests: list[dict[str, Any]] = field(default_factory=list)
+    # F11: per-project generation override (wins over target default).
+    generation: dict[str, Any] = field(default_factory=dict)
+
+    def generation_profile(self, target: TargetConfig | None = None) -> dict[str, Any]:
+        base = target.generation_profile() if target else {
+            "temperature": 0.0, "max_tokens": 8,
+        }
+        if self.generation:
+            g = self.generation
+            if "temperature" in g:
+                base["temperature"] = float(g["temperature"])
+            if "max_tokens" in g:
+                base["max_tokens"] = int(g["max_tokens"])
+        return base
 
 
 def load_targets(path: Path | None = None) -> dict[str, TargetConfig]:
@@ -88,6 +115,7 @@ def load_projects(path: Path | None = None) -> dict[str, ProjectConfig]:
             thresholds=dict(cfg.get("thresholds") or {}),
             caveats=list(cfg.get("caveats") or []),
             manifests=list(cfg.get("manifests") or []),
+            generation=dict(cfg.get("generation") or {}),
         )
     return projects
 

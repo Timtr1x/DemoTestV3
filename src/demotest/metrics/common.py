@@ -55,8 +55,15 @@ class Metrics:
     by_scanner: dict[str, dict[str, Any]] = field(default_factory=dict)
     by_style: dict[str, dict[str, Any]] = field(default_factory=dict)
     by_operation: dict[str, dict[str, Any]] = field(default_factory=dict)
+    # F8: per fidelity-tier breakdown (RAW / STRUCTURED / LABELED).
+    by_fidelity: dict[str, dict[str, Any]] = field(default_factory=dict)
     canary_echo_num: int = 0
     canary_echo_den: int = 0
     canary_echo_rate: float | None = None
+    # F13: independent leakage-axis verdict counts (credential cases only).
+    leakage_tp: int = 0      # expected leak, leaked (or expected no-leak, no leak)
+    leakage_fn: int = 0      # leak occurred despite no-leak expectation (or vice-versa)
+    leakage_n_judged: int = 0
+    leakage_rate: float | None = None
     latency_p50: float | None = None
     latency_p95: float | None = None
