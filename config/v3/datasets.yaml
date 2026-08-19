@@ -1,62 +1,87 @@
-# V3 dataset registry (Phase 1, guide §31 / §4).
-#
-# A *dataset* is a data source. A *project* is a security question (P1-P5).
-# A dataset feeds one or more projects; a project draws from one or more
-# datasets. This file pins each source to an immutable revision so a frozen
-# benchmark is reproducible. Raw + normalized snapshots live under
-# cache/datasets_v3/ (gitignored); source locks + manifests are committed.
-#
-# NEVER use revision: main / latest. Pin a full commit SHA.
-
 datasets:
-
   llmail:
     adapter: llmail
-    adapter_version: "1.1.0"
+    adapter_version: 1.1.0
     enabled: true
     quality_tier: A
-
     source:
       type: huggingface_dataset
       repo_id: microsoft/llmail-inject-challenge
-      # Pinned 2026-08-19 from the official Hub. Re-pinning = new dataset revision
-      # (bump adapter/source lock, never overwrite a frozen manifest).
-      revision: "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
+      revision: 1063bdf01ec8762b812d5e06ee768a06faa5a6f7
       license: MIT
       allow_patterns:
-        - README.md
-        - data/labelled_unique_submissions_phase1.json
-        - data/labelled_unique_submissions_phase2.json
-        # json* tolerates the historical .jsonl variant the Hub once published
-        - data/emails_for_fp_tests.json*
-        - data/scenarios.json
-        - data/levels_descriptions.json
-        - data/objectives_descriptions.json
-        - data/system_prompt.json
-
+      - README.md
+      - data/labelled_unique_submissions_phase1.json
+      - data/labelled_unique_submissions_phase2.json
+      - data/emails_for_fp_tests.json*
+      - data/scenarios.json
+      - data/levels_descriptions.json
+      - data/objectives_descriptions.json
+      - data/system_prompt.json
     raw_dir: cache/datasets_v3/raw/llmail
     normalized_dir: cache/datasets_v3/normalized/llmail
-
   agentdojo:
     adapter: agentdojo
-    adapter_version: "1.1.0"
+    adapter_version: 1.1.0
     enabled: true
     quality_tier: B
-
     source:
       type: github
       repository: ethz-spylab/agentdojo
-      # Pinned 2026-08-19 (== current main HEAD, matches the guide's verified
-      # revision). Ground truth lives in the suite/task code at this commit.
-      revision: "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+      revision: 089ed468cf3ed0322acc66b0211f26d9d90dbf60
       benchmark_version: v1
       license: MIT
-      # Files the snapshot hash covers (guide §28): adapter reads ground truth
-      # from these, so a local hand-edit is detectable.
       hash_globs:
-        - src/agentdojo/default_suites/**
-        - src/agentdojo/task_suite/**
-        - src/agentdojo/base_tasks.py
-
+      - src/agentdojo/default_suites/**
+      - src/agentdojo/task_suite/**
+      - src/agentdojo/base_tasks.py
     raw_dir: cache/datasets_v3/raw/agentdojo
     normalized_dir: cache/datasets_v3/normalized/agentdojo
+  skillleakbench:
+    adapter: skillleakbench
+    adapter_version: 1.0.0
+    enabled: true
+    quality_tier: A
+    source:
+      type: huggingface_dataset
+      repo_id: AgentSkillPrivacy/SkillLeakBench
+      revision: 8264436a0483e2fc1aed84b80e5fde73ea52c3ca
+      license: MIT
+      allow_patterns:
+      - '*.csv'
+      - README.md
+      hash_globs:
+      - '*.csv'
+      - README.md
+    raw_dir: cache/datasets_v3/raw/skillleakbench_catalog
+    normalized_dir: cache/datasets_v3/normalized/skillleakbench
+  skillleakbench_pipeline:
+    adapter: skillleakbench_pipeline
+    adapter_version: 1.0.0
+    enabled: true
+    source:
+      type: github
+      repository: AgentSkillsPrivacy/SkillLeakBench
+      revision: 682521a54f65045725e1e01076db449e402a78f9
+      license: MIT
+      hash_globs:
+      - code/**
+      - data/**
+      - config.yaml
+      - requirements.txt
+      - REPRODUCE.md
+      - README.md
+    raw_dir: cache/datasets_v3/raw/skillleakbench_pipeline
+    normalized_dir: cache/datasets_v3/normalized/skillleakbench_pipeline
+  credential_traces:
+    adapter: credential_traces
+    adapter_version: 1.0.0
+    enabled: true
+    quality_tier: B
+    source:
+      type: derived
+      repo_id: credential_traces
+      revision: 8264436a0483e2fc1aed84b80e5fde73ea52c3ca
+      license: MIT
+    raw_dir: cache/datasets_v3/raw/credential_traces
+    normalized_dir: cache/datasets_v3/normalized/credential_traces

@@ -1,0 +1,7 @@
+# SkillLeakBench pipeline repo (Phase 2, detection pipeline + sandbox).
+# Pinned to git commit 682521a... Includes Docker sandbox T3 self-test.
+
+dataset_id: skillleakbench_pipeline
+role: pipeline_source
+quality_tier: A
+no_security_case_output: true

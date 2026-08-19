@@ -1,0 +1,26 @@
+# SkillLeakBench source catalog (Phase 2, guide §5 / §35).
+#
+# This dataset is a *source catalog* — it records the official taxonomy and
+# candidates. It does NOT directly produce SecurityCase (guide §35). Its files
+# are used for weighting, candidate priority, and provenance.
+
+dataset_id: skillleakbench
+
+role: source_catalog
+quality_tier: A
+no_security_case_output: true
+
+files:
+  catalog:
+    - skills_dataset.csv
+    - issues.csv
+    - remediation_summary.csv
+    - popularity_hardcoded_repos.csv
+
+projection:
+  note: no SecurityCase projection — catalog only
+
+metadata:
+  source_dataset: skillleakbench
+  quality_tier: A
+  derivation: original

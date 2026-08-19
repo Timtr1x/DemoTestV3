@@ -1,0 +1,12 @@
+{
+  "acquired_at": "2026-08-19T17:39:00Z",
+  "adapter_name": "skillleakbench_pipeline",
+  "adapter_version": "1.0.0",
+  "dataset_id": "skillleakbench_pipeline",
+  "extra": {},
+  "license": "MIT",
+  "raw_sha256": "b8628eeb833dcef3e011d6041edf57b7a7575fa4e7ca20d0cc90a8116d6297e8",
+  "revision": "682521a54f65045725e1e01076db449e402a78f9",
+  "source_type": "github",
+  "source_uri": "AgentSkillsPrivacy/SkillLeakBench"
+}

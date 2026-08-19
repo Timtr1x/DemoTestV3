@@ -1,18 +1,4 @@
-# V3 benchmark suites (fix round v3.2 — P1 LLMail-only, strata, split-v2).
-#
-# Fix round vs v1:
-#   - P1 is LLMail-only (AgentDojo P1 tool_result removed — environment content,
-#     not attacker payload, leaked goal). P2 remains AgentDojo tool_call.
-#   - Selection is per-stratum with explicit attack/benign quotas and cluster cap.
-#   - Split is case-weighted group-aware (split-v2).
-#   - Manifests are byte-identical: no created_at wall-clock field.
-#   - Old v1 suites are preserved under benchmarks/manifests/*-v1 as superseded.
-#
-# A suite bundles projects into a named benchmark run. Suite identity is fixed
-# once frozen: a new selection = a new suite version, never an in-place overwrite.
-
 suites:
-
   smoke-v2:
     seed: 42
     split: dev
@@ -22,24 +8,48 @@ suites:
         manifest: benchmarks/manifests/smoke-v2/p1.json
         target: 120
         strata:
-          - id: llmail_attack
-            dataset: llmail
-            expected_action: block
-            count: 80
-          - id: llmail_benign
-            dataset: llmail
-            expected_action: allow
-            count: all
+        - id: llmail_attack
+          dataset: llmail
+          expected_action: block
+          count: 80
+        - id: llmail_benign
+          dataset: llmail
+          expected_action: allow
+          count: all
         max_cluster_share: 0.01
       P2_tool_action:
         manifest: benchmarks/manifests/smoke-v2/p2.json
         target: 100
         strata:
-          - id: agentdojo_tool_call
-            dataset: agentdojo
-            channel: tool_call
-            count: 100
-
+        - id: agentdojo_tool_call
+          dataset: agentdojo
+          channel: tool_call
+          count: 100
+      P4_credential_flow:
+        manifest: benchmarks/manifests/smoke-v2/p4.json
+        target: 120
+        strata:
+        - id: cred_stdout_block
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_result
+          count: 40
+        - id: cred_network_block
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_call
+          count: 30
+        - id: cred_authorized_allow
+          dataset: credential_traces
+          expected_action: allow
+          channel: tool_call
+          count: 30
+        - id: cred_redacted_allow
+          dataset: credential_traces
+          expected_action: allow
+          channel: tool_result
+          count: 20
+        max_cluster_share: 0.05
   phase1-standard-v2:
     seed: 42
     split: eval
@@ -49,51 +59,89 @@ suites:
         manifest: benchmarks/manifests/phase1-standard-v2/p1.json
         target: 1674
         strata:
-          - id: llmail_attack
-            dataset: llmail
-            expected_action: block
-            count: 1580
-          - id: llmail_benign
-            dataset: llmail
-            expected_action: allow
-            count: all
+        - id: llmail_attack
+          dataset: llmail
+          expected_action: block
+          count: 1580
+        - id: llmail_benign
+          dataset: llmail
+          expected_action: allow
+          count: all
         max_cluster_share: 0.01
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-standard-v2/p2.json
         target: 540
         strata:
-          - id: agentdojo_tool_call
-            dataset: agentdojo
-            channel: tool_call
-            count: 540
-
+        - id: agentdojo_tool_call
+          dataset: agentdojo
+          channel: tool_call
+          count: 540
+      P4_credential_flow:
+        manifest: benchmarks/manifests/phase1-standard-v2/p4.json
+        target: 660
+        strata:
+        - id: cred_block_stdout
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_result
+          count: 393
+        - id: cred_block_network
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_call
+          count: 73
+        - id: cred_allow
+          dataset: credential_traces
+          expected_action: allow
+          count: all
+        max_cluster_share: 0.05
   phase1-full-v2:
     seed: 42
-    split: [eval, holdout]
+    split:
+    - eval
+    - holdout
     split_version: split-v2
     projects:
       P1_external_instruction:
         manifest: benchmarks/manifests/phase1-full-v2/p1.json
         target: 2683
         strata:
-          - id: llmail_attack
-            dataset: llmail
-            expected_action: block
-            count: 2740
-          - id: llmail_benign
-            dataset: llmail
-            expected_action: allow
-            count: all
+        - id: llmail_attack
+          dataset: llmail
+          expected_action: block
+          count: 2740
+        - id: llmail_benign
+          dataset: llmail
+          expected_action: allow
+          count: all
         max_cluster_share: 0.01
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-full-v2/p2.json
         target: 761
         strata:
-          - id: agentdojo_tool_call
-            dataset: agentdojo
-            channel: tool_call
-            count: 773
-
+        - id: agentdojo_tool_call
+          dataset: agentdojo
+          channel: tool_call
+          count: 773
+      P4_credential_flow:
+        manifest: benchmarks/manifests/phase1-full-v2/p4.json
+        target: 883
+        strata:
+        - id: cred_block_stdout
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_result
+          count: 524
+        - id: cred_block_network
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_call
+          count: 96
+        - id: cred_allow
+          dataset: credential_traces
+          expected_action: allow
+          count: all
+        max_cluster_share: 0.05
   holdout-v2:
     seed: 42
     split: holdout
@@ -103,25 +151,42 @@ suites:
         manifest: benchmarks/manifests/holdout-v2/p1.json
         target: 580
         strata:
-          - id: llmail_attack
-            dataset: llmail
-            expected_action: block
-            count: 500
-          - id: llmail_benign
-            dataset: llmail
-            expected_action: allow
-            count: all
+        - id: llmail_attack
+          dataset: llmail
+          expected_action: block
+          count: 500
+        - id: llmail_benign
+          dataset: llmail
+          expected_action: allow
+          count: all
         max_cluster_share: 0.01
       P2_tool_action:
         manifest: benchmarks/manifests/holdout-v2/p2.json
         target: 150
         strata:
-          - id: agentdojo_tool_call
-            dataset: agentdojo
-            channel: tool_call
-            count: 150
-
-  # --- superseded v1 (preserved, not used for reporting) -------------------
+        - id: agentdojo_tool_call
+          dataset: agentdojo
+          channel: tool_call
+          count: 150
+      P4_credential_flow:
+        manifest: benchmarks/manifests/holdout-v2/p4.json
+        target: 200
+        strata:
+        - id: cred_block_stdout
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_result
+          count: 120
+        - id: cred_block_network
+          dataset: credential_traces
+          expected_action: block
+          channel: tool_call
+          count: 20
+        - id: cred_allow
+          dataset: credential_traces
+          expected_action: allow
+          count: all
+        max_cluster_share: 0.05
   smoke-v1:
     seed: 42
     split: dev
@@ -132,7 +197,6 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/smoke-v1/p2.json
         target: 100
-
   phase1-standard-v1:
     seed: 42
     split: eval
@@ -143,10 +207,11 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-standard-v1/p2.json
         target: 540
-
   phase1-full-v1:
     seed: 42
-    split: [eval, holdout]
+    split:
+    - eval
+    - holdout
     projects:
       P1_external_instruction:
         manifest: benchmarks/manifests/phase1-full-v1/p1.json
@@ -154,7 +219,6 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-full-v1/p2.json
         target: 800
-
   holdout-v1:
     seed: 42
     split: holdout

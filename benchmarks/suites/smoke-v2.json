@@ -17,6 +17,15 @@
         "dev"
       ],
       "target": 100
+    },
+    "P4_credential_flow": {
+      "manifest": "benchmarks/manifests/smoke-v2/p4.json",
+      "manifest_sha256": "sha256:6b912a0f8f39a10dd54a2adc7b700a37a85f777bd7dc713155662041a9d3cadd",
+      "n": 119,
+      "split": [
+        "dev"
+      ],
+      "target": 120
     }
   },
   "seed": 42,
@@ -26,6 +35,12 @@
       "adapter_version": "1.1.0",
       "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+    },
+    "credential_traces": {
+      "adapter": "credential_traces",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "8cb5eedc0b27d7ac028341fb4098f693640fc23da59ecca5203684328313fbd3",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     },
     "llmail": {
       "adapter": "llmail",
@@ -37,7 +52,7 @@
   "split": [
     "dev"
   ],
-  "suite_config_hash": "sha256:ccb31551b1e1036b9f3b30db9275d3551e99e7d1e6fc3140099d8fa381ac75c7",
+  "suite_config_hash": "sha256:837e8fd1f57507626b7fc93c89016d6b7dc99dc275925f018f576865c60db50e",
   "suite_id": "smoke-v2",
-  "total_cases": 220
+  "total_cases": 339
 }

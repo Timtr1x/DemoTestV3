@@ -17,6 +17,15 @@
         "holdout"
       ],
       "target": 150
+    },
+    "P4_credential_flow": {
+      "manifest": "benchmarks/manifests/holdout-v2/p4.json",
+      "manifest_sha256": "sha256:359434f60e1cd2c7ae55eb48d47e400187df672830ae0425431cb76154bf3d3e",
+      "n": 208,
+      "split": [
+        "holdout"
+      ],
+      "target": 200
     }
   },
   "seed": 42,
@@ -26,6 +35,12 @@
       "adapter_version": "1.1.0",
       "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+    },
+    "credential_traces": {
+      "adapter": "credential_traces",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "8cb5eedc0b27d7ac028341fb4098f693640fc23da59ecca5203684328313fbd3",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     },
     "llmail": {
       "adapter": "llmail",
@@ -37,7 +52,7 @@
   "split": [
     "holdout"
   ],
-  "suite_config_hash": "sha256:b18101a120ba81c76bed2c84371f16d4abfc15690a7c4f1c49616919140b55c4",
+  "suite_config_hash": "sha256:4aedb713dc2fa7c70e405c03d718231964f203e096e3df0112743078311e405b",
   "suite_id": "holdout-v2",
-  "total_cases": 676
+  "total_cases": 884
 }

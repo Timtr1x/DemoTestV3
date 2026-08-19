@@ -1,0 +1,1713 @@
+{
+  "cases": [
+    {
+      "case_fingerprint": "fp-3a459b08ac2ba57a",
+      "case_id": "case-00bf40e8ba1b0cca",
+      "dataset_id": "credential_traces",
+      "group_id": "56_playdadev",
+      "source_id": "skillleak:56_playdadev:VUL-006:trace-e182f886a221:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-81a9ab3a8be5f923",
+      "case_id": "case-011d81cede506bb0",
+      "dataset_id": "credential_traces",
+      "group_id": "56_devinism",
+      "source_id": "skillleak:56_devinism:MAL-001:trace-d199ae1860a5:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-25103d6a8e4dc5bd",
+      "case_id": "case-01d7da9cebedc4fe",
+      "dataset_id": "credential_traces",
+      "group_id": "56_purch-agent",
+      "source_id": "skillleak:56_purch-agent:VUL-006:trace-c897c638953f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dc7fd079ed02bb6c",
+      "case_id": "case-0339a4b65256ab6f",
+      "dataset_id": "credential_traces",
+      "group_id": "56_locus",
+      "source_id": "skillleak:56_locus:VUL-010:trace-68ccc8cad97b:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a11ba59e83057700",
+      "case_id": "case-05b3214692e37ad5",
+      "dataset_id": "credential_traces",
+      "group_id": "56_dxdleady",
+      "source_id": "skillleak:56_dxdleady:VUL-011:trace-4c5b4f962bfa:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4bc95028b5288e05",
+      "case_id": "case-062eab2caee977de",
+      "dataset_id": "credential_traces",
+      "group_id": "56_x-trends",
+      "source_id": "skillleak:56_x-trends:MAL-001:trace-468f47e186c3:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-72aa67a5e9cc0a6d",
+      "case_id": "case-06cca722ae81d846",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_npm-proxy",
+      "source_id": "skillleak:5392_npm-proxy:VUL-006:trace-39086d940558:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-07a8f1b171e89352",
+      "case_id": "case-0a4765a61254e13d",
+      "dataset_id": "credential_traces",
+      "group_id": "56_purch-agent",
+      "source_id": "skillleak:56_purch-agent:benign-authorized:trace-benign-0b25ea7d56:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fa294b7e01903729",
+      "case_id": "case-0d8d02b35dec28a5",
+      "dataset_id": "credential_traces",
+      "group_id": "56_custom-smtp-sender",
+      "source_id": "skillleak:56_custom-smtp-sender:VUL-011:trace-7a92bfd501ee:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dadb418468775830",
+      "case_id": "case-128b18a5f24567c9",
+      "dataset_id": "credential_traces",
+      "group_id": "56_fobonacci404",
+      "source_id": "skillleak:56_fobonacci404:MAL-001:trace-cfc43d70ab10:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aa4f0b238225b3ef",
+      "case_id": "case-1570904d8c651e17",
+      "dataset_id": "credential_traces",
+      "group_id": "817_gemini-gen",
+      "source_id": "skillleak:817_gemini-gen:benign-redacted:trace-benign-ca27ddffa3:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b598f1b9305e7afc",
+      "case_id": "case-1624ab54f75b76cf",
+      "dataset_id": "credential_traces",
+      "group_id": "56_unifi",
+      "source_id": "skillleak:56_unifi:VUL-010:trace-75f1bb8b6187:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-edfe19a610e0702c",
+      "case_id": "case-16422b3a5715dcba",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_withings-health",
+      "source_id": "skillleak:5393_withings-health:VUL-010:trace-8b2d886c697f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7ae4d49884702a67",
+      "case_id": "case-165be7f13b274c7c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_openkm-rest",
+      "source_id": "skillleak:56_openkm-rest:benign-redacted:trace-benign-cb170e4397:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-34ce38edbc5043ab",
+      "case_id": "case-18cdc19de7af707c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_lazymonlabs",
+      "source_id": "skillleak:56_lazymonlabs:VUL-006:trace-dd62f450820c:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d005f5c5c6c2dc37",
+      "case_id": "case-1cbbbf3a70aa27ef",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_coolify",
+      "source_id": "skillleak:5392_coolify:VUL-010:trace-b5d4067f6c4a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-113368323c6b6b55",
+      "case_id": "case-1e0bb0e353833e89",
+      "dataset_id": "credential_traces",
+      "group_id": "56_easonc13",
+      "source_id": "skillleak:56_easonc13:VUL-010:trace-de6f77367bc7:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-44f5a6ec9e87111b",
+      "case_id": "case-1e307e9c79192682",
+      "dataset_id": "credential_traces",
+      "group_id": "56_hightower6eu",
+      "source_id": "skillleak:56_hightower6eu:benign-redacted:trace-benign-a5db6fe064:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-18938097d0ecd4e5",
+      "case_id": "case-1f6bff9951128929",
+      "dataset_id": "credential_traces",
+      "group_id": "56_pepe276",
+      "source_id": "skillleak:56_pepe276:MAL-001:trace-295c6380f443:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4419404799b36d00",
+      "case_id": "case-2064cf292b277808",
+      "dataset_id": "credential_traces",
+      "group_id": "1930_localrank",
+      "source_id": "skillleak:1930_localrank:VUL-011:trace-2e0af4b7f861:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9026dbf8eddc32e9",
+      "case_id": "case-209aac410603cebf",
+      "dataset_id": "credential_traces",
+      "group_id": "56_dimkag79",
+      "source_id": "skillleak:56_dimkag79:VUL-001:trace-9c75b96d37f9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9608eb1c6c7e2e19",
+      "case_id": "case-21587a1930fe9e54",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tristankaiburrell-code",
+      "source_id": "skillleak:56_tristankaiburrell-code:VUL-010:trace-d93047d505d9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8d4f19311587dc91",
+      "case_id": "case-21cde9ce1b5d24f3",
+      "dataset_id": "credential_traces",
+      "group_id": "56_totally-legit-skill",
+      "source_id": "skillleak:56_totally-legit-skill:MAL-014:trace-81c8f34e7a77:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4932ea2b4c3bc9bd",
+      "case_id": "case-221cb244e0d235b2",
+      "dataset_id": "credential_traces",
+      "group_id": "56_strava",
+      "source_id": "skillleak:56_strava:VUL-010:trace-f3f62419e3fb:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3fab18b77ff55ab1",
+      "case_id": "case-22be06c74a15d91c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_alexrudloff",
+      "source_id": "skillleak:56_alexrudloff:benign-redacted:trace-benign-ccfe3ce9fc:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e100ad57840a98e4",
+      "case_id": "case-24026e164bfd26e2",
+      "dataset_id": "credential_traces",
+      "group_id": "56_dsiprouter",
+      "source_id": "skillleak:56_dsiprouter:MAL-001:trace-864f3096351b:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dcfa5e0d3a0936a8",
+      "case_id": "case-246d73c5ad5be1c8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_kasyak0",
+      "source_id": "skillleak:56_kasyak0:benign-authorized:trace-benign-e3b81c6d10:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-835684b7f2d14c73",
+      "case_id": "case-25bd18d3a9d2c615",
+      "dataset_id": "credential_traces",
+      "group_id": "56_rei",
+      "source_id": "skillleak:56_rei:VUL-010:trace-527178a02de5:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1add83ebb0d7d8dc",
+      "case_id": "case-28fe87f1e55262fd",
+      "dataset_id": "credential_traces",
+      "group_id": "56_hightower6eu",
+      "source_id": "skillleak:56_hightower6eu:VUL-001:trace-e72a0be66274:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-48188798fe0b7b41",
+      "case_id": "case-2af234e2ee17646d",
+      "dataset_id": "credential_traces",
+      "group_id": "56_agent-sentinel",
+      "source_id": "skillleak:56_agent-sentinel:VUL-006:trace-e4c2377dcdf5:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bb789328480e6df2",
+      "case_id": "case-2b25fb892b7734df",
+      "dataset_id": "credential_traces",
+      "group_id": "56_andrewjiang",
+      "source_id": "skillleak:56_andrewjiang:benign-authorized:trace-benign-a18c118f0c:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-98d54273566ec782",
+      "case_id": "case-2b589ed3b59b3d2a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_pepe276",
+      "source_id": "skillleak:56_pepe276:benign-authorized:trace-benign-f436260406:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a4445bb8d1a2f7b5",
+      "case_id": "case-2ba3aa48157e4c38",
+      "dataset_id": "credential_traces",
+      "group_id": "56_asustor-pro-adaptive-suite",
+      "source_id": "skillleak:56_asustor-pro-adaptive-suite:benign-redacted:trace-benign-5b1f0251bf:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e5c3711774c3bd9a",
+      "case_id": "case-2beea1868f585a15",
+      "dataset_id": "credential_traces",
+      "group_id": "56_thesethrose",
+      "source_id": "skillleak:56_thesethrose:VUL-006:trace-98505a983544:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e1eb1f464baddf3d",
+      "case_id": "case-2cfb5cb891329849",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_mcp-atlassian",
+      "source_id": "skillleak:5392_mcp-atlassian:VUL-010:trace-ba241e61116f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3bbeadbbd4985e48",
+      "case_id": "case-2dd17ba811c8bd8e",
+      "dataset_id": "credential_traces",
+      "group_id": "56_unifi",
+      "source_id": "skillleak:56_unifi:benign-authorized:trace-benign-917f8924f9:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-01746ff32e5bb4df",
+      "case_id": "case-2e60a054fdd6b9ee",
+      "dataset_id": "credential_traces",
+      "group_id": "56_odds-api-io",
+      "source_id": "skillleak:56_odds-api-io:VUL-010:trace-73f6aa28abf5:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c2de1a8554bef2ef",
+      "case_id": "case-2e8ccdd4267531b2",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_withings-health",
+      "source_id": "skillleak:5393_withings-health:benign-authorized:trace-benign-8ea8b7dabc:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9a455d114b0ebd4c",
+      "case_id": "case-2edf9a2895087273",
+      "dataset_id": "credential_traces",
+      "group_id": "666_medrxiv-search",
+      "source_id": "skillleak:666_medrxiv-search:VUL-010:trace-662fc172d103:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ce557e2c0975350",
+      "case_id": "case-2f58dcc5f901edab",
+      "dataset_id": "credential_traces",
+      "group_id": "56_personal-agent",
+      "source_id": "skillleak:56_personal-agent:VUL-010:trace-db11204a41ac:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e5c2e5e4b27fe257",
+      "case_id": "case-2ff50e4d03baf99e",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_whoop-integration",
+      "source_id": "skillleak:5393_whoop-integration:benign-redacted:trace-benign-6e632806a9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0cdac49f23252445",
+      "case_id": "case-33daa05c24cc49df",
+      "dataset_id": "credential_traces",
+      "group_id": "56_custom-smtp-sender",
+      "source_id": "skillleak:56_custom-smtp-sender:VUL-010:trace-c339c3e813f6:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4e95fb72266603d1",
+      "case_id": "case-33e4f599cbd730c8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_chuxo",
+      "source_id": "skillleak:56_chuxo:VUL-011:trace-f90026d05856:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-38162fe96a4546d6",
+      "case_id": "case-38400e5521e4acbc",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tesla-fleet-api",
+      "source_id": "skillleak:56_tesla-fleet-api:benign-authorized:trace-benign-65b0d9d5e0:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c5b65f5bc328ba44",
+      "case_id": "case-39c813fbc66856bd",
+      "dataset_id": "credential_traces",
+      "group_id": "56_agentbus-nostr",
+      "source_id": "skillleak:56_agentbus-nostr:VUL-011:trace-fa4f20fa6d0f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4c26d4a61aa82c63",
+      "case_id": "case-3ba63659a26eb11c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_openkm-rest",
+      "source_id": "skillleak:56_openkm-rest:VUL-006:trace-a21946cded9a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b590481d50d3c648",
+      "case_id": "case-3c4c42c3461f4dea",
+      "dataset_id": "credential_traces",
+      "group_id": "56_quodd",
+      "source_id": "skillleak:56_quodd:benign-authorized:trace-benign-51de6eaf28:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-989ce2825a5175e7",
+      "case_id": "case-3c5dd910dae77e3c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_voidborne",
+      "source_id": "skillleak:56_voidborne:benign-authorized:trace-benign-b47d489456:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-da0c6e9b5560649a",
+      "case_id": "case-3c6da8d90bd713bb",
+      "dataset_id": "credential_traces",
+      "group_id": "56_shawnminh",
+      "source_id": "skillleak:56_shawnminh:VUL-010:trace-b4f8bd03db8b:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f151c2bb4b3a3f71",
+      "case_id": "case-3e7c3ecbf6f45ab8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_clawdsense",
+      "source_id": "skillleak:56_clawdsense:VUL-001:trace-987b4d11a958:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78774b75a61f4cdc",
+      "case_id": "case-3e9feeae18a838b7",
+      "dataset_id": "credential_traces",
+      "group_id": "56_microsoft-todo",
+      "source_id": "skillleak:56_microsoft-todo:benign-authorized:trace-benign-40cdd4bcea:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c5961259dcd2f766",
+      "case_id": "case-40ddd2f96a64506a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_better-polymarket",
+      "source_id": "skillleak:56_better-polymarket:benign-authorized:trace-benign-011aa0e9e2:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d98fb26c9384a4b4",
+      "case_id": "case-41520e9cb070e351",
+      "dataset_id": "credential_traces",
+      "group_id": "56_agentbus-nostr",
+      "source_id": "skillleak:56_agentbus-nostr:VUL-006:trace-4e32e7e2495c:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8b8f01aa6e255d1a",
+      "case_id": "case-464b9c825c340491",
+      "dataset_id": "credential_traces",
+      "group_id": "56_playdadev",
+      "source_id": "skillleak:56_playdadev:benign-redacted:trace-benign-7c57a001e7:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-13dc77a427f7b802",
+      "case_id": "case-465e8200c7f9f9c3",
+      "dataset_id": "credential_traces",
+      "group_id": "56_sbaker5",
+      "source_id": "skillleak:56_sbaker5:VUL-005:trace-73e560858109:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-473cc3546cf6b946",
+      "case_id": "case-47b6591f6ae82e5e",
+      "dataset_id": "credential_traces",
+      "group_id": "56_youtube-watcher",
+      "source_id": "skillleak:56_youtube-watcher:benign-redacted:trace-benign-dc58df7ab4:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ed970dba9382de6d",
+      "case_id": "case-4b7edeee3f8a718a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_co1onnese",
+      "source_id": "skillleak:56_co1onnese:benign-authorized:trace-benign-93b4011c90:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3eb3d6c429cf727a",
+      "case_id": "case-4bbc26a17923a9dc",
+      "dataset_id": "credential_traces",
+      "group_id": "56_agent-sentinel",
+      "source_id": "skillleak:56_agent-sentinel:VUL-011:trace-fc9c22a5001a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9ef224c47db16aee",
+      "case_id": "case-4caa97ce2288590b",
+      "dataset_id": "credential_traces",
+      "group_id": "38_proj-deploy",
+      "source_id": "skillleak:38_proj-deploy:benign-redacted:trace-benign-3115c6de6f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1f1f9388f07989fd",
+      "case_id": "case-4d12a8c22e55fbc6",
+      "dataset_id": "credential_traces",
+      "group_id": "56_dimkag79",
+      "source_id": "skillleak:56_dimkag79:benign-authorized:trace-benign-38b9ddebe0:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c66155f4a114e76b",
+      "case_id": "case-4d6d16b49ebd1f1c",
+      "dataset_id": "credential_traces",
+      "group_id": "5430_facebook-page",
+      "source_id": "skillleak:5430_facebook-page:VUL-001:trace-57c17e3b84bd:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e720a592617f32ec",
+      "case_id": "case-4e7669087ba899bd",
+      "dataset_id": "credential_traces",
+      "group_id": "56_am-will",
+      "source_id": "skillleak:56_am-will:VUL-001:trace-e043c294b398:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b79673d0bc2a4cd1",
+      "case_id": "case-4fa48ce2aef4a421",
+      "dataset_id": "credential_traces",
+      "group_id": "56_feishu-doc-reader",
+      "source_id": "skillleak:56_feishu-doc-reader:benign-authorized:trace-benign-3ecfef6b15:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9418b1a63df1dd6e",
+      "case_id": "case-5046df49604124ec",
+      "dataset_id": "credential_traces",
+      "group_id": "56_archon-nostr",
+      "source_id": "skillleak:56_archon-nostr:VUL-006:trace-14131ecf931a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e5bd7f531898bce9",
+      "case_id": "case-517567ebc57ada1d",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_imap-idle",
+      "source_id": "skillleak:5393_imap-idle:VUL-010:trace-fc6a798f7609:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fee725057fce1539",
+      "case_id": "case-51db8746897c63f1",
+      "dataset_id": "credential_traces",
+      "group_id": "56_dxdleady",
+      "source_id": "skillleak:56_dxdleady:benign-redacted:trace-benign-f1b8991995:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-82cb90a8a317bafd",
+      "case_id": "case-531056d9745db0e9",
+      "dataset_id": "credential_traces",
+      "group_id": "56_weird-aftertaste",
+      "source_id": "skillleak:56_weird-aftertaste:VUL-006:trace-a1792287ed25:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2ad8b7c48eb96e32",
+      "case_id": "case-537846800435e2b2",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tesla-fleet-api",
+      "source_id": "skillleak:56_tesla-fleet-api:VUL-006:trace-3e9e43729a5a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8167605bde2018a6",
+      "case_id": "case-552746bb6e58a153",
+      "dataset_id": "credential_traces",
+      "group_id": "56_ga4",
+      "source_id": "skillleak:56_ga4:VUL-010:trace-eebea355014a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cd4dc6f187218ad0",
+      "case_id": "case-55386d449fcffde5",
+      "dataset_id": "credential_traces",
+      "group_id": "56_slack-personal",
+      "source_id": "skillleak:56_slack-personal:VUL-010:trace-06a68c3ba2ac:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78b3d1273b2f4b86",
+      "case_id": "case-55631ee0791091b4",
+      "dataset_id": "credential_traces",
+      "group_id": "56_farcaster-agent",
+      "source_id": "skillleak:56_farcaster-agent:VUL-010:trace-273c14279cf1:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6960b53f78fb7b55",
+      "case_id": "case-5653073099b08526",
+      "dataset_id": "credential_traces",
+      "group_id": "5534_azure-deploy",
+      "source_id": "skillleak:5534_azure-deploy:VUL-010:trace-e1600855fb40:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bbe08ecf04b60c43",
+      "case_id": "case-5659fae139c6bd51",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_cloudflare",
+      "source_id": "skillleak:5392_cloudflare:benign-authorized:trace-benign-0823cff063:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-eca3b7e966a73972",
+      "case_id": "case-57ac105feaa597a6",
+      "dataset_id": "credential_traces",
+      "group_id": "56_archon-nostr",
+      "source_id": "skillleak:56_archon-nostr:benign-redacted:trace-benign-7c2093cbaf:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-996e3d1431c173d6",
+      "case_id": "case-5a6f89d100a5bd96",
+      "dataset_id": "credential_traces",
+      "group_id": "56_lavish0000",
+      "source_id": "skillleak:56_lavish0000:VUL-006:trace-8393a4ec774d:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9f4c30759508a613",
+      "case_id": "case-5b94206c5a6a7fd7",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tesla-fleet-api",
+      "source_id": "skillleak:56_tesla-fleet-api:VUL-010:trace-a8dc86ea3eea:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b54b5f3904077146",
+      "case_id": "case-5c495dea6a73908c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_rainy-cogmet",
+      "source_id": "skillleak:56_rainy-cogmet:benign-authorized:trace-benign-9558c7c057:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-127f09e9d089ddc9",
+      "case_id": "case-5cef47504b9ceeae",
+      "dataset_id": "credential_traces",
+      "group_id": "56_finance-news",
+      "source_id": "skillleak:56_finance-news:VUL-006:trace-3337602985b9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ef15084d80484c9b",
+      "case_id": "case-5dcd845a8dbe7065",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tristankaiburrell-code",
+      "source_id": "skillleak:56_tristankaiburrell-code:VUL-001:trace-00a53d9e36c9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e25dfdfef813b2d9",
+      "case_id": "case-5ebe0dc0eac526db",
+      "dataset_id": "credential_traces",
+      "group_id": "56_youbaolian",
+      "source_id": "skillleak:56_youbaolian:VUL-001:trace-ebbd6e855e5f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b0dfc32084e3284f",
+      "case_id": "case-5f2e31c29719d016",
+      "dataset_id": "credential_traces",
+      "group_id": "56_telegram-cloud-storage",
+      "source_id": "skillleak:56_telegram-cloud-storage:VUL-010:trace-67de2844f458:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7bb88941c53600d0",
+      "case_id": "case-5fc1380166d8fe50",
+      "dataset_id": "credential_traces",
+      "group_id": "56_feishu-doc-reader",
+      "source_id": "skillleak:56_feishu-doc-reader:VUL-010:trace-b4af36632102:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-27eda6660cfadb38",
+      "case_id": "case-5ff193522c77aa88",
+      "dataset_id": "credential_traces",
+      "group_id": "56_weird-aftertaste",
+      "source_id": "skillleak:56_weird-aftertaste:benign-redacted:trace-benign-5069a225c9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0be802f5aa24bcf2",
+      "case_id": "case-60ab1e55f5b07aea",
+      "dataset_id": "credential_traces",
+      "group_id": "56_lazymonlabs",
+      "source_id": "skillleak:56_lazymonlabs:benign-authorized:trace-benign-8ec653f3bd:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e794bb65d437cf73",
+      "case_id": "case-662f1815e79001cd",
+      "dataset_id": "credential_traces",
+      "group_id": "56_voidborne",
+      "source_id": "skillleak:56_voidborne:VUL-010:trace-a5c2f6c23fd2:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0fa2827c1402f2de",
+      "case_id": "case-66ea53e0786770fa",
+      "dataset_id": "credential_traces",
+      "group_id": "56_in-liberty420",
+      "source_id": "skillleak:56_in-liberty420:VUL-001:trace-6904644f9333:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fcd7f432bd96a3b5",
+      "case_id": "case-67072afcae2b6eb2",
+      "dataset_id": "credential_traces",
+      "group_id": "666_medrxiv-search",
+      "source_id": "skillleak:666_medrxiv-search:benign-redacted:trace-benign-6f07cfd71c:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f66baf8136799c7d",
+      "case_id": "case-68fc3f450490ff03",
+      "dataset_id": "credential_traces",
+      "group_id": "56_pedro-valentim",
+      "source_id": "skillleak:56_pedro-valentim:benign-authorized:trace-benign-0dd29a2af5:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-36027bdf805e0190",
+      "case_id": "case-6907bef146004445",
+      "dataset_id": "credential_traces",
+      "group_id": "56_arya-reminders",
+      "source_id": "skillleak:56_arya-reminders:VUL-001:trace-975114fc3439:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c6820f0c0aa2141a",
+      "case_id": "case-69dc878b96a9dbbc",
+      "dataset_id": "credential_traces",
+      "group_id": "56_shekohex",
+      "source_id": "skillleak:56_shekohex:VUL-010:trace-905062a4a0e8:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9829e33c513da634",
+      "case_id": "case-6b3ec48ed87dd854",
+      "dataset_id": "credential_traces",
+      "group_id": "56_totally-legit-skill",
+      "source_id": "skillleak:56_totally-legit-skill:benign-authorized:trace-benign-fc15a6265a:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d89039f52c378cb5",
+      "case_id": "case-6b8ae7476b4f7b3d",
+      "dataset_id": "credential_traces",
+      "group_id": "56_quodd",
+      "source_id": "skillleak:56_quodd:VUL-010:trace-c3dc658b1472:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ff4c3bfde5d2023a",
+      "case_id": "case-6bdd2397bad39910",
+      "dataset_id": "credential_traces",
+      "group_id": "56_withings-health",
+      "source_id": "skillleak:56_withings-health:benign-authorized:trace-benign-5907929bb6:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a10597c86e6de5cc",
+      "case_id": "case-6c4fa18de3829875",
+      "dataset_id": "credential_traces",
+      "group_id": "56_discord-server-ctrl",
+      "source_id": "skillleak:56_discord-server-ctrl:VUL-010:trace-b892b0406d4a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52fef8d899d8ae78",
+      "case_id": "case-6c9931bb1fd5005b",
+      "dataset_id": "credential_traces",
+      "group_id": "56_lavish0000",
+      "source_id": "skillleak:56_lavish0000:benign-redacted:trace-benign-ef7518bd56:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b9c3a55e90dd67ef",
+      "case_id": "case-6d38285e6d8f2c47",
+      "dataset_id": "credential_traces",
+      "group_id": "56_polymarket-hyperliquid-trading",
+      "source_id": "skillleak:56_polymarket-hyperliquid-trading:MAL-011:trace-e2e5e1426edb:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6a5e8dae80831188",
+      "case_id": "case-6e0db9f0fe8ad174",
+      "dataset_id": "credential_traces",
+      "group_id": "56_environment-secrets-exfiltrator",
+      "source_id": "skillleak:56_environment-secrets-exfiltrator:MAL-001:trace-63b22f6c18b5:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-744bdd92edac1417",
+      "case_id": "case-6ec6e8ddf35b8a54",
+      "dataset_id": "credential_traces",
+      "group_id": "56_davideasaf",
+      "source_id": "skillleak:56_davideasaf:VUL-006:trace-bd0b75988755:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f8e1a3db9ad89b69",
+      "case_id": "case-6eff2581188da5f5",
+      "dataset_id": "credential_traces",
+      "group_id": "56_chuxo",
+      "source_id": "skillleak:56_chuxo:VUL-010:trace-77c660bc4596:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d53481a492fdf80e",
+      "case_id": "case-70030c3e2e75836c",
+      "dataset_id": "credential_traces",
+      "group_id": "287_create-git-worktree",
+      "source_id": "skillleak:287_create-git-worktree:VUL-010:trace-50a8d6cfc159:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1c1e78d8a3b282ba",
+      "case_id": "case-7151b3fff64aa2c4",
+      "dataset_id": "credential_traces",
+      "group_id": "56_clawmegle-staking",
+      "source_id": "skillleak:56_clawmegle-staking:VUL-010:trace-b0ae86c2448d:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3eec48567b67982b",
+      "case_id": "case-72817b5cd84e0092",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_zyla-api-hub-skill",
+      "source_id": "skillleak:5393_zyla-api-hub-skill:VUL-010:trace-ea533eb596aa:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fc5bb502e7079bb2",
+      "case_id": "case-73e1f79913150357",
+      "dataset_id": "credential_traces",
+      "group_id": "56_hummusonrails",
+      "source_id": "skillleak:56_hummusonrails:MAL-001:trace-64d33215fac8:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4734cdad4e305e51",
+      "case_id": "case-74bf097dd2fadc8f",
+      "dataset_id": "credential_traces",
+      "group_id": "56_finance-news",
+      "source_id": "skillleak:56_finance-news:VUL-010:trace-0a48b12f0147:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a514d6884ff88581",
+      "case_id": "case-755df5c689b9a580",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tencentcloud-cvm-skill",
+      "source_id": "skillleak:56_tencentcloud-cvm-skill:benign-redacted:trace-benign-1310761aee:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-185a68139878f933",
+      "case_id": "case-75cf378e617ce7ae",
+      "dataset_id": "credential_traces",
+      "group_id": "56_archon-nostr",
+      "source_id": "skillleak:56_archon-nostr:VUL-010:trace-11bf7898122b:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fd652c9d96903b3d",
+      "case_id": "case-7832ede428e5795e",
+      "dataset_id": "credential_traces",
+      "group_id": "56_parallel",
+      "source_id": "skillleak:56_parallel:VUL-001:trace-a4b31e104e20:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7a0c84b30d90bf04",
+      "case_id": "case-7a8f9043a49df9a4",
+      "dataset_id": "credential_traces",
+      "group_id": "56_dsiprouter",
+      "source_id": "skillleak:56_dsiprouter:benign-authorized:trace-benign-008ec24741:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4880465757f1b93d",
+      "case_id": "case-7c6f3842f5d31fcb",
+      "dataset_id": "credential_traces",
+      "group_id": "56_odds-api-io",
+      "source_id": "skillleak:56_odds-api-io:benign-authorized:trace-benign-5acb0a6d77:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d2b02b8688061598",
+      "case_id": "case-7c7afa89456588b7",
+      "dataset_id": "credential_traces",
+      "group_id": "56_thesethrose",
+      "source_id": "skillleak:56_thesethrose:VUL-010:trace-65847ed45635:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a0877dd0fd5b3cdc",
+      "case_id": "case-7cd4d8ac8692b516",
+      "dataset_id": "credential_traces",
+      "group_id": "56_shawnminh",
+      "source_id": "skillleak:56_shawnminh:benign-redacted:trace-benign-2c121ad601:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-46c166de8f08df14",
+      "case_id": "case-7cdbd1b075ed0e11",
+      "dataset_id": "credential_traces",
+      "group_id": "56_mukhtharcm",
+      "source_id": "skillleak:56_mukhtharcm:benign-authorized:trace-benign-15761b6a71:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7746e42357ff48cd",
+      "case_id": "case-7d808a27e12be33a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_co1onnese",
+      "source_id": "skillleak:56_co1onnese:VUL-010:trace-73be0503ccdd:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0ec2e6ad345ba121",
+      "case_id": "case-7e1bab08f4e3fa17",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_whoop-integration",
+      "source_id": "skillleak:5393_whoop-integration:VUL-001:trace-4a5ec81568c2:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-66562e8914a31f48",
+      "case_id": "case-7f6e51d76a45c23a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_yt",
+      "source_id": "skillleak:56_yt:benign-redacted:trace-benign-7049956e33:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0f8e2c40d3b85865",
+      "case_id": "case-829ad7f537d51b31",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_telegram-pairing-approver",
+      "source_id": "skillleak:5393_telegram-pairing-approver:benign-redacted:trace-benign-368c7b9d49:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bd64d4af0983c794",
+      "case_id": "case-83d71e80e7287a37",
+      "dataset_id": "credential_traces",
+      "group_id": "56_hightower6eu",
+      "source_id": "skillleak:56_hightower6eu:VUL-006:trace-dd864780ffa9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f88e0b20d2924c88",
+      "case_id": "case-853ddad98948ff49",
+      "dataset_id": "credential_traces",
+      "group_id": "56_feishu-doc-reader",
+      "source_id": "skillleak:56_feishu-doc-reader:VUL-001:trace-2e80ea8542a6:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cc6b8ee99b6e9f37",
+      "case_id": "case-8622aa1f057d9a1c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_noypearl",
+      "source_id": "skillleak:56_noypearl:MAL-001:trace-54b5b8c12186:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6a1ab945c495873e",
+      "case_id": "case-869e529b1027a21e",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_mcp-atlassian",
+      "source_id": "skillleak:5392_mcp-atlassian:benign-authorized:trace-benign-19acd12945:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4ee5243187fcce5e",
+      "case_id": "case-86db5c8e0115096a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_microsoft-todo",
+      "source_id": "skillleak:56_microsoft-todo:VUL-010:trace-91448469d834:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6f0be184d3ab37a3",
+      "case_id": "case-880b8a1e6dd7e609",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tencentcloud-cvm-skill",
+      "source_id": "skillleak:56_tencentcloud-cvm-skill:VUL-010:trace-dac929a79844:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-13bfa010bad9428e",
+      "case_id": "case-889c967334215735",
+      "dataset_id": "credential_traces",
+      "group_id": "56_frontend-design",
+      "source_id": "skillleak:56_frontend-design:benign-authorized:trace-benign-b0185f8f8f:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c9d22ae0e2181a1c",
+      "case_id": "case-89d898a5dceeec0f",
+      "dataset_id": "credential_traces",
+      "group_id": "56_youtube-watcher",
+      "source_id": "skillleak:56_youtube-watcher:MAL-011:trace-4187c9b93bb2:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e14082d63e96779b",
+      "case_id": "case-8a153311f4606f89",
+      "dataset_id": "credential_traces",
+      "group_id": "56_better-polymarket",
+      "source_id": "skillleak:56_better-polymarket:MAL-001:trace-d70496e096c4:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6f1affacd1c9d564",
+      "case_id": "case-8b153b99db179b65",
+      "dataset_id": "credential_traces",
+      "group_id": "56_secure-sync",
+      "source_id": "skillleak:56_secure-sync:MAL-001:trace-cbdda4f07aee:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1eefb93712afad12",
+      "case_id": "case-8c1b5bfca6a5067a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_hightower6eu",
+      "source_id": "skillleak:56_hightower6eu:VUL-006:trace-a9976213eed7:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c2479c62c2dd75cd",
+      "case_id": "case-8c7527fa49fcf9a8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_asustor-pro-adaptive-suite",
+      "source_id": "skillleak:56_asustor-pro-adaptive-suite:VUL-010:trace-6d4a9b6d471e:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5056a151eb5c0252",
+      "case_id": "case-8cdd591313a94552",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_zyla-api-hub-skill",
+      "source_id": "skillleak:5393_zyla-api-hub-skill:benign-redacted:trace-benign-27035df525:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6b9e20b021b26fd1",
+      "case_id": "case-8e320cc5142bdf7b",
+      "dataset_id": "credential_traces",
+      "group_id": "56_ga4",
+      "source_id": "skillleak:56_ga4:benign-authorized:trace-benign-86a5917be4:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1fc4f48328811bc5",
+      "case_id": "case-900735ab61178b04",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_cloudflare",
+      "source_id": "skillleak:5392_cloudflare:VUL-010:trace-bffee1faabfe:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0fd3a9c74e265030",
+      "case_id": "case-91c9b3a028407b81",
+      "dataset_id": "credential_traces",
+      "group_id": "56_easonc13",
+      "source_id": "skillleak:56_easonc13:VUL-006:trace-1c2e3c9f8328:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d4789c54aeebcb12",
+      "case_id": "case-9431f6cc17e6763d",
+      "dataset_id": "credential_traces",
+      "group_id": "5534_azure-deploy",
+      "source_id": "skillleak:5534_azure-deploy:VUL-011:trace-1630951e494f:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0f1a8c9daa46c7ef",
+      "case_id": "case-973ba2c056587861",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_mcp-atlassian",
+      "source_id": "skillleak:5392_mcp-atlassian:VUL-006:trace-c479d8abcd91:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f263c9e7eae5c886",
+      "case_id": "case-97afee3937406876",
+      "dataset_id": "credential_traces",
+      "group_id": "56_chuxo",
+      "source_id": "skillleak:56_chuxo:benign-redacted:trace-benign-d30f6e966c:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-77a8e7c543a90b11",
+      "case_id": "case-981b7a2b01a1cfad",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_fitbit-analytics",
+      "source_id": "skillleak:5393_fitbit-analytics:VUL-010:trace-0226ffef0efc:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bbaae93744aff66e",
+      "case_id": "case-983722511c443c02",
+      "dataset_id": "credential_traces",
+      "group_id": "56_lvy19811120-gif",
+      "source_id": "skillleak:56_lvy19811120-gif:benign-redacted:trace-benign-00499c4b74:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-255f979c69f0b1fd",
+      "case_id": "case-984dabc856cb75a9",
+      "dataset_id": "credential_traces",
+      "group_id": "56_openkm-rest",
+      "source_id": "skillleak:56_openkm-rest:VUL-010:trace-cbf31f69f760:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a9c248c5284afc88",
+      "case_id": "case-995370e01b28a40a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_sbauch",
+      "source_id": "skillleak:56_sbauch:VUL-011:trace-9e594626bb60:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-741d357cd6afac58",
+      "case_id": "case-9a850cae6ba212f8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_polymarket-hyperliquid-trading",
+      "source_id": "skillleak:56_polymarket-hyperliquid-trading:benign-redacted:trace-benign-f8bdca0f9e:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-12d03487b19d9cd2",
+      "case_id": "case-9ab1f621ac16a85f",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_obsidian",
+      "source_id": "skillleak:5392_obsidian:VUL-010:trace-7bdecae3baaa:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5c83c92a2950e8be",
+      "case_id": "case-9b75c07c1f7755cb",
+      "dataset_id": "credential_traces",
+      "group_id": "56_custom-smtp-sender",
+      "source_id": "skillleak:56_custom-smtp-sender:benign-redacted:trace-benign-8ce4af00f3:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-33abc4e61da08d29",
+      "case_id": "case-9b97fb41715a8052",
+      "dataset_id": "credential_traces",
+      "group_id": "56_clawdsense",
+      "source_id": "skillleak:56_clawdsense:benign-authorized:trace-benign-fb3309a510:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f3c84b7002407416",
+      "case_id": "case-9d63acf84dbe4157",
+      "dataset_id": "credential_traces",
+      "group_id": "56_shekohex",
+      "source_id": "skillleak:56_shekohex:benign-redacted:trace-benign-a00ca27e32:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c42760d23e4feadc",
+      "case_id": "case-9d6cdf1bafdc169c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_withings-health",
+      "source_id": "skillleak:56_withings-health:VUL-010:trace-6bcf53b85d4e:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-03240833de5f9f7b",
+      "case_id": "case-9f417a5e96d8cdef",
+      "dataset_id": "credential_traces",
+      "group_id": "56_pedro-valentim",
+      "source_id": "skillleak:56_pedro-valentim:VUL-010:trace-047b66d98282:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a29519c5a3223a9b",
+      "case_id": "case-a0485bf5b1469b30",
+      "dataset_id": "credential_traces",
+      "group_id": "56_arya-reminders",
+      "source_id": "skillleak:56_arya-reminders:benign-authorized:trace-benign-3532e2689c:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c07cb8e7ae9cc1f4",
+      "case_id": "case-a5ba2e4f0c8602d5",
+      "dataset_id": "credential_traces",
+      "group_id": "56_peterfzh",
+      "source_id": "skillleak:56_peterfzh:VUL-011:trace-145618829174:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-de59b58f24758e0f",
+      "case_id": "case-a8e30a78a7e1f341",
+      "dataset_id": "credential_traces",
+      "group_id": "56_agent-sentinel",
+      "source_id": "skillleak:56_agent-sentinel:VUL-010:trace-07404bb642aa:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4486e038ce6d6ac6",
+      "case_id": "case-ac23687b7f1362ab",
+      "dataset_id": "credential_traces",
+      "group_id": "56_slempiam",
+      "source_id": "skillleak:56_slempiam:VUL-010:trace-acc51d8afae1:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2b6cbc5a4981bbfd",
+      "case_id": "case-ad263e56ebe3afc9",
+      "dataset_id": "credential_traces",
+      "group_id": "56_weird-aftertaste",
+      "source_id": "skillleak:56_weird-aftertaste:VUL-010:trace-91b4b7cac440:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-35b6419aa556180f",
+      "case_id": "case-b1dbe85d8645b0e7",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_zeruai",
+      "source_id": "skillleak:5393_zeruai:VUL-006:trace-5197c6053168:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a53562d1cdae962a",
+      "case_id": "case-b3733dc579b60e10",
+      "dataset_id": "credential_traces",
+      "group_id": "56_jdrhyne",
+      "source_id": "skillleak:56_jdrhyne:benign-redacted:trace-benign-322d5d0c4a:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8a3df54dcd55fcf2",
+      "case_id": "case-b5ae7a32519b4b72",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_withings-health",
+      "source_id": "skillleak:5393_withings-health:VUL-006:trace-2b3634cf9ea8:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1acabf90c05ba5a4",
+      "case_id": "case-b6ecf4bf6426502b",
+      "dataset_id": "credential_traces",
+      "group_id": "666_medrxiv-search",
+      "source_id": "skillleak:666_medrxiv-search:VUL-006:trace-883f7d0dc482:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-74c73e11ea01004c",
+      "case_id": "case-b7dad6fa26246e1e",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_nest-devices",
+      "source_id": "skillleak:5392_nest-devices:VUL-010:trace-aa4404f838a8:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d7f3add709719513",
+      "case_id": "case-b870f5557c34a0e0",
+      "dataset_id": "credential_traces",
+      "group_id": "56_alexrudloff",
+      "source_id": "skillleak:56_alexrudloff:VUL-010:trace-7e19a2a0c450:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-85c2b99ce95999a0",
+      "case_id": "case-b91880930096d758",
+      "dataset_id": "credential_traces",
+      "group_id": "56_clawmegle-staking",
+      "source_id": "skillleak:56_clawmegle-staking:VUL-006:trace-9aabf1163ddd:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4390b98a6e9e6dcc",
+      "case_id": "case-baa058bbda914b5f",
+      "dataset_id": "credential_traces",
+      "group_id": "56_davideasaf",
+      "source_id": "skillleak:56_davideasaf:VUL-010:trace-780bc8dd3c13:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6797347d8be93a26",
+      "case_id": "case-bb95e693facc52c7",
+      "dataset_id": "credential_traces",
+      "group_id": "56_mukhtharcm",
+      "source_id": "skillleak:56_mukhtharcm:VUL-001:trace-65214755b32d:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ecc09d4f1789369b",
+      "case_id": "case-bbf7f15305a91af3",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_nest-devices",
+      "source_id": "skillleak:5392_nest-devices:benign-authorized:trace-benign-c9820b6711:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a2742b2952fbffdf",
+      "case_id": "case-bc083b7ab8f4ae62",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_obsidian",
+      "source_id": "skillleak:5392_obsidian:benign-authorized:trace-benign-84ac032671:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-68f8c2e698976b4a",
+      "case_id": "case-bcfc8e59e1922ae0",
+      "dataset_id": "credential_traces",
+      "group_id": "5161_chat-navigator",
+      "source_id": "skillleak:5161_chat-navigator:VUL-006:trace-0adee387ba76:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-17e918262029d5ff",
+      "case_id": "case-bdd06b3791d5d81d",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_better-polymarket",
+      "source_id": "skillleak:5392_better-polymarket:MAL-001:trace-bc541847ad14:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1308634e63cd28b9",
+      "case_id": "case-c628ef0af68a8f54",
+      "dataset_id": "credential_traces",
+      "group_id": "666_medrxiv-search",
+      "source_id": "skillleak:666_medrxiv-search:VUL-011:trace-db202dbb709b:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-84b129017bff2c9f",
+      "case_id": "case-c73945d19b4b570b",
+      "dataset_id": "credential_traces",
+      "group_id": "56_youbaolian",
+      "source_id": "skillleak:56_youbaolian:VUL-010:trace-15077330dcce:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-969aaf3a3bc249ec",
+      "case_id": "case-c8f5863bee436992",
+      "dataset_id": "credential_traces",
+      "group_id": "56_digitaladaption",
+      "source_id": "skillleak:56_digitaladaption:VUL-011:trace-bd5c590cd34c:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-15bcd0aee27d2c21",
+      "case_id": "case-c8fc47149b8ac316",
+      "dataset_id": "credential_traces",
+      "group_id": "56_yt",
+      "source_id": "skillleak:56_yt:VUL-010:trace-4f4366b71221:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-939b0f63fdefcd2e",
+      "case_id": "case-c97e29375929fdb0",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_better-polymarket",
+      "source_id": "skillleak:5392_better-polymarket:benign-redacted:trace-benign-6855744773:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-465d1fb4d99e4d00",
+      "case_id": "case-cd39b54eb1b31a71",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_ticktick",
+      "source_id": "skillleak:5392_ticktick:VUL-010:trace-c4f974b20a0b:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-660c1c73474d9b52",
+      "case_id": "case-cec525827f4188c9",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_telegram-pairing-approver",
+      "source_id": "skillleak:5393_telegram-pairing-approver:VUL-001:trace-af414c5118e7:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8842186cc2f38883",
+      "case_id": "case-d1f1c6bb9b4957b5",
+      "dataset_id": "credential_traces",
+      "group_id": "56_creative-writer",
+      "source_id": "skillleak:56_creative-writer:MAL-007:trace-3f61c35709a1:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6a75134545ae3a09",
+      "case_id": "case-d2514874dec57970",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_npm-proxy",
+      "source_id": "skillleak:5392_npm-proxy:VUL-010:trace-fffd3ea78740:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-60c487acf25fa1b5",
+      "case_id": "case-d2cda6af59685276",
+      "dataset_id": "credential_traces",
+      "group_id": "56_frontend-design",
+      "source_id": "skillleak:56_frontend-design:MAL-001:trace-e7ab9bf2fefb:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bcaf7437c09be1dc",
+      "case_id": "case-d57d2d4721926d42",
+      "dataset_id": "credential_traces",
+      "group_id": "56_bird",
+      "source_id": "skillleak:56_bird:MAL-011:trace-9f655c1202c8:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-30c40e95eac8aa57",
+      "case_id": "case-d6edd0a98dcbd08c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_openclaw-backup-optimized",
+      "source_id": "skillleak:56_openclaw-backup-optimized:VUL-006:trace-2d099c6a8de9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b87dfb50e05a6956",
+      "case_id": "case-d710a60e07503932",
+      "dataset_id": "credential_traces",
+      "group_id": "56_farcaster-agent",
+      "source_id": "skillleak:56_farcaster-agent:VUL-006:trace-81cc2ecca30e:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f5a6c22efbf4c9c7",
+      "case_id": "case-d7a4c7191ca36126",
+      "dataset_id": "credential_traces",
+      "group_id": "56_coolmanns",
+      "source_id": "skillleak:56_coolmanns:VUL-001:trace-dc901da77c54:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-94c6fc29b9a4854a",
+      "case_id": "case-d7f0c17c8d864b9c",
+      "dataset_id": "credential_traces",
+      "group_id": "56_slempiam",
+      "source_id": "skillleak:56_slempiam:benign-authorized:trace-benign-e4d1c840ef:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a57009dcd56dc37",
+      "case_id": "case-dc92515cd52d84d0",
+      "dataset_id": "credential_traces",
+      "group_id": "56_kasyak0",
+      "source_id": "skillleak:56_kasyak0:MAL-001:trace-2a20a27e17ab:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-958e7dede7e37b5b",
+      "case_id": "case-dd545ab8e2597595",
+      "dataset_id": "credential_traces",
+      "group_id": "56_farcaster-agent",
+      "source_id": "skillleak:56_farcaster-agent:benign-redacted:trace-benign-1475e6c022:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-71c18a43e59781f4",
+      "case_id": "case-dde14d18bcbc7917",
+      "dataset_id": "credential_traces",
+      "group_id": "56_rainy-cogmet",
+      "source_id": "skillleak:56_rainy-cogmet:VUL-006:trace-a5a379cc6ab5:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b11d1cb3af2b2d64",
+      "case_id": "case-df2c0365ea941d21",
+      "dataset_id": "credential_traces",
+      "group_id": "56_sscottdev",
+      "source_id": "skillleak:56_sscottdev:VUL-001:trace-87a1d3506e63:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c48afb0ac1fb6ef4",
+      "case_id": "case-e0fadc52dc6afc6a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_slack-personal",
+      "source_id": "skillleak:56_slack-personal:benign-redacted:trace-benign-6f9f4f7a73:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-27e516f845bdf044",
+      "case_id": "case-e2b87f2bedde00ce",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_coolify",
+      "source_id": "skillleak:5392_coolify:VUL-006:trace-10934ccccd80:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a20bb7a2c29d9448",
+      "case_id": "case-e4bf5bfe5cc76626",
+      "dataset_id": "credential_traces",
+      "group_id": "56_bohdanpodvirnyi",
+      "source_id": "skillleak:56_bohdanpodvirnyi:VUL-010:trace-a0ba1b359364:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-290a084198562ba3",
+      "case_id": "case-e5fb2ff619dc94e2",
+      "dataset_id": "credential_traces",
+      "group_id": "287_create-git-worktree",
+      "source_id": "skillleak:287_create-git-worktree:benign-authorized:trace-benign-ac038da7ad:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-575c6ed524cab1ef",
+      "case_id": "case-e6a738750a85cdb8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_agentbus-nostr",
+      "source_id": "skillleak:56_agentbus-nostr:benign-redacted:trace-benign-e8dbf76ad1:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-efb59657ac397c08",
+      "case_id": "case-e7496fac9797c69f",
+      "dataset_id": "credential_traces",
+      "group_id": "56_miniflux",
+      "source_id": "skillleak:56_miniflux:VUL-010:trace-11245986030d:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-23a231918bf55af9",
+      "case_id": "case-e79282b4b8b13cbc",
+      "dataset_id": "credential_traces",
+      "group_id": "56_hightower6eu",
+      "source_id": "skillleak:56_hightower6eu:VUL-010:trace-08f2eba175a8:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-40da8aa30f14f603",
+      "case_id": "case-e80b120b9db207d8",
+      "dataset_id": "credential_traces",
+      "group_id": "56_bilalmohamed187-cpu",
+      "source_id": "skillleak:56_bilalmohamed187-cpu:VUL-010:trace-b49900093b86:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c7a21544f67a1dd8",
+      "case_id": "case-e95bd9214eb2640b",
+      "dataset_id": "credential_traces",
+      "group_id": "56_personal-agent",
+      "source_id": "skillleak:56_personal-agent:benign-redacted:trace-benign-069be720e4:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-af7d705fd78f0155",
+      "case_id": "case-ed4c63ba5a696e8b",
+      "dataset_id": "credential_traces",
+      "group_id": "56_personal-agent",
+      "source_id": "skillleak:56_personal-agent:VUL-006:trace-5e7c312c3b2e:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9185369d5cd85d88",
+      "case_id": "case-ed86a01f5f60d56a",
+      "dataset_id": "credential_traces",
+      "group_id": "5392_youtube-instant-article",
+      "source_id": "skillleak:5392_youtube-instant-article:VUL-010:trace-adeb704119df:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-69fb9dedbece86e7",
+      "case_id": "case-ef136aca4a82ef11",
+      "dataset_id": "credential_traces",
+      "group_id": "817_gemini-gen",
+      "source_id": "skillleak:817_gemini-gen:VUL-001:trace-57c9ea155c18:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9af10d98ffb31f7c",
+      "case_id": "case-f1022648dbdf79c4",
+      "dataset_id": "credential_traces",
+      "group_id": "56_telegram-cloud-storage",
+      "source_id": "skillleak:56_telegram-cloud-storage:benign-authorized:trace-benign-7b848b7ad9:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-289ca76f2353d976",
+      "case_id": "case-f2e208fa97a8dc9e",
+      "dataset_id": "credential_traces",
+      "group_id": "56_lvy19811120-gif",
+      "source_id": "skillleak:56_lvy19811120-gif:MAL-011:trace-a325b32d4924:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fd6c5e6422bc850e",
+      "case_id": "case-f46231e8105553d2",
+      "dataset_id": "credential_traces",
+      "group_id": "56_jdrhyne",
+      "source_id": "skillleak:56_jdrhyne:VUL-010:trace-3bdc6ca9b0a9:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-007896000e183003",
+      "case_id": "case-f475889a8481f4fc",
+      "dataset_id": "credential_traces",
+      "group_id": "56_strava",
+      "source_id": "skillleak:56_strava:benign-redacted:trace-benign-7a9fc66c14:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5d1e38397e6dbc97",
+      "case_id": "case-f4ca221a29ecc25e",
+      "dataset_id": "credential_traces",
+      "group_id": "56_tsyvic",
+      "source_id": "skillleak:56_tsyvic:VUL-010:trace-16541cb4b680:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52bcf45563c3301c",
+      "case_id": "case-f573986ae911817f",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_telegram-pairing-approver",
+      "source_id": "skillleak:5393_telegram-pairing-approver:VUL-010:trace-2a0eaf50bfe4:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bdb93e21b61bc59a",
+      "case_id": "case-f8cd6768e489502a",
+      "dataset_id": "credential_traces",
+      "group_id": "56_x-trends",
+      "source_id": "skillleak:56_x-trends:benign-redacted:trace-benign-00cbb7654b:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a6d2188bfc017ea9",
+      "case_id": "case-f901de9b88810b49",
+      "dataset_id": "credential_traces",
+      "group_id": "56_andrewjiang",
+      "source_id": "skillleak:56_andrewjiang:VUL-001:trace-b50a33879ee4:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5104db64d40b344d",
+      "case_id": "case-fa9011dbe997b185",
+      "dataset_id": "credential_traces",
+      "group_id": "56_yt",
+      "source_id": "skillleak:56_yt:VUL-011:trace-6637a7353dff:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-853d733a9ee766ed",
+      "case_id": "case-fbeaa820acfd198b",
+      "dataset_id": "credential_traces",
+      "group_id": "56_environment-secrets-exfiltrator",
+      "source_id": "skillleak:56_environment-secrets-exfiltrator:benign-redacted:trace-benign-00ee002f6c:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-197644858e2c896e",
+      "case_id": "case-fda131d2a0194295",
+      "dataset_id": "credential_traces",
+      "group_id": "56_sbaker5",
+      "source_id": "skillleak:56_sbaker5:benign-redacted:trace-benign-449fe655f3:stdout",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-88cc24fd8032b68b",
+      "case_id": "case-fe835a7eb583589f",
+      "dataset_id": "credential_traces",
+      "group_id": "56_finance-news",
+      "source_id": "skillleak:56_finance-news:benign-authorized:trace-benign-24a807f2ba:network",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-70714f6db355473c",
+      "case_id": "case-ff00a2bd0dc32204",
+      "dataset_id": "credential_traces",
+      "group_id": "5393_fitbit-analytics",
+      "source_id": "skillleak:5393_fitbit-analytics:benign-authorized:trace-benign-4cb6c03640:network",
+      "split": "holdout"
+    }
+  ],
+  "created_from": {
+    "credential_traces": {
+      "adapter": "credential_traces",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "8cb5eedc0b27d7ac028341fb4098f693640fc23da59ecca5203684328313fbd3",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
+    }
+  },
+  "manifest_sha256": "sha256:359434f60e1cd2c7ae55eb48d47e400187df672830ae0425431cb76154bf3d3e",
+  "manifest_version": "v3.2",
+  "n": 208,
+  "project": "P4_credential_flow",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "holdout"
+  ],
+  "strata": {
+    "cred_allow": {
+      "actual": 69,
+      "filtered": 69,
+      "target": "all"
+    },
+    "cred_block_network": {
+      "actual": 19,
+      "filtered": 23,
+      "target": 20
+    },
+    "cred_block_stdout": {
+      "actual": 120,
+      "filtered": 131,
+      "target": 120
+    }
+  },
+  "suite": "holdout-v2",
+  "target": 200
+}

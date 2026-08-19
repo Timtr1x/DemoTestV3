@@ -1,0 +1,12 @@
+{
+  "acquired_at": "2026-08-19T17:39:12Z",
+  "adapter_name": "skillleakbench",
+  "adapter_version": "1.0.0",
+  "dataset_id": "skillleakbench",
+  "extra": {},
+  "license": "MIT",
+  "raw_sha256": "0e6ce3cfb745ccecb8e659f5d59b086faf8a2b5296763e96ddbc3b9a3f352d7d",
+  "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca",
+  "source_type": "huggingface_dataset",
+  "source_uri": "AgentSkillPrivacy/SkillLeakBench"
+}

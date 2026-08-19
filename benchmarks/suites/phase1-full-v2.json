@@ -19,6 +19,16 @@
         "holdout"
       ],
       "target": 761
+    },
+    "P4_credential_flow": {
+      "manifest": "benchmarks/manifests/phase1-full-v2/p4.json",
+      "manifest_sha256": "sha256:bf8a6664e08a7e6f21b2f3822a143d26590bffe9ed214e61c84b5b9f5a96e681",
+      "n": 883,
+      "split": [
+        "eval",
+        "holdout"
+      ],
+      "target": 883
     }
   },
   "seed": 42,
@@ -28,6 +38,12 @@
       "adapter_version": "1.1.0",
       "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+    },
+    "credential_traces": {
+      "adapter": "credential_traces",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "8cb5eedc0b27d7ac028341fb4098f693640fc23da59ecca5203684328313fbd3",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     },
     "llmail": {
       "adapter": "llmail",
@@ -40,7 +56,7 @@
     "eval",
     "holdout"
   ],
-  "suite_config_hash": "sha256:d490b71712bd2d264d19c21f39f4dc16489a8b8d09f537c0507c0281cf2daa25",
+  "suite_config_hash": "sha256:29989eed95c6391d4165a60ca0127def35aeb84f28a7d7791a5673b8d08f62cd",
   "suite_id": "phase1-full-v2",
-  "total_cases": 3444
+  "total_cases": 4327
 }
