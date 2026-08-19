@@ -1,0 +1,1526 @@
+{
+  "cases": [
+    {
+      "case_fingerprint": "fp-025a615eb42cb504",
+      "case_id": "case-0150d39cf20aa3d2",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_24:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_24:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2c0d40d148ba1003",
+      "case_id": "case-0228eeec66985672",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_5:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_5:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d80fd646224e6292",
+      "case_id": "case-02c4d7a5d957baa6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_1:injection_task_3",
+      "source_id": "agentdojo:travel:user_task_1:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-61485cc9f5cca828",
+      "case_id": "case-035450599bebc3d6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_25:injection_task_2",
+      "source_id": "agentdojo:workspace:user_task_25:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a4547d6f085f96ae",
+      "case_id": "case-042b3a2c842a8f57",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_14:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_14:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-db1ff9ddf05fc023",
+      "case_id": "case-06f912a8562c2dc7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_2:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b3974775ee3072e1",
+      "case_id": "case-0821847d48357eb7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_36:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_36:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0311929c2a3c6afa",
+      "case_id": "case-0842d4447036a9c9",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_2:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-09bfd4f5e56d1e34",
+      "case_id": "case-0b7a741a7c09a7c3",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_8:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_8:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e2de32507245efdd",
+      "case_id": "case-0c945a12e717e216",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_12:injection_task_4",
+      "source_id": "agentdojo:travel:user_task_12:injection_task_4:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b830f8e325131a14",
+      "case_id": "case-0c959ca4f8acde95",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_26:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_26:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c69aa4c9bc0d0995",
+      "case_id": "case-0d65f25ffce69192",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_10:injection_task_2",
+      "source_id": "agentdojo:banking:user_task_10:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d5dc7e745dbc9b43",
+      "case_id": "case-0ee9420b9e2d0a92",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_14:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_14:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4102d77229bdd7f9",
+      "case_id": "case-10fc8da84e324212",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_2:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d69721906e0fef34",
+      "case_id": "case-11cf86c2734eede1",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_13:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_13:injection_task_2:tool_call:6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-16f02846a1455fe2",
+      "case_id": "case-13188d212f881f6b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_21:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_21:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4e236f627836f06a",
+      "case_id": "case-1338d3ac324bc2e9",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_28:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_28:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-654ad196853dd506",
+      "case_id": "case-139b3fb425fc2847",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_14:injection_task_3",
+      "source_id": "agentdojo:slack:user_task_14:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e235685cc647acdc",
+      "case_id": "case-13f73c60b54699b4",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_5:injection_task_1",
+      "source_id": "agentdojo:banking:user_task_5:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-434821e97b1fcebf",
+      "case_id": "case-15fd4e07d4f83ef8",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_31:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_31:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b418eaa8b0539e2f",
+      "case_id": "case-160fff4fa3c3bed7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_27:injection_task_2",
+      "source_id": "agentdojo:workspace:user_task_27:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1290b9e0082df053",
+      "case_id": "case-16d9d5b4d8d66c9a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_0:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_0:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fac568539c936530",
+      "case_id": "case-172c1f26b65453b4",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_11:injection_task_0",
+      "source_id": "agentdojo:travel:user_task_11:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-636302a0b618a629",
+      "case_id": "case-18063fc1783f62c3",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_11:injection_task_2",
+      "source_id": "agentdojo:banking:user_task_11:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8c8dfe81e2fbc724",
+      "case_id": "case-188e825429a7ad86",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_1:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_1:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8fffe9d77632650d",
+      "case_id": "case-18a1c6b1cc6c0195",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_6:injection_task_4",
+      "source_id": "agentdojo:slack:user_task_6:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-10dd4ed1f4c4c033",
+      "case_id": "case-194511470916c08e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_2:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-afd4cc9a2f6db38c",
+      "case_id": "case-1ce6791e52317178",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_13:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_13:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-895db0b1b88a9b52",
+      "case_id": "case-1e2dcccca146645b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_3:injection_task_4",
+      "source_id": "agentdojo:slack:user_task_3:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2ad80959928cdfaa",
+      "case_id": "case-1e4d79cc32e268de",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_8:injection_task_6",
+      "source_id": "agentdojo:banking:user_task_8:injection_task_6:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-63aec0d08c086013",
+      "case_id": "case-202158864a29db58",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_2:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8a818fdd2948ed85",
+      "case_id": "case-2048ad1bafd71415",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_32:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_32:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7ad24572acc38506",
+      "case_id": "case-20d13b47aade3efa",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_16:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_16:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-afdbef3069ddbf92",
+      "case_id": "case-20e6737d44d6940b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_15:injection_task_2",
+      "source_id": "agentdojo:banking:user_task_15:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-59df02d15e3635f2",
+      "case_id": "case-215f1ab277a6b086",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_1",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-10ac5d66da04f671",
+      "case_id": "case-2386bed500f19b1b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_2:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78676cf2fb96e144",
+      "case_id": "case-24396be484251d33",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_21:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_21:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f7bad8b217fc616c",
+      "case_id": "case-249930f6e93c50b1",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_1:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_1:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b5847f52ec2a46e6",
+      "case_id": "case-269f252226d0d3a7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_4:injection_task_3",
+      "source_id": "agentdojo:banking:user_task_4:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3e445c69a417cb53",
+      "case_id": "case-27e7a10471a3c502",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_14:injection_task_8",
+      "source_id": "agentdojo:banking:user_task_14:injection_task_8:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1a557e6ffb783f2f",
+      "case_id": "case-28004508d0e508d2",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_2:tool_call:5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-62382485769ba15e",
+      "case_id": "case-29c70d88fd57c01f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_2:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e9a7b886796cf6e2",
+      "case_id": "case-2dacccb23c727073",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_3:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_3:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ce6373d8fbe65422",
+      "case_id": "case-2ef942ddeecd488c",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-18826798da9f92f0",
+      "case_id": "case-31fa1110579a7459",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_33:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_33:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7c0a8a75e9c808a5",
+      "case_id": "case-337bc593db786a41",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_2:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_2:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-28789e6faec2a707",
+      "case_id": "case-36bfbf352620346f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_21:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_21:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4ca7787ca5c02303",
+      "case_id": "case-38d9f20e01140be1",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_28:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_28:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3924a10484da867f",
+      "case_id": "case-39bd8ba8b2ad4825",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_18:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_18:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-70a8534f7da4cd53",
+      "case_id": "case-3b530f40d84b5c99",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_20:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_20:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9191c9798ac1b12d",
+      "case_id": "case-3ed5d49acb982dd0",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_19:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_19:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aebcff5f8efd46f9",
+      "case_id": "case-3f36fb763a814672",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_17:injection_task_4",
+      "source_id": "agentdojo:slack:user_task_17:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-beb8c57aad552f9a",
+      "case_id": "case-3f5ea9ead48eb8a7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_13:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_13:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-698f9335eb6f4fc1",
+      "case_id": "case-3ffcb77668ba80f6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_9:injection_task_1",
+      "source_id": "agentdojo:banking:user_task_9:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a9015d51f9a02bdf",
+      "case_id": "case-42974e87fdc412dc",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_24:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_24:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7151b78b0f35dd3c",
+      "case_id": "case-42f1231576d5a08a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2b21cb866d7fcbe0",
+      "case_id": "case-430d00a1b4e788d9",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_25:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_25:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7b5742cffb2f379d",
+      "case_id": "case-43de02e3348c051b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_1:injection_task_0",
+      "source_id": "agentdojo:banking:user_task_1:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bdb3fb5876618b72",
+      "case_id": "case-43ec7d703f298f06",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_13:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_13:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-714d82bb5270bea4",
+      "case_id": "case-48c76927b483d052",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-384cf435e7aac6f0",
+      "case_id": "case-4cc2154a5d429625",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_2:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e531192589e1a837",
+      "case_id": "case-4d18d4fefb42681f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_26:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_26:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-040fabfbc299ec6c",
+      "case_id": "case-4e5067ad7c78c51a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_25:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_25:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7d2bcd6dcf15728f",
+      "case_id": "case-4e79321732a21294",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_2:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-226c8004fe1baeae",
+      "case_id": "case-4edf0e11595ea6ea",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_13:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_13:injection_task_2:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-90b37f467b92ab36",
+      "case_id": "case-4f9de7591446f6e7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_18:injection_task_5",
+      "source_id": "agentdojo:travel:user_task_18:injection_task_5:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8d0b96ad901e5377",
+      "case_id": "case-4fed76820936111a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_2:tool_call:6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-136ac0301580ad68",
+      "case_id": "case-504623154aec7c87",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_5:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_5:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dc209720bdc44e01",
+      "case_id": "case-50e0ad71fe0bd750",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_13:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_13:injection_task_2:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7f3f8d7bf19b39ac",
+      "case_id": "case-51e07a0c498f95f7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_16:injection_task_1",
+      "source_id": "agentdojo:travel:user_task_16:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fac42c43cdcb71a2",
+      "case_id": "case-53fe198111c38c33",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_2:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-61c40cb5323b4b22",
+      "case_id": "case-549dd53cbb1f368d",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_36:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_36:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-520b0ec23aa2f974",
+      "case_id": "case-552ac986eb984642",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_8:injection_task_2",
+      "source_id": "agentdojo:banking:user_task_8:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7518b2dd50fbb808",
+      "case_id": "case-55746656beb718f8",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_4:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_4:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-55ce995a41f7955c",
+      "case_id": "case-583156375aed7681",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_9:injection_task_5",
+      "source_id": "agentdojo:travel:user_task_9:injection_task_5:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-479fa3ba04ffd923",
+      "case_id": "case-59a34c5a043ba16a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_1:injection_task_5",
+      "source_id": "agentdojo:banking:user_task_1:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-26297cce647f77a3",
+      "case_id": "case-5a4b830adbd21fc3",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_16:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_16:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8a68b9ed63488b82",
+      "case_id": "case-5bca4853e1e66726",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_39:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_39:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-80c8ae86e2f317d0",
+      "case_id": "case-5be53376c2a72d1b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_6:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_6:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9644ea76ff402cc3",
+      "case_id": "case-5e2647ff78737777",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_4:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_4:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a5c54fa23e189bcd",
+      "case_id": "case-617c42314c7a65da",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_15:injection_task_4",
+      "source_id": "agentdojo:slack:user_task_15:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0a5ceb6ac476dd4e",
+      "case_id": "case-654914fb061209b6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_4:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_4:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d6daf074bd00e720",
+      "case_id": "case-6829a24084cf84c4",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_13:injection_task_0",
+      "source_id": "agentdojo:banking:user_task_13:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b826b035e73d98f3",
+      "case_id": "case-6a616b88b5f0bcb0",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_2:tool_call:5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f7c3bc0efa678851",
+      "case_id": "case-6b9232ed7581ea14",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_36:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_36:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-40712351043ba098",
+      "case_id": "case-6c45d6ff06c08515",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_3:injection_task_6",
+      "source_id": "agentdojo:banking:user_task_3:injection_task_6:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-98aecd20cb9ea3b0",
+      "case_id": "case-6e30fce9927ff480",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_19:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_19:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e32014fe29afae34",
+      "case_id": "case-6e8d96433ec531a8",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_12:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_12:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-741febaaff294d7f",
+      "case_id": "case-6f5dd20d2976748c",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_9:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_9:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-651addffa6412cc5",
+      "case_id": "case-6f9e429c879c5d92",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_10:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_10:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cb7df56c7fc5e4a7",
+      "case_id": "case-701cdc04f8952f60",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_32:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_32:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-35527edd729cbf91",
+      "case_id": "case-7111492d49e34fcf",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_15:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_15:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a0b270491728db4f",
+      "case_id": "case-71b720dea513a7bd",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_2:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4871b33cfadcaa7d",
+      "case_id": "case-724f7d150acddbad",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_3",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f906c3372f15d0aa",
+      "case_id": "case-742d8ded3d0aebdd",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_37:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_37:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-96f44899349b7964",
+      "case_id": "case-765b23a891443c6f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_12:injection_task_4",
+      "source_id": "agentdojo:travel:user_task_12:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3488cab1f8e1dde1",
+      "case_id": "case-772fcd181e9fbcbe",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_38:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_38:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-325afe0bc6f8cff8",
+      "case_id": "case-7cce04cf7e305d4b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_25:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_25:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0f8a7ddbc69c2d53",
+      "case_id": "case-7d1411ec1cb5a7f0",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_4:injection_task_1",
+      "source_id": "agentdojo:slack:user_task_4:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-39638ba85c5b5e14",
+      "case_id": "case-7de11c1f4fb38cfd",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_15:injection_task_0",
+      "source_id": "agentdojo:travel:user_task_15:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e9d0c0ec488365a3",
+      "case_id": "case-7e2732c9ae0a119e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_15:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_15:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d89c1857c62ad4e4",
+      "case_id": "case-7e54ac10d265604a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_3:injection_task_3",
+      "source_id": "agentdojo:travel:user_task_3:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9ed192b6c5807daa",
+      "case_id": "case-7f1125a511d5ed27",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_2:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_2:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9c1d962e8e1de0a7",
+      "case_id": "case-807fbe1a9b8d1de9",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_9:injection_task_1",
+      "source_id": "agentdojo:travel:user_task_9:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dd8a93dbf67eaedf",
+      "case_id": "case-80aca399e302595d",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_6:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_6:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2198dee8b17c9312",
+      "case_id": "case-8191eb4c3390a2f5",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_9:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_9:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d2ade2e509971527",
+      "case_id": "case-848158ab0ea0c1cb",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_1:injection_task_3",
+      "source_id": "agentdojo:banking:user_task_1:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dd536037e066abd4",
+      "case_id": "case-850911158722fc6e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_2:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-79960a2159b69b30",
+      "case_id": "case-8598546e107bc67c",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_7:injection_task_2",
+      "source_id": "agentdojo:banking:user_task_7:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-83bf0e37cd533bb1",
+      "case_id": "case-85f6e54288470451",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_2:injection_task_0",
+      "source_id": "agentdojo:travel:user_task_2:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5725f6e0eef929ce",
+      "case_id": "case-8824d50b170caf9d",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-af6fb92a5a532213",
+      "case_id": "case-8899c3b0cb5a17f2",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_3:injection_task_1",
+      "source_id": "agentdojo:slack:user_task_3:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ed586700f2b5ed81",
+      "case_id": "case-89b2c6a6367e248f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_10:injection_task_5",
+      "source_id": "agentdojo:banking:user_task_10:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-eb17f573e7397e6c",
+      "case_id": "case-8ea3ef04d006d15b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_11:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_11:injection_task_2:tool_call:6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-83aa1a07799a7446",
+      "case_id": "case-900b30fd6d543851",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_13:injection_task_1",
+      "source_id": "agentdojo:travel:user_task_13:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fd0fdf5f2f4b788f",
+      "case_id": "case-928ee6c83ed5b519",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_17:injection_task_1",
+      "source_id": "agentdojo:travel:user_task_17:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-16b551324fcd4a95",
+      "case_id": "case-946b02358f883a7e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_10:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_10:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5c46bdf1ead2e476",
+      "case_id": "case-960b150daef9ddbc",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_3:injection_task_8",
+      "source_id": "agentdojo:banking:user_task_3:injection_task_8:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1b666171d8f1fcdf",
+      "case_id": "case-96967d319090baea",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_33:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_33:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78ed12b4d074525e",
+      "case_id": "case-98487605f2021417",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_12:injection_task_1",
+      "source_id": "agentdojo:banking:user_task_12:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a10fef32804c4a25",
+      "case_id": "case-9876b28c96b1813b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_9:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_9:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8573e51024768aa5",
+      "case_id": "case-9a1e214fc8ded3f1",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_2:injection_task_0",
+      "source_id": "agentdojo:banking:user_task_2:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bc06083f3f6ffb04",
+      "case_id": "case-9baa5000368065de",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_15:injection_task_5",
+      "source_id": "agentdojo:travel:user_task_15:injection_task_5:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-85dac19b9e850a27",
+      "case_id": "case-9c0a1d8da96564e1",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_4:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_4:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d712784d42f3cb94",
+      "case_id": "case-9ca4af112a92cd7a",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_20:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_20:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cdf8019b9f8dfede",
+      "case_id": "case-9d4946721979fadc",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_0:injection_task_2",
+      "source_id": "agentdojo:banking:user_task_0:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-69cfbbccccbd7281",
+      "case_id": "case-9ddb67a7ed8f45c4",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_14:injection_task_8",
+      "source_id": "agentdojo:banking:user_task_14:injection_task_8:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9f835416ab7cfe9e",
+      "case_id": "case-9f6c83e3016f3adb",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_2:injection_task_6",
+      "source_id": "agentdojo:banking:user_task_2:injection_task_6:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0cd0b4e05d23e411",
+      "case_id": "case-9fab99640dd65578",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_4:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_4:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a1edbdfc7e6ea2eb",
+      "case_id": "case-a0575311bc238411",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_2:tool_call:6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1436563746fee4a5",
+      "case_id": "case-a094901b1a1ea5f2",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6f86921bbc04da92",
+      "case_id": "case-a1749265df3a3b8c",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_13:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_13:injection_task_2:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-868385f250f4c0f9",
+      "case_id": "case-a441be2af0adb167",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_19:injection_task_2",
+      "source_id": "agentdojo:travel:user_task_19:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-131fc605485fedd0",
+      "case_id": "case-a4b6294518926749",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_20:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_20:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-240e9a140c772138",
+      "case_id": "case-a6b89d53315b4ff4",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_10:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_10:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7c4d18e169e1ad7a",
+      "case_id": "case-a7691788e09341eb",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_15:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_15:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-03243c5de5af08ab",
+      "case_id": "case-aa64c21de75504ba",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_15:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_15:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-af1acb0b43026ae2",
+      "case_id": "case-ae689d77afe56684",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-38c06cc5ea45090a",
+      "case_id": "case-b2756c4323c3f895",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_12:injection_task_7",
+      "source_id": "agentdojo:banking:user_task_12:injection_task_7:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-64a57a6e04be0165",
+      "case_id": "case-b50d6ff17e776418",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_26:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_26:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f41d32555904849b",
+      "case_id": "case-b9e5741130d8b3a5",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_2:tool_call:5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f4ae6cb37f7f623c",
+      "case_id": "case-bc3e5c86a5123ea6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_12:injection_task_0",
+      "source_id": "agentdojo:banking:user_task_12:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8b40c82722bf08b9",
+      "case_id": "case-be66a3b35391c32b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_10:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_10:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5ad9ac187db321cf",
+      "case_id": "case-be84a68346271cac",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_10:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_10:injection_task_2:tool_call:6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1570a8c20481e4df",
+      "case_id": "case-bea211027a52f016",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_11:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_11:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fef35a038683a44f",
+      "case_id": "case-c348eda4496beb1e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_3:injection_task_3",
+      "source_id": "agentdojo:travel:user_task_3:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-648cfc1cbf991ec3",
+      "case_id": "case-c5b7692141b73f65",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_12:injection_task_4",
+      "source_id": "agentdojo:travel:user_task_12:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a5c99106b4cc8400",
+      "case_id": "case-c6f4eb0328d556cf",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_3:injection_task_1",
+      "source_id": "agentdojo:travel:user_task_3:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-19117ec1391463a4",
+      "case_id": "case-c8032b033aa39dc5",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_6:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_6:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a235c0b21c85091c",
+      "case_id": "case-c99433111a68fe99",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_29:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_29:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2119e07653029de6",
+      "case_id": "case-c9b261b99d8880e9",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_29:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_29:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6425eb3701d08b33",
+      "case_id": "case-c9d18cb47acdc39b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_14:injection_task_7",
+      "source_id": "agentdojo:banking:user_task_14:injection_task_7:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-83ac74ca8aeea89f",
+      "case_id": "case-ca18bc953f7c84dc",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_39:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_39:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c7fa23839be5d31c",
+      "case_id": "case-cb08e0629576cce9",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_1",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-01b1870bcb963d19",
+      "case_id": "case-cfd1035fca5949eb",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_5:injection_task_7",
+      "source_id": "agentdojo:banking:user_task_5:injection_task_7:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7cfb81f75219fada",
+      "case_id": "case-d1506a32fd006894",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_6:injection_task_0",
+      "source_id": "agentdojo:travel:user_task_6:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c9d6a721ca21b672",
+      "case_id": "case-d34ad07b97818de3",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_7:injection_task_1",
+      "source_id": "agentdojo:banking:user_task_7:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b8d6323b95ebef2b",
+      "case_id": "case-d41c08735eec061d",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_29:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_29:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a1cb45ff30dccefd",
+      "case_id": "case-d9712256b20c64f6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_19:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_19:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c54dfa32f7b83b90",
+      "case_id": "case-daa45b09893be325",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_4:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_4:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8e27ca4c186925c4",
+      "case_id": "case-db49db5d96108116",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_16:injection_task_2",
+      "source_id": "agentdojo:workspace:user_task_16:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-505c880ad7c0b902",
+      "case_id": "case-df2d45aa1c1da81b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_19:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_19:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-df9c4beb21f8c849",
+      "case_id": "case-dff63dfeff9c8aa7",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_1:injection_task_3",
+      "source_id": "agentdojo:travel:user_task_1:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-752480fca46ec6f7",
+      "case_id": "case-e03bbdde92118c8b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_21:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_21:injection_task_5:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9cd181605d554be2",
+      "case_id": "case-e1ab4349372589c6",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_0:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_0:injection_task_2:tool_call:5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78e92361c9a4c43a",
+      "case_id": "case-e6f8a2a216b240b3",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_16:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_16:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0359e91421d9e826",
+      "case_id": "case-e772762393fd2e11",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_38:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_38:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cc3dce3452cce922",
+      "case_id": "case-e856fde057ea32d4",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_12:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_12:injection_task_4:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9c5d631e276ab262",
+      "case_id": "case-eec0f875546805db",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_17:injection_task_1",
+      "source_id": "agentdojo:workspace:user_task_17:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f965cc0d0b1bc5b8",
+      "case_id": "case-eeda2ffa4ae8620e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_7:injection_task_0",
+      "source_id": "agentdojo:workspace:user_task_7:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0a7211061b1549ec",
+      "case_id": "case-f09c45e855efbefe",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_37:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_37:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0e1734bd84479d06",
+      "case_id": "case-f20662b1e665a17d",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_8:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_8:injection_task_5:tool_call:3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5a0c58fd30990387",
+      "case_id": "case-f28a0de41d3c7b2c",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_9:injection_task_3",
+      "source_id": "agentdojo:banking:user_task_9:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6c0926a28a34525e",
+      "case_id": "case-f430b66227454d2d",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_14:injection_task_5",
+      "source_id": "agentdojo:travel:user_task_14:injection_task_5:tool_call:4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-daa5cc3c68a76d5f",
+      "case_id": "case-f4fee8eab523f1d3",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_13:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_13:injection_task_2:tool_call:5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-75e988e5b24137ef",
+      "case_id": "case-f5706f8d91a1bcce",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_13:injection_task_2",
+      "source_id": "agentdojo:slack:user_task_13:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a09434cdf6650de6",
+      "case_id": "case-f5a042017e200567",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_31:injection_task_3",
+      "source_id": "agentdojo:workspace:user_task_31:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f505d6004580d7b6",
+      "case_id": "case-f6adf3e4af12ddfd",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_3:injection_task_8",
+      "source_id": "agentdojo:banking:user_task_3:injection_task_8:tool_call:2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2e6a7111118c86ad",
+      "case_id": "case-f75b1a01b27b55ff",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_6:injection_task_4",
+      "source_id": "agentdojo:banking:user_task_6:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f034faf39201fa87",
+      "case_id": "case-f873bee869a4907f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_10:injection_task_0",
+      "source_id": "agentdojo:travel:user_task_10:injection_task_0:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52de6e79fa12ad66",
+      "case_id": "case-f9aea2b1478f5fde",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_20:injection_task_1",
+      "source_id": "agentdojo:slack:user_task_20:injection_task_1:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e11d3838fff5c0ff",
+      "case_id": "case-f9b8ed7f5d3fd46e",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_19:injection_task_2",
+      "source_id": "agentdojo:workspace:user_task_19:injection_task_2:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-34831421bdc15116",
+      "case_id": "case-fad2e8710c13d364",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:banking:user_task_8:injection_task_5",
+      "source_id": "agentdojo:banking:user_task_8:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-24a7fb0f986adcd8",
+      "case_id": "case-fb7ef768a76a9795",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_5:injection_task_5",
+      "source_id": "agentdojo:slack:user_task_5:injection_task_5:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-42fc44ade8bc0970",
+      "case_id": "case-fd92217d718d1458",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:slack:user_task_2:injection_task_3",
+      "source_id": "agentdojo:slack:user_task_2:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e74337ef4d16ed99",
+      "case_id": "case-feb0e882f07e7daf",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_6:injection_task_4",
+      "source_id": "agentdojo:workspace:user_task_6:injection_task_4:tool_call:1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2367eec1da2bccfe",
+      "case_id": "case-ffe0d66c1bd6357b",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_6:injection_task_5",
+      "source_id": "agentdojo:travel:user_task_6:injection_task_5:tool_call:4",
+      "split": "holdout"
+    }
+  ],
+  "created_at": "2026-08-19T06:46:27Z",
+  "created_from": {
+    "agentdojo": {
+      "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
+      "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+    }
+  },
+  "manifest_sha256": "sha256:b959df688b9d587198183208a8c3a5ade5a42d1f1b59d3799fa209041a0aff8b",
+  "manifest_version": "v3.1",
+  "n": 187,
+  "project": "P2_tool_action",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_cumulative_count_v1",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    }
+  },
+  "split": [
+    "holdout"
+  ],
+  "suite": "holdout-v1",
+  "target": 0
+}

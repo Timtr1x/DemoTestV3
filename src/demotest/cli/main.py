@@ -12,6 +12,8 @@ from ..core.redactor import SecretRedactor
 from ..paths import RESULTS_DIR, REPORTS_DIR
 from . import analyze as analyze_cmd
 from . import compare as compare_cmd
+from . import dataset as dataset_cmd
+from . import manifest as manifest_cmd
 from . import render as render_cmd
 from . import report as report_cmd
 from . import run as run_cmd
@@ -43,6 +45,8 @@ def main(argv: list[str] | None = None) -> int:
     analyze_cmd.add_parser(sub)
     report_cmd.add_parser(sub)
     compare_cmd.add_parser(sub)
+    dataset_cmd.add_parser(sub)
+    manifest_cmd.add_parser(sub)
 
     args = parser.parse_args(argv)
     try:

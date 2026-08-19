@@ -1,0 +1,74 @@
+"""Generate benchmarks/suites/*.json suite summaries (guide §1, §36).
+
+A suite summary aggregates the frozen per-project manifests of one suite into
+a single committed file: the manifest paths, total case count, source locks,
+seed, split, and the manifest sha256s. It is benchmark identity, committed to
+git alongside the manifests.
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+_SRC = Path(__file__).resolve().parents[1] / "src"
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
+
+from demotest.config import get_suite, load_suites
+from demotest.datasets.manifest_builder import load_manifest
+from demotest.datasets.source_lock import load_source_lock
+
+
+def build_suite_summary(suite_id: str) -> dict:
+    suite = get_suite(suite_id)
+    projects = {}
+    total = 0
+    for pid, ptarget in suite.projects.items():
+        mpath = Path(ptarget.manifest)
+        manifest = load_manifest(mpath) if mpath.exists() else {}
+        n = manifest.get("n", 0)
+        total += n
+        projects[pid] = {
+            "manifest": ptarget.manifest,
+            "manifest_sha256": manifest.get("manifest_sha256", ""),
+            "n": n,
+            "target": ptarget.target,
+            "split": manifest.get("split", []),
+        }
+    # source locks for datasets feeding these projects
+    from demotest.cli.manifest import _DATASETS_BY_PROJECT
+    locks = {}
+    for pid in suite.projects:
+        for ds_id in _DATASETS_BY_PROJECT.get(pid, []):
+            if ds_id in locks:
+                continue
+            try:
+                lk = load_source_lock(ds_id)
+                locks[ds_id] = {"revision": lk.revision, "raw_sha256": lk.raw_sha256,
+                                "adapter": lk.adapter_name, "adapter_version": lk.adapter_version}
+            except Exception:
+                pass
+    return {
+        "suite_id": suite_id,
+        "seed": suite.seed,
+        "split": suite.split,
+        "total_cases": total,
+        "projects": projects,
+        "source_locks": locks,
+    }
+
+
+def main() -> int:
+    out_dir = Path("benchmarks/suites")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for sid in load_suites():
+        summary = build_suite_summary(sid)
+        p = out_dir / f"{sid}.json"
+        p.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        print(f"wrote {p}: total_cases={summary['total_cases']} projects={len(summary['projects'])}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,81 @@
+# AgentDojo adapter config (guide §17-§29).
+#
+# AgentDojo is an *executable* benchmark: ground truth (UserTask / InjectionTask
+# / environment injection vectors / ground-truth tool actions) lives in the
+# suite/task code at the pinned commit. The adapter imports the official suite
+# objects and projects them deterministically into SecurityCase — it does NOT
+# regex-parse source, does NOT ask an LLM to (re)write attacks (guide §21, §24,
+# §25, §52). One original security case may yield TWO derived cases
+# (tool_result for P1 + tool_call for P2) with independent source_ids and a
+# shared parent (guide §21).
+
+dataset_id: agentdojo
+
+benchmark_version: v1
+
+suites:
+  - workspace
+  - travel
+  - banking
+  - slack
+
+# Projections: which derived channel each original case produces.
+projections:
+  tool_result:
+    channel: tool_result
+    operation: read
+    direction: inbound
+    project: P1_external_instruction
+    # content mirrors tool_result so RAW fidelity is a valid fallback (guide §18)
+    content_from: tool_result
+    expected_action: block          # an injected tool result must be blocked
+  tool_call:
+    channel: tool_call
+    operation: execute_tool
+    direction: outbound
+    project: P2_tool_action
+    # the dangerous tool call the injection would induce (guide §19)
+    fields:
+      user_intent: user_task_prompt
+      tool_name: ground_truth_tool
+      tool_arguments: ground_truth_arguments
+    expected_action: block
+
+metadata:
+  source_dataset: agentdojo
+  quality_tier: A          # original security cases (guide §25); derived = A-derived
+  derivation: deterministic_projection
+  keep:
+    - source_task_id
+    - source_security_case_id
+    - environment          # suite name (workspace/travel/banking/slack)
+    - user_task
+    - attack
+    - trajectory_step
+    - derived_channel
+    - parent_source_id
+
+# Split grouping (guide §22): tool_result + tool_call from the SAME parent case
+# must share a split to prevent train/test leakage.
+split_group:
+  group_id: parent_source_id
+
+# Per-suite selection targets (AgentDojo portion).
+suite_targets:
+  smoke-v1:
+    tool_result: 80
+    tool_call: 80
+  phase1-standard-v1:
+    tool_result: 540
+    tool_call: 480
+  phase1-full-v1:
+    tool_result: 600
+    tool_call: 800
+
+# Running the real projection requires the agentdojo package importable from the
+# pinned clone:  pip install -e cache/datasets_v3/raw/agentdojo
+# (guide §19). The adapter imports it lazily so the module loads without it;
+# unit tests use synthetic task fixtures shaped like the real objects.
+runtime:
+  require_import: agentdojo.task_suite.load_suites
+  inject_src_path: src   # add raw_dir/src to sys.path before import

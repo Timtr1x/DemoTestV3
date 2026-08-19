@@ -1,0 +1,47 @@
+# V3 benchmark suites (guide §39-§42, §63).
+#
+# A suite bundles one or more *projects* (P1/P2) into a named benchmark run,
+# each project pointing at a frozen manifest. Suite identity is fixed once
+# frozen: a new selection = a new suite version (standard-v1 -> standard-v2),
+# never an in-place overwrite (guide §37, §64).
+#
+# Split policy per suite (guide §31, §61):
+#   smoke-v1            draws from DEV   (CI / adapter / renderer debugging)
+#   phase1-standard-v1  draws from EVAL  (the first real, reportable number)
+#   phase1-full-v1      draws from EVAL + HOLDOUT (all reserved cases)
+# HOLDOUT case bodies are never copied; they resolve from the raw dataset.
+
+suites:
+
+  smoke-v1:
+    seed: 42
+    split: dev
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/smoke-v1/p1.json
+        target: 100
+      P2_tool_action:
+        manifest: benchmarks/manifests/smoke-v1/p2.json
+        target: 100
+
+  phase1-standard-v1:
+    seed: 42
+    split: eval
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-standard-v1/p1.json
+        target: 1740
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-standard-v1/p2.json
+        target: 540
+
+  phase1-full-v1:
+    seed: 42
+    split: [eval, holdout]
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-full-v1/p1.json
+        target: 2900
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-full-v1/p2.json
+        target: 800

@@ -24,3 +24,15 @@ class RendererError(DemoTestError):
 
 class TargetError(DemoTestError):
     """Target adapter misconfiguration or unrecoverable transport failure."""
+
+
+class DatasetSourceError(DemoTestError):
+    """Dataset source problem: missing files, bad revision, hash mismatch."""
+
+
+class DatasetSourceDirtyError(DatasetSourceError):
+    """A pinned source was locally modified (e.g. agentdojo working tree not clean).
+
+    Guide §29: a dirty working tree must fail verify-source rather than silently
+    run as "official" data.
+    """

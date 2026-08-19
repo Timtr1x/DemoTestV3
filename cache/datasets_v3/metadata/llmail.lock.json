@@ -1,0 +1,12 @@
+{
+  "acquired_at": "2026-08-19T05:45:04Z",
+  "adapter_name": "llmail",
+  "adapter_version": "1.0.0",
+  "dataset_id": "llmail",
+  "extra": {},
+  "license": "MIT",
+  "raw_sha256": "a223abaf159dfa6e688d4efe515c93d239cf658797e78c3b12ec5785c09fca92",
+  "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "source_type": "huggingface_dataset",
+  "source_uri": "microsoft/llmail-inject-challenge"
+}

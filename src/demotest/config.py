@@ -3,6 +3,11 @@
 V3 config lives under ``config/v3/`` to stay separate from V2's ``config/``.
 Project configs map P1-P5 to channels + renderers + oracle + metrics.
 Target configs define transport (url/key/model/headers/no-failover).
+
+Dataset Integration (Phase 1) adds three more config files:
+  * ``datasets.yaml``  — registry of pinned external sources
+  * ``datasets/<id>.yaml`` — per-dataset adapter mapping + dedup/stratification
+  * ``suites.yaml``    — frozen benchmark suites (smoke/standard/full)
 """
 from __future__ import annotations
 
@@ -13,9 +18,10 @@ from typing import Any
 import yaml
 
 from .core.exceptions import ConfigError, ValidationError
-from .paths import CONFIG_DIR
+from .paths import CONFIG_DIR, V3_CONFIG_DIR
 
 V3_CONFIG_DIR = CONFIG_DIR / "v3"
+DATASETS_CONFIG_DIR = V3_CONFIG_DIR / "datasets"
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -135,3 +141,164 @@ def get_target(name: str, path: Path | None = None) -> TargetConfig:
     if name not in targets:
         raise ConfigError(f"unknown target {name!r}; known: {sorted(targets)}")
     return targets[name]
+
+
+# ===========================================================================
+# Dataset Integration (Phase 1) — datasets.yaml + suites.yaml + per-dataset
+# ===========================================================================
+@dataclass
+class DatasetSourceConfig:
+    """One pinned external source (datasets.yaml)."""
+
+    name: str
+    adapter: str
+    adapter_version: str = "1.0.0"
+    enabled: bool = True
+    quality_tier: str = "A"
+    source_type: str = ""  # huggingface_dataset | github
+    source_uri: str = ""  # repo_id or owner/repo
+    revision: str = ""
+    license: str | None = None
+    benchmark_version: str | None = None  # agentdojo
+    allow_patterns: list[str] = field(default_factory=list)  # HF snapshot_download
+    hash_globs: list[str] = field(default_factory=list)  # git clone snapshot hash scope
+    raw_dir: str = ""
+    normalized_dir: str = ""
+
+    @property
+    def raw_path(self) -> Path:
+        from .paths import REPO_ROOT
+        return REPO_ROOT / self.raw_dir if self.raw_dir else REPO_ROOT / "cache" / "datasets_v3" / "raw" / self.name
+
+    @property
+    def normalized_path(self) -> Path:
+        from .paths import REPO_ROOT
+        return (
+            REPO_ROOT / self.normalized_dir
+            if self.normalized_dir
+            else REPO_ROOT / "cache" / "datasets_v3" / "normalized" / self.name
+        )
+
+
+@dataclass
+class DatasetProjectionConfig:
+    """Per-dataset adapter mapping + dedup + stratification (datasets/<id>.yaml)."""
+
+    dataset_id: str
+    benchmark_version: str | None = None
+    suites: list[str] = field(default_factory=list)
+    files: dict[str, list[str]] = field(default_factory=dict)
+    projection: dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+    dedup: dict[str, Any] = field(default_factory=dict)
+    stratification: dict[str, Any] = field(default_factory=dict)
+    split_group: dict[str, Any] = field(default_factory=dict)
+    suite_targets: dict[str, dict[str, int]] = field(default_factory=dict)
+    runtime: dict[str, Any] = field(default_factory=dict)
+
+
+def load_datasets(path: Path | None = None) -> dict[str, DatasetSourceConfig]:
+    p = path or (V3_CONFIG_DIR / "datasets.yaml")
+    data = _load_yaml(p)
+    out: dict[str, DatasetSourceConfig] = {}
+    for name, cfg in (data.get("datasets") or {}).items():
+        cfg = dict(cfg or {})
+        src = dict(cfg.get("source") or {})
+        stype = str(src.get("type", ""))
+        out[name] = DatasetSourceConfig(
+            name=name,
+            adapter=str(cfg.get("adapter", name)),
+            adapter_version=str(cfg.get("adapter_version", "1.0.0")),
+            enabled=bool(cfg.get("enabled", True)),
+            quality_tier=str(cfg.get("quality_tier", "A")),
+            source_type=stype,
+            source_uri=str(src.get("repo_id") or src.get("repository") or ""),
+            revision=str(src.get("revision") or ""),
+            license=src.get("license"),
+            benchmark_version=src.get("benchmark_version"),
+            allow_patterns=list(src.get("allow_patterns") or []),
+            hash_globs=list(src.get("hash_globs") or []),
+            raw_dir=str(cfg.get("raw_dir") or ""),
+            normalized_dir=str(cfg.get("normalized_dir") or ""),
+        )
+    return out
+
+
+def get_dataset(name: str, path: Path | None = None) -> DatasetSourceConfig:
+    ds = load_datasets(path)
+    if name not in ds:
+        raise ConfigError(f"unknown dataset {name!r}; known: {sorted(ds)}")
+    return ds[name]
+
+
+def load_dataset_projection(dataset_id: str, path: Path | None = None) -> DatasetProjectionConfig:
+    """Load the per-dataset adapter mapping YAML."""
+    p = path or (DATASETS_CONFIG_DIR / f"{dataset_id}.yaml")
+    data = _load_yaml(p)
+    if not data:
+        raise ConfigError(f"dataset projection config not found: {p}")
+    return DatasetProjectionConfig(
+        dataset_id=str(data.get("dataset_id") or dataset_id),
+        benchmark_version=data.get("benchmark_version"),
+        suites=list(data.get("suites") or []),
+        files=dict(data.get("files") or {}),
+        projection=dict(data.get("projection") or {}),
+        metadata=dict(data.get("metadata") or {}),
+        dedup=dict(data.get("dedup") or {}),
+        stratification=dict(data.get("stratification") or {}),
+        split_group=dict(data.get("split_group") or {}),
+        suite_targets=dict(data.get("suite_targets") or {}),
+        runtime=dict(data.get("runtime") or {}),
+    )
+
+
+@dataclass
+class SuiteProjectTarget:
+    project: str
+    manifest: str  # repo-relative path to frozen manifest
+    target: int = 0
+
+
+@dataclass
+class SuiteConfig:
+    suite_id: str
+    seed: int = 42
+    split: list[str] = field(default_factory=list)  # ["eval"] or ["eval","holdout"]
+    projects: dict[str, SuiteProjectTarget] = field(default_factory=dict)
+
+    def split_set(self) -> set[str]:
+        s = self.split or ["eval"]
+        return set(s)
+
+
+def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
+    p = path or (V3_CONFIG_DIR / "suites.yaml")
+    data = _load_yaml(p)
+    out: dict[str, SuiteConfig] = {}
+    for sid, cfg in (data.get("suites") or {}).items():
+        cfg = dict(cfg or {})
+        split = cfg.get("split", "eval")
+        if isinstance(split, str):
+            split = [split]
+        projects: dict[str, SuiteProjectTarget] = {}
+        for pid, pcfg in (cfg.get("projects") or {}).items():
+            pcfg = dict(pcfg or {})
+            projects[pid] = SuiteProjectTarget(
+                project=pid,
+                manifest=str(pcfg.get("manifest") or ""),
+                target=int(pcfg.get("target", 0)),
+            )
+        out[sid] = SuiteConfig(
+            suite_id=sid,
+            seed=int(cfg.get("seed", 42)),
+            split=list(split),
+            projects=projects,
+        )
+    return out
+
+
+def get_suite(suite_id: str, path: Path | None = None) -> SuiteConfig:
+    suites = load_suites(path)
+    if suite_id not in suites:
+        raise ConfigError(f"unknown suite {suite_id!r}; known: {sorted(suites)}")
+    return suites[suite_id]

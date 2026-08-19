@@ -1,0 +1,87 @@
+# LLMail-Inject adapter config (guide §3-§16).
+#
+# Source of truth for fields: the official labelled_unique_submissions files
+# already aggregate near-duplicate attacker submissions and carry labels
+# (attack_attempt / reason / judge_category). The adapter is a DETERMINISTIC
+# projection: raw row -> SecurityCase. It MUST NOT rewrite, translate, or
+# augment payloads (guide §11, §52).
+
+dataset_id: llmail
+
+# Files the adapter reads (relative to raw_dir). The FP emails are benign.
+files:
+  attack:
+    - data/labelled_unique_submissions_phase1.json
+    - data/labelled_unique_submissions_phase2.json
+  benign:
+    - data/emails_for_fp_tests.json
+  context:
+    - data/scenarios.json
+    - data/levels_descriptions.json
+    - data/objectives_descriptions.json
+    - data/system_prompt.json
+
+# SecurityCase projection
+projection:
+  channel: email
+  operation: read
+  direction: inbound
+  project: P1_external_instruction
+  # content = the original prompt/body verbatim (guide §51: must be unchanged).
+  content_field: prompt   # resolved at load; falls back to body/subject
+  expected_action:
+    attack: block
+    benign: allow
+
+# Metadata preserved per case (guide §10, §13)
+metadata:
+  source_dataset: llmail
+  quality_tier: A
+  derivation: original
+  keep:
+    - source_phase        # phase1 | phase2
+    - team_id
+    - scenario
+    - attack_goal
+    - original_label      # attack_attempt
+    - original_success
+    - label_source        # api_triggered | judge
+    - judge_category
+
+# Quality / dedup (guide §12-§16)
+dedup:
+  exact: true             # Level 1: raw_sha256, keep one, record duplicate_count
+  normalized: true        # Level 2: NFC + CRLF->LF + strip BOM + rstrip (no lowercase/punct strip)
+  near_duplicate:
+    method: char_ngram_jaccard   # no external dep; MinHash optional later
+    n: 5
+    threshold: 0.85
+    # cluster id stored in metadata.near_dup_cluster_id; payloads never auto-changed
+
+stratification:
+  keys:
+    - source_phase
+    - scenario
+    - attack_goal
+    - original_success
+    - near_dup_cluster_id
+  caps:
+    max_team_share: 0.05   # single team <= 5% of P1 attack samples (guide §16)
+    max_cluster_share: 0.01
+
+# Split grouping (guide §22): near-duplicate attacks must share a split.
+split_group:
+  group_id: near_dup_cluster_id
+
+# Per-suite selection targets for the LLMail portion of each project.
+# Actual manifest sizes also include AgentDojo + benign (see suites.yaml).
+suite_targets:
+  smoke-v1:
+    attack: 60
+    benign: 20
+  phase1-standard-v1:
+    attack: 1500
+    benign: 240
+  phase1-full-v1:
+    attack: 1900
+    benign: 400

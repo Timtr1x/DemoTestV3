@@ -240,7 +240,7 @@ class SecurityCase:
         op = Operation.from_value(operation)
         threat_id = str(kwargs.get("threat_id") or "")
         case_id = compute_case_id(dataset_id, source_id, ch.value, op.value, threat_id)
-        direction = kwargs.get("direction")
+        direction = kwargs.pop("direction", None)
         if direction is None:
             direction = (
                 Direction.OUTBOUND if ch in _OUTBOUND_CHANNELS else Direction.INBOUND
