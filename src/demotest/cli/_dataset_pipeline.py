@@ -115,10 +115,66 @@ def _build_adapter(ds: DatasetSourceConfig, max_cases: int | None):
     return get_adapter(ds.adapter, source_config=ds)
 
 
-def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None) -> PrepareReport:
-    """Raw -> normalized + dedup. Writes a jsonl snapshot of SecurityCase dicts."""
-    adapter = _build_adapter(ds, max_cases)
-    raw_cases = adapter.cases()
+# ---- LLMail bounded pool (default A): 1900 attacks (phase-balanced) + 160 benign
+
+_LM_BOUNDED_ATTACKS = 3700  # guide §33: P1 ~1,900 attack
+_LM_PHASE1_SHARE = 0.85     # phase1 dominates (127K vs 21K), but keep 15% phase2
+
+
+def _llmail_bounded_pool(ds: DatasetSourceConfig, *, target_attacks: int = _LM_BOUNDED_ATTACKS):
+    """Stream a bounded LLMail pool deterministically via hash-rank.
+
+    Phase quotas (~1615 / ~285) then hash-rank within each phase keep the pool
+    stratification-aligned (§16) and reproducible (no random.sample).
+    """
+    import hashlib
+
+    n1 = max(0, int(round(target_attacks * _LM_PHASE1_SHARE)))
+    n2 = max(0, target_attacks - n1)
+    phase_targets = {"phase1": n1, "phase2": n2}
+
+    def key_of(phase: str, source_id: str) -> str:
+        raw = f"llmail|{phase}|{source_id}"
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+    adapter = _build_adapter(ds, None)  # no per-phase cap; we cap here
+    buckets: dict[str, list] = {"phase1": [], "phase2": []}
+    benign: list = []
+    for c in adapter.iter_cases():
+        m = c.metadata or {}
+        ph = m.get("source_phase", "phase1")
+        if c.expected_action.value == "allow":
+            benign.append(c)
+        elif ph in buckets:
+            buckets[ph].append((key_of(ph, c.source_id), c))
+        else:
+            buckets["phase1"].append((key_of("phase1", c.source_id), c))
+    out = []
+    for ph in ("phase1", "phase2"):
+        rows = buckets[ph]
+        rows.sort(key=lambda kv: kv[0])
+        out.extend(c for _, c in rows[: phase_targets[ph]])
+    out.extend(benign)
+    return out
+
+
+def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, full: bool = False) -> PrepareReport:
+    """Raw -> normalized + dedup. Writes a jsonl snapshot of SecurityCase dicts.
+
+    Default A (guide §33): LLMail is bounded to ~1900 attacks + 160 benign via
+    deterministic phase-stratified hash-rank (~7MB). Pass --full to materialize
+    the full 148545 candidate pool (483M, for provenance/evidence only).
+    """
+    bounded = (ds.name == "llmail" and max_cases is None and not full)
+    if bounded:
+        raw_cases = _llmail_bounded_pool(ds)
+        adapter_version = "1.0.0"
+        adapter_revision = ds.revision
+    else:
+        adapter = _build_adapter(ds, max_cases)
+        raw_cases = adapter.cases()
+        adapter_version = adapter.adapter_version
+        adapter_revision = adapter.source_metadata().get("revision", ds.revision)
     proj = load_dataset_projection(ds.name)
     dd = proj.dedup or {}
     near = dd.get("near_duplicate") or {}
@@ -144,8 +200,8 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None) ->
     # write a small provenance sidecar
     meta = {
         "dataset_id": ds.name,
-        "adapter_version": adapter.adapter_version,
-        "revision": adapter.source_metadata().get("revision", ds.revision),
+        "adapter_version": adapter_version,
+        "revision": adapter_revision,
         "n_cases": len(cases),
         "dedup": {
             "exact_duplicates": rep.n_exact_duplicates,

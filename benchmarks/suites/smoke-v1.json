@@ -2,34 +2,20 @@
   "projects": {
     "P1_external_instruction": {
       "manifest": "benchmarks/manifests/smoke-v1/p1.json",
-      "manifest_sha256": "sha256:1bfe1c249b5a6c862a000c6c269326e140a0fe95ec4643df2d896ff6351c9fa1",
-      "n": 100,
-      "split": [
-        "dev"
-      ],
-      "target": 100
+      "n": 100
     },
     "P2_tool_action": {
       "manifest": "benchmarks/manifests/smoke-v1/p2.json",
-      "manifest_sha256": "sha256:7cd655323f929c43d73ebc8b84944821399082ba0f6a5ff9c79258cf0242fdd5",
-      "n": 100,
-      "split": [
-        "dev"
-      ],
-      "target": 100
+      "n": 100
     }
   },
   "seed": 42,
   "source_locks": {
     "agentdojo": {
-      "adapter": "agentdojo",
-      "adapter_version": "1.0.0",
       "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
     },
     "llmail": {
-      "adapter": "llmail",
-      "adapter_version": "1.0.0",
       "raw_sha256": "a223abaf159dfa6e688d4efe515c93d239cf658797e78c3b12ec5785c09fca92",
       "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
     }

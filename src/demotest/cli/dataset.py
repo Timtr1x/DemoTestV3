@@ -42,6 +42,7 @@ def add_parser(sub) -> None:
     pr = sp.add_parser("prepare", help="Raw -> normalized SecurityCase (no sampling)")
     pr.add_argument("--dataset", required=True)
     pr.add_argument("--max", type=int, default=0, help="cap cases (0 = all; for smoke)")
+    pr.add_argument("--full", action="store_true", help="for llmail: write the full 148K candidate pool (483M); default is bounded ~2.3k (guide §33)")
     pr.set_defaults(func=cmd_prepare)
 
     ve = sp.add_parser("verify", help="Verify normalized snapshot integrity")
@@ -131,7 +132,8 @@ def cmd_verify_source(args) -> int:
 
 def cmd_prepare(args) -> int:
     ds = get_dataset(args.dataset)
-    report = pipeline.prepare_dataset(ds, max_cases=args.max or None)
+    full = bool(getattr(args, "full", False))
+    report = pipeline.prepare_dataset(ds, max_cases=args.max or None, full=full)
     print(f"prepared {ds.name}: cases={report.n_cases} kept={report.n_kept}")
     print(f"  exact_dup={report.n_exact} normalized_dup={report.n_norm} clusters={report.n_clusters}")
     print(f"  normalized -> {ds.normalized_path}")
