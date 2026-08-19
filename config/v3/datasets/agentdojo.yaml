@@ -1,13 +1,15 @@
-# AgentDojo adapter config (guide §17-§29).
+# AgentDojo adapter config (guide §17-§29, fix round v1.1.0).
 #
-# AgentDojo is an *executable* benchmark: ground truth (UserTask / InjectionTask
-# / environment injection vectors / ground-truth tool actions) lives in the
+# AgentDojo is an *executable* benchmark: ground truth (UserTask /
+# InjectionTask / environment / ground-truth tool actions) lives in the
 # suite/task code at the pinned commit. The adapter imports the official suite
 # objects and projects them deterministically into SecurityCase — it does NOT
-# regex-parse source, does NOT ask an LLM to (re)write attacks (guide §21, §24,
-# §25, §52). One original security case may yield TWO derived cases
-# (tool_result for P1 + tool_call for P2) with independent source_ids and a
-# shared parent (guide §21).
+# regex-parse source, does NOT ask an LLM to (re)write attacks.
+#
+# Fix round P0-2: P1 tool_result from default injection vectors is REMOVED from
+# core (it was environment content, not an attacker payload, and leaked the
+# attacker goal into content). P1 is now LLMail-only. AgentDojo core is P2
+# tool_call only (quality B, deterministic_projection).
 
 dataset_id: agentdojo
 
@@ -19,22 +21,13 @@ suites:
   - banking
   - slack
 
-# Projections: which derived channel each original case produces.
+# Projections — core only exposes tool_call (P2).
 projections:
-  tool_result:
-    channel: tool_result
-    operation: read
-    direction: inbound
-    project: P1_external_instruction
-    # content mirrors tool_result so RAW fidelity is a valid fallback (guide §18)
-    content_from: tool_result
-    expected_action: block          # an injected tool result must be blocked
   tool_call:
     channel: tool_call
     operation: execute_tool
     direction: outbound
     project: P2_tool_action
-    # the dangerous tool call the injection would induce (guide §19)
     fields:
       user_intent: user_task_prompt
       tool_name: ground_truth_tool
@@ -43,39 +36,32 @@ projections:
 
 metadata:
   source_dataset: agentdojo
-  quality_tier: A          # original security cases (guide §25); derived = A-derived
+  quality_tier: B
   derivation: deterministic_projection
   keep:
     - source_task_id
     - source_security_case_id
-    - environment          # suite name (workspace/travel/banking/slack)
+    - environment
     - user_task
     - attack
     - trajectory_step
     - derived_channel
     - parent_source_id
 
-# Split grouping (guide §22): tool_result + tool_call from the SAME parent case
-# must share a split to prevent train/test leakage.
+# Split grouping: tool_call cases from distinct parents are independent;
+# group_id is parent_source_id so future tool_result+tool_call pairing stays together.
 split_group:
   group_id: parent_source_id
 
-# Per-suite selection targets (AgentDojo portion).
+# Per-suite selection targets (P2 tool_call only; P1 is LLMail).
 suite_targets:
-  smoke-v1:
-    tool_result: 80
+  smoke-v2:
     tool_call: 80
-  phase1-standard-v1:
-    tool_result: 540
-    tool_call: 480
-  phase1-full-v1:
-    tool_result: 600
-    tool_call: 800
+  phase1-standard-v2:
+    tool_call: 540
+  phase1-full-v2:
+    tool_call: 773
 
-# Running the real projection requires the agentdojo package importable from the
-# pinned clone:  pip install -e cache/datasets_v3/raw/agentdojo
-# (guide §19). The adapter imports it lazily so the module loads without it;
-# unit tests use synthetic task fixtures shaped like the real objects.
 runtime:
   require_import: agentdojo.task_suite.load_suites
-  inject_src_path: src   # add raw_dir/src to sys.path before import
+  inject_src_path: src

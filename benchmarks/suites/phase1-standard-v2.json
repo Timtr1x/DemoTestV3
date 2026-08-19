@@ -1,22 +1,22 @@
 {
   "projects": {
     "P1_external_instruction": {
-      "manifest": "benchmarks/manifests/smoke-v1/p1.json",
-      "manifest_sha256": "sha256:1bfe1c249b5a6c862a000c6c269326e140a0fe95ec4643df2d896ff6351c9fa1",
-      "n": 100,
+      "manifest": "benchmarks/manifests/phase1-standard-v2/p1.json",
+      "manifest_sha256": "sha256:dc93dcf20365abfe23ec994043e2191004e56604c1ca8e5c8b13b1b835c8ec82",
+      "n": 1674,
       "split": [
-        "dev"
+        "eval"
       ],
-      "target": 100
+      "target": 1740
     },
     "P2_tool_action": {
-      "manifest": "benchmarks/manifests/smoke-v1/p2.json",
-      "manifest_sha256": "sha256:7cd655323f929c43d73ebc8b84944821399082ba0f6a5ff9c79258cf0242fdd5",
-      "n": 100,
+      "manifest": "benchmarks/manifests/phase1-standard-v2/p2.json",
+      "manifest_sha256": "sha256:dcf4c6b591668995546227dee4008661bfee311437c91170771a6f35e779ccef",
+      "n": 540,
       "split": [
-        "dev"
+        "eval"
       ],
-      "target": 100
+      "target": 540
     }
   },
   "seed": 42,
@@ -35,8 +35,8 @@
     }
   },
   "split": [
-    "dev"
+    "eval"
   ],
-  "suite_id": "smoke-v1",
-  "total_cases": 200
+  "suite_id": "phase1-standard-v2",
+  "total_cases": 2214
 }

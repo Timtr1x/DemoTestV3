@@ -257,6 +257,8 @@ class SuiteProjectTarget:
     project: str
     manifest: str  # repo-relative path to frozen manifest
     target: int = 0
+    strata: list[dict] = field(default_factory=list)
+    max_cluster_share: float | None = None
 
 
 @dataclass
@@ -264,6 +266,7 @@ class SuiteConfig:
     suite_id: str
     seed: int = 42
     split: list[str] = field(default_factory=list)  # ["eval"] or ["eval","holdout"]
+    split_version: str = "split-v1"
     projects: dict[str, SuiteProjectTarget] = field(default_factory=dict)
 
     def split_set(self) -> set[str]:
@@ -283,15 +286,19 @@ def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
         projects: dict[str, SuiteProjectTarget] = {}
         for pid, pcfg in (cfg.get("projects") or {}).items():
             pcfg = dict(pcfg or {})
+            mcs = pcfg.get("max_cluster_share")
             projects[pid] = SuiteProjectTarget(
                 project=pid,
                 manifest=str(pcfg.get("manifest") or ""),
                 target=int(pcfg.get("target", 0)),
+                strata=list(pcfg.get("strata") or []),
+                max_cluster_share=float(mcs) if mcs is not None else None,
             )
         out[sid] = SuiteConfig(
             suite_id=sid,
             seed=int(cfg.get("seed", 42)),
             split=list(split),
+            split_version=str(cfg.get("split_version", "split-v1")),
             projects=projects,
         )
     return out

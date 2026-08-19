@@ -1,53 +1,50 @@
-"""Frozen manifest builder + verifier (guide §36-§38, §47-§48).
+"""Frozen manifest builder + verifier (guide §36-§38, §47-§48, fix round v3.2).
 
 A manifest is a frozen selection of cases for one project within one suite.
 It records, for every case, only the *identity* needed to resolve the body from
 the raw dataset later (case_id / source_id / split / fingerprint) — never the
 payload itself. The manifest is the benchmark's identity: once frozen it is
-committed to git and never overwritten; a new selection is a new version
-(``standard-v1`` -> ``standard-v2``, guide §37, §64).
+committed to git and never overwritten; a new selection is a new suite version
+(``standard-v1`` -> ``standard-v2``).
 
 Determinism contract (guide §48): building the same manifest twice must yield
 a byte-identical file — same case ordering, same ids, same splits, same
 manifest SHA-256. We achieve that by sorting cases by selection_key before
-serialization and writing canonical (sorted-key, fixed-indent) JSON.
+serialization and writing canonical (sorted-key, fixed-indent) JSON. No
+``created_at`` wall-clock field is included in v3.2 (fix round P1-4).
 
-For large pools (LLMail 148K) the caller should use ``build_manifest_streaming``
-which operates on lightweight headers (source_id/group_id/dataset_id/case_id#
-+fingerprint) without holding full SecurityCase in memory, then hydrates only
-the selected target rows. ``build_manifest`` on full SecurityCase remains for
-tests and small pools.
+Strata (fix round P0-3/P1-3): each suite declares per-project strata
+(attack/benign quotas + cluster cap). The builder enforces them: split first,
+then for each stratum filter -> hash-rank -> cluster-cap -> take N.
+
+For large pools (LLMail 148K) callers should use ``build_manifest_streaming``
+which operates on lightweight CaseHeader without holding full SecurityCase.
 """
 from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+import math
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Iterable, Sequence
 
-from ..config import SuiteConfig  # noqa: F401  (re-exported for CLI typing)
+from ..config import SuiteConfig  # noqa: F401
 from ..core.exceptions import ManifestError
 from ..core.models import SecurityCase
 from .quality import get_provenance
-from .sampler import Split, assign_splits, group_id_of, selection_key
+from .sampler import CaseHeader, Split, assign_splits, assign_splits_case_weighted, group_id_of, header_of, selection_key, split_key
 
-MANIFEST_VERSION = "v3.1"
-
-
-def _utc_now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+MANIFEST_VERSION = "v3.2"
 
 
 def manifest_sha256(manifest: dict[str, Any]) -> str:
     """Byte-stable hash of a manifest (canonical JSON, sorted keys).
 
-    Excludes both ``created_at`` (run-dependent timestamp) and
-    ``manifest_sha256`` itself (self-referential) so the hash is stable and the
-    stored value can be re-verified by recomputation.
+    Excludes ``manifest_sha256`` itself (self-referential) so the hash is
+    stable and the stored value can be re-verified.
     """
-    stable = {k: v for k, v in manifest.items() if k not in ("created_at", "manifest_sha256")}
+    stable = {k: v for k, v in manifest.items() if k not in ("manifest_sha256",)}
     blob = json.dumps(stable, sort_keys=True, ensure_ascii=False, default=str)
     return "sha256:" + hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
@@ -84,6 +81,72 @@ def _entry_for(case: SecurityCase, split: str) -> ManifestEntry:
     )
 
 
+def _entry_for_header(h: CaseHeader, split: str) -> ManifestEntry:
+    return ManifestEntry(
+        case_id=h.case_id,
+        case_fingerprint=h.case_fingerprint,
+        dataset_id=h.dataset_id,
+        source_id=h.source_id,
+        split=split,
+        group_id=h.group_id,
+    )
+
+
+def _strata_select(
+    *,
+    headers: list[CaseHeader],
+    strata: list[dict[str, Any]],
+    suite_id: str,
+    seed: int,
+    max_cluster_share: float | None,
+) -> tuple[list[CaseHeader], dict[str, dict[str, Any]]]:
+    """Select per stratum: filter -> hash-rank -> cluster cap -> take N."""
+    selected: list[CaseHeader] = []
+    strata_report: dict[str, dict[str, Any]] = {}
+    for st in strata:
+        sid = str(st.get("id") or st.get("name") or "stratum")
+        count_raw = st.get("count", 0)
+        is_all = isinstance(count_raw, str) and count_raw.lower() == "all"
+        target = 0 if is_all else int(count_raw or 0)
+        # filter
+        filt = list(headers)
+        ds = st.get("dataset")
+        if ds:
+            filt = [h for h in filt if h.dataset_id == ds]
+        ea = st.get("expected_action")
+        if ea:
+            filt = [h for h in filt if h.expected_action == ea]
+        ch = st.get("channel")
+        if ch:
+            filt = [h for h in filt if h.channel == ch]
+        # hash-rank within stratum
+        filt.sort(key=lambda h: hashlib.sha256(
+            "|".join([suite_id, str(seed), h.dataset_id, h.source_id, h.group_id]).encode()
+        ).hexdigest())
+        # cluster cap
+        if max_cluster_share and max_cluster_share > 0 and not is_all:
+            cap = max(1, math.ceil(target * float(max_cluster_share)))
+            by_group: dict[str, int] = {}
+            capped: list[CaseHeader] = []
+            for h in filt:
+                if by_group.get(h.group_id, 0) >= cap:
+                    continue
+                capped.append(h)
+                by_group[h.group_id] = by_group.get(h.group_id, 0) + 1
+                if len(capped) >= target:
+                    break
+            chosen = capped[:target] if not is_all else capped
+        else:
+            chosen = filt if is_all else filt[:target]
+        selected.extend(chosen)
+        strata_report[sid] = {
+            "target": count_raw,
+            "actual": len(chosen),
+            "filtered": len(filt),
+        }
+    return selected, strata_report
+
+
 def build_manifest(
     *,
     suite_id: str,
@@ -93,54 +156,92 @@ def build_manifest(
     split: Split | str | Sequence[Split | str] = Split.EVAL,
     target: int = 0,
     source_locks: dict[str, dict[str, str]] | None = None,
-    created_at: str | None = None,
+    strata: list[dict[str, Any]] | None = None,
+    max_cluster_share: float | None = None,
+    split_version: str = "split-v1",
 ) -> dict[str, Any]:
     """Build a frozen manifest dict for one project within a suite.
 
-    ``cases`` should already be normalized + deduped + provenance-attached.
-    Selection is deterministic (selection_key sort); the entries list is
-    sorted by selection_key so two builds produce the same byte content.
+    If ``strata`` is provided, selection is per-stratum (attack/benign quotas).
+    Otherwise falls back to legacy single-target selection for backward compat.
     """
     cases = list(cases)
-    # group-aware split assignment for ALL candidates (so split labels are stable)
-    splits = assign_splits(cases, seed=seed)
+    # group-aware split: use case-weighted v2 when requested, else legacy v1
+    if split_version == "split-v2":
+        # need group sizes
+        group_sizes: dict[str, int] = {}
+        group_members: dict[str, list[str]] = {}
+        for c in cases:
+            gid = group_id_of(c)
+            group_sizes[gid] = group_sizes.get(gid, 0) + 1
+            group_members.setdefault(gid, []).append(c.case_id)
+        group_split = assign_splits_case_weighted(group_sizes, seed=seed, version=split_version)
+        splits: dict[str, Split] = {}
+        for gid, sp in group_split.items():
+            for cid in group_members.get(gid, []):
+                splits[cid] = sp
+    else:
+        splits = assign_splits(cases, seed=seed, version=split_version)
 
     allowed: set[str] = set()
     if isinstance(split, (Split, str)):
         split = [split]
     for s in split:
         allowed.add(Split.from_value(s if isinstance(s, str) else s.value).value)
-    eligible = [c for c in cases if splits.get(c.case_id, Split.EVAL).value in allowed]
-    # deterministic order by selection_key
-    dataset_ids = sorted({c.dataset_id for c in cases})
-    # selection_key needs a dataset_id; use the case's own dataset_id (multi-dataset
-    # projects like P1 span llmail + agentdojo — sort within each dataset).
-    eligible.sort(
-        key=lambda c: selection_key(c, suite_version=suite_id, seed=seed, dataset_id=c.dataset_id)
-    )
-    selected = eligible[: max(0, target)] if target else eligible
 
-    entries = [_entry_for(c, splits.get(c.case_id, Split.EVAL).value) for c in selected]
-    # final sort by case_id for a canonical, input-order-independent listing
+    # Build headers for strata logic (reuse header_of)
+    all_headers = [header_of(c) for c in cases]
+    # filter to requested split
+    eligible_headers = [h for h in all_headers if splits.get(h.case_id, Split.EVAL).value in allowed]
+    eligible_cases = [c for c in cases if splits.get(c.case_id, Split.EVAL).value in allowed]
+
+    if strata:
+        selected_headers, strata_report = _strata_select(
+            headers=eligible_headers,
+            strata=strata,
+            suite_id=suite_id,
+            seed=seed,
+            max_cluster_share=max_cluster_share,
+        )
+        # map back to entries via header
+        by_id = {c.case_id: c for c in cases}
+        # need split value per header
+        entries = []
+        for h in selected_headers:
+            sp = splits.get(h.case_id, Split.EVAL).value
+            entries.append(_entry_for_header(h, sp))
+    else:
+        # legacy: hash-rank across eligible
+        eligible_cases.sort(
+            key=lambda c: selection_key(c, suite_version=suite_id, seed=seed, dataset_id=c.dataset_id)
+        )
+        selected = eligible_cases[: max(0, target)] if target else eligible_cases
+        entries = [_entry_for(c, splits.get(c.case_id, Split.EVAL).value) for c in selected]
+        strata_report = {}
+
     entries.sort(key=lambda e: e.case_id)
 
-    manifest = {
+    # created_from: include adapter version + benchmark_version when available
+    cf = source_locks or {}
+    manifest: dict[str, Any] = {
         "manifest_version": MANIFEST_VERSION,
         "suite": suite_id,
         "project": project_id,
         "seed": seed,
         "split": sorted(allowed),
         "target": target,
-        "created_from": source_locks or {},
+        "created_from": cf,
         "selection_policy": {
             "algorithm": "hash_rank_v1",
-            "split_algorithm": "group_aware_cumulative_count_v1",
+            "split_algorithm": "group_aware_case_count_v2" if split_version == "split-v2" else "group_aware_cumulative_count_v1",
             "split_ratios": {"dev": 0.20, "eval": 0.60, "holdout": 0.20},
+            "split_version": split_version,
         },
         "n": len(entries),
         "cases": [e.to_dict() for e in entries],
-        "created_at": created_at or _utc_now(),
     }
+    if strata_report:
+        manifest["strata"] = strata_report
     manifest["manifest_sha256"] = manifest_sha256(manifest)
     return manifest
 
@@ -154,31 +255,97 @@ def build_manifest_streaming(
     split: Split | str | Sequence[Split | str] = Split.EVAL,
     target: int = 0,
     source_locks: dict[str, dict[str, str]] | None = None,
-    created_at: str | None = None,
+    strata: list[dict[str, Any]] | None = None,
+    max_cluster_share: float | None = None,
+    split_version: str = "split-v1",
 ) -> dict[str, Any]:
-    """Streaming manifest builder for large pools (LLMail 148K).
+    """Streaming manifest builder — collects headers only, not full cases.
 
-    ``cases_iter`` is an iterable of SecurityCase (materializes one-by-one).
-    Works like ``build_manifest`` but materializes cases lazily — it collects a
-    small tuple of (case_id, dataset_id, source_id, group_id, fingerprint) per
-    row for the sampler, then hydrates only the selected target's full cases
-    for fingerprint verification.
+    Pass 1: collect group sizes (for split). Pass 2: collect lightweight headers.
+    Then reuse build_manifest logic on headers.
     """
-    # materialize only lightweight rows for sampling
-    light: list[tuple[str, str, str, str, str, SecurityCase]] = []
+    # Collect headers without holding payloads; we need case_id etc. from headers
+    # cases_iter yields SecurityCase; we convert to headers immediately
+    headers: list[CaseHeader] = []
     for c in cases_iter:
-        light.append((c.source_id, c.dataset_id, c.case_id, c.fingerprint(), group_id_of(c), c))
-    if not light:
+        headers.append(header_of(c))
+    if not headers:
         return build_manifest(
             suite_id=suite_id, project_id=project_id, cases=[],
-            seed=seed, split=split, target=target, source_locks=source_locks, created_at=created_at,
+            seed=seed, split=split, target=target, source_locks=source_locks,
+            strata=strata, max_cluster_share=max_cluster_share, split_version=split_version,
         )
-    # reuse the non-streaming core on the materialized target (small)
-    cases = [row[5] for row in light]
-    return build_manifest(
-        suite_id=suite_id, project_id=project_id, cases=cases,
-        seed=seed, split=split, target=target, source_locks=source_locks, created_at=created_at,
-    )
+    # Reconstruct minimal split assignment from headers
+    if split_version == "split-v2":
+        group_sizes: dict[str, int] = {}
+        group_members: dict[str, list[str]] = {}
+        for h in headers:
+            group_sizes[h.group_id] = group_sizes.get(h.group_id, 0) + 1
+            group_members.setdefault(h.group_id, []).append(h.case_id)
+        group_split = assign_splits_case_weighted(group_sizes, seed=seed, version=split_version)
+        splits: dict[str, Split] = {}
+        for gid, sp in group_split.items():
+            for cid in group_members.get(gid, []):
+                splits[cid] = sp
+    else:
+        # legacy v1: group count based
+        groups = sorted({h.group_id for h in headers}, key=lambda g: split_key(g, seed=seed, version=split_version))
+        n_groups = len(groups)
+        dev_cut = max(1, round(n_groups * 0.20))
+        eval_cut = max(dev_cut + 1, round(n_groups * 0.80))
+        g2split: dict[str, Split] = {}
+        for idx, gid in enumerate(groups):
+            if idx < dev_cut:
+                g2split[gid] = Split.DEV
+            elif idx < eval_cut:
+                g2split[gid] = Split.EVAL
+            else:
+                g2split[gid] = Split.HOLDOUT
+        splits = {h.case_id: g2split[h.group_id] for h in headers}
+
+    allowed: set[str] = set()
+    if isinstance(split, (Split, str)):
+        split = [split]
+    for s in split:
+        allowed.add(Split.from_value(s if isinstance(s, str) else s.value).value)
+    eligible = [h for h in headers if splits.get(h.case_id, Split.EVAL).value in allowed]
+
+    if strata:
+        selected_headers, strata_report = _strata_select(
+            headers=eligible, strata=strata, suite_id=suite_id, seed=seed,
+            max_cluster_share=max_cluster_share,
+        )
+        entries = [_entry_for_header(h, splits.get(h.case_id, Split.EVAL).value) for h in selected_headers]
+    else:
+        eligible.sort(key=lambda h: hashlib.sha256(
+            "|".join([suite_id, str(seed), h.dataset_id, h.source_id, h.group_id]).encode()
+        ).hexdigest())
+        selected_headers = eligible[: max(0, target)] if target else eligible
+        entries = [_entry_for_header(h, splits.get(h.case_id, Split.EVAL).value) for h in selected_headers]
+        strata_report = {}
+
+    entries.sort(key=lambda e: e.case_id)
+    manifest: dict[str, Any] = {
+        "manifest_version": MANIFEST_VERSION,
+        "suite": suite_id,
+        "project": project_id,
+        "seed": seed,
+        "split": sorted(allowed),
+        "target": target,
+        "created_from": source_locks or {},
+        "selection_policy": {
+            "algorithm": "hash_rank_v1",
+            "split_algorithm": "group_aware_case_count_v2" if split_version == "split-v2" else "group_aware_cumulative_count_v1",
+            "split_ratios": {"dev": 0.20, "eval": 0.60, "holdout": 0.20},
+            "split_version": split_version,
+        },
+        "n": len(entries),
+        "cases": [e.to_dict() for e in entries],
+    }
+    if strata_report:
+        manifest["strata"] = strata_report
+    manifest["manifest_sha256"] = manifest_sha256(manifest)
+    return manifest
 
 
 def write_manifest(manifest: dict[str, Any], path: Path | str) -> Path:
@@ -201,34 +368,26 @@ def verify_manifest(
     *,
     resolved_cases: dict[str, SecurityCase] | None = None,
 ) -> list[str]:
-    """Return a list of problems (empty == OK).
-
-    Checks (guide §47): manifest_sha256 matches, case_ids unique, every case
-    resolvable with a matching fingerprint, no group spans multiple splits.
-    """
+    """Return a list of problems (empty == OK)."""
     problems: list[str] = []
-    # 1. self-hash
     recomputed = manifest_sha256(manifest)
     if manifest.get("manifest_sha256") and manifest.get("manifest_sha256") != recomputed:
         problems.append(
             f"manifest_sha256 mismatch: stored={manifest.get('manifest_sha256')} computed={recomputed}"
         )
     entries = manifest.get("cases") or []
-    # 2. unique case_ids
     seen: dict[str, int] = {}
     for e in entries:
         seen[e["case_id"]] = seen.get(e["case_id"], 0) + 1
     dupes = [cid for cid, n in seen.items() if n > 1]
     if dupes:
         problems.append(f"duplicate case_ids in manifest: {dupes[:10]}")
-    # 3. group does not span splits
     group_splits: dict[str, set[str]] = {}
     for e in entries:
         group_splits.setdefault(e["group_id"], set()).add(e["split"])
     bad_groups = {g: sorted(s) for g, s in group_splits.items() if len(s) > 1}
     if bad_groups:
         problems.append(f"group spans multiple splits (train/test leakage): {bad_groups}")
-    # 4. resolved cases match fingerprint (when a resolver is provided)
     if resolved_cases is not None:
         for e in entries:
             c = resolved_cases.get(e["case_id"])

@@ -92,7 +92,7 @@ class LLMailAdapter(DatasetAdapter):
     """Project the pinned LLMail-Inject snapshot into EMAIL SecurityCase objects."""
 
     dataset_id = "llmail"
-    adapter_version = "1.0.0"
+    adapter_version = "1.1.0"
 
     def __init__(
         self,

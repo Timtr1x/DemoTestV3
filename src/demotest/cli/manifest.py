@@ -1,12 +1,4 @@
-"""demotest manifest — build / verify frozen benchmark manifests (guide §46-§48).
-
-build:   load normalized snapshots for every dataset feeding a project,
-         select cases for the requested suite+project+split deterministically,
-         write the frozen manifest (committed to git).
-verify:  re-open a manifest and check self-hash, unique ids, no group spans
-         splits, and (when the normalized snapshots are present) that every
-         entry resolves to a case with a matching fingerprint.
-"""
+"""demotest manifest — build / verify frozen benchmark manifests (fix round v3.2)."""
 from __future__ import annotations
 
 import argparse
@@ -24,13 +16,11 @@ from ..datasets.manifest_builder import (
     write_manifest,
 )
 from . import _dataset_pipeline as pipeline
-from .dataset import cmd_hash  # noqa: F401  (re-export parity)
+from .dataset import cmd_hash  # noqa: F401
 
 
-# which datasets feed which project (mirror of config/v3/projects.yaml channels,
-# kept here as a single source of truth for manifest building).
 _DATASETS_BY_PROJECT = {
-    "P1_external_instruction": ["llmail", "agentdojo"],
+    "P1_external_instruction": ["llmail"],
     "P2_tool_action": ["agentdojo"],
 }
 
@@ -51,9 +41,12 @@ def add_parser(sub) -> None:
     v.add_argument("--strict", action="store_true", help="also resolve cases + check fingerprints")
     v.set_defaults(func=cmd_verify)
 
+    sv = sp.add_parser("suite-verify", help="Verify a suite snapshot binds correct manifest hashes")
+    sv.add_argument("suite", help="suite id (e.g. phase1-standard-v2)")
+    sv.set_defaults(func=cmd_suite_verify)
+
 
 def _project_cases(project_id: str):
-    """Load + concat normalized cases for every dataset feeding a project."""
     all_cases = []
     datasets = load_datasets()
     for ds_id in _DATASETS_BY_PROJECT.get(project_id, []):
@@ -65,19 +58,26 @@ def _project_cases(project_id: str):
         except Exception as e:
             print(f"WARN: cannot load normalized for {ds_id}: {e}", file=sys.stderr)
             continue
-        # filter to this project's cases
         all_cases.extend(c for c in cases if (c.project_id or "") == project_id)
     return all_cases
 
 
-def _source_locks_block(project_id: str) -> dict[str, dict[str, str]]:
+def _source_locks_block(project_id: str) -> dict[str, dict[str, Any]]:
     from ..datasets.source_lock import load_source_lock
 
-    blocks: dict[str, dict[str, str]] = {}
+    blocks: dict[str, dict[str, Any]] = {}
     for ds_id in _DATASETS_BY_PROJECT.get(project_id, []):
         try:
             lock = load_source_lock(ds_id)
-            blocks[ds_id] = {"revision": lock.revision, "raw_sha256": lock.raw_sha256}
+            blocks[ds_id] = {
+                "revision": lock.revision,
+                "raw_sha256": lock.raw_sha256,
+                "adapter": lock.adapter_name,
+                "adapter_version": lock.adapter_version,
+                "benchmark_version": lock.extra.get("benchmark_version") if lock.extra else None,
+            }
+            # prune None
+            blocks[ds_id] = {k: v for k, v in blocks[ds_id].items() if v is not None}
         except Exception:
             continue
     return blocks
@@ -90,6 +90,9 @@ def cmd_build(args) -> int:
         return 1
     ptarget = suite.projects[args.project]
     target = args.target or ptarget.target
+    strata = getattr(ptarget, "strata", None)
+    max_cluster_share = getattr(ptarget, "max_cluster_share", None)
+    split_version = getattr(suite, "split_version", "split-v1") or "split-v1"
     cases = _project_cases(args.project)
     if not cases:
         print(f"FAIL: no normalized cases for project {args.project!r} (run 'dataset prepare')", file=sys.stderr)
@@ -102,12 +105,14 @@ def cmd_build(args) -> int:
         split=suite.split,
         target=target,
         source_locks=_source_locks_block(args.project),
+        strata=strata,
+        max_cluster_share=max_cluster_share,
+        split_version=split_version,
     )
     out = Path(args.out) if args.out else Path(ptarget.manifest)
     if not args.out and not out.parent.exists():
         out.parent.mkdir(parents=True, exist_ok=True)
     write_manifest(manifest, out)
-    # source distribution + split summary
     by_ds: dict[str, int] = {}
     by_split: dict[str, int] = {}
     for e in manifest["cases"]:
@@ -117,6 +122,8 @@ def cmd_build(args) -> int:
     print(f"  n={manifest['n']} target={target} split={manifest['split']}")
     print(f"  by_dataset={by_ds}")
     print(f"  by_split={by_split}")
+    if manifest.get("strata"):
+        print(f"  strata={manifest['strata']}")
     print(f"  manifest_sha256={manifest['manifest_sha256']}")
     return 0
 
@@ -130,7 +137,6 @@ def cmd_verify(args) -> int:
 
         resolved = resolve_manifest_cases(manifest, cases)
     problems = verify_manifest(manifest, resolved_cases=resolved)
-    # also verify the stored self-hash
     recomputed = manifest_sha256(manifest)
     if manifest.get("manifest_sha256") != recomputed:
         problems.append(f"manifest_sha256 drift: stored={manifest.get('manifest_sha256')} computed={recomputed}")
@@ -139,4 +145,40 @@ def cmd_verify(args) -> int:
             print(f"FAIL: {p}", file=sys.stderr)
         return 1
     print(f"OK: {args.manifest} verified (n={manifest.get('n')} sha256={manifest.get('manifest_sha256')})")
+    return 0
+
+
+def cmd_suite_verify(args) -> int:
+    from pathlib import Path as _P
+    from ..paths import BENCHMARKS_SUITES_DIR
+
+    suite = get_suite(args.suite)
+    suite_path = BENCHMARKS_SUITES_DIR / f"{args.suite}.json"
+    if not suite_path.exists():
+        print(f"FAIL: suite snapshot not found: {suite_path}", file=sys.stderr)
+        return 1
+    snap = json.loads(suite_path.read_text(encoding="utf-8"))
+    problems: list[str] = []
+    for pid, ptarget in suite.projects.items():
+        mpath = _P(ptarget.manifest)
+        if not mpath.exists():
+            problems.append(f"{pid}: manifest not found: {mpath}")
+            continue
+        manifest = load_manifest(str(mpath))
+        recomputed = manifest_sha256(manifest)
+        if manifest.get("manifest_sha256") != recomputed:
+            problems.append(f"{pid}: manifest_sha256 drift")
+        # compare with suite snapshot binding if present
+        snap_entry = (snap.get("projects") or {}).get(pid) or {}
+        snap_sha = snap_entry.get("manifest_sha256")
+        if snap_sha and snap_sha != manifest.get("manifest_sha256"):
+            problems.append(f"{pid}: suite manifest_sha256 {snap_sha} != manifest {manifest.get('manifest_sha256')}")
+        if snap_entry.get("n") and snap_entry["n"] != manifest.get("n"):
+            problems.append(f"{pid}: suite n {snap_entry['n']} != manifest n {manifest.get('n')}")
+        problems.extend(verify_manifest(manifest))
+    if problems:
+        for p in problems:
+            print(f"FAIL: {p}", file=sys.stderr)
+        return 1
+    print(f"OK: suite {args.suite} verified")
     return 0

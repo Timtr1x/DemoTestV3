@@ -1,0 +1,4252 @@
+{
+  "cases": [
+    {
+      "case_fingerprint": "fp-39a569ddb62a0a64",
+      "case_id": "case-001fec26bf515987",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fc516e82d9",
+      "source_id": "llmail:phase1:382e3208f8eaf683",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5cbbbeb22d015d59",
+      "case_id": "case-00aa87a13d9d1997",
+      "dataset_id": "llmail",
+      "group_id": "ndc-556d75c4a9",
+      "source_id": "llmail:phase1:03becd3dbd5b63f2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9b9474a65b442a6a",
+      "case_id": "case-00dee39e75fb817b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-20276dedde",
+      "source_id": "llmail:phase1:609014a5b9ca914c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6366010808f244c4",
+      "case_id": "case-00ec89e61560a4c5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6d2d426f8c",
+      "source_id": "llmail:phase1:0721d1df0cac6ece",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-482eafbd2dc671d7",
+      "case_id": "case-01786c7ea970303e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-77845105d3",
+      "source_id": "llmail:phase1:ac365c7ac90f62a2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8af97377832d91d4",
+      "case_id": "case-0186956df368a70b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-760cff3cdf",
+      "source_id": "llmail:phase1:601c783c419c2280",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c7f47e78e175d78e",
+      "case_id": "case-0222328bb9eb6cf1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-85898e0ef2",
+      "source_id": "llmail:phase1:70518c567062d3b0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5c0a676217efabda",
+      "case_id": "case-036c30398f4e3716",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bcc1eb619c",
+      "source_id": "llmail:phase1:0f0767f7ff6a9ec1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-012256327059eca5",
+      "case_id": "case-038364351d835bfe",
+      "dataset_id": "llmail",
+      "group_id": "ndc-d85ea9d007",
+      "source_id": "llmail:phase1:eb50e93a6e2c286f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b7c7f1f1d767c6f7",
+      "case_id": "case-03be16530b258dd0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-67f4819955",
+      "source_id": "llmail:phase2:77549d11bd3b8797",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-de475d1c05265fdf",
+      "case_id": "case-03c00482863ca92b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4d0be67006",
+      "source_id": "llmail:phase1:5906c3097373d88c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-82aaaae3e07bb469",
+      "case_id": "case-0416eb3c21a92f5c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b21f3cba14",
+      "source_id": "llmail:phase1:6f9a1207ff162a53",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b3f1ad8900a71d57",
+      "case_id": "case-04811fadb87e4068",
+      "dataset_id": "llmail",
+      "group_id": "ndc-04a684c335",
+      "source_id": "llmail:phase2:f69847ccbdcbf813",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-192866ac5b1ce965",
+      "case_id": "case-048aceb9c4dab382",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e2cae4d0ef",
+      "source_id": "llmail:phase1:be8957621dc8d319",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c8ff6f5be50547d2",
+      "case_id": "case-04ab1bc1a584925a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-857f590994",
+      "source_id": "llmail:phase1:a2afaac2aa12008a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-00fa9317c9177b59",
+      "case_id": "case-057f9faf15677cdb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-69d8ae41f3",
+      "source_id": "llmail:phase1:f77445a6dd65b386",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6bc8c073c37cba34",
+      "case_id": "case-062001d921aaaf3c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1d8dc448f6",
+      "source_id": "llmail:phase1:4261c87a5db2e651",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7b7d052b8b90b28a",
+      "case_id": "case-06826ad8c471dfc8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cf2123ce81",
+      "source_id": "llmail:phase1:9390d040212310a6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e6509c0c1ee43a4a",
+      "case_id": "case-068aed1e7ebe9116",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0cb91ccd75",
+      "source_id": "llmail:phase1:89e93fb012b1b16e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8ce383af4a39ed1e",
+      "case_id": "case-06c4ac20b895b2d8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-919bbef1f0",
+      "source_id": "llmail:phase1:d730ca15dcd25478",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5e51feab4d050e35",
+      "case_id": "case-074068af7abd2726",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2447fa5a11",
+      "source_id": "llmail:phase1:a944b7695daefd30",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-de22b1e876d0c32a",
+      "case_id": "case-076590af2f945f39",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1532fca582",
+      "source_id": "llmail:phase1:b74930cd351753d4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8fa0393cad007ef5",
+      "case_id": "case-08e8e23c8b41001a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-d64b3ca56a",
+      "source_id": "llmail:phase1:4c7206288d2d03f2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-91bbc6662fa32ec6",
+      "case_id": "case-0a09c8c0527786f8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0ec93d17cd",
+      "source_id": "llmail:phase1:f6edd12bb15a1659",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-400b6b1da88640e7",
+      "case_id": "case-0a41e371b64405a0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b2b095b413",
+      "source_id": "llmail:phase1:5e97afc7347c19c4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-de6d96f3229d0f43",
+      "case_id": "case-0aa77b14e9642d7b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fd2b817e0a",
+      "source_id": "llmail:phase1:b92b3da3a152f14c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-eee0d490bc9d3eed",
+      "case_id": "case-0b3e8dc93929d54b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-837b70140d",
+      "source_id": "llmail:phase2:55aa9656cd9a3033",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f9afc5e8303d7a0e",
+      "case_id": "case-0b429efbd966b211",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6a4283fdb9",
+      "source_id": "llmail:phase2:ed97e8e123bf7c19",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1a1c75670ef75fa6",
+      "case_id": "case-0c47ed7df32c48a7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0baf679ba8",
+      "source_id": "llmail:phase1:909834eda3341f4f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4d5669aa7195e340",
+      "case_id": "case-0ce7c83e9241d781",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4732379187",
+      "source_id": "llmail:phase1:8269622353ee65ab",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d36a5297076749f5",
+      "case_id": "case-0d31ed389691db4f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-128e669b69",
+      "source_id": "llmail:phase1:2718fdaf1d6922da",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-92452080d7f4a307",
+      "case_id": "case-0d8d2640e83e4b57",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b81b18ba7",
+      "source_id": "llmail:phase1:8779c734e3264f8b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-16f44206387df222",
+      "case_id": "case-0dc011b65f026b98",
+      "dataset_id": "llmail",
+      "group_id": "ndc-33d2fd3ebe",
+      "source_id": "llmail:phase1:9991fe684f52f6fb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ae5262a58012b8dc",
+      "case_id": "case-0dfc3d2bc57f78ec",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2bae910823",
+      "source_id": "llmail:phase1:247bdc1a0fd1925c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-10b7409b150a9e25",
+      "case_id": "case-0e2a18a188304158",
+      "dataset_id": "llmail",
+      "group_id": "ndc-201d6e7390",
+      "source_id": "llmail:phase1:2536e042bc202949",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2701f589d4764a45",
+      "case_id": "case-0f9012f649b82678",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0baf679ba8",
+      "source_id": "llmail:phase1:7227e51adc8c29e5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1aabe37016250cb4",
+      "case_id": "case-0fd6c903cbb9d951",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0ba7b52ea7",
+      "source_id": "llmail:phase2:f43b65bdf52f045e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-03471f49d51644e2",
+      "case_id": "case-10fa4a3e4c707773",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c2d5e4a672",
+      "source_id": "llmail:phase1:fd3381ad5ce3071e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9278847d42fcf69b",
+      "case_id": "case-11d1c75498d2ab29",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4cd43bd16b",
+      "source_id": "llmail:phase1:65eb40f29ed0bfef",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d72eeaa9274386ca",
+      "case_id": "case-129f257919ebaaa8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-857d06d55c",
+      "source_id": "llmail:phase1:2e01dc9260399c2d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-42e5737fa0b75bfa",
+      "case_id": "case-12a257728ed2bc03",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4eb53a9200",
+      "source_id": "llmail:phase1:db84b630948b9fcf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4a439fe40ea7f657",
+      "case_id": "case-131cfbf654abc173",
+      "dataset_id": "llmail",
+      "group_id": "ndc-786703349e",
+      "source_id": "llmail:phase1:f8f99ba033bcba19",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-13a60b3b534a179b",
+      "case_id": "case-1341313c82f9c3c2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9e4b6adf19",
+      "source_id": "llmail:benign:e90788fd89b394d2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52d00bbf56321a38",
+      "case_id": "case-14be9ceac0537621",
+      "dataset_id": "llmail",
+      "group_id": "ndc-61d2354ec0",
+      "source_id": "llmail:phase1:a6d6c9faa2ea7e5d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a89dff528339c879",
+      "case_id": "case-15030579e36a1155",
+      "dataset_id": "llmail",
+      "group_id": "ndc-83ef02f1a6",
+      "source_id": "llmail:phase1:d38ea76b000ca702",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-69603a53e43f9b53",
+      "case_id": "case-1559407c29093a38",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6ec0e77b54",
+      "source_id": "llmail:phase1:3dee69585f159ece",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9a19c190011fe68d",
+      "case_id": "case-1582754e42a2406f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2d929833bd",
+      "source_id": "llmail:phase1:133d6c0849644477",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0fe4e8fcbbf0678d",
+      "case_id": "case-17153e1def75ec53",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7151b8d245",
+      "source_id": "llmail:phase2:d9073b71d371fa84",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ec533580aeb5fbd",
+      "case_id": "case-173d742484f29508",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e5652c6c7f",
+      "source_id": "llmail:phase1:37fa8839d1c0b0c1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-788449a4fc5bcd59",
+      "case_id": "case-17ea946d4a2806df",
+      "dataset_id": "llmail",
+      "group_id": "ndc-22e7cf82f7",
+      "source_id": "llmail:phase1:edceedca2797f2c2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a381ba83e60308a7",
+      "case_id": "case-19096c18e55e1bfd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0c4f5f588f",
+      "source_id": "llmail:phase1:00e881ff6eeee2f4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b97924968c46d159",
+      "case_id": "case-1a9471c01b4a7e22",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fc9b65166d",
+      "source_id": "llmail:phase1:5f98bd01381e1716",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5739aa72ba5f76aa",
+      "case_id": "case-1acaccdfc14ab237",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ef871b864f",
+      "source_id": "llmail:phase1:6b101fa1c19a2d7c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9f2f3a0c96c1b07a",
+      "case_id": "case-1bbece14b3d3673b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9747e5cc41",
+      "source_id": "llmail:phase1:a361bb640d923d78",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cabcdf675549020c",
+      "case_id": "case-1c5c3bbc61e62762",
+      "dataset_id": "llmail",
+      "group_id": "ndc-113763eebc",
+      "source_id": "llmail:phase2:e87ddbda56a0a37b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a8cd81105aa39c9d",
+      "case_id": "case-1ceec529ba7cd100",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0baf679ba8",
+      "source_id": "llmail:phase1:841fc8ee382cb6e7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-75c6da4b4fa41d38",
+      "case_id": "case-1d257ad1857e7d3b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2f77deac13",
+      "source_id": "llmail:phase2:ef6a07498e1c3a99",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d71abfe9e86ab144",
+      "case_id": "case-1da9b182fa8efd8a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-42de46a63d",
+      "source_id": "llmail:phase1:fcf5fd93b2fb4a65",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-724156b90b7d443e",
+      "case_id": "case-1f6706c519311103",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6604e48e37",
+      "source_id": "llmail:phase1:8824edf14ef5962c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-29836d4117ab686d",
+      "case_id": "case-20435c0d7064b7f5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-476f985fb0",
+      "source_id": "llmail:phase1:4f3682a342234262",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ed3991902e27953e",
+      "case_id": "case-2046c86ab6db10bc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-61d2354ec0",
+      "source_id": "llmail:phase1:08ae69b64fa1b027",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c5e05997f286f3f1",
+      "case_id": "case-212e1f12c942cc70",
+      "dataset_id": "llmail",
+      "group_id": "ndc-971fc57137",
+      "source_id": "llmail:phase1:1b15634c84874aa6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-236012db7de5805f",
+      "case_id": "case-21c329b73aa566de",
+      "dataset_id": "llmail",
+      "group_id": "ndc-616d59056a",
+      "source_id": "llmail:phase2:56a0bf269493ad7f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-43e66a5b083d8324",
+      "case_id": "case-2328393db38d3991",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8494f176e3",
+      "source_id": "llmail:phase1:0b27769f6b3ca4ec",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-808096facea241c1",
+      "case_id": "case-2360d7d7da59e09b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1586bdcc49",
+      "source_id": "llmail:phase1:8fa57a1a7c0f2c80",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-12ec9a384f2bd740",
+      "case_id": "case-237660df8b3cfe8d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-af69978eab",
+      "source_id": "llmail:phase1:e2333863c8fd557e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-75351693d2e79e08",
+      "case_id": "case-2469a2490a5ff563",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0c9ce74f4a",
+      "source_id": "llmail:phase1:a42eac5db2229a01",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0c28b6381ce44a0b",
+      "case_id": "case-24dbb4bff276fac8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-48379bc150",
+      "source_id": "llmail:phase1:dcefb652e4ca3c24",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bc1212fc50b58be5",
+      "case_id": "case-2500a7cf670ef6a0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e7f2efe0ec",
+      "source_id": "llmail:phase1:a4ad9903c41f2669",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f40d1bb675f14013",
+      "case_id": "case-257f1ed5c214e78f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b89cbfab14",
+      "source_id": "llmail:phase2:b9dce8092419f905",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8ef6d1f093800bc3",
+      "case_id": "case-2640c81b3a140de4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-d6de6328c3",
+      "source_id": "llmail:phase2:e4820df19c578c77",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-763b00856bfa72fc",
+      "case_id": "case-264f7f06ac14b92d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7c33c8e423",
+      "source_id": "llmail:benign:f01992f1d96cbda4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6ff0f6f4f151bba3",
+      "case_id": "case-2653b510c4698e86",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7e690c3778",
+      "source_id": "llmail:phase2:ab2a83fe46ffecf6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-af1a013821a3a532",
+      "case_id": "case-26defb90fdabf010",
+      "dataset_id": "llmail",
+      "group_id": "ndc-02e00f38ad",
+      "source_id": "llmail:phase1:aa67fbece4a7cba0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4435334d3c6b4feb",
+      "case_id": "case-26e14146fd7921b1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3e2a212ac7",
+      "source_id": "llmail:phase2:fe53813ad2814d1a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e701c7b9a5c41775",
+      "case_id": "case-26f548f119a7522b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6441633a8f",
+      "source_id": "llmail:phase1:952bfea5d09edd3d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6901caa3580b15b1",
+      "case_id": "case-2700a576a3cb2a07",
+      "dataset_id": "llmail",
+      "group_id": "ndc-03a8fea3ea",
+      "source_id": "llmail:phase1:4c5dfaff38fd8fd3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-86cd7729675f78f0",
+      "case_id": "case-2739d51234150ee3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f936b55de4",
+      "source_id": "llmail:phase1:74d09e58a951d7c7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d6361c41c9ee9077",
+      "case_id": "case-286db3e85d188fc0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6c0f245e08",
+      "source_id": "llmail:phase1:80f46220caacec9b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-466c6294c7585151",
+      "case_id": "case-2a463a147a355484",
+      "dataset_id": "llmail",
+      "group_id": "ndc-35c19edf6c",
+      "source_id": "llmail:phase1:4109a1c31a2b570f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b004b0d79e007f41",
+      "case_id": "case-2ac8884b535e0db7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-800227d617",
+      "source_id": "llmail:phase1:ae9f8db9318a0210",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-49fb20edc2f28d77",
+      "case_id": "case-2b6e16558768aec1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-40c99feec9",
+      "source_id": "llmail:phase1:d889f3097771f09f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5dc7344a51c8d605",
+      "case_id": "case-2b794ac4e660cb41",
+      "dataset_id": "llmail",
+      "group_id": "ndc-935e479971",
+      "source_id": "llmail:phase1:3bf7be8e256634ae",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7358835f16eabeb9",
+      "case_id": "case-2b7c8135c60e46c2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e646965b37",
+      "source_id": "llmail:benign:dab91d0650a034b2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c6633ee6fc3865a9",
+      "case_id": "case-2ba7f46eed15d7a5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6c9908ce71",
+      "source_id": "llmail:phase2:2c3db2a9d4ab7ab8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bb306d23ffa341aa",
+      "case_id": "case-2d2c9352cc513ba1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e4902623ef",
+      "source_id": "llmail:phase1:15d3b4e150baed22",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-050a8a4c6eecab06",
+      "case_id": "case-2ed9dfc6cc2aee85",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4cd43bd16b",
+      "source_id": "llmail:phase1:4592a44576097376",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1c8d819b9ee7fa2f",
+      "case_id": "case-2f5e8bbda12a5c3a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3806f81c1b",
+      "source_id": "llmail:phase1:4e7f17d5cfbd87b6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-72573f27736cd508",
+      "case_id": "case-2fe7fd00e79cde66",
+      "dataset_id": "llmail",
+      "group_id": "ndc-695fab4a55",
+      "source_id": "llmail:phase1:e46f55095ab973d2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4a6fd6f65c1e8eea",
+      "case_id": "case-3023a722625cdd60",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2d6930e9c9",
+      "source_id": "llmail:phase1:22a47f8259afd5ba",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c98a5a43c73d9cb7",
+      "case_id": "case-303c96ed98c98d3e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f001c354ac",
+      "source_id": "llmail:phase1:9d9d963fa55460bb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-741ec249b17802e2",
+      "case_id": "case-307213b3f35d5507",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ec9fa6fd72",
+      "source_id": "llmail:benign:a89fc76a9e998a83",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aacf7ed8b08259e7",
+      "case_id": "case-30a6a993f730cacb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9f13e6cf79",
+      "source_id": "llmail:benign:174755297692f76d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4840e32451428280",
+      "case_id": "case-30a94d06f6630138",
+      "dataset_id": "llmail",
+      "group_id": "ndc-646cfcebc8",
+      "source_id": "llmail:phase1:356fc018ecfdf1ca",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-59fe62ad1b4fdadf",
+      "case_id": "case-311bf893f02e5e72",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9f6dcab27c",
+      "source_id": "llmail:phase2:7c5343a146632068",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-170135d395f31d0e",
+      "case_id": "case-31755d1fe15b7cc5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-be00c2393c",
+      "source_id": "llmail:phase1:169368ad6186b6cf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a825cc50c2b7fcf8",
+      "case_id": "case-31c3afaa76e113e6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ba9e2cd81d",
+      "source_id": "llmail:phase1:6240a2acf8d4b78b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-df550edb9fda8bfa",
+      "case_id": "case-31f5e0e57ca5b672",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3427788fae",
+      "source_id": "llmail:phase1:17417553ec116e05",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-515770af828aba34",
+      "case_id": "case-324be65c2a738731",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3dcf248f13",
+      "source_id": "llmail:phase2:317b8d91ee4abd9f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3de390f8a4262c38",
+      "case_id": "case-32f0abd8cf4db88b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-dbfb5d9417",
+      "source_id": "llmail:phase1:e1cb9e1c7e854a52",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5dcb8082565a9a62",
+      "case_id": "case-3339641ede3c3356",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9f6dcab27c",
+      "source_id": "llmail:phase2:18d48705376c703b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9ba4aa36130c9e82",
+      "case_id": "case-33666279cf567aa3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f333b69b09",
+      "source_id": "llmail:phase1:106a13225d0cc96c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fc09dbac0382a602",
+      "case_id": "case-33f33a8412d2b2bb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6e845ef4a1",
+      "source_id": "llmail:phase2:2cace98fe4db0b19",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ce219e387bb6cdbe",
+      "case_id": "case-3428210fca1f0898",
+      "dataset_id": "llmail",
+      "group_id": "ndc-d0a37b67b0",
+      "source_id": "llmail:phase1:a7be87efd12b690d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1fd930e713bb22cd",
+      "case_id": "case-343dfd243f895284",
+      "dataset_id": "llmail",
+      "group_id": "ndc-10f54a753d",
+      "source_id": "llmail:phase1:8606800dd332214a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-786e27fe7684a5be",
+      "case_id": "case-345fc2a980abd324",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7c74948fff",
+      "source_id": "llmail:phase1:b2aed22277be5dbd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9e9757c39463234a",
+      "case_id": "case-3479d62028ac34ee",
+      "dataset_id": "llmail",
+      "group_id": "ndc-33a21c33ac",
+      "source_id": "llmail:phase2:14f124af5c04fc7a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-00383a2adb0f3091",
+      "case_id": "case-3480e1395e766260",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bf643a4bd8",
+      "source_id": "llmail:phase1:ef383c44b6439f42",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fb0ef72eec1e6396",
+      "case_id": "case-34dc506b4e381261",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2d6930e9c9",
+      "source_id": "llmail:phase1:97508b27ad4cf4ca",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5733700dfaf47a08",
+      "case_id": "case-356aad887d8e79a8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8c037ffa31",
+      "source_id": "llmail:phase1:cdbf651c07ba5f83",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-500887e1ded57ca3",
+      "case_id": "case-35b160550157cbcb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7c4ff5f406",
+      "source_id": "llmail:phase1:06cbe3e229521a74",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7826b783f4a09dd5",
+      "case_id": "case-35b64ed1df6df92e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-24fdf35870",
+      "source_id": "llmail:phase2:d8dc036be1e77e56",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-978751478868dc18",
+      "case_id": "case-35ed19369aaddded",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bb1de29cc2",
+      "source_id": "llmail:phase1:3d9c95020db289f3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2762084641457282",
+      "case_id": "case-370ef19f408a99a0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ed29f82870",
+      "source_id": "llmail:phase2:22f32f35c547a776",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-176042e5b1a11e0b",
+      "case_id": "case-3736aea37a345ce0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1643ab0767",
+      "source_id": "llmail:phase1:c1c17062018406b4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-be7b0736b23ce33f",
+      "case_id": "case-374f94184af34d7b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4cd43bd16b",
+      "source_id": "llmail:phase1:fd181f1102d14f1a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-194fb74e6ee15ad9",
+      "case_id": "case-378c8d09d43ba4b0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-294a229404",
+      "source_id": "llmail:phase2:422b3acd361f8ce4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c46c46597d17a79f",
+      "case_id": "case-37b802caa99bd1bd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-09cd76c125",
+      "source_id": "llmail:phase2:26e14b18fd6f1122",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ed43746775cc0795",
+      "case_id": "case-37bbae0f923fdc96",
+      "dataset_id": "llmail",
+      "group_id": "ndc-afe5927a11",
+      "source_id": "llmail:phase1:3ef36661c9f1b5d9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-998823277e02a838",
+      "case_id": "case-388d40a548d662ec",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9db7d6843b",
+      "source_id": "llmail:phase1:3209486cb855a775",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f569357084ac8162",
+      "case_id": "case-3971bcb6f6b82ba8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6809a7ee80",
+      "source_id": "llmail:phase1:9249a99f0f652e5e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e0e0a446b7099d7c",
+      "case_id": "case-3a1b45c09a10d11c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c4db59b767",
+      "source_id": "llmail:phase1:0c64b5a1000a655b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d3df39e642998259",
+      "case_id": "case-3abece45ecc9aa1a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ddc5482e02",
+      "source_id": "llmail:phase1:5d6ce19452e5a4d4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f28ac753729846f6",
+      "case_id": "case-3b0d14daffd8a90a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-28824c9316",
+      "source_id": "llmail:phase2:ca3e579ae055d207",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d7dad5c5d390630e",
+      "case_id": "case-3be2acfaf3c4c2c5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6fe0341cfc",
+      "source_id": "llmail:phase1:35572a7ad09cc64d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b6ff0b0b594fbbaf",
+      "case_id": "case-3c1c0d32b4b168f0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3289032fa8",
+      "source_id": "llmail:phase1:a32a3521ac2a2276",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a72ca60180c28eba",
+      "case_id": "case-3cb5dc4ebe844cf6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-dc78126684",
+      "source_id": "llmail:phase2:af2a9e00b5e025d6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d9a33c0813c55b88",
+      "case_id": "case-3d6c329ac9929647",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5348bd36b7",
+      "source_id": "llmail:phase1:216588fe29d6ed34",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7639bb8c433fbca4",
+      "case_id": "case-3d811736436da2af",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a6b54012fd",
+      "source_id": "llmail:phase1:208520617375ffee",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9e7dd365e96b8fd1",
+      "case_id": "case-3e52d7478f3aedae",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f92516cdfa",
+      "source_id": "llmail:phase1:b2b4d8daceeac49d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-30f97d3444eb8b57",
+      "case_id": "case-3ebfc07dc84b31ba",
+      "dataset_id": "llmail",
+      "group_id": "ndc-778f3f8370",
+      "source_id": "llmail:phase1:e4ef9e4dc2450629",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-abcd179c158703d6",
+      "case_id": "case-3fc81eb453521f60",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1d5e996361",
+      "source_id": "llmail:phase1:752bc01fd5fdd78a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ec48cde75f00fbda",
+      "case_id": "case-3fec4b6d3a3f8c93",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8227f2fc56",
+      "source_id": "llmail:benign:f876146932d09ea2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4b3512cd8fc9a9c1",
+      "case_id": "case-416cb75cd43da678",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1504ac1cf5",
+      "source_id": "llmail:phase1:db0a1c23a4e288ac",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aab18f67533be1f1",
+      "case_id": "case-420ba9d3054b2f18",
+      "dataset_id": "llmail",
+      "group_id": "ndc-587617fe9c",
+      "source_id": "llmail:phase1:a8d1becf122c388a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2d6e39381f084ac3",
+      "case_id": "case-42bbd6e6d9a7a77d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8ed4dd2a79",
+      "source_id": "llmail:phase1:1adb956c2b390d05",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e449d9461bf8d49f",
+      "case_id": "case-42be7d250cfe5d5e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6fe0341cfc",
+      "source_id": "llmail:phase1:750dbf2a39b38334",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-605682bb05cab6c4",
+      "case_id": "case-4332a660cd34e075",
+      "dataset_id": "llmail",
+      "group_id": "ndc-314b8b7852",
+      "source_id": "llmail:phase1:15c862dd4682feb5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f8dd3c7bbcdbc460",
+      "case_id": "case-43f2023968e2d168",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7d9f57bd36",
+      "source_id": "llmail:phase1:e6fe313c7063cff5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4903bf843b0a8475",
+      "case_id": "case-450a42254cdc60f5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ab703552d2",
+      "source_id": "llmail:phase1:4e58cf0642b73248",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3c33cf0619fcd945",
+      "case_id": "case-459985d4fc3aa676",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e0a7a2530f",
+      "source_id": "llmail:phase1:5c35125bf4e59d71",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aa016e53d14b93a7",
+      "case_id": "case-4612febe53b1d22c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b242d35f53",
+      "source_id": "llmail:phase1:c600839e0e9934ac",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-25d437a8efea9fca",
+      "case_id": "case-4662e3eea1b2f450",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5687fcb75c",
+      "source_id": "llmail:phase1:f9a826872ca4cedc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c2018be2424f9895",
+      "case_id": "case-46638090db7c62b1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-821eec51c3",
+      "source_id": "llmail:phase1:12a691587c90b141",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d237d191aec8cf46",
+      "case_id": "case-470db3d3c6cf8c07",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9a750fe7bb",
+      "source_id": "llmail:phase1:5a7d094ec6a0232d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5adc8b40690796cf",
+      "case_id": "case-494992ff80035d0a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-475fdd4b4b",
+      "source_id": "llmail:phase1:944b53ff1c5790a5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c1e782fbcb2b52f3",
+      "case_id": "case-49a4c0aaad993e19",
+      "dataset_id": "llmail",
+      "group_id": "ndc-786934842c",
+      "source_id": "llmail:phase1:cc20860829ce6c91",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1adab8a614f62aae",
+      "case_id": "case-4a46f5373fb13460",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e3676d62a4",
+      "source_id": "llmail:phase1:07a278c160528131",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-87ee05e5296cfff6",
+      "case_id": "case-4a4b8938a8aa163f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2b1811a17c",
+      "source_id": "llmail:phase1:7189cc68fe7c3056",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c3fabbc3ee19baf6",
+      "case_id": "case-4a6e28f2ea692205",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0332c68c82",
+      "source_id": "llmail:phase1:2acb582f4331e180",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-93f12eff2cb57486",
+      "case_id": "case-4be9ed1d396ee57a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-086663eabb",
+      "source_id": "llmail:phase1:20415ae0e4a4b47c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1be6e9e381f2d1dd",
+      "case_id": "case-4c3d58fdfbc454bb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0c051372cd",
+      "source_id": "llmail:phase1:45ec5aa2935f4eeb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-06c3132b29cd6bb2",
+      "case_id": "case-4c5fef177dc80e86",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a4545e62fa",
+      "source_id": "llmail:phase1:837789da5d0f749d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-09d49a55f4987fd7",
+      "case_id": "case-4c73598060162af5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f333b69b09",
+      "source_id": "llmail:phase1:5f749aee6e854842",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d996170dcaa90634",
+      "case_id": "case-4d2251856d1f18d2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e3c38836f2",
+      "source_id": "llmail:phase1:636f9a0259ad4392",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3ec2d43b03477364",
+      "case_id": "case-4d6a431f9b07e93b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-489127f76a",
+      "source_id": "llmail:phase2:5937bec796c6ba6a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9c667e927313fdcb",
+      "case_id": "case-4e480ba747f30e5a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e438a106ed",
+      "source_id": "llmail:phase1:9b3c88777dc64ab7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-30c048aba0736125",
+      "case_id": "case-505e49eb7415deeb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8f5454d311",
+      "source_id": "llmail:phase1:bc5565a1ea7a1824",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ca5c3e8879636396",
+      "case_id": "case-50844c8a86b88b40",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c4863bb760",
+      "source_id": "llmail:phase1:35eaa549fd5ac8f8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a7cca563642830cf",
+      "case_id": "case-50a823273255ec32",
+      "dataset_id": "llmail",
+      "group_id": "ndc-54f3d4f64e",
+      "source_id": "llmail:phase1:5254eb5558fc36c4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cb33747cdca3b428",
+      "case_id": "case-5141dec21c983d61",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cf4630f4d9",
+      "source_id": "llmail:phase2:113718645bd1f39c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cf5973b713a6b49f",
+      "case_id": "case-5147fcb393fbb0e6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-434ddff0a1",
+      "source_id": "llmail:phase1:13ff10b0f2ae3d25",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-38db25b3b1815206",
+      "case_id": "case-51dfb836c74f9d6b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-67cadb95cf",
+      "source_id": "llmail:phase2:fc3eba2335179a56",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b296c2c971abb65f",
+      "case_id": "case-527f01361c85608f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a2cc0fbc16",
+      "source_id": "llmail:phase1:575df622570346e2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dd2fd9120c530e4b",
+      "case_id": "case-534fc02e61cb4d51",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9db7d6843b",
+      "source_id": "llmail:phase1:8e1aea2a6224341e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ba258d39dc234ad1",
+      "case_id": "case-53b2536a6d431b57",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8678aa90ed",
+      "source_id": "llmail:phase1:f8812012bf3baf89",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-283d1eaef30b3208",
+      "case_id": "case-5415ca5c3ec5ef10",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3b2c45660e",
+      "source_id": "llmail:phase1:f34bbd47eca54676",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aec4c32090eea99a",
+      "case_id": "case-55a129d2dd799e07",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ded6fb241c",
+      "source_id": "llmail:phase2:8514a62d76985caf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-64362349e3a6bfca",
+      "case_id": "case-55becb309896cc95",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fd3387a80c",
+      "source_id": "llmail:phase1:38f28d6ab0e0e142",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-347f6169489a2614",
+      "case_id": "case-560232bf20a8dd69",
+      "dataset_id": "llmail",
+      "group_id": "ndc-28612960c9",
+      "source_id": "llmail:phase1:d903dcbd4b7abea2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6c6a361038a2ba37",
+      "case_id": "case-56a00a241a96efa2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-897a93b6a0",
+      "source_id": "llmail:phase1:a799d5e4f2f25fbd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5e8387b00ef844e9",
+      "case_id": "case-573ee4754531582a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f57720156e",
+      "source_id": "llmail:phase1:41e7dd36a47710e1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5a6718d960abd81c",
+      "case_id": "case-58c78ebe505a5190",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9931247d97",
+      "source_id": "llmail:phase1:d3896d0cd7d10599",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4707ee0337510324",
+      "case_id": "case-58eb303fad23b98b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-adb6161cb1",
+      "source_id": "llmail:phase1:8d658867f9c700ea",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-98f4265ae7ec213b",
+      "case_id": "case-599159ab06b27e4b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6667425ed9",
+      "source_id": "llmail:phase1:454821c6dd0ea838",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-713d0303e3bcf703",
+      "case_id": "case-59d5a0c068ba3f2a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b9587bd88b",
+      "source_id": "llmail:phase1:9e2106d716f90076",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3aa689bb54fd23e0",
+      "case_id": "case-5a3d475d290c23c6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-34acf1acaf",
+      "source_id": "llmail:phase2:31fa65a04accfe51",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ecf052e4511af163",
+      "case_id": "case-5abc15b25528eecb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4cd43bd16b",
+      "source_id": "llmail:phase1:414c46cdbea5ba01",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d17856352b90c0b1",
+      "case_id": "case-5ac80d5be1b618bb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ef871b864f",
+      "source_id": "llmail:phase1:44b4aacd2cced644",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c5a8a5c699cb42ce",
+      "case_id": "case-5b01c55088ad6d2b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c322e54b2f",
+      "source_id": "llmail:phase1:2f023e9871eb4633",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c9efb29eb9815605",
+      "case_id": "case-5b4f1f2631181f30",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6020519b48",
+      "source_id": "llmail:phase1:2e716f896e5eedb6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b9bc2a3006b05340",
+      "case_id": "case-5c592e2b3574c522",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2ee1245c04",
+      "source_id": "llmail:phase1:c8afe37b49df1424",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4fbabc9652feacab",
+      "case_id": "case-5c5d31dde24bc91d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-d1d8d60863",
+      "source_id": "llmail:phase1:abf9bf078ef77ec9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6c2aa426f2cd8913",
+      "case_id": "case-5ceefb4822b647a2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cb6ea05012",
+      "source_id": "llmail:phase1:19f15cf48d465f4c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6f0b9b1a9ad4d882",
+      "case_id": "case-5e82ee108586caa5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-533d4f6a6a",
+      "source_id": "llmail:phase1:aabe639e0ee66535",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1480f29a2d48d09c",
+      "case_id": "case-5f100d00ebf91af2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-01405a7bd3",
+      "source_id": "llmail:phase1:806d66232ad9dbb7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6e079f18aadec413",
+      "case_id": "case-5f50e1f1a7b4f1b4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-545104fbd3",
+      "source_id": "llmail:phase1:a252ae67ae526826",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f79ecb93f12f3fe9",
+      "case_id": "case-5fa088c3b652f4bc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7a17c5c1a4",
+      "source_id": "llmail:phase1:76632a54ac9ed0c8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-515f3796d2921f7b",
+      "case_id": "case-6074b222a1d18b44",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cb0bed4a60",
+      "source_id": "llmail:phase1:504545fc4134267e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-06dd97a91e56035e",
+      "case_id": "case-611070f3b9f1bfe9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f03700fb38",
+      "source_id": "llmail:phase1:ff5e4132007db56d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3da4789060545f3c",
+      "case_id": "case-6173c1cf7d7d506b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a012face47",
+      "source_id": "llmail:benign:9dba6aae83510482",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-509518c0f7ecbe7e",
+      "case_id": "case-61a153e6bfa6810d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4c61140063",
+      "source_id": "llmail:phase1:39ef16f25a80c71c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2c580736fc9b8cfd",
+      "case_id": "case-627a0f6224c8c6a7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-384da4d95e",
+      "source_id": "llmail:phase1:4a7eb1668525ddfc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2b58d7f5c2eb3230",
+      "case_id": "case-6291caabd2115aaf",
+      "dataset_id": "llmail",
+      "group_id": "ndc-dab0f02a99",
+      "source_id": "llmail:phase1:159c276784948ddd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-291cb6f22403bae6",
+      "case_id": "case-62ab34c84cebedf0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-849596520e",
+      "source_id": "llmail:phase1:c35a9d003d0cac82",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-69d2015e943acb6a",
+      "case_id": "case-633d6fb4286d4346",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ee93da5de8",
+      "source_id": "llmail:phase1:d3dc0fddc60664d4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-df31c5fa89a0b5fd",
+      "case_id": "case-6378a0545f3ac77f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-776f09af7c",
+      "source_id": "llmail:phase1:78b6a325f074192c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bbde36ff10e23f57",
+      "case_id": "case-64a48065537f6afd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8d547fcb3a",
+      "source_id": "llmail:phase1:90a85f604f55ab3d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ce5c75dd31fa4751",
+      "case_id": "case-64da25afc4d4d3ac",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5e77034892",
+      "source_id": "llmail:phase1:de7b50d7d43761ba",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dd6ed95bb3499b9a",
+      "case_id": "case-64f433f5b9610e7b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ef871b864f",
+      "source_id": "llmail:phase1:df4c2294f4672048",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5c52590dfe551ebe",
+      "case_id": "case-6524530f26cdd717",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5adc0861d8",
+      "source_id": "llmail:phase1:fae3634faca919c9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b6825c415718632d",
+      "case_id": "case-657b25f1436b052e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7ca45234b1",
+      "source_id": "llmail:phase1:a924999a5d5831e8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-63954b27e221c306",
+      "case_id": "case-65f963924c5a9ba9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ac5940d88b",
+      "source_id": "llmail:phase1:fc0333ccbeae6583",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4dcf92a74af9a228",
+      "case_id": "case-661a0c01326db2bf",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2437bebf4b",
+      "source_id": "llmail:phase1:51bc7b27e6e5b975",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-edf1619978fde5cc",
+      "case_id": "case-661e2d8e40cafe1b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7bcee12473",
+      "source_id": "llmail:benign:1d0c73b9b2849f4e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5acd81c6de9ce8e3",
+      "case_id": "case-66517a217bd22257",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8dfb9d326b",
+      "source_id": "llmail:benign:1de248c9ac6ed1d5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3e4e4b2761ed280a",
+      "case_id": "case-66e9728beee1e790",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e646965b37",
+      "source_id": "llmail:benign:206cb126a51e1b92",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-73d05a4e941bde1f",
+      "case_id": "case-67a279a3951ccbff",
+      "dataset_id": "llmail",
+      "group_id": "ndc-33a21c33ac",
+      "source_id": "llmail:phase2:775874c374f93a6d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-daca9805a8751868",
+      "case_id": "case-683fffed78d356e1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3e2a212ac7",
+      "source_id": "llmail:phase2:a7564f354d7b44cd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3bccd444538ff5ee",
+      "case_id": "case-68e8e6bb8f28b0ec",
+      "dataset_id": "llmail",
+      "group_id": "ndc-727f79597a",
+      "source_id": "llmail:phase1:a58893ba496bc4a2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e8b70fe0f9117506",
+      "case_id": "case-6a40cef5424241b9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-462077d37a",
+      "source_id": "llmail:phase1:1e2924d5f5e3c042",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-188f0648b19dc5e8",
+      "case_id": "case-6aeb014ccf304df9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-896c47014c",
+      "source_id": "llmail:phase1:21799346bda60cf3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3a781c2bba76bd1b",
+      "case_id": "case-6b9203a10caf1041",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f844612caf",
+      "source_id": "llmail:phase1:b2be1ec3c1896322",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c0267d2d9c6799f2",
+      "case_id": "case-6c385ab6bfa9f741",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6fe0341cfc",
+      "source_id": "llmail:phase1:6da92dc203f4f1cc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f19633bad0f3cfaa",
+      "case_id": "case-6c7248098b1b0fd3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-23a6c629cd",
+      "source_id": "llmail:phase1:489a41bdc962f273",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e2874ac25cf1d054",
+      "case_id": "case-6c8a4567b2efc58a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-342e51f41e",
+      "source_id": "llmail:phase1:7f9821f4072f1e26",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3397f9913093f75d",
+      "case_id": "case-6ce18fac1498889e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-94b275e1f2",
+      "source_id": "llmail:phase1:7bb50c96f0b10345",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ac21f1c4948970e0",
+      "case_id": "case-6e20eebd5c3140db",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fc38add461",
+      "source_id": "llmail:phase1:b3efd0dcb2df1224",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-23c5147d7fd66fd9",
+      "case_id": "case-6eec4ffdf06dc93f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0b532330e7",
+      "source_id": "llmail:phase2:ad2af93037db56b6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-db5b2c58ad658438",
+      "case_id": "case-6f135d727bfc0aa5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b34c12ceb0",
+      "source_id": "llmail:phase1:f48fa8b7e5681469",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-408ca81571e20dab",
+      "case_id": "case-6f5b360f44e623c7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f410b998dd",
+      "source_id": "llmail:phase1:858b4ee2e1072cc6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-449066b40b560dee",
+      "case_id": "case-714262ad49211cd3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-716021fc42",
+      "source_id": "llmail:phase1:ae55172324e0b056",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b768944d7919de1c",
+      "case_id": "case-7146d70c58f4a734",
+      "dataset_id": "llmail",
+      "group_id": "ndc-049dda17a2",
+      "source_id": "llmail:phase1:ad38816237964b6b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7584b1c25e044e87",
+      "case_id": "case-7441dd70bdda9e7b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7f8d088b6e",
+      "source_id": "llmail:phase2:8f31c4d29f98f6ef",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-264776ad9d7f2361",
+      "case_id": "case-74c1c77b76615ca2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f1fe745554",
+      "source_id": "llmail:phase1:868ef5e549cca3e1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3b540661faaef14d",
+      "case_id": "case-763f1a1bcc41f772",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a440eca6a3",
+      "source_id": "llmail:phase1:fac6ff0b35069997",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fce22fdceb458346",
+      "case_id": "case-7665fed0667d8e87",
+      "dataset_id": "llmail",
+      "group_id": "ndc-207f9e3cfb",
+      "source_id": "llmail:phase1:4a17e99302e80b3f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-27653bfba9d6ec3b",
+      "case_id": "case-7695cb4c845086b2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-384da4d95e",
+      "source_id": "llmail:phase1:d734ea0bc8ae1204",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-252dcf33c21b7ca6",
+      "case_id": "case-76c20e3a2c2b1519",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1153418134",
+      "source_id": "llmail:phase1:9e2d58c1bde72d5e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0428fdc98bf471bc",
+      "case_id": "case-77086e680719f1fe",
+      "dataset_id": "llmail",
+      "group_id": "ndc-09c3122a35",
+      "source_id": "llmail:phase1:1fe878d8dc81e301",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a3183e3ad57a5aa0",
+      "case_id": "case-77ce6085fb174101",
+      "dataset_id": "llmail",
+      "group_id": "ndc-52b003196a",
+      "source_id": "llmail:phase1:23c2827e14dc7e95",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-697e8d8c6346649c",
+      "case_id": "case-790759a032e5462e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-675aed5dcd",
+      "source_id": "llmail:phase1:16a65ddc9c805d90",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f844eeb08f54c2ca",
+      "case_id": "case-7950a3b5e23b0e2d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-664652949e",
+      "source_id": "llmail:phase1:120e8f5258d1df20",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e8370f046ddde5fd",
+      "case_id": "case-79f16b23711c998c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c26c494a56",
+      "source_id": "llmail:phase1:c5f1afbb8c4a8681",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-16dbe03c01a39abb",
+      "case_id": "case-7a33a5ebd824dbc5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8e813b3862",
+      "source_id": "llmail:phase1:da436ed94ace2827",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-072cb227d93ae56c",
+      "case_id": "case-7b4cd9df315a9072",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ac73abc8c4",
+      "source_id": "llmail:phase1:b4b3697b9f4eebee",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bc67babec4677e76",
+      "case_id": "case-7c42cb1eabc4d375",
+      "dataset_id": "llmail",
+      "group_id": "ndc-17389d8cea",
+      "source_id": "llmail:benign:affccd75914f58eb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6efc718de0ff894c",
+      "case_id": "case-7d48a6aa73430682",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6e5473ddd0",
+      "source_id": "llmail:phase1:4c81209131054f36",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f22b214656cb550a",
+      "case_id": "case-7e0e35dab287ec08",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bf643a4bd8",
+      "source_id": "llmail:phase1:9cd6f28d9fae97b4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a24223279d0ecdeb",
+      "case_id": "case-7e51ba6f9df1f35b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-17389d8cea",
+      "source_id": "llmail:benign:5baf3eb0befe186f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-77733e7aaa0f2980",
+      "case_id": "case-7eb9ae904591fccc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-97d01901a1",
+      "source_id": "llmail:phase1:d881a862b0ded5b2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-48e58efd4753f317",
+      "case_id": "case-7eff097feb694f28",
+      "dataset_id": "llmail",
+      "group_id": "ndc-38b831c9a6",
+      "source_id": "llmail:phase1:7464698491a39511",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0d87cc26f5dd3c48",
+      "case_id": "case-7f5c8962e838a224",
+      "dataset_id": "llmail",
+      "group_id": "ndc-46c14337ac",
+      "source_id": "llmail:phase1:cc1f39071adcd8bf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e9c080cdcb362910",
+      "case_id": "case-7fb44a5ca71cdc62",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cf84adeea1",
+      "source_id": "llmail:phase1:71701189adbe2b27",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-783be507f54d472d",
+      "case_id": "case-8012fbff4b2b27cd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8438e24372",
+      "source_id": "llmail:phase1:09b715ee6666b693",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-11fb8db50a998536",
+      "case_id": "case-80bf04485b2d5bc4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-921acf7fc8",
+      "source_id": "llmail:phase1:6e8f6ff8c6fe6a93",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-450ad55bac4d286c",
+      "case_id": "case-81334de22fae7054",
+      "dataset_id": "llmail",
+      "group_id": "ndc-40c99feec9",
+      "source_id": "llmail:phase1:9558cc866c85fa40",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-82afe57df05895af",
+      "case_id": "case-81f9d1369b7095e5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e4902623ef",
+      "source_id": "llmail:phase1:aa7dc3389732b10c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d5fa632550d82489",
+      "case_id": "case-83e52232a84fc66a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a90c57cf05",
+      "source_id": "llmail:phase1:2aa17d45528f04dd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5e5acdc315232752",
+      "case_id": "case-8433fbe4eb19511e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0f21515629",
+      "source_id": "llmail:phase1:bfce567880221987",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3192e1a0e1fb7b2d",
+      "case_id": "case-843d3ccb7ff2d900",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ba1e1501a9",
+      "source_id": "llmail:phase1:ddd00485a745b028",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-54085c344b39ef00",
+      "case_id": "case-84b27bfde4637f08",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4270f689c6",
+      "source_id": "llmail:phase1:8cf48aa5c47f2f0f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bf19edc6e87536f4",
+      "case_id": "case-84c751d34601a000",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1b2578e69b",
+      "source_id": "llmail:phase1:a1a2b0069ec0af22",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bf32e5deaa1d4416",
+      "case_id": "case-84dd3d06134a4dcb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-92cdf970b6",
+      "source_id": "llmail:phase1:b9e539afa930d7ea",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8a0b1212672c834b",
+      "case_id": "case-855d4a21570074ca",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4cd43bd16b",
+      "source_id": "llmail:phase1:9d8ed1c77dabbc55",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-db7c9d1b8ee8a5ee",
+      "case_id": "case-8621ef3d141b095d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b9ea64732",
+      "source_id": "llmail:phase1:4852795314ab752d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8add9f7d7d29dfd4",
+      "case_id": "case-8767d28494d2fca9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-feea743b5d",
+      "source_id": "llmail:phase2:1d4097ef5ae12224",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d0c2ab4cad987f5a",
+      "case_id": "case-87979036930f2c45",
+      "dataset_id": "llmail",
+      "group_id": "ndc-57342d91ad",
+      "source_id": "llmail:phase1:9c397211da63d2e8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1519c63f046c3c18",
+      "case_id": "case-87be265aade0f77d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3e2a212ac7",
+      "source_id": "llmail:phase2:e04b8587a09b0b7f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-89c5c7c9149930d5",
+      "case_id": "case-87eee0453d12756c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6b89d7b467",
+      "source_id": "llmail:phase1:cd17f55184394508",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-eb08baa724e388ad",
+      "case_id": "case-88612ee34ab020dd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a2074fe298",
+      "source_id": "llmail:phase2:7f5094a3c87db0b4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b43288f0d6cb45d3",
+      "case_id": "case-886cb30e8d68df1e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5d7e54c0c1",
+      "source_id": "llmail:phase1:04abd03c4d8895dc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b11314735490b4c4",
+      "case_id": "case-889093f9c4a748c3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b093d5ac59",
+      "source_id": "llmail:phase1:ef0a500556a6f1c1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b142cd95f5088f2e",
+      "case_id": "case-88aa159c0d8c7465",
+      "dataset_id": "llmail",
+      "group_id": "ndc-12209ba1f8",
+      "source_id": "llmail:phase1:6fe3d041258fce3f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3ed1e97f9fa774a0",
+      "case_id": "case-8947d0c01d052cfb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ea6cf88a6c",
+      "source_id": "llmail:phase2:4195d1033dacbe20",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d04faf1a488cad7c",
+      "case_id": "case-8a65340bc1b846bf",
+      "dataset_id": "llmail",
+      "group_id": "ndc-64d1f04d94",
+      "source_id": "llmail:phase1:5153ebc95e088c9d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-efa715cf893693e2",
+      "case_id": "case-8a931a4911f8bb46",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a301f2fc0d",
+      "source_id": "llmail:phase1:f14d3f223d76bacf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-17236af7e8e95732",
+      "case_id": "case-8b3bc41da8d1e461",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e646965b37",
+      "source_id": "llmail:benign:5182bbc64d7193b2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-16d80d93c5cf771e",
+      "case_id": "case-8c9233d6f1097122",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fb9b2cbc05",
+      "source_id": "llmail:phase1:2e10a9e8f0e73359",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0fb3314696a2d393",
+      "case_id": "case-8cb81e20b6306336",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e7f1438b01",
+      "source_id": "llmail:phase1:00b1489d90f3fba9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9be71c1f055c2f82",
+      "case_id": "case-8d43dc64fe6fa906",
+      "dataset_id": "llmail",
+      "group_id": "ndc-df5d943e07",
+      "source_id": "llmail:phase1:8dd38b308b491e25",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1f01593eeee17f9b",
+      "case_id": "case-8d64aa20df5b380f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b2c0e8eb25",
+      "source_id": "llmail:phase1:43d5c642815877ac",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-84f53d1945a4738c",
+      "case_id": "case-8d84cb36055be674",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9f13e6cf79",
+      "source_id": "llmail:benign:143ec1642e577e7d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e9b354c0a44cc170",
+      "case_id": "case-8d93af35964bd68f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e193d33c81",
+      "source_id": "llmail:phase1:894425a67d9d1733",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1a34551be70cefcf",
+      "case_id": "case-8e8ba5ec3642cb5c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5fece56ef9",
+      "source_id": "llmail:phase1:a975a53dcde576cf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ed7fb7a74b7da8c2",
+      "case_id": "case-8ee044df5a84f127",
+      "dataset_id": "llmail",
+      "group_id": "ndc-264c52c15e",
+      "source_id": "llmail:phase1:57c957e489ad1ace",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-473f40037847321b",
+      "case_id": "case-907fc21c3c79a352",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e4902623ef",
+      "source_id": "llmail:phase1:cc0d048ec36bfba4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8a9b47ff7cf62a40",
+      "case_id": "case-90902841af4e24fd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f410b998dd",
+      "source_id": "llmail:phase1:7c329b8578a559c4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b70f52eaee240dbd",
+      "case_id": "case-91cb716719a008e7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f3f759a3a3",
+      "source_id": "llmail:phase1:a7c0c0cfce4676b4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ba35692651cb705",
+      "case_id": "case-92394a4a0977451c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-75c72523ea",
+      "source_id": "llmail:phase1:560b252f76e414c9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b32bd093b91234bc",
+      "case_id": "case-932659b3d05b20e3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-77e9bc775b",
+      "source_id": "llmail:phase1:49c0bfb1f9afd793",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-372b6f1df120fd9f",
+      "case_id": "case-932daff105492260",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7779b3c936",
+      "source_id": "llmail:phase1:454022a3004968cc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e633024abfc32c04",
+      "case_id": "case-9398b07ed100a734",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4b87293749",
+      "source_id": "llmail:phase1:85dbd4bd1b6b7383",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6b1bf996c46c0202",
+      "case_id": "case-939eed5fba9c4dc2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b025d22ff",
+      "source_id": "llmail:phase1:cea6eb7482cc68b9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-58e8c9ddeaeefe4a",
+      "case_id": "case-93d541aff41a4841",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6fe0341cfc",
+      "source_id": "llmail:phase1:264c9582da67d420",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78d292812fc0e18d",
+      "case_id": "case-944b4d249fd9325c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bdbab204ed",
+      "source_id": "llmail:phase1:312fc5e535dcbe2c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3cf8dda6e4b8e2c6",
+      "case_id": "case-94646f616f35314d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8939177d1e",
+      "source_id": "llmail:phase1:eff7f7c6a801949d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6ea275183011d844",
+      "case_id": "case-94bb6432c1b848da",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a8cdf4d4df",
+      "source_id": "llmail:phase1:027ef153c73b82e8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5a8cac2daa6c690b",
+      "case_id": "case-94c131fcc5e05069",
+      "dataset_id": "llmail",
+      "group_id": "ndc-26c70de3a5",
+      "source_id": "llmail:benign:261881b286a1bff1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bbcf0ec3f7f8468e",
+      "case_id": "case-952012675e7055f7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ad793cfb23",
+      "source_id": "llmail:phase1:165b4a1d8dbdfb84",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0cdda11da70d24cd",
+      "case_id": "case-954cd4abd2145799",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0be77dd4e3",
+      "source_id": "llmail:phase1:2352cfb5771c81c4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a07e300fbfc00e7e",
+      "case_id": "case-958e7cb4dfdc05db",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ca7b2ab3ce",
+      "source_id": "llmail:phase1:481f713c2e0a8763",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-94a59f99babbca6c",
+      "case_id": "case-9629ad3f91cff159",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ef871b864f",
+      "source_id": "llmail:phase1:9c89e156295029d4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bfac44fbfbcf7291",
+      "case_id": "case-983fc26f4eff1160",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8dfb9d326b",
+      "source_id": "llmail:benign:46d469180c1f7e42",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b8d38824a63a88d5",
+      "case_id": "case-987c01335c799182",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ea5cd8cb6e",
+      "source_id": "llmail:phase1:47a0bba9bd83f37e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-82e6f67ffb60cb2a",
+      "case_id": "case-995fdceb8fddc087",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5914e28c50",
+      "source_id": "llmail:phase1:59ee6f806b460b06",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5a15ca023f3ab5d3",
+      "case_id": "case-99976fadcdd4619e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-08d98ab067",
+      "source_id": "llmail:phase1:4e531ddaeedb00eb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b25b682209708c77",
+      "case_id": "case-9aa1db4066591b0e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-75c72523ea",
+      "source_id": "llmail:phase1:9e34c7af77c7b255",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bcc210e7fa0ae63c",
+      "case_id": "case-9af406fec749eea2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e7ac09bf7a",
+      "source_id": "llmail:phase1:451fb21cbdcd018c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-39b15c5d30411e54",
+      "case_id": "case-9b53f985aef1b811",
+      "dataset_id": "llmail",
+      "group_id": "ndc-639a8cc94b",
+      "source_id": "llmail:phase1:38004427af8e8552",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-88b386ad35008345",
+      "case_id": "case-9b9efcc96f739457",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1153418134",
+      "source_id": "llmail:phase1:7513f613986ee807",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ab354b8d1173224",
+      "case_id": "case-9ca179b8a39b2cd1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9df2e6297d",
+      "source_id": "llmail:phase1:c218e197785ff07b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6aa38e5b14b39296",
+      "case_id": "case-9cd330c8d859af58",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a012face47",
+      "source_id": "llmail:benign:c6c831eb72015fc3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-54f1d26c6a2f479b",
+      "case_id": "case-9d72dd65233fa222",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cb6ea05012",
+      "source_id": "llmail:phase1:5e0880dee4ab9f6a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0d616054c72191b7",
+      "case_id": "case-9e16c267510fc67f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f410b998dd",
+      "source_id": "llmail:phase1:66762b705fd5d4a8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d5548d54775305a1",
+      "case_id": "case-9e76eedb848c9093",
+      "dataset_id": "llmail",
+      "group_id": "ndc-43cbdb02cc",
+      "source_id": "llmail:phase1:8f79642654a17dfc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-37445d97d17cad75",
+      "case_id": "case-9e92a38d26de3687",
+      "dataset_id": "llmail",
+      "group_id": "ndc-daa4b3f2c8",
+      "source_id": "llmail:phase1:bb96213550fcd5cb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c40cdfd77612de18",
+      "case_id": "case-9f27ccfcb1ae1bfd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ad793cfb23",
+      "source_id": "llmail:phase1:c0c339e38caf0d26",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dc280676fb43b67b",
+      "case_id": "case-9f9e3aaf18c3d4b5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e5e8c4703b",
+      "source_id": "llmail:phase1:fd76062f33431f09",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ebcc21c87449cdf",
+      "case_id": "case-9fc8ea936bee58fd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7cb75c25d0",
+      "source_id": "llmail:phase2:1689bea18809da71",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f0f5d1e7cd1ecb48",
+      "case_id": "case-a04a318685c16739",
+      "dataset_id": "llmail",
+      "group_id": "ndc-201e47706e",
+      "source_id": "llmail:phase1:645075223e2cacb0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e13e487d560428c6",
+      "case_id": "case-a19fe84c9dbf3e45",
+      "dataset_id": "llmail",
+      "group_id": "ndc-935e479971",
+      "source_id": "llmail:phase1:a34da7f9462c86a9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-42ff79289d942b87",
+      "case_id": "case-a1e1ac65272f0c92",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ff6f0af11c",
+      "source_id": "llmail:phase1:7fa42479622f5264",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-70affe7bf391f5a9",
+      "case_id": "case-a21c94bbaf0afecf",
+      "dataset_id": "llmail",
+      "group_id": "ndc-69f46001d1",
+      "source_id": "llmail:phase1:8db8c2c02693ca07",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-73822e8c06a7f793",
+      "case_id": "case-a2d289f605770ed4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f410b998dd",
+      "source_id": "llmail:phase1:b71774d319df09b8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-59ba2390f79ae103",
+      "case_id": "case-a2fe6cf59f604b4d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3e2a212ac7",
+      "source_id": "llmail:phase2:3878a0ca51e52d24",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-49a066bf54ef1c6b",
+      "case_id": "case-a3d5d70c6b162d4c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3b36ffb67c",
+      "source_id": "llmail:phase1:677a06f5f1f38e43",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-18c7222bb4f4daea",
+      "case_id": "case-a3e5c5bad8b7ff26",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2ed75efec7",
+      "source_id": "llmail:phase1:be8d61e0dd3057ac",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4875e2eae6b05839",
+      "case_id": "case-a5338810b9544730",
+      "dataset_id": "llmail",
+      "group_id": "ndc-85db1b3a8c",
+      "source_id": "llmail:phase1:abfbc107f5ba77bd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c3735b398c843c23",
+      "case_id": "case-a54f2cb1222152d5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4003672a1c",
+      "source_id": "llmail:phase1:69f1ca42a6ff1565",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-24dc69df80349e06",
+      "case_id": "case-a66637127ff36a73",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b043786db",
+      "source_id": "llmail:phase1:87adfd2c18966f7e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9e1cfd7cd347e277",
+      "case_id": "case-a69933520eece09f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c5533e1acb",
+      "source_id": "llmail:phase1:6828ed53cbee1e51",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bde433e6c219bc30",
+      "case_id": "case-a6fc59c9c2b52f33",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8b6479571f",
+      "source_id": "llmail:phase1:f0b58b12d3356274",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fed83391d7a876d1",
+      "case_id": "case-a74affb4a0415b43",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0baf679ba8",
+      "source_id": "llmail:phase1:1e9075ecd1eb9266",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a7e5d50e3d92832",
+      "case_id": "case-a81f99ae0d493386",
+      "dataset_id": "llmail",
+      "group_id": "ndc-de854b9645",
+      "source_id": "llmail:phase1:07cf299e1d303ead",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c4a8b838521c4144",
+      "case_id": "case-a83b4cd474a12be8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-031c66c7c4",
+      "source_id": "llmail:phase1:72d9d0b3ea468113",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5f2b499147f0b05a",
+      "case_id": "case-a886a79728c96434",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ad793cfb23",
+      "source_id": "llmail:phase1:07074f066f04f45c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-96fd5e17fbf0a060",
+      "case_id": "case-a8a1cadf950a18af",
+      "dataset_id": "llmail",
+      "group_id": "ndc-43eb3a4849",
+      "source_id": "llmail:phase1:a5285e02f3707792",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b918424d8ae8ef31",
+      "case_id": "case-a948d4ba2e423de3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2a8e0017f5",
+      "source_id": "llmail:phase1:431ca97df6f2173f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dd33d0c4b61a4e84",
+      "case_id": "case-a9fb6e4584d4c59c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-159d0af335",
+      "source_id": "llmail:phase1:f5ee6f18285cfe62",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9af02e2803c5f9f6",
+      "case_id": "case-aa3b52a5c9512dcc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-89729f930d",
+      "source_id": "llmail:phase2:aaf9b4a1b3504947",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-92d356753c6ce7fb",
+      "case_id": "case-aab181eef008c6ab",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b083bb2e9c",
+      "source_id": "llmail:phase1:2af511bbda5ce66b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d493311898aa3edb",
+      "case_id": "case-ab25673657c0f3fe",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ded6fb241c",
+      "source_id": "llmail:phase2:45f89c70adcf0bc1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1368ea306b46f44d",
+      "case_id": "case-ac28072d21761e62",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2437bebf4b",
+      "source_id": "llmail:phase1:5b9f3d7384b59c0c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-82b4d326b1721223",
+      "case_id": "case-ac5788be3c63ba35",
+      "dataset_id": "llmail",
+      "group_id": "ndc-719d5ead06",
+      "source_id": "llmail:phase1:3d749390a1a77e25",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c0ee7d4bcf496978",
+      "case_id": "case-ac66ae7f40d27eb0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-14b39f73bd",
+      "source_id": "llmail:phase1:5b872291ae70aea0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ecd69edba9f871d9",
+      "case_id": "case-ac9619cd7442b56c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6e5473ddd0",
+      "source_id": "llmail:phase1:28fbe7afbdd8c04a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9ad351d86577acb1",
+      "case_id": "case-aca88d0c531e8133",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9db7d6843b",
+      "source_id": "llmail:phase1:4feb22d1cbbae4b9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b16340e123c85a76",
+      "case_id": "case-acb14bae03f0b527",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3e97c69fb8",
+      "source_id": "llmail:phase1:5c9f47efa08b62ac",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-76a07baec2e7da81",
+      "case_id": "case-ace29f5ad41b23fc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ad793cfb23",
+      "source_id": "llmail:phase1:29e85a3101e4c31f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6658c3c266ce88be",
+      "case_id": "case-ad1997bc7f3b3d2a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e4902623ef",
+      "source_id": "llmail:phase1:b743c5588666aa3c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f391d05d3f345d27",
+      "case_id": "case-adb0b42d244733d1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-07816c1889",
+      "source_id": "llmail:phase1:61b8128059687cc2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1b2a1f1b271eac4e",
+      "case_id": "case-aebe4b8158c335cb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a1cafe8629",
+      "source_id": "llmail:phase1:7abde6eca55fbc8e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-817d8219a3b33448",
+      "case_id": "case-aed31c69c4dc8592",
+      "dataset_id": "llmail",
+      "group_id": "ndc-63ca1f9d90",
+      "source_id": "llmail:phase2:0d576fbaa6f6af1b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e809a321b3a41294",
+      "case_id": "case-af070053c583ec7b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4b87293749",
+      "source_id": "llmail:phase1:6be10c5ed0e6f3c7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a29897a7796440e6",
+      "case_id": "case-b042d67214484b6b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b8cc24879e",
+      "source_id": "llmail:benign:c20a63cae4de053f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4de4e2a02ba21d11",
+      "case_id": "case-b07a0cab07b84948",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b8dfa67362",
+      "source_id": "llmail:phase2:796c61b35971e950",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2496d471fec10304",
+      "case_id": "case-b08d7fc9c2453774",
+      "dataset_id": "llmail",
+      "group_id": "ndc-07fe1eebea",
+      "source_id": "llmail:phase2:1b0982348985b5de",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8508c4d945791b6a",
+      "case_id": "case-b122e613e6b756f2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fa8cdaaa98",
+      "source_id": "llmail:phase1:aa06165508e2aadb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-de7aee2b1420afef",
+      "case_id": "case-b1ca9e2bbcb625ce",
+      "dataset_id": "llmail",
+      "group_id": "ndc-61d2354ec0",
+      "source_id": "llmail:phase1:8f05d5faaaecf818",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-66a0e15db6377624",
+      "case_id": "case-b1cc275bd7db394d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-07d9fb03b2",
+      "source_id": "llmail:phase1:add197dc0e1d3d9c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-418c0fd558bb1e0d",
+      "case_id": "case-b2496a0e93dff398",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6e2e72e5ec",
+      "source_id": "llmail:phase1:3a2a1dcbdcc3de02",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1842d5eaf63890be",
+      "case_id": "case-b324ebe57f870bc5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-54290ded73",
+      "source_id": "llmail:phase1:df273df9f69ef687",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d586f19c5b4d3688",
+      "case_id": "case-b375ddce38579c85",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1fbc194618",
+      "source_id": "llmail:phase1:2f887716a5ee8df8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52a20ace6d4d714d",
+      "case_id": "case-b3db990d98e2a4eb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2da0f7c24f",
+      "source_id": "llmail:phase1:d004c28f8d422412",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7560ff27337b3db9",
+      "case_id": "case-b52e3b4fb8b88c0b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e4902623ef",
+      "source_id": "llmail:phase1:ad5b1b73940fd060",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e8b49c20b0e1427f",
+      "case_id": "case-b53cb5fe89a76489",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8317ca2af1",
+      "source_id": "llmail:phase1:2ea74bd340194cc2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-557f02921e0bb6dd",
+      "case_id": "case-b56aece3ca4c4e73",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8317ca2af1",
+      "source_id": "llmail:phase1:f475b19a420f4209",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-166f867561ae21fe",
+      "case_id": "case-b587a39340388685",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c1c9e92536",
+      "source_id": "llmail:phase1:5bb1852cc2d20ff3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-32f25566a7774451",
+      "case_id": "case-b609435862b8fffa",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7071e61ec7",
+      "source_id": "llmail:phase1:6ac5f32bf5fe9b54",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aca0e454cdcd825a",
+      "case_id": "case-b6abb6d181e9b4de",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b9a3a9111d",
+      "source_id": "llmail:phase1:db83d361ac51b819",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f6a03a9e1ff9829b",
+      "case_id": "case-b6f2cc395323ff9a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-da8c44afa0",
+      "source_id": "llmail:phase1:4740035b2aec8124",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1e87117cf2b70e32",
+      "case_id": "case-b796a6ce57a0b645",
+      "dataset_id": "llmail",
+      "group_id": "ndc-704f3b839a",
+      "source_id": "llmail:phase1:2ee90a9b9b16e270",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5d5e00a46eb53199",
+      "case_id": "case-b826792eeda7f89d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ad793cfb23",
+      "source_id": "llmail:phase1:44f209a77d92f0ee",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-14700599fe5b78f9",
+      "case_id": "case-b8394995ee7ad589",
+      "dataset_id": "llmail",
+      "group_id": "ndc-35a8360f7d",
+      "source_id": "llmail:phase1:1060ccd7ec9c64a9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-de98339ebe17fc3a",
+      "case_id": "case-b83f943e8d324e32",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2e78562eaa",
+      "source_id": "llmail:phase2:569608b5256b5409",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6ff89ba0cdbd57b8",
+      "case_id": "case-b92b003a98d7047d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ded6fb241c",
+      "source_id": "llmail:phase2:890ec29dfe5ef4e8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-86a2245dcb576cd2",
+      "case_id": "case-b940d73765447c41",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8b56c3a47d",
+      "source_id": "llmail:phase2:3fdc34f24ff484ab",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-769c75afd6748f9a",
+      "case_id": "case-ba2cab84c9fe1c87",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0c3a68ce60",
+      "source_id": "llmail:phase1:0ad6827d5ce7270d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-212c6c7bcc7badc9",
+      "case_id": "case-ba42ec4fc5dd56b1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b75c367bc0",
+      "source_id": "llmail:phase1:9ddeb7cb5357adb4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-01db2eaee4aed203",
+      "case_id": "case-bab223a8d8716564",
+      "dataset_id": "llmail",
+      "group_id": "ndc-613b388509",
+      "source_id": "llmail:phase1:10f8940303aa1eb5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bd460d1a46eb2d4c",
+      "case_id": "case-bbff9a2fc5098ca9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-45cb936525",
+      "source_id": "llmail:phase1:ab6faede473fa00b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-864eb141a5de4eb5",
+      "case_id": "case-bcd291db27d69f86",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0d5cf08d0d",
+      "source_id": "llmail:benign:64ccd65103baf31b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-40c66b341848661c",
+      "case_id": "case-bcd77518bf3f937c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a6ac5ac3b3",
+      "source_id": "llmail:phase1:fffa9d5c9c87fca8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-253fd2ffb09d80ba",
+      "case_id": "case-bd259df6ecb2e9f6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-51654c4cf0",
+      "source_id": "llmail:phase1:ecdadcc44e19a231",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d1c843a69edf3785",
+      "case_id": "case-bde47cd9cbc1cc49",
+      "dataset_id": "llmail",
+      "group_id": "ndc-15ee791a4f",
+      "source_id": "llmail:phase2:0adad33df386c341",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0023d71fbd0e9e70",
+      "case_id": "case-be48bc563bc98558",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f556dc2f2f",
+      "source_id": "llmail:phase1:754286e063e1f447",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2c1128925c1fc46d",
+      "case_id": "case-be4db30835b70aa1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-04f6099129",
+      "source_id": "llmail:phase2:7cc3f67d9b3d3cbd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d4c5d941b323205f",
+      "case_id": "case-be650672409612ed",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ebe036d5bf",
+      "source_id": "llmail:phase2:3fe887aa3ad74d2c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-00ce7f4a1f062a3d",
+      "case_id": "case-bf84bce1bcd38ba7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f410b998dd",
+      "source_id": "llmail:phase1:a97baea2e0b841fd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dd35aca31e14f06f",
+      "case_id": "case-c0182fe045d5c226",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cb6ea05012",
+      "source_id": "llmail:phase1:fba80f21d63c5217",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-31f9168771f8f3f0",
+      "case_id": "case-c03a7a0cb02679ad",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b0bf78f4b5",
+      "source_id": "llmail:phase1:555648e984d9e1d0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-012fa65c187c0f4b",
+      "case_id": "case-c0429307d88621de",
+      "dataset_id": "llmail",
+      "group_id": "ndc-88787b9eca",
+      "source_id": "llmail:phase1:1722bfe508b5b6a4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ce7ebe49ca6814e9",
+      "case_id": "case-c0f76926ed3198bd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7f0e2756eb",
+      "source_id": "llmail:phase1:74807d2f9f224175",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a8c79a3160424665",
+      "case_id": "case-c13f103693c9f0bc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e4ea0a2d45",
+      "source_id": "llmail:phase1:619ecc0f51109b5d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-54f0f751365aa69d",
+      "case_id": "case-c1550e5d9de7a200",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b81b18ba7",
+      "source_id": "llmail:phase1:fd60772cbc66606e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c9eefaad7c53bf49",
+      "case_id": "case-c2499ba66e3f756f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7942fa7011",
+      "source_id": "llmail:phase1:59d5f204a7da74ad",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f69a196dd2ff7644",
+      "case_id": "case-c2be9cb56198dd55",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a4ea44805f",
+      "source_id": "llmail:phase1:b5ad8cc9b5fcd5ce",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-56168468eb2b0fd1",
+      "case_id": "case-c32c2ca0b4555ff7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c69df22a03",
+      "source_id": "llmail:phase1:6f4191af5eb5d2a5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-81a7f66530f75cb2",
+      "case_id": "case-c3afba6ae22ef715",
+      "dataset_id": "llmail",
+      "group_id": "ndc-26fc690642",
+      "source_id": "llmail:phase1:1da236358d01cc08",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ff4ad39ae42ab260",
+      "case_id": "case-c42ac04fef97ffb0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0f03ede3be",
+      "source_id": "llmail:phase1:f21471e036e8a10c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4bdf6188ca417c9c",
+      "case_id": "case-c4554fa55dec27e4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-24655b45ae",
+      "source_id": "llmail:phase2:cf7ecc5ab488787e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-762ecc84812980d8",
+      "case_id": "case-c4e1c18bbf77e019",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cb6ea05012",
+      "source_id": "llmail:phase1:1cf38a3ecf148490",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ff082a1025b431aa",
+      "case_id": "case-c518fb63a930492d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3f260bd32a",
+      "source_id": "llmail:phase1:e7b2f0c1de046cf2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-147346d920ab6772",
+      "case_id": "case-c57f5f695ad8b2db",
+      "dataset_id": "llmail",
+      "group_id": "ndc-46c14337ac",
+      "source_id": "llmail:phase1:312615e3f5ad1d28",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-547d49e32df5a25c",
+      "case_id": "case-c58fca12928e284d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b524a9bc2",
+      "source_id": "llmail:phase1:3545ff4622ce18aa",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2e12e0b4d6b975f3",
+      "case_id": "case-c5f2892cc9d8aacb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-75e1a6bdf5",
+      "source_id": "llmail:phase1:85c10b0e51cd4cba",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3bb526de03a4f00a",
+      "case_id": "case-c62959409f6f507b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7bcee12473",
+      "source_id": "llmail:benign:6f0b21d11041f6fc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f5d85fd16fefeb04",
+      "case_id": "case-c6885a84ea3cea29",
+      "dataset_id": "llmail",
+      "group_id": "ndc-545104fbd3",
+      "source_id": "llmail:phase1:b411a21ea0ffe040",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0f044f44320b636d",
+      "case_id": "case-c7919e17e55b051e",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6b07829f3f",
+      "source_id": "llmail:phase2:3e4fbecf8ba2377f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ebdf84a33cff3d73",
+      "case_id": "case-c7a2ebd99454ba4c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f333b69b09",
+      "source_id": "llmail:phase1:81f4ad11b586f04f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-09ada0b95affcb3d",
+      "case_id": "case-c7ec0df2cdc44992",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4388610684",
+      "source_id": "llmail:phase2:2fb0f406281f7c69",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b93d284d471f9660",
+      "case_id": "case-c7ee0ccde9da5006",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4eb53a9200",
+      "source_id": "llmail:phase1:ade1f5a83b1117cc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-41c9cea28181c8df",
+      "case_id": "case-c878f70a0dd2740a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-973551104a",
+      "source_id": "llmail:phase1:adf5410519a223ed",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3d444da67b9dfb95",
+      "case_id": "case-c89866811d5975a6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7bcee12473",
+      "source_id": "llmail:benign:8b35512d4c3d6192",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b680aaac93309737",
+      "case_id": "case-c8c3f2cca5be6557",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fd4be33360",
+      "source_id": "llmail:phase1:0694001a576f3eb3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d5e66707b458144b",
+      "case_id": "case-c91ee19c9effb09d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2e71d037e6",
+      "source_id": "llmail:phase2:00beee6273af47bf",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8881e3b7afe4b62f",
+      "case_id": "case-c9901c9e35a7f253",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2bae910823",
+      "source_id": "llmail:phase1:5cda9bc70ce461c7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9bc3b7ac4c413c09",
+      "case_id": "case-c9a10513aacfbb25",
+      "dataset_id": "llmail",
+      "group_id": "ndc-117a2fa4e8",
+      "source_id": "llmail:phase1:143b5d8119ab2638",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-884a4474497413ad",
+      "case_id": "case-cba3c8380064fb8b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-794a538a3d",
+      "source_id": "llmail:phase1:6952d57f10edfc18",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-01c7812855d1ae7f",
+      "case_id": "case-cc3dd2c7baac6bc8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fea1993e88",
+      "source_id": "llmail:phase1:43180ca72a521e17",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-27fcbc1baa4aa8e6",
+      "case_id": "case-cc6cccb30ee5fa78",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6667425ed9",
+      "source_id": "llmail:phase1:c6817faa4dc50c78",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4c877fd213d1732f",
+      "case_id": "case-cd9a53eed2fe39e1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6e5473ddd0",
+      "source_id": "llmail:phase1:c6a5c99fd2f35c73",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e148c40f81544be2",
+      "case_id": "case-cdd6464f4013ada4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b5d6e42899",
+      "source_id": "llmail:phase1:942290f69381b0aa",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-145dfb27da629a72",
+      "case_id": "case-cdf509a37ed48484",
+      "dataset_id": "llmail",
+      "group_id": "ndc-935e479971",
+      "source_id": "llmail:phase1:3e12d4b1d5f12241",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-49d0caa14bb0b86f",
+      "case_id": "case-ce349517cf166e2d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f45269dbf0",
+      "source_id": "llmail:phase2:34d88538d30e9a1a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4a7f17f367f7806a",
+      "case_id": "case-ce53a64ed1d2c777",
+      "dataset_id": "llmail",
+      "group_id": "ndc-52f5e9e1b7",
+      "source_id": "llmail:phase1:a7ef64ed1939fbc6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-25bbbc5da053a7ba",
+      "case_id": "case-ce55843ccd6d4c8a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-46c14337ac",
+      "source_id": "llmail:phase1:1b319b9a570631ec",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fbf8672ee559d2d1",
+      "case_id": "case-ce69132d463af786",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0a15d27a51",
+      "source_id": "llmail:phase1:d697d78e39db618f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-62ad7a1ffcd11523",
+      "case_id": "case-cfb2a0331b98738a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e55fceecbe",
+      "source_id": "llmail:phase1:91fd0046b3282fd9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a6af9f9ce01b0bc",
+      "case_id": "case-d0c85a9e5a530f6a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-78bf61e798",
+      "source_id": "llmail:phase1:c82ed1de80e98329",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a2a68fd83509d7e5",
+      "case_id": "case-d0d395cf7882c777",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b41fce5213",
+      "source_id": "llmail:phase1:b1b184d5897e7931",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-995efe9bf2817ff4",
+      "case_id": "case-d1170aea86f0e5d8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-17389d8cea",
+      "source_id": "llmail:benign:d6139eb2bf4ad313",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-add994f97464a0e3",
+      "case_id": "case-d14440e328763b29",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8fc39f5f14",
+      "source_id": "llmail:phase1:22dfb7d0d29612c0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-aad9e5390e02bae5",
+      "case_id": "case-d1d170eb1433fe25",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9f43bf61f1",
+      "source_id": "llmail:phase1:643c5dbe905be60d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b50e2f387ccb1399",
+      "case_id": "case-d1eeb89cb40d68b3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7f8054535b",
+      "source_id": "llmail:phase1:ad0563e086c9fc57",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-74ed19d5ba046cc4",
+      "case_id": "case-d1fd6c2860f8d8d4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ac63a47973",
+      "source_id": "llmail:phase1:6dbd14faf35cbfdb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a5e2d65d8e8513e4",
+      "case_id": "case-d22171878bc8f343",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8dfb9d326b",
+      "source_id": "llmail:benign:3608489579f071e5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9d3a67e165f99a96",
+      "case_id": "case-d22b94c4135506ce",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a6c6280384",
+      "source_id": "llmail:phase2:96f08af5a0952a61",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a089d94580969ecd",
+      "case_id": "case-d2584cb9c231dedd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-508fd43acc",
+      "source_id": "llmail:phase1:3a5c25e6b7596bcc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4b7bfc11e4aa30ea",
+      "case_id": "case-d3d1ea473542c704",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f933bff34e",
+      "source_id": "llmail:phase2:4d83835acc797f05",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7ed2bf42847857d8",
+      "case_id": "case-d4189507e2644e1b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-61d2354ec0",
+      "source_id": "llmail:phase1:a3f505e0aac6332a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-147838139a48fe9d",
+      "case_id": "case-d42706100ea4fad8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-d1d8d60863",
+      "source_id": "llmail:phase1:ec5b696517053b24",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2efa867401efa839",
+      "case_id": "case-d46fa386aafd5fdc",
+      "dataset_id": "llmail",
+      "group_id": "ndc-8b94020a22",
+      "source_id": "llmail:phase1:f2c7bd908f366f6e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ad3f843dbb662258",
+      "case_id": "case-d47ef61e4be3bed7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-99b86d5c52",
+      "source_id": "llmail:phase1:686086273c14d6c0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c9f3896eeee3d731",
+      "case_id": "case-d56ea7cfc6d81f0b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a30b843c91",
+      "source_id": "llmail:phase1:0b4f0370f9909c91",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7a7114df8452a7c2",
+      "case_id": "case-d5c84bff5f0b0a65",
+      "dataset_id": "llmail",
+      "group_id": "ndc-60e44dfe4b",
+      "source_id": "llmail:phase1:21b065a0cd56b9e1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ae6bfbd983c593e5",
+      "case_id": "case-d60fb87b7663b80f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-67b3ce2ea6",
+      "source_id": "llmail:benign:c5eb5c42501b81f3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d5f558d96dd57a54",
+      "case_id": "case-d6143838feb72819",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fb6246c37a",
+      "source_id": "llmail:phase1:c677cad546c51966",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ac54b5d687403db0",
+      "case_id": "case-d644d0b359392004",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ded6fb241c",
+      "source_id": "llmail:phase2:8146a5273b642e44",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f80f742e53082c38",
+      "case_id": "case-d6dbf5b3d7287eb4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3b36ffb67c",
+      "source_id": "llmail:phase1:a4accbcc8c854464",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8edf0e776542e9e3",
+      "case_id": "case-d739efa15ab6e592",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7cb06cbd57",
+      "source_id": "llmail:phase1:39a58306b3d81734",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6c1a11c11082391a",
+      "case_id": "case-d782cf6d15aa9ffa",
+      "dataset_id": "llmail",
+      "group_id": "ndc-932406a924",
+      "source_id": "llmail:phase1:d953e7704d74b93e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b6c040b816d3f137",
+      "case_id": "case-d7f9cdb0c90c66c1",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7cc9ceaa04",
+      "source_id": "llmail:phase2:0a0790dfbbd37f49",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d24dba3cfdb1bea3",
+      "case_id": "case-d86a5ef85de24359",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7942fa7011",
+      "source_id": "llmail:phase1:9b8b741289978590",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-abf48f477c66b385",
+      "case_id": "case-da1195dfb0165065",
+      "dataset_id": "llmail",
+      "group_id": "ndc-54aa9ee9cf",
+      "source_id": "llmail:phase1:ede0b752ff6e41c5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-44569451a32f4e86",
+      "case_id": "case-da737229ab8d4fc9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7bcee12473",
+      "source_id": "llmail:benign:d97a7d0e2001264f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a49e49e0c20a5586",
+      "case_id": "case-db46a8ffebfcfcd4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-441647568a",
+      "source_id": "llmail:phase1:e24247157aaf379a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7de96e6278c58c6d",
+      "case_id": "case-db7a22c8246208b6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-b7a9d00767",
+      "source_id": "llmail:phase2:acb11f2df5952ead",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7b8890638b1ef08c",
+      "case_id": "case-dc2631a423953695",
+      "dataset_id": "llmail",
+      "group_id": "ndc-fb54765002",
+      "source_id": "llmail:phase1:382bd37158ceaa12",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cb65177ebae51738",
+      "case_id": "case-dc2fca42567b8a6d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e5b9317cc8",
+      "source_id": "llmail:phase1:e1aabad222e7ba06",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cc8636ca0a8f02ba",
+      "case_id": "case-dc6059ec5475f545",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cb56a61b04",
+      "source_id": "llmail:phase1:833b41e85b2c2880",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52eff2f972327675",
+      "case_id": "case-dc965f4a75d69ad0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b81b18ba7",
+      "source_id": "llmail:phase1:66c27a5dfadc3f0a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e4bf6dccf91a01c2",
+      "case_id": "case-dd831c7d195db4e0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-da8c44afa0",
+      "source_id": "llmail:phase1:3b0bea308fd5d8b4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-401f06d28ae4c20d",
+      "case_id": "case-ddcdf1e05c4e9579",
+      "dataset_id": "llmail",
+      "group_id": "ndc-17027ae175",
+      "source_id": "llmail:phase1:4653ce59fc371578",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-416612e51f68fe39",
+      "case_id": "case-de8f84457d29bb28",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a1cc89c0e7",
+      "source_id": "llmail:phase1:6643aae42d28fc26",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c7ffb1ec78975750",
+      "case_id": "case-ded585edcf7fdffe",
+      "dataset_id": "llmail",
+      "group_id": "ndc-cca3184ab1",
+      "source_id": "llmail:phase1:498878115e70dd19",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-06e7c27cfa94913b",
+      "case_id": "case-dee4c1163b78e936",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f333b69b09",
+      "source_id": "llmail:phase1:7646bfd962b87ee2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f2536654adcc03f1",
+      "case_id": "case-e06438f40a2b2557",
+      "dataset_id": "llmail",
+      "group_id": "ndc-82de1e4b24",
+      "source_id": "llmail:phase1:04cafec0fe57529d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4f95741a83e55d41",
+      "case_id": "case-e0731491ce3c93f8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c3012f87eb",
+      "source_id": "llmail:phase2:0f91a27a5665a0df",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52d50b6570200349",
+      "case_id": "case-e09e609ffe3fbbc2",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4a25ee6fe6",
+      "source_id": "llmail:phase1:5c529eb00ffa7d9c",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f5b4aae95368b22f",
+      "case_id": "case-e14d14fd88ef1395",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ef871b864f",
+      "source_id": "llmail:phase1:db9c883b3dba13e0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c35d612e12fd4174",
+      "case_id": "case-e151a90bfacc15e7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-92f4938121",
+      "source_id": "llmail:phase1:eb602329434ad9b0",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-41bc9317b808bc63",
+      "case_id": "case-e1543b32cda16d89",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f8978736f0",
+      "source_id": "llmail:phase1:d01ffcd25872da71",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cb3ba2d744db599e",
+      "case_id": "case-e164178b5ccbdd1b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-46c14337ac",
+      "source_id": "llmail:phase1:41fb136e384fdf37",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f4a92511c5598076",
+      "case_id": "case-e178ee65eea51360",
+      "dataset_id": "llmail",
+      "group_id": "ndc-310f365ccb",
+      "source_id": "llmail:phase1:db5255073cf18507",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-70d7252510b052b8",
+      "case_id": "case-e1a6f8af33f14212",
+      "dataset_id": "llmail",
+      "group_id": "ndc-14b36831eb",
+      "source_id": "llmail:phase1:eeec13076ad7d5ee",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7890f8fab3593fdb",
+      "case_id": "case-e1e5174c6e762880",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0154f4fb1c",
+      "source_id": "llmail:phase2:9f1d65b880efcc9d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ab555c82505ff318",
+      "case_id": "case-e20609e4c8b2c19f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-439da43913",
+      "source_id": "llmail:phase1:ed07bcdc950f7edc",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d02157055784a18c",
+      "case_id": "case-e2bfa11893db7542",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a3ffee694b",
+      "source_id": "llmail:phase1:9d57b0cecf0a46d5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5ddecc2f30b93da2",
+      "case_id": "case-e2fd7dede939b51d",
+      "dataset_id": "llmail",
+      "group_id": "ndc-59e0b91a1f",
+      "source_id": "llmail:phase1:b260ece4ab32cdc9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1a75d4806a7b312a",
+      "case_id": "case-e337f700b3d5eacd",
+      "dataset_id": "llmail",
+      "group_id": "ndc-70c4cb9531",
+      "source_id": "llmail:phase1:bd03a067ad70afe3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d1188b674815c82e",
+      "case_id": "case-e3d270e954560680",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f35cb37ade",
+      "source_id": "llmail:phase1:c1a4f739a7e34420",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6352c5a3afab66aa",
+      "case_id": "case-e85cedd9d49d7d63",
+      "dataset_id": "llmail",
+      "group_id": "ndc-89f3c4a64a",
+      "source_id": "llmail:phase1:cac517e0c5a01c3e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-829aef804bc2a348",
+      "case_id": "case-e86b75b09d25f291",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6dba0efde4",
+      "source_id": "llmail:phase1:ee37c930293ec240",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-69611a3958e5b3e5",
+      "case_id": "case-ea376ae2d84519e8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-c8413cf44d",
+      "source_id": "llmail:phase1:1951f4292fc58ede",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9a9834653f0334fa",
+      "case_id": "case-ea3c0fe5100ea70b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a6654437e6",
+      "source_id": "llmail:phase1:2434bbbf3b848855",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f7d3c376276cfc92",
+      "case_id": "case-ea736c6c63cd38a6",
+      "dataset_id": "llmail",
+      "group_id": "ndc-e8010678a4",
+      "source_id": "llmail:phase1:620d7bb4c21918ce",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e07536a7966e7eda",
+      "case_id": "case-eb96603733c47204",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bf643a4bd8",
+      "source_id": "llmail:phase1:bda7b2c700573cc6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a67f4b2b25df28e",
+      "case_id": "case-ebf5e7030cdc8e10",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9690c67808",
+      "source_id": "llmail:phase1:a1626b8933b909f2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d8cb613c2cb227cb",
+      "case_id": "case-ec56d646f6957c61",
+      "dataset_id": "llmail",
+      "group_id": "ndc-818c85f184",
+      "source_id": "llmail:phase1:e06950446f261b67",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-eda934a36d4d98f1",
+      "case_id": "case-ece18ee7444e7468",
+      "dataset_id": "llmail",
+      "group_id": "ndc-bf11ae41d1",
+      "source_id": "llmail:phase1:843d61787cc3279b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f388211a3f642d16",
+      "case_id": "case-edfbece316c0fc52",
+      "dataset_id": "llmail",
+      "group_id": "ndc-7e457f823c",
+      "source_id": "llmail:phase1:39bfe75e6f7e9f27",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c5ebe4184ccaa452",
+      "case_id": "case-eeacde37d8f3bb53",
+      "dataset_id": "llmail",
+      "group_id": "ndc-53849ceaef",
+      "source_id": "llmail:phase1:c17300e6aadc79cb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d98c2d309576561b",
+      "case_id": "case-eee58132f7054310",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f8638e090e",
+      "source_id": "llmail:phase1:efaf5ddb5bf6ca12",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e2dc8d506c254fb7",
+      "case_id": "case-ef528377af49fcef",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0baf679ba8",
+      "source_id": "llmail:phase1:94f864335ca51712",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-34419b74656dd343",
+      "case_id": "case-ef973d4466a70319",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2783040697",
+      "source_id": "llmail:phase2:001a49a531911c53",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6376a148009d7e35",
+      "case_id": "case-efc5304497824990",
+      "dataset_id": "llmail",
+      "group_id": "ndc-0c9ce74f4a",
+      "source_id": "llmail:phase1:976600ba96d50e3b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c942d4156a74711b",
+      "case_id": "case-f024ca04df8bc273",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5cc73f8002",
+      "source_id": "llmail:phase1:79f2b3a121658765",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-43bc18da48b1c661",
+      "case_id": "case-f06b393c51b7f18c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-3df6f2dacb",
+      "source_id": "llmail:phase1:aeaf31e4ac99cd98",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c9cca3773a9080a8",
+      "case_id": "case-f15e78e0d79b8252",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5b3505bf3a",
+      "source_id": "llmail:phase1:786a85ef7c124b8a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5b57e8dd71efa7a3",
+      "case_id": "case-f1849672448914cb",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2e10d84b83",
+      "source_id": "llmail:phase1:60dbdbaaffd083d8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a20491252b27cf00",
+      "case_id": "case-f1c322160468a477",
+      "dataset_id": "llmail",
+      "group_id": "ndc-973551104a",
+      "source_id": "llmail:phase1:4c07d2d4edcd45e3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b7516ce42544776c",
+      "case_id": "case-f20e49e6f0d33af4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4d73ef248f",
+      "source_id": "llmail:phase1:8b3e0180c09a6662",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-802c18c4e4a44455",
+      "case_id": "case-f2e1a1ea80a96a6c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f40e6036cd",
+      "source_id": "llmail:phase1:63217d2e97678192",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-98e984e22e9267c2",
+      "case_id": "case-f3361721e225351a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6b16c7fcae",
+      "source_id": "llmail:phase1:338090d643759105",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-60ccbe56e271a416",
+      "case_id": "case-f348e84fc16fb619",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2d6930e9c9",
+      "source_id": "llmail:phase1:3c7d36a5ea8fe893",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-561623f087fbf31b",
+      "case_id": "case-f380f3f13482be78",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6485a15add",
+      "source_id": "llmail:phase1:a57bacc26e4be054",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-26b6453880a6e29c",
+      "case_id": "case-f3ba36f8e83e7e40",
+      "dataset_id": "llmail",
+      "group_id": "ndc-286d9d254c",
+      "source_id": "llmail:phase1:59dfbc8a6c1d02b9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b9864942a35d07f7",
+      "case_id": "case-f3dc72fbd2b8c3b8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ded6fb241c",
+      "source_id": "llmail:phase2:b3cef35b3013ce11",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-60e6ca9fef7025e2",
+      "case_id": "case-f4660cb7e3cc85f7",
+      "dataset_id": "llmail",
+      "group_id": "ndc-67f1f53609",
+      "source_id": "llmail:phase1:466dd476db1f18f8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a815bedaca3545cd",
+      "case_id": "case-f4828b5a133653e9",
+      "dataset_id": "llmail",
+      "group_id": "ndc-5b5497785f",
+      "source_id": "llmail:phase1:89f9db5aea7bcba1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d002ba57bf84f596",
+      "case_id": "case-f4a7567c9dda94c8",
+      "dataset_id": "llmail",
+      "group_id": "ndc-abb3648b15",
+      "source_id": "llmail:phase1:10f72ad6df34a95a",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-10621c41a7cca316",
+      "case_id": "case-f50f5db48e973060",
+      "dataset_id": "llmail",
+      "group_id": "ndc-44193c59b7",
+      "source_id": "llmail:phase1:57bfea29c19fba7f",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a69686d25a2fe297",
+      "case_id": "case-f5a4fce03595ca3a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-abbe94d065",
+      "source_id": "llmail:phase2:bd1461c1af7941fb",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8d144fbca60aa863",
+      "case_id": "case-f5af7a1835f166db",
+      "dataset_id": "llmail",
+      "group_id": "ndc-9b81b18ba7",
+      "source_id": "llmail:phase1:31493636ab1fc0fe",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5d9ac0987f94b2a8",
+      "case_id": "case-f615301c993f077a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-263c287ca5",
+      "source_id": "llmail:phase1:b1f790bf1879cb03",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3aea3ff662b9f04f",
+      "case_id": "case-f64035444f4c423a",
+      "dataset_id": "llmail",
+      "group_id": "ndc-4677811e67",
+      "source_id": "llmail:phase1:02d380fb3133bd9b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f664e7d56cceef00",
+      "case_id": "case-f6ea55dde39fec87",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ec154392d0",
+      "source_id": "llmail:phase1:80eecc58852f95b3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6226907914a2437f",
+      "case_id": "case-f761313167acfea5",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6fd636498c",
+      "source_id": "llmail:phase1:2d09a1412b0ad11d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-788c4f9b40d205d8",
+      "case_id": "case-f7b6372dbb065374",
+      "dataset_id": "llmail",
+      "group_id": "ndc-99ec591896",
+      "source_id": "llmail:phase1:99261e68cc8774bd",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4cff504a715110f9",
+      "case_id": "case-f7db5f075d9c027c",
+      "dataset_id": "llmail",
+      "group_id": "ndc-126490d653",
+      "source_id": "llmail:benign:29fc4f8d0de9800b",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5b49e91d43a40ab9",
+      "case_id": "case-f8d7b0795b5f46ac",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ee321092de",
+      "source_id": "llmail:phase1:341b243eaa8c726d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c022cf3c5772565a",
+      "case_id": "case-fa0f26c2c0b3c603",
+      "dataset_id": "llmail",
+      "group_id": "ndc-921070fd1d",
+      "source_id": "llmail:phase1:1961e182381e15ea",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2e0d080ff642be64",
+      "case_id": "case-fa4905b55c698941",
+      "dataset_id": "llmail",
+      "group_id": "ndc-ad354dd965",
+      "source_id": "llmail:phase1:3af417e536f1b40e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5b6ddf7b9c594e73",
+      "case_id": "case-fa694dea0bb9c77b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-a4f9244969",
+      "source_id": "llmail:phase1:1398c98a036869f8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ac1ef0715469d8d",
+      "case_id": "case-faf5636d75aca5ef",
+      "dataset_id": "llmail",
+      "group_id": "ndc-858863a5d9",
+      "source_id": "llmail:phase1:3dfc862abb2c5149",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e135375615927939",
+      "case_id": "case-fb186503c0188fe3",
+      "dataset_id": "llmail",
+      "group_id": "ndc-198c6483b7",
+      "source_id": "llmail:phase1:95523b43818b01ef",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fc6bad7b911ef54c",
+      "case_id": "case-fbc7d73e94291821",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6fe0341cfc",
+      "source_id": "llmail:phase1:6ce23c0d5157f5e9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fe4ec5b0ed520dd0",
+      "case_id": "case-fc0d0b481136c63f",
+      "dataset_id": "llmail",
+      "group_id": "ndc-f09313ffac",
+      "source_id": "llmail:phase1:b46a2f3d760549c3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-191dffad115819e6",
+      "case_id": "case-fc301aab955253db",
+      "dataset_id": "llmail",
+      "group_id": "ndc-dfdd402d17",
+      "source_id": "llmail:phase1:8575edd27948881d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a21e9cf24a09fbc",
+      "case_id": "case-fc613b80354ada93",
+      "dataset_id": "llmail",
+      "group_id": "ndc-6dee77eacc",
+      "source_id": "llmail:phase2:4888369e41a2ce6e",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2aa8aff7882e457e",
+      "case_id": "case-fe473eaa682a4afa",
+      "dataset_id": "llmail",
+      "group_id": "ndc-576e1fc505",
+      "source_id": "llmail:phase1:6a1b12586f9a408d",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-30b004f0f0c5e319",
+      "case_id": "case-ff0e6982f701a3f4",
+      "dataset_id": "llmail",
+      "group_id": "ndc-1a3b913937",
+      "source_id": "llmail:phase1:0e70a0ca31dd5250",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b6f1125aaa69b21e",
+      "case_id": "case-ff710cf79122b4c0",
+      "dataset_id": "llmail",
+      "group_id": "ndc-023b2d86a9",
+      "source_id": "llmail:phase1:3b38790b5dc6a3c2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-996a9055b5575598",
+      "case_id": "case-ff8df807de42dd3b",
+      "dataset_id": "llmail",
+      "group_id": "ndc-2b6a9857c6",
+      "source_id": "llmail:phase1:967c7a3d78984bd1",
+      "split": "holdout"
+    }
+  ],
+  "created_from": {
+    "llmail": {
+      "adapter": "llmail",
+      "adapter_version": "1.1.0",
+      "raw_sha256": "a223abaf159dfa6e688d4efe515c93d239cf658797e78c3b12ec5785c09fca92",
+      "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
+    }
+  },
+  "manifest_sha256": "sha256:1a021d5ad3677aabefc014b1a7a55308ad5814c23225f0d827dae3f2883fb688",
+  "manifest_version": "v3.2",
+  "n": 526,
+  "project": "P1_external_instruction",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "holdout"
+  ],
+  "strata": {
+    "llmail_attack": {
+      "actual": 500,
+      "filtered": 746,
+      "target": 500
+    },
+    "llmail_benign": {
+      "actual": 26,
+      "filtered": 26,
+      "target": "all"
+    }
+  },
+  "suite": "holdout-v2",
+  "target": 580
+}

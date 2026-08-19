@@ -1,22 +1,22 @@
 {
   "projects": {
     "P1_external_instruction": {
-      "manifest": "benchmarks/manifests/smoke-v1/p1.json",
-      "manifest_sha256": "sha256:1bfe1c249b5a6c862a000c6c269326e140a0fe95ec4643df2d896ff6351c9fa1",
-      "n": 100,
+      "manifest": "benchmarks/manifests/holdout-v1/p1.json",
+      "manifest_sha256": "sha256:50ca793ba339d63158895646a1117a947765ffa1091344e24a1048e57e010020",
+      "n": 820,
       "split": [
-        "dev"
+        "holdout"
       ],
-      "target": 100
+      "target": 580
     },
     "P2_tool_action": {
-      "manifest": "benchmarks/manifests/smoke-v1/p2.json",
-      "manifest_sha256": "sha256:7cd655323f929c43d73ebc8b84944821399082ba0f6a5ff9c79258cf0242fdd5",
-      "n": 100,
+      "manifest": "benchmarks/manifests/holdout-v1/p2.json",
+      "manifest_sha256": "sha256:b959df688b9d587198183208a8c3a5ade5a42d1f1b59d3799fa209041a0aff8b",
+      "n": 187,
       "split": [
-        "dev"
+        "holdout"
       ],
-      "target": 100
+      "target": 150
     }
   },
   "seed": 42,
@@ -35,8 +35,8 @@
     }
   },
   "split": [
-    "dev"
+    "holdout"
   ],
-  "suite_id": "smoke-v1",
-  "total_cases": 200
+  "suite_id": "holdout-v1",
+  "total_cases": 1007
 }

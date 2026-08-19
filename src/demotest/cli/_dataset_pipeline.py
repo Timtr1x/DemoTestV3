@@ -115,45 +115,75 @@ def _build_adapter(ds: DatasetSourceConfig, max_cases: int | None):
     return get_adapter(ds.adapter, source_config=ds)
 
 
-# ---- LLMail bounded pool (default A): 1900 attacks (phase-balanced) + 160 benign
+# ---- LLMail bounded pool (default A): bounded-memory Top-K
 
-_LM_BOUNDED_ATTACKS = 3700  # guide §33: P1 ~1,900 attack
-_LM_PHASE1_SHARE = 0.85     # phase1 dominates (127K vs 21K), but keep 15% phase2
+_LM_BOUNDED_ATTACKS = 3700
 
 
 def _llmail_bounded_pool(ds: DatasetSourceConfig, *, target_attacks: int = _LM_BOUNDED_ATTACKS):
-    """Stream a bounded LLMail pool deterministically via hash-rank.
+    """Stream a bounded LLMail pool via BoundedHashSelector (true O(K) memory).
 
-    Phase quotas (~1615 / ~285) then hash-rank within each phase keep the pool
-    stratification-aligned (§16) and reproducible (no random.sample).
+    Phase quotas are read from datasets/llmail.yaml bounded_pool; defaults match
+    guide §2. Memory is O(K) not O(N): only capacity-sized heaps + benign list.
     """
-    import hashlib
+    from ..datasets.sampler import BoundedHashSelector
 
-    n1 = max(0, int(round(target_attacks * _LM_PHASE1_SHARE)))
-    n2 = max(0, target_attacks - n1)
-    phase_targets = {"phase1": n1, "phase2": n2}
+    proj = load_dataset_projection(ds.name)
+    bp = (proj.metadata.get("bounded_pool") or {}) if hasattr(proj, "metadata") else {}
+    # also check dedicated bounded_pool key on the projection yaml
+    raw_bp = {}
+    try:
+        import yaml as _yaml
 
-    def key_of(phase: str, source_id: str) -> str:
-        raw = f"llmail|{phase}|{source_id}"
-        return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+        from ..paths import DATASETS_V3_METADATA_DIR  # noqa
 
-    adapter = _build_adapter(ds, None)  # no per-phase cap; we cap here
-    buckets: dict[str, list] = {"phase1": [], "phase2": []}
+        from pathlib import Path as _P
+
+        from ..paths import V3_CONFIG_DIR
+
+        p = V3_CONFIG_DIR / "datasets" / f"{ds.name}.yaml"
+        if p.exists():
+            data = _yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+            raw_bp = data.get("bounded_pool") or {}
+    except Exception:
+        pass
+    # prefer explicit bounded_pool from yaml; fallback to old constants
+    if raw_bp:
+        total = int(raw_bp.get("total_attack", target_attacks))
+        phases = raw_bp.get("phases") or {}
+        n1 = int(phases.get("phase1", 3145))
+        n2 = int(phases.get("phase2", 555))
+        # if total overrides, rescale
+        if total != (n1 + n2):
+            # keep ratio from phases but scale to total
+            r1 = n1 / max(1, n1 + n2)
+            n1 = int(round(total * r1))
+            n2 = total - n1
+    else:
+        n1 = 3145
+        n2 = 555
+        if target_attacks != _LM_BOUNDED_ATTACKS:
+            r1 = n1 / (n1 + n2)
+            n1 = int(round(target_attacks * r1))
+            n2 = target_attacks - n1
+
+    sel_p1 = BoundedHashSelector(capacity=n1, namespace="llmail-default-v1|phase1")
+    sel_p2 = BoundedHashSelector(capacity=n2, namespace="llmail-default-v1|phase2")
     benign: list = []
+    adapter = _build_adapter(ds, None)
     for c in adapter.iter_cases():
-        m = c.metadata or {}
-        ph = m.get("source_phase", "phase1")
         if c.expected_action.value == "allow":
             benign.append(c)
-        elif ph in buckets:
-            buckets[ph].append((key_of(ph, c.source_id), c))
+            continue
+        m = c.metadata or {}
+        ph = m.get("source_phase", "phase1")
+        if ph == "phase2":
+            sel_p2.offer(source_id=c.source_id, value=c)
         else:
-            buckets["phase1"].append((key_of("phase1", c.source_id), c))
-    out = []
-    for ph in ("phase1", "phase2"):
-        rows = buckets[ph]
-        rows.sort(key=lambda kv: kv[0])
-        out.extend(c for _, c in rows[: phase_targets[ph]])
+            sel_p1.offer(source_id=c.source_id, value=c)
+    out: list = []
+    out.extend(sel_p1.selected())
+    out.extend(sel_p2.selected())
     out.extend(benign)
     return out
 
@@ -168,7 +198,7 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, fu
     bounded = (ds.name == "llmail" and max_cases is None and not full)
     if bounded:
         raw_cases = _llmail_bounded_pool(ds)
-        adapter_version = "1.0.0"
+        adapter_version = "1.1.0"
         adapter_revision = ds.revision
     else:
         adapter = _build_adapter(ds, max_cases)
@@ -249,33 +279,25 @@ def iter_normalized_lines(ds: DatasetSourceConfig):
 
 
 def verify_normalized(ds: DatasetSourceConfig) -> list[str]:
+    """Streaming verify — checks incrementally without holding all payloads."""
     problems: list[str] = []
-    cases: list = []
+    seen: dict[str, int] = {}
+    prov_cases: list = []
     try:
         for line in iter_normalized_lines(ds):
             from ..core.models import SecurityCase as _SC
-            cases.append(_SC.from_dict(json.loads(line)))
+            c = _SC.from_dict(json.loads(line))
+            seen[c.case_id] = seen.get(c.case_id, 0) + 1
+            _ = c.fingerprint()
+            if c.expected_action.value not in ("block", "allow"):
+                problems.append(f"{c.case_id}: bad expected_action {c.expected_action!r}")
+            prov_cases.append(c)
     except DatasetSourceError as e:
         return [str(e)]
-    # case_id unique — stream check first to fail fast
-    seen: dict[str, int] = {}
-    for c in cases:
-        seen[c.case_id] = seen.get(c.case_id, 0) + 1
     dupes = [cid for cid, n in seen.items() if n > 1]
     if dupes:
         problems.append(f"duplicate case_ids: {dupes[:10]}")
-    # fingerprint stable: recompute and confirm it matches what was serialized
-    for c in cases:
-        # SecurityCase.fingerprint() is pure and deterministic; if the
-        # normalized snapshot round-trips, recomputing must equal itself.
-        # (A drift would surface as a changed case_id/fingerprint on reload.)
-        _ = c.fingerprint()
-    # expected_action legal
-    for c in cases:
-        if c.expected_action.value not in ("block", "allow"):
-            problems.append(f"{c.case_id}: bad expected_action {c.expected_action!r}")
-    # provenance complete
-    problems.extend(validate_provenance_block(cases))
+    problems.extend(validate_provenance_block(prov_cases))
     return problems
 
 

@@ -6,15 +6,16 @@ code at the pinned commit. This adapter imports the official suite objects and
 projects them **deterministically** into SecurityCase — it does NOT regex-parse
 source, does NOT ask an LLM to (re)write attacks (guide §21, §24, §25, §52).
 
-One original security case (a UserTask x InjectionTask pairing) may yield TWO
-derived cases:
-  * tool_result  (channel=TOOL_RESULT, project P1) — the injected content the
-    agent would observe; content mirrors tool_result so RAW fidelity is a valid
-    fallback (guide §18).
+One original security case (a UserTask x InjectionTask pairing) yields ONE
+derived case in core:
+
   * tool_call    (channel=TOOL_CALL, project P2) — the dangerous tool call the
     injection would induce, taken from InjectionTask.ground_truth (guide §19).
 
-Both share a ``parent_source_id`` so the sampler keeps them in one split
+P1 tool_result from default injection vectors was removed from core (guide P0-2):
+get_injection_vector_defaults() is environment content, not an attacker payload;
+the constructed content also leaked the attacker goal. AgentDojo P1 may return
+only as an Extended/Regression track.
 (guide §22). Each gets an independent ``source_id`` (``agentdojo:<parent>:tool_result``
 / ``...:tool_call``) and the lineage is recorded in metadata (guide §20).
 
@@ -96,7 +97,7 @@ class AgentDojoAdapter(DatasetAdapter):
     """Project pinned AgentDojo security cases into TOOL_RESULT + TOOL_CALL cases."""
 
     dataset_id = "agentdojo"
-    adapter_version = "1.0.0"
+    adapter_version = "1.1.0"
 
     def __init__(
         self,
@@ -219,20 +220,7 @@ class AgentDojoAdapter(DatasetAdapter):
     def iter_cases(self) -> Iterator[SecurityCase]:
         for pair in self._load_pairs():
             parent = f"agentdojo:{pair.suite}:{pair.user_task_id}:{pair.injection_task_id}"
-            # P1: tool_result injection (guide §18). Content frames the injected
-            # text within the user's task context AND the injection task's goal,
-            # so each (user_task x injection_task) pair is a distinct security
-            # event: "same injected text, different attack goal" is a different
-            # case, and exact-dedup folds only truly-identical payloads.
-            inj = pair.injection_text or pair.injection_goal or ""
-            if inj:
-                tr_content = (
-                    f"User task: {pair.user_prompt}\n\n"
-                    f"Attacker goal (injection task): {pair.injection_goal}\n\n"
-                    f"Tool observation (may contain injected content):\n{inj}"
-                )
-                yield self._build_tool_result_case(pair=pair, parent=parent, content=tr_content, raw_inj=inj)
-            # P2: tool_call (guide §19) — one case per ground-truth dangerous call
+            # P2 only in core (P1 tool_result from default vectors removed — guide P0-2)
             for step, call in enumerate(pair.ground_truth_calls or [], start=1):
                 yield self._build_tool_call_case(pair=pair, parent=parent, call=call, step=step)
 
@@ -243,12 +231,12 @@ class AgentDojoAdapter(DatasetAdapter):
             source_dataset=self.dataset_id,
             source_revision=self._lock_revision(),
             source_id=source_id,
-            group_id=parent,            # split groups tool_result + tool_call together (guide §22)
+            group_id=parent,
             raw_sha256=raw,
             normalized_sha256=nsha,
             adapter_name="agentdojo",
             adapter_version=self.adapter_version,
-            quality_tier="A",
+            quality_tier="B",
             derivation="deterministic_projection",
             parent_source_id=parent,
         )
@@ -264,7 +252,7 @@ class AgentDojoAdapter(DatasetAdapter):
             "trajectory_step": step,
             "derived_channel": derived_channel,
             "parent_source_id": f"agentdojo:{pair.suite}:{pair.user_task_id}:{pair.injection_task_id}",
-            "quality_tier": "A",
+            "quality_tier": "B",
             "derivation": "deterministic_projection",
             "benchmark_version": self.benchmark_version,
         }
@@ -342,7 +330,7 @@ class AgentDojoAdapter(DatasetAdapter):
             "source_uri": self.source_config.source_uri,
             "revision": self._lock_revision(),
             "benchmark_version": self.benchmark_version,
-            "quality_tier": "A",
+            "quality_tier": "B",
             "derivation": "deterministic_projection",
         }
 

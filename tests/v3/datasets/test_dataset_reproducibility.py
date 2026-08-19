@@ -16,6 +16,8 @@ if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
 from demotest.core.models import SecurityCase  # noqa: E402
+import pathlib as _pl
+import tempfile as _tf
 from demotest.datasets.manifest_builder import (  # noqa: E402
     build_manifest,
     manifest_sha256,
@@ -54,10 +56,15 @@ def test_manifest_reproducible_after_delete_rebuild(tmp_path: Path):
     assert sha1 == sha2
     assert ids1 == ids2
     assert splits1 == splits2
-    # file content identical apart from created_at
-    t1 = p2.read_text(encoding="utf-8")
-    # (we already deleted p1; re-load via manifest_sha256 equality which is the contract)
-    assert "manifest_sha256" in t1
+    # fix round: byte-identical file (no created_at)
+    b1_after = p2.read_bytes()
+    # rebuild again and compare bytes
+    m3 = build_manifest(**args)
+    import tempfile
+    p3 = _pl.Path(_tf.mktemp(suffix=".json"))
+    write_manifest(m3, p3)
+    assert p2.read_bytes() == p3.read_bytes()
+    p3.unlink()
 
 
 def test_reproducible_across_input_order_shuffle():

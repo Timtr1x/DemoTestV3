@@ -1,18 +1,127 @@
-# V3 benchmark suites (guide §39-§42, §63).
+# V3 benchmark suites (fix round v3.2 — P1 LLMail-only, strata, split-v2).
 #
-# A suite bundles one or more *projects* (P1/P2) into a named benchmark run,
-# each project pointing at a frozen manifest. Suite identity is fixed once
-# frozen: a new selection = a new suite version (standard-v1 -> standard-v2),
-# never an in-place overwrite (guide §37, §64).
+# Fix round vs v1:
+#   - P1 is LLMail-only (AgentDojo P1 tool_result removed — environment content,
+#     not attacker payload, leaked goal). P2 remains AgentDojo tool_call.
+#   - Selection is per-stratum with explicit attack/benign quotas and cluster cap.
+#   - Split is case-weighted group-aware (split-v2).
+#   - Manifests are byte-identical: no created_at wall-clock field.
+#   - Old v1 suites are preserved under benchmarks/manifests/*-v1 as superseded.
 #
-# Split policy per suite (guide §31, §61):
-#   smoke-v1            draws from DEV   (CI / adapter / renderer debugging)
-#   phase1-standard-v1  draws from EVAL  (the first real, reportable number)
-#   phase1-full-v1      draws from EVAL + HOLDOUT (all reserved cases)
-# HOLDOUT case bodies are never copied; they resolve from the raw dataset.
+# A suite bundles projects into a named benchmark run. Suite identity is fixed
+# once frozen: a new selection = a new suite version, never an in-place overwrite.
 
 suites:
 
+  smoke-v2:
+    seed: 42
+    split: dev
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/smoke-v2/p1.json
+        target: 100
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 80
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/smoke-v2/p2.json
+        target: 100
+        strata:
+          - id: agentdojo_tool_call
+            dataset: agentdojo
+            channel: tool_call
+            count: 100
+
+  phase1-standard-v2:
+    seed: 42
+    split: eval
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-standard-v2/p1.json
+        target: 1740
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 1580
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-standard-v2/p2.json
+        target: 540
+        strata:
+          - id: agentdojo_tool_call
+            dataset: agentdojo
+            channel: tool_call
+            count: 540
+
+  phase1-full-v2:
+    seed: 42
+    split: [eval, holdout]
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-full-v2/p1.json
+        target: 2900
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 2740
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-full-v2/p2.json
+        target: 773
+        strata:
+          - id: agentdojo_tool_call
+            dataset: agentdojo
+            channel: tool_call
+            count: 773
+
+  holdout-v2:
+    seed: 42
+    split: holdout
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/holdout-v2/p1.json
+        target: 580
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 500
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/holdout-v2/p2.json
+        target: 150
+        strata:
+          - id: agentdojo_tool_call
+            dataset: agentdojo
+            channel: tool_call
+            count: 150
+
+  # --- superseded v1 (preserved, not used for reporting) -------------------
   smoke-v1:
     seed: 42
     split: dev
@@ -45,3 +154,14 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-full-v1/p2.json
         target: 800
+
+  holdout-v1:
+    seed: 42
+    split: holdout
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/holdout-v1/p1.json
+        target: 580
+      P2_tool_action:
+        manifest: benchmarks/manifests/holdout-v1/p2.json
+        target: 150

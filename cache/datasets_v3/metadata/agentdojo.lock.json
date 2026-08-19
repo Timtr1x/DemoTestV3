@@ -1,7 +1,7 @@
 {
   "acquired_at": "2026-08-19T06:58:38Z",
   "adapter_name": "agentdojo",
-  "adapter_version": "1.0.0",
+  "adapter_version": "1.1.0",
   "dataset_id": "agentdojo",
   "extra": {
     "benchmark_version": "v1"
