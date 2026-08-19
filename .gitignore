@@ -10,6 +10,7 @@ cache/results/
 # of pinned external sources — never commit them. Source locks, inventories,
 # manifests and suites ARE committed (they are benchmark identity, guide §38).
 cache/datasets_v3/raw/
+cache/datasets_v3/evidence/
 cache/datasets_v3/normalized/
 # E10 oversized payloads — regenerate: python -m projects.e10_resource_abuse sample --force
 cache/sample_manifests/longctx_200.json

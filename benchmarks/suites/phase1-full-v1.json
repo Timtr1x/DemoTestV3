@@ -40,6 +40,7 @@
     "eval",
     "holdout"
   ],
+  "suite_config_hash": "sha256:fc2c56cabc834914dd0ba068f95844720d7772e30ea17b8ccdcdbb53d7384053",
   "suite_id": "phase1-full-v1",
   "total_cases": 3673
 }

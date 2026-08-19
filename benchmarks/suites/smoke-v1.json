@@ -37,6 +37,7 @@
   "split": [
     "dev"
   ],
+  "suite_config_hash": "sha256:1e68de9ac6cc1c60b8d80365f3e77fa1e062087e2ea07426a1defdfcf2388f79",
   "suite_id": "smoke-v1",
   "total_cases": 200
 }

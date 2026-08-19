@@ -7,6 +7,7 @@ git alongside the manifests.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -18,6 +19,16 @@ if str(_SRC) not in sys.path:
 from demotest.config import get_suite, load_suites
 from demotest.datasets.manifest_builder import load_manifest
 from demotest.datasets.source_lock import load_source_lock
+
+
+def _suite_config_hash(suite_id: str) -> str:
+    import yaml
+    from demotest.paths import V3_CONFIG_DIR
+    p = V3_CONFIG_DIR / "suites.yaml"
+    data = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+    suite_cfg = (data.get("suites") or {}).get(suite_id, {})
+    blob = json.dumps(suite_cfg, sort_keys=True, ensure_ascii=False, default=str)
+    return "sha256:" + hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 def build_suite_summary(suite_id: str) -> dict:
@@ -36,7 +47,6 @@ def build_suite_summary(suite_id: str) -> dict:
             "target": ptarget.target,
             "split": manifest.get("split", []),
         }
-    # source locks for datasets feeding these projects
     from demotest.cli.manifest import _DATASETS_BY_PROJECT
     locks = {}
     for pid in suite.projects:
@@ -56,6 +66,7 @@ def build_suite_summary(suite_id: str) -> dict:
         "total_cases": total,
         "projects": projects,
         "source_locks": locks,
+        "suite_config_hash": _suite_config_hash(suite_id),
     }
 
 

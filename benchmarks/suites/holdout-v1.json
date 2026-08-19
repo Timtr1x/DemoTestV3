@@ -37,6 +37,7 @@
   "split": [
     "holdout"
   ],
+  "suite_config_hash": "sha256:dcfedeeb23544e64379c87ae15fb60e122fa1f4573fd6e50d37b38037f487a79",
   "suite_id": "holdout-v1",
   "total_cases": 1007
 }

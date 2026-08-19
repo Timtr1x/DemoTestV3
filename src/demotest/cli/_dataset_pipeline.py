@@ -188,13 +188,83 @@ def _llmail_bounded_pool(ds: DatasetSourceConfig, *, target_attacks: int = _LM_B
     return out
 
 
+def _prepare_full_source_streaming(ds: DatasetSourceConfig) -> PrepareReport:
+    """Full-source evidence: streaming exact+normalized dedup, source-order, no O(N) payload hold.
+
+    Does NOT sort; evidence canonical order is adapter source order (pinned revision).
+    Memory is O(N) hashes only (seen_raw + seen_norm), not O(N*payload).
+    Output goes to cache/datasets_v3/evidence/<dataset>/cases.jsonl so bounded
+    normalized snapshot is never overwritten.
+    """
+    from ..datasets.dedup import normalize_text as _norm
+    from ..paths import DATASETS_V3_EVIDENCE_DIR
+
+    adapter = _build_adapter(ds, None)
+    adapter_version = adapter.adapter_version
+    adapter_revision = adapter.source_metadata().get("revision", ds.revision)
+    out_dir = DATASETS_V3_EVIDENCE_DIR / ds.name
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out = out_dir / "cases.jsonl"
+    seen_raw: set[str] = set()
+    seen_norm: set[str] = set()
+    n_in = 0
+    n_exact = 0
+    n_norm = 0
+    n_kept = 0
+    # write streaming — no sorted(cases)
+    import hashlib as _hl
+    with out.open("w", encoding="utf-8") as f:
+        for c in adapter.iter_cases():
+            n_in += 1
+            raw_h = _hl.sha256(c.content.encode("utf-8", errors="replace")).hexdigest()
+            if raw_h in seen_raw:
+                n_exact += 1
+                continue
+            seen_raw.add(raw_h)
+            norm_h = _hl.sha256(_norm(c.content).encode("utf-8", errors="replace")).hexdigest()
+            if norm_h in seen_norm:
+                n_norm += 1
+                continue
+            seen_norm.add(norm_h)
+            f.write(jsonl_dumps(c.to_dict()) + "\n")
+            n_kept += 1
+    dedup_meta: dict = {
+        "exact_duplicates": n_exact,
+        "normalized_duplicates": n_norm,
+        "near_duplicate_clusters": 0,
+        "near_duplicate": {"status": "not_computed", "reason": "full_source_evidence_mode"},
+    }
+    meta = {
+        "dataset_id": ds.name,
+        "adapter_version": adapter_version,
+        "revision": adapter_revision,
+        "n_cases": n_kept,
+        "n_in": n_in,
+        "dedup": dedup_meta,
+        "mode": "full_source_evidence",
+    }
+    (out_dir / "prepare.json").write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return PrepareReport(
+        n_cases=n_in,
+        n_kept=n_kept,
+        n_exact=n_exact,
+        n_norm=n_norm,
+        n_clusters=0,
+        normalized_path=out,
+    )
+
+
 def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, full: bool = False) -> PrepareReport:
     """Raw -> normalized + dedup. Writes a jsonl snapshot of SecurityCase dicts.
 
     Default A: LLMail is bounded to 3700 attacks + 160 benign via
     BoundedHashSelector O(K) (~13M). Pass --full-source to materialize the
-    full 148K evidence pool (streamed, no near-dup O(N^2)), not for manifest.
+    full 148K evidence pool (streaming evidence dir, no near-dup O(N^2)), not for manifest.
     """
+    if full:
+        return _prepare_full_source_streaming(ds)
     bounded = (ds.name == "llmail" and max_cases is None and not full)
     if bounded:
         raw_cases = _llmail_bounded_pool(ds)
@@ -208,18 +278,14 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, fu
     proj = load_dataset_projection(ds.name)
     dd = proj.dedup or {}
     near = dd.get("near_duplicate") or {}
-    # full-source evidence mode: disable O(N^2) near-duplicate clustering
-    do_near = bool(near.get("method")) and not full
     cases, rep = run_dedup(
         raw_cases,
         do_exact=bool(dd.get("exact", True)),
         do_normalized=bool(dd.get("normalized", True)),
-        do_near_duplicate=do_near,
+        do_near_duplicate=bool(near.get("method")),
         near_n=int(near.get("n", 5)),
         near_threshold=float(near.get("threshold", 0.85)),
     )
-    if full and near.get("method"):
-        rep.n_clusters = 0  # mark as not computed
     # write normalized snapshot (jsonl; one SecurityCase dict per line)
     ds.normalized_path.mkdir(parents=True, exist_ok=True)
     out = ds.normalized_path / "cases.jsonl"
@@ -237,8 +303,6 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, fu
             "normalized_duplicates": rep.n_normalized_duplicates,
             "near_duplicate_clusters": rep.n_clusters,
         }
-    if full:
-        dedup_meta["near_duplicate"] = {"status": "not_computed", "reason": "full_source_evidence_mode"}
     meta = {
         "dataset_id": ds.name,
         "adapter_version": adapter_version,

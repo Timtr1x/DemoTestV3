@@ -176,6 +176,17 @@ def cmd_suite_verify(args) -> int:
         return 1
     snap = json.loads(suite_path.read_text(encoding="utf-8"))
     problems: list[str] = []
+    # check suite_config_hash drift if snapshot has it
+    try:
+        import hashlib as _hl2, json as _js2, yaml as _yl2
+        from ..paths import V3_CONFIG_DIR as _V3
+        _cfg2 = _yl2.safe_load((_V3 / "suites.yaml").read_text(encoding="utf-8")) or {}
+        _sc2 = (_cfg2.get("suites") or {}).get(args.suite, {})
+        _exp2 = "sha256:" + _hl2.sha256(_js2.dumps(_sc2, sort_keys=True, ensure_ascii=False, default=str).encode()).hexdigest()
+        if snap.get("suite_config_hash") and snap["suite_config_hash"] != _exp2:
+            problems.append(f"suite_config_hash drift: snapshot {snap['suite_config_hash'][:16]} != suites.yaml { _exp2[:16]} (re-run build_suite_summaries)")
+    except Exception:
+        pass
     for pid, ptarget in suite.projects.items():
         mpath = _P(ptarget.manifest)
         if not mpath.exists():
