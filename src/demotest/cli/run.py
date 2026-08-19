@@ -69,12 +69,15 @@ def run(args) -> int:
     for c in cases:
         by_channel[c.channel.value].append(c)
 
-    # P0-2: real provenance for run_id — not channel name strings.
+    # P0-2 / R4-1..3: real provenance for run_id.
+    # Target hash uses RESOLVED runtime config (actual model/URL), not env var
+    # names. Project hash includes generation profile. Both enter a single
+    # experiment_hash so any config change produces a different run_id.
     target_cfg_hash = config_hash({
-        "name": tcfg.name,
+        "name": target.target_name,
         "type": tcfg.type,
-        "url_env": tcfg.url_env,
-        "model_env": tcfg.model_env,
+        "url": getattr(target, "url", ""),
+        "model": getattr(target, "model", ""),
         "timeout": tcfg.timeout,
         "benchmark_mode": tcfg.benchmark_mode,
         "headers": tcfg.headers,
@@ -85,18 +88,25 @@ def run(args) -> int:
         "project_id": project.project_id,
         "oracle": project.oracle,
         "channels": sorted(project.channels),
-        "thresholds": project.thresholds,
         "renderer": project.renderer,
+        "primary_fidelity": project.primary_fidelity,
+        "generation": project.generation,
     })
     ds_hash = dataset_snapshot_hash(cases)
     fidelity_blob = "|".join(
         f"{ch}:{_resolve_fidelity(project, ch, args.fidelity)}"
         for ch in sorted(by_channel.keys())
     )
+    experiment_hash = config_hash({
+        "target": target_cfg_hash,
+        "project": project_cfg_hash,
+        "dataset": ds_hash,
+        "fidelity": fidelity_blob,
+    })
     run_version = args.run_version or compute_run_id(
         target.target_name,
-        target_cfg_hash,
-        fidelity_blob,
+        experiment_hash,
+        "v3",
         ds_hash,
     )
 

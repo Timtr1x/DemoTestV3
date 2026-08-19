@@ -206,3 +206,123 @@ def test_dataset_snapshot_hash_stable_for_same_cases():
     cases = [SecurityCase.build(dataset_id="d", source_id="s1",
                                  channel="email", operation="read", content="AAA")]
     assert dataset_snapshot_hash(cases) == dataset_snapshot_hash(cases)
+
+
+# ================================================================
+# Round 4 fixes (R4-1 through R4-7)
+# ================================================================
+
+# ---------------- R4-4: Canary UNSET with actual leak → UNJUDGED ----------------
+
+def test_canary_unset_with_leak_is_unjudged():
+    """R4-4: UNSET must be UNJUDGED even when a leak IS detected — UNSET means
+    'this axis should not be scored', not 'no leak expected'."""
+    from demotest.core import GatewayObservation
+    case = SecurityCase.build(
+        dataset_id="d", source_id="s1", channel="tool_call",
+        operation="execute_tool", tool_name="t", content="x",
+        expected_action="block", credential_markers=["TEST_SECRET_X"],
+        leakage_expected="unset",
+    )
+    obs = GatewayObservation(http_status=200, response_text="here is TEST_SECRET_X")
+    ev = CanaryOracle().evaluate(case, obs)
+    assert ev.leakage_verdict == Verdict.UNJUDGED
+
+
+# ---------------- R4-5: SecretRedactor masks any type under sensitive key ----------------
+
+def test_redactor_masks_dict_under_sensitive_key():
+    """R4-5: {'credentials': {'linemod': 'sr-gl-...'}} — 'credentials' is a
+    sensitive key; the entire dict must be masked, not recursed into."""
+    out = SecretRedactor().redact_dict(
+        {"credentials": {"linemod": "sr-gl-abcdefgh123456"}}
+    )
+    assert out["credentials"] == "<REDACTED>"
+    assert "sr-gl-abcdefgh123456" not in str(out)
+
+
+def test_redactor_masks_list_under_sensitive_key():
+    out = SecretRedactor().redact_dict({"tokens": ["abc", "xyz"]})
+    assert out["tokens"] == "<REDACTED>"
+
+
+def test_redactor_masks_int_under_sensitive_key():
+    out = SecretRedactor().redact_dict({"password": 12345})
+    assert out["password"] == "<REDACTED>"
+
+
+def test_redactor_masks_none_under_sensitive_key():
+    out = SecretRedactor().redact_dict({"secret": None})
+    assert out["secret"] == "<REDACTED>"
+
+
+def test_redactor_nested_dict_with_sensitive_inner_key():
+    out = SecretRedactor().redact_dict({
+        "config": {"name": "safe", "api_key": "sr-gl-123456789abcdef"}
+    })
+    assert out["config"]["api_key"] == "<REDACTED>"
+    assert out["config"]["name"] == "safe"
+    assert "sr-gl-123456789abcdef" not in str(out)
+
+
+# ---------------- R4-6: cooldown_share denominator is n_total ----------------
+
+def test_cooldown_share_uses_n_total(tmp_path):
+    """R4-6: cooldown_share must not exceed 100%. With n_judged no longer
+    counting cooldown, dividing by n_judged could yield >1.0."""
+    from demotest.analysis import analyze
+    from demotest.core.contracts import CaseResult
+    from demotest.storage import ResultStore
+    cases = [
+        SecurityCase.build(dataset_id="d", source_id=f"c{i}", channel="user_prompt",
+                           operation="chat", content="x", expected_action="block")
+        for i in range(10)
+    ]
+    store = ResultStore(tmp_path / "r.jsonl")
+    # 5 blocked (TP), 5 cooldown
+    for i, c in enumerate(cases):
+        outcome = "blocked" if i < 5 else "upstream_cooldown"
+        verdict = "TP" if i < 5 else "UNJUDGED"
+        store.append(CaseResult(
+            case_id=c.case_id, run_id="t", project="P1", channel="user_prompt",
+            expected="block", target="linemod", request_hash="h",
+            http_status=403 if i < 5 else 503, outcome=outcome, verdict=verdict,
+            renderer_name="user_prompt", renderer_version="v1",
+        ))
+    rep = analyze(cases, store)
+    m = rep.metrics
+    assert m.n_cooldown == 5
+    assert m.cooldown_share == 0.5  # 5/10, not 5/5
+    assert m.cooldown_share <= 1.0
+
+
+# ---------------- R4-1..3: run_id provenance includes project config + resolved target ----------------
+
+def test_run_id_changes_with_project_config():
+    """R4-1: changing project oracle must change the experiment hash."""
+    from demotest.core.ids import config_hash
+    h1 = config_hash({
+        "target": "t1", "project": config_hash({"oracle": "block_pass"}),
+        "dataset": "ds1", "fidelity": "raw",
+    })
+    h2 = config_hash({
+        "target": "t1", "project": config_hash({"oracle": "canary"}),
+        "dataset": "ds1", "fidelity": "raw",
+    })
+    assert h1 != h2
+
+
+def test_run_id_changes_with_resolved_model():
+    """R4-2: changing resolved model must change target hash."""
+    from demotest.core.ids import config_hash
+    h1 = config_hash({"url": "http://a", "model": "deepseek-v4-flash"})
+    h2 = config_hash({"url": "http://a", "model": "gpt-5.6"})
+    assert h1 != h2
+
+
+def test_run_id_changes_with_generation():
+    """R4-3: changing project generation must change project hash."""
+    from demotest.core.ids import config_hash
+    h1 = config_hash({"generation": {"max_tokens": 128}})
+    h2 = config_hash({"generation": {"max_tokens": 256}})
+    assert h1 != h2

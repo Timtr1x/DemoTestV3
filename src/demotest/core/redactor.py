@@ -46,10 +46,10 @@ class SecretRedactor:
     SENSITIVE_KEYS = frozenset({
         "api_key", "apikey", "api-key",
         "authorization", "auth",
-        "token", "access_token", "access-token",
+        "token", "tokens", "access_token", "access-token",
         "refresh_token", "refresh-token",
         "password", "passwd", "pwd",
-        "secret", "client_secret", "clientsecret",
+        "secret", "secrets", "client_secret", "clientsecret",
         "private_key", "privatekey",
         "credential", "credentials",
     })
@@ -83,9 +83,11 @@ class SecretRedactor:
         return str(key)
 
     def _redact_value(self, key: str, value: Any) -> Any:
-        # P1-6: mask any value under a sensitive key wholesale, before
-        # recursing — catches secrets that don't match a regex pattern.
-        if isinstance(value, str) and str(key).lower() in self.SENSITIVE_KEYS:
+        # R4-5: mask ANY value under a sensitive key wholesale, regardless of
+        # type (str / dict / list / int / None). The previous isinstance(value,
+        # str) check let nested dicts under "credentials" recurse and leak
+        # inner values that don't match a regex. Better to over-redact than leak.
+        if str(key).lower() in self.SENSITIVE_KEYS:
             return self.MASK
         return self.redact_dict(value)
 

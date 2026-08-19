@@ -121,7 +121,10 @@ def compute_metrics(
         sum(1 for c in cases if (resolved.get(c.case_id) or {}).get("outcome") == Outcome.RATE_LIMITED.value),
         m.n_total,
     )
-    m.cooldown_share = (m.n_cooldown / m.n_judged) if m.n_judged else 0.0
+    # R4-6: cooldown_share is now cooldown_rate = n_cooldown / n_total.
+    # Previously divided by n_judged (which no longer counts cooldown), which
+    # could exceed 100%. n_total is the stable denominator.
+    m.cooldown_share = safe_div(m.n_cooldown, m.n_total) or 0.0
     m.scanner_counts = dict(scanner_counter.most_common(50))
     m.leakage_rate = safe_div(m.leakage_fn, m.leakage_n_judged)
 
