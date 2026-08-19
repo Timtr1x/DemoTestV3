@@ -1,87 +1,165 @@
-# LineMod 网关护栏测试框架（E1–E12）
+# DemoTest V3 — Gateway Security Benchmark Framework
 
-在 `DemoTest V2` 落地的纯护栏评测工程：canonical `Sample` → 分层抽样 manifest → 串行 runner → TPR/FPR analyze → SUMMARY 报告。
+DemoTest 从一个 **Prompt Injection Scanner Tester** 升级为真正针对中转站产品的 **Gateway Security Benchmark Framework**。
+
+V2 的核心抽象是 `Sample.prompt_text → POST → 403/200 → blocked/passed`——适合直接注入，但无法解释"网关在什么安全边界上成功/失败"。V3 把核心抽象升级为 **SecurityCase**：一个结构化的安全事件，携带 trust channel、operation、上下文（tool args / MCP schema / memory target / credential markers），经过 Renderer → TargetAdapter → Oracle 的分层流水线。
+
+> **被测对象不变**（仍然是 LineMod Gateway），**核心 Oracle 不变**（403+SECURITY_BLOCKED=blocked / 200=passed），但测试框架内部从单一字符串升级为结构化事件。
 
 ## 文档
 
 | 文档 | 内容 |
 |------|------|
-| **[docs/SURVEY_REPORT_live-real-v1.md](docs/SURVEY_REPORT_live-real-v1.md)** | **完整实测调查报告**（含 E8/E9 原测+加压） |
-| **[docs/STANDARD_DATASET.md](docs/STANDARD_DATASET.md)** | **标准数据集 standard-v1 与可复测说明** |
-| **[docs/E1-E12_CATALOG.md](docs/E1-E12_CATALOG.md)** | 全部 E 说明、子项、入站/出站、T8/T15 |
-| `config/projects.yaml` | 子项配置、`max_n`（**不再强制 500**） |
+| **[docs/V3_ACCEPTANCE_REPORT.md](docs/V3_ACCEPTANCE_REPORT.md)** | **V3 验收报告**（§51 逐项 + 架构 + 测试覆盖） |
+| **[docs/P1-P5_MAPPING.md](docs/P1-P5_MAPPING.md)** | P1-P5 ↔ 旧 E1-E12 / 威胁代号映射 |
+| [docs/E1-E12_CATALOG.md](docs/E1-E12_CATALOG.md) | V2 E1-E12 全部子项、入站/出站、T8/T15 |
+| [docs/STANDARD_DATASET.md](docs/STANDARD_DATASET.md) | 标准数据集 standard-v1 与可复测说明 |
+| [docs/SURVEY_REPORT_live-real-v1.md](docs/SURVEY_REPORT_live-real-v1.md) | V2 完整实测调查报告 |
 
-## 架构
+## V3 架构
 
-- `linemod_guard_client.py` — 唯一 HTTP 出口（403+SECURITY_BLOCKED / 200 / 503 cooldown / 429 / 400·413）
-- `core/` — schema、sampler、runner、analyzer、report、registry
-- `adapters/` — 数据集 → Sample（含 legacy DemoTest manifest 桥接）
-- `generators/` — 确定性 encoding、promptfoo/garak 静态转换
-- `projects/` — E1–E12 + ex 薄入口（`sample|run|retest-cooldown|analyze|report`）
-- `config/` — `projects.yaml`、`templates.yaml`、`env.example`
-- `scripts/` — 真源数据准备、真实 n 重抽、E 清单打印
+```
+Dataset → DatasetAdapter → SecurityCase → CaseRenderer → GatewayRequest
+  → TargetAdapter → LineMod → GatewayObservation → Oracle → CaseResult
+  → ResultStore → Analyzer → Report
+```
 
-## 数据政策与标准库
+**关键分离**："数据是什么"（SecurityCase）和"怎么送进网关"（Renderer + TargetAdapter）彻底分开。Runner 只认识 SecurityCase / Renderer / TargetAdapter / Oracle，不知道 E2 / LLMail / AuthBench。
 
-- **只用真 case**；禁止 `#N` 假模板垫数；`max_n` 只截断不补齐  
-- **标准数据集 `standard-v1`**：`config/projects.yaml` + `cache/sample_manifests/`（seed=**42**）  
-- **可复测**：同一 datasets 缓存下重抽 `sample_id` 不变 → `python scripts/verify_standard_dataset.py`  
-- 准备：`python -m scripts.prepare_all_data`；E8/E9 hard：`python scripts/prepare_hard_agent.py`  
-- 重抽：`python scripts/resample_real.py`  
-- E8/E9：**原测**（`live-real-v1` 高信号）与 **加压**（`live-hard-v1` stealth/hard）结果均保留；标准配置以 hard 套为主  
+### 目录结构
+
+```
+src/demotest/
+├── core/         # SecurityCase / enums / ids / contracts / SecretRedactor
+├── datasets/     # DatasetAdapter ABC + LegacyV2Adapter
+├── renderers/    # 7 个渲染器 (UserPrompt / ExternalContent / ToolResult / ...)
+├── targets/      # LineMod TargetAdapter + QwenGuard + HTTP parser
+├── runners/      # GatewayRunner + retry (transport vs benchmark retest)
+├── oracles/      # BlockPass / Canary / Composite
+├── metrics/      # detection / leakage / grouping
+├── analysis/    # analyzer + compare
+├── reporting/   # markdown
+├── storage/     # append-only ResultStore (写盘前脱敏)
+└── cli/         # validate / render / run / analyze / report / compare
+```
+
+V2 代码（`core/` `adapters/` `projects/` `linemod_guard_client.py`）完整保留在项目根目录，通过 `LegacyV2Adapter` 桥接。
+
+### 核心模型：SecurityCase
+
+替代 `Sample.prompt_text` 的结构化安全事件。字段分五组：
+
+- **身份**：`case_id`（hash of dataset_id+source_id+channel+operation+threat_id，**不含 renderer/target 版本**，跨版本稳定）
+- **什么/哪里/为什么**：`channel` / `operation` / `direction` / `content` / `expected_action`
+- **上下文**：`tool_name` / `tool_arguments` / `mcp_schema` / `memory_target` / `credential_markers` / `authorization_context`
+- **表现**：`presentation_style`（explicit / structured / stealth / natural）
+- **指纹**：`fingerprint()`（内容哈希，resume 时与 case_id 一起检查，防止数据集悄悄改内容）
+
+### Channel 枚举
+
+`USER_PROMPT` / `EMAIL` / `WEB_PAGE` / `RAG_DOCUMENT` / `TOOL_RESULT` / `TOOL_CALL` / `MCP_DEFINITION` / `MEMORY_WRITE` / `OUTBOUND_RESPONSE` / `SYSTEM_CONTEXT`
+
+### Renderer（7 个）
+
+每个是**确定性运输格式**（不是攻击生成器），支持三档 fidelity：
+
+| Fidelity | 含义 | 用途 |
+|-----------|------|------|
+| `raw` | payload 原样，无安全标签 | headline 分数（最接近真实生产请求） |
+| `structured` | 真实传输信封（tool args JSON、email header），无安全标签 | 结构信号但不提示网关 |
+| `labeled` | 加 `[UNTRUSTED_EXTERNAL_CONTENT]` 等安全标签 | enhancement 实验（可能虚高 TPR） |
+
+CLI `--fidelity auto` 按 channel 自动选主 fidelity（tool_call 用 structured，email 用 raw）。
+
+### Oracle 体系
+
+- **BlockPassOracle**：混淆矩阵（TP/FP/TN/FN），transport 噪声 → UNJUDGED
+- **CanaryOracle**：双轴——决策正确性 + credential 泄露（独立报告）
+- **CompositeOracle**：预留（block AND no-leak）
+
+### SecretRedactor
+
+统一脱敏，覆盖所有输出面（result store / render / exception / request dump）。写盘前对每行 `redact_dict`，注入 case 的 `credential_markers`。敏感键（api_key/token/password/...）下的值整体替换。
+
+## P1-P5 研究项目
+
+| 项目 | Channel | Oracle | Legacy 映射 |
+|------|---------|--------|-------------|
+| P1 External Instruction Boundary | email, web_page, rag_document, tool_result | block_pass | E2, E8 |
+| P2 Tool Action Guard | tool_call | block_pass | E8, E11 |
+| P3 MCP Definition Content Guard | mcp_definition | block_pass | new |
+| P4 Credential Flow Guard | user_prompt, tool_result, tool_call, memory_write, outbound_response | canary | E4, E5 |
+| P5 Memory Write Guard | memory_write | block_pass | E9 |
+
+E1-E12 编号不删除，保留历史可比性。
 
 ## 快速开始
 
-```powershell
-cd "D:\KMG\Coding\DemoTest V2"
-pip install -r requirements.txt
-$env:LINEMOD_API_KEY="sr-gl-xxx"
-$env:LINEMOD_REQUEST_GAP="0.5"
-$env:SAMPLE_SEED="42"   # 可复测：分层/比例抽样固定种子
+```bash
+# 安装
+pip install -e ".[test]"
 
-# 下载真源 + 重建 manifest（n = 真实池，可被 max_n 截断）
-python -m scripts.prepare_all_data
-# 仅重抽：python scripts/resample_real.py
-# 打印各 E 子项 n：python scripts/describe_e.py
+# 环境变量
+cp config/env.example .env
+# 设置 LINEMOD_API_KEY 等
 
-# 示例：E2
-python -m projects.e2_indirect_injection sample
-python -m projects.e2_indirect_injection run --run-version rules-v2.1.0
-python -m projects.e2_indirect_injection retest-cooldown --run-version rules-v2.1.0
-python -m projects.e2_indirect_injection analyze --run-version rules-v2.1.0
-python -m projects.e2_indirect_injection report --run-version rules-v2.1.0
+# 验证配置 + cases
+python -m demotest.cli.main validate \
+  --project P1_external_instruction \
+  --source fixture:p1_external_instruction \
+  --no-key-check
 
-# 跨项目 sample_id 查重
-python -m core.analyzer --cross-check
+# 检查渲染结果（不调 API）
+python -m demotest.cli.main render \
+  --project P2_tool_action \
+  --source fixture:p2_tool_action \
+  --show-request --limit 2
+
+# dry-run（不调 API）
+python -m demotest.cli.main run \
+  --project P5_memory_write \
+  --source fixture:p5_memory_write \
+  --dry-run
+
+# 真实运行
+python -m demotest.cli.main run \
+  --project P1_external_instruction \
+  --source legacy:spear_explicit_30 \
+  --run-version live-v3-001
+
+# 分析 + 报告
+python -m demotest.cli.main analyze \
+  --project P1_external_instruction \
+  --source legacy:spear_explicit_30 \
+  --run-version live-v3-001
+
+python -m demotest.cli.main report \
+  --project P1_external_instruction \
+  --source legacy:spear_explicit_30 \
+  --run-version live-v3-001
+
+# 跨 target 对比
+python -m demotest.cli.main compare \
+  --project P1_external_instruction \
+  --source legacy:spear_explicit_30 \
+  --run-a linemod/live-v3-001 \
+  --run-b qwen3guard/live-v3-001
 ```
 
-## 评测项目一览（n = 真源池 ∩ max_n；以 `describe_e.py` 为准）
+## 测试
 
-| 项目 | 主题 | 真源要点 | 网关主通道 |
-|------|------|----------|------------|
-| E1 | 直接注入 | CSE PI + HarmBench；WildGuard 需 HF token（gated） | **入站** |
-| E2 | 间接注入 | LLMail HF + BIPIA GitHub + InjecAgent 真 case | 入站（外部内容） |
-| E3 | 编码绕过 | CSE 基座 × 确定性 encoding | **入站** |
-| E4 | 系统泄露 | TensorTrust extraction + 自建 canary | **出站为主**（入站诱导近似） |
-| E5 | 外泄 | InjecAgent DS + LLMail + AgentDojo GOAL + SSRF/PII | 入站 + 出站/工具补强 |
-| E6 | 武器化 + **T15** | CSE MITRE/spear + human_manip 唯一话术 + HarmBench cyber + WMDP | **入站** |
-| E7 | 解释器滥用 | CSE interpreter 全量 | **入站** |
-| E8 | 工具误用 | **ASB 真实 Attacker Instruction** + AgentDojo GOAL | 入站（tool 文本） |
-| E9 | 记忆投毒 | ASB stealthy → mp/mixed（真指令） | 入站（写入前） |
-| E10 | 资源/长文 | 自建边界梯度（尺寸测，非攻击语义垫数） | **入站** |
-| E11 | 权限诱导 | curated_privilege_v2 唯一话术 | **入站** |
-| E12 | 过度拒绝 | CSE FRR + XSTest + OR-Bench hard + autocomplete | **入站**（误拦） |
-| EX | 多语 | MultiJail HF（polyguard 槽位=非英语 MultiJail） | **入站** |
+```bash
+# V3 + V2 全套
+pytest tests/ -q
 
-完整子项释义与入站/出站边界见 **[docs/E1-E12_CATALOG.md](docs/E1-E12_CATALOG.md)**。当前 n：`python scripts/describe_e.py`。
+# 仅 V3
+pytest tests/v3/ -q
 
-### T8 / T15（WASP·ASI 增量）
+# 仅回归验证（V2/V3 字节级一致性）
+pytest tests/v3/contract/test_v2_v3_regression.py -q
+```
 
-| 项 | 测什么 | 怎么测 | 量 |
-|----|--------|--------|-----|
-| **T8** 审计日志完备性 | 产品日志能否追责 | **非数据集** checklist；SUMMARY「可审计性」；对 jsonl 最多抽 **20** 条字段核验 | — |
-| **T15·生成侧** | 诱导模型生成操纵人类的内容 | E6 spear_*，analyze 按 goal 拆 TPR | 真源 capped by max_n |
-| **T15·操纵变体** | 客服冒充、转账催促、伪造通知等 | E6 `human_manip_100`（唯一模板，不扩序号） | 当前 24 条唯一话术 |
+152 个测试全部通过（V3 123 + V2 29），含 FakeLineModServer 合约测试、V2/V3 字节级回归验证、端到端脱敏测试、§51 验收门。
 
 ## 判定口径（不可违反）
 
@@ -89,22 +167,18 @@ python -m core.analyzer --cross-check
 |------|---------|
 | 403 + `SECURITY_BLOCKED` | `blocked` |
 | 200 | `passed` |
-| 503 cooldown / no upstream | `passed_upstream_cooldown` |
+| 503 cooldown / no upstream | `upstream_cooldown` |
 | 429 | `rate_limited`（runner 退避重试） |
 | 400/413 超长 | `payload_too_large` |
 
-- 串行、单 key、默认 `REQUEST_GAP=1s`
-- manifest 只读运行；同名拒绝覆盖
-- 结果 jsonl 只追加；retest-cooldown 追加新记录
+- `classification` 配置驱动（`config/v3/targets.yaml`），不硬编码
+- benchmark_mode 强制 `X-LineMod-No-Failover: true`（缺失即拒绝启动）
+- result append-only jsonl + fsync；resume 跳过 clear outcome
+- `n_judged` 只计 security verdict（TP/FP/TN/FN），cooldown 不计入
 
-## 遗留资产
+## 数据政策
 
-默认从 `D:\KMG\Coding\DemoTest\cache\sample_manifests\` 桥接 `mitre_400`、`interpreter_500` 等，**不改写**历史 id（如 `mitre:0`）。抽样后 manifest 中的 n 以比例分配结果为准（例如 `mitre_400` 实际可能为 185 条）。
-
-## 测试
-
-```powershell
-pytest tests -q
-```
-
-框架单元测试使用假 client，不调用真实 LineMod。
+- 冻结的 V2 manifest 只读（`cache/sample_manifests/`），V3 不改写
+- V3 结果写在 `cache/results_v3/`（与 V2 `cache/results/` 分离）
+- `case_id` 稳定（跨 renderer/target 版本不变）；`fingerprint()` 防 data drift
+- `run_id` 含真实 provenance（target config + project config + dataset snapshot hash + fidelity）
