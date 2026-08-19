@@ -2,8 +2,8 @@
   "projects": {
     "P1_external_instruction": {
       "manifest": "benchmarks/manifests/phase1-standard-v1/p1.json",
-      "manifest_sha256": "sha256:53b442129d21ca4f4a5684d304bd7ce06b63b7d5477507a4703c120a172422f5",
-      "n": 478,
+      "manifest_sha256": "sha256:02176568024a02144f829621e52b32bd514862eea85452a02982896123ef737f",
+      "n": 1740,
       "split": [
         "eval"
       ],
@@ -38,5 +38,5 @@
     "eval"
   ],
   "suite_id": "phase1-standard-v1",
-  "total_cases": 1018
+  "total_cases": 2280
 }

@@ -42,6 +42,29 @@ def _prompt_sha(prompt: str) -> str:
     return hashlib.sha256((prompt or "").encode("utf-8", errors="replace")).hexdigest()
 
 
+def _iter_prompt_value_pairs(path: Path) -> Iterator[tuple[str, Mapping[str, Any]]]:
+    """Stream ``{prompt: {"attack_attempt": .., "reason": ..}}`` from a JSON file.
+
+    Uses ``ijson`` when installed so the 428M labelled_unique file is parsed as
+    a stream (bounded memory); falls back to ``json.loads`` otherwise. Prompt
+    keys are huge (they ARE the email text), so never buffer the raw dict.
+    """
+    try:
+        import ijson  # type: ignore[import-not-found]
+
+        with open(path, "rb") as f:
+            for key, val in ijson.kvitems(f, ""):
+                yield key, (val if isinstance(val, dict) else {})
+        return
+    except ImportError:
+        pass
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, Mapping):
+        return
+    for k, v in data.items():
+        yield k, (v if isinstance(v, Mapping) else {})
+
+
 def _is_attack(attack_attempt: Any) -> bool:
     """Conservative attack parse for the messy attack_attempt field."""
     if attack_attempt is None:
@@ -122,18 +145,16 @@ class LLMailAdapter(DatasetAdapter):
     # ------------------------------------------------------------------ iter
     def iter_cases(self) -> Iterator[SecurityCase]:
         seen_ids: set[str] = set()
-        # attacks (deterministic order: by file, then by prompt hash)
+        # attacks — streamed so the 428M phase1 file never loads fully into RAM.
+        # Deterministic order: the normalized snapshot is sorted by source_id at
+        # write time and the manifest re-sorts by selection_key, so streaming in
+        # file order does not affect reproducibility (guide §29, §48).
         for fp in self._attack_files():
             if not fp.exists():
                 continue
             phase = _phase_of(str(fp))
-            data = json.loads(fp.read_text(encoding="utf-8"))
-            if not isinstance(data, Mapping):
-                continue
-            # sort by prompt hash for stable ordering independent of file order
-            items = sorted(data.items(), key=lambda kv: _prompt_sha(kv[0]))
             count = 0
-            for prompt, labels in items:
+            for prompt, labels in _iter_prompt_value_pairs(fp):
                 if not isinstance(prompt, str) or not prompt.strip():
                     continue
                 labels = labels if isinstance(labels, Mapping) else {}

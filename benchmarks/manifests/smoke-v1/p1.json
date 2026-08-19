@@ -1,807 +1,807 @@
 {
   "cases": [
     {
-      "case_fingerprint": "fp-a59b40d7733ac811",
-      "case_id": "case-017b59d375dfbedf",
+      "case_fingerprint": "fp-a47612e5fe341736",
+      "case_id": "case-01c625c896e6dafe",
       "dataset_id": "llmail",
-      "group_id": "ndc-9677f78009",
-      "source_id": "llmail:benign:7430beb8455e7898",
+      "group_id": "llmail:phase1:755d0be7509bff66",
+      "source_id": "llmail:phase1:755d0be7509bff66",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-998e2a081297e897",
-      "case_id": "case-0232cda702ccca5f",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_28:injection_task_5",
-      "source_id": "agentdojo:workspace:user_task_28:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-928e9d4d3ddbe60a",
-      "case_id": "case-0357134f3e0c509a",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_11:injection_task_1",
-      "source_id": "agentdojo:slack:user_task_11:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-e692e79b14a35540",
-      "case_id": "case-0479bf2e3c8191d7",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_5:injection_task_1",
-      "source_id": "agentdojo:slack:user_task_5:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-29315b28246a6806",
-      "case_id": "case-093f8c4551101a8d",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_14:injection_task_4",
-      "source_id": "agentdojo:banking:user_task_14:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-b8fd6e7b9d5b13f2",
-      "case_id": "case-0b4b3f3c11627507",
+      "case_fingerprint": "fp-47c85f676b71a697",
+      "case_id": "case-02ac04f15237ac8c",
       "dataset_id": "llmail",
-      "group_id": "ndc-15726d3595",
-      "source_id": "llmail:benign:4cc18f71cbe35d4d",
+      "group_id": "llmail:phase1:6e96fac560e7252f",
+      "source_id": "llmail:phase1:6e96fac560e7252f",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2e234a5de96ffc2c",
-      "case_id": "case-0c9817175cc532ba",
+      "case_fingerprint": "fp-b4cf897d6ad625e5",
+      "case_id": "case-0b7d77d8c88bbf89",
       "dataset_id": "llmail",
-      "group_id": "ndc-b9438c08e5",
-      "source_id": "llmail:benign:87f86bb473f97b9d",
+      "group_id": "llmail:phase2:28d46dc5e627634c",
+      "source_id": "llmail:phase2:28d46dc5e627634c",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-3ebc6068dcefeab8",
-      "case_id": "case-134a7ebd0cabe330",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_37:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_37:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-d999e4d517cfc1f4",
-      "case_id": "case-144e7052b6cc89ea",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_4:injection_task_3",
-      "source_id": "agentdojo:slack:user_task_4:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-9720b7ceead29e7a",
-      "case_id": "case-1bb35cd892c5260d",
+      "case_fingerprint": "fp-f321d3427993c3e8",
+      "case_id": "case-0c31c38b13467fa2",
       "dataset_id": "llmail",
-      "group_id": "ndc-93d824b58a",
-      "source_id": "llmail:benign:5b23b52a1db0763c",
+      "group_id": "llmail:phase2:a6fa36f86f4bbb65",
+      "source_id": "llmail:phase2:a6fa36f86f4bbb65",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5e5a5ece94cd4318",
-      "case_id": "case-1cd1aa5b3d576b12",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_23:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_23:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-099fef01e38db468",
-      "case_id": "case-1e6734a132825aa7",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_1:injection_task_2",
-      "source_id": "agentdojo:slack:user_task_1:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-c3e4d3444d383528",
-      "case_id": "case-21c6ea533e6629b4",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_13:injection_task_3",
-      "source_id": "agentdojo:banking:user_task_13:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-8a1d64ea7fe39498",
-      "case_id": "case-22f477959e899106",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_9:injection_task_1",
-      "source_id": "agentdojo:slack:user_task_9:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-96918ffc330c353e",
-      "case_id": "case-23080ee26c60270b",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_7:injection_task_6",
-      "source_id": "agentdojo:banking:user_task_7:injection_task_6:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-5916fc62d0890dfe",
-      "case_id": "case-277dba2e80970b97",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_1:injection_task_4",
-      "source_id": "agentdojo:workspace:user_task_1:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-82447154eff16e69",
-      "case_id": "case-27a85c8a65e335e8",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_8:injection_task_1",
-      "source_id": "agentdojo:slack:user_task_8:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-878d2505928fd319",
-      "case_id": "case-3099aa58dd628ad0",
+      "case_fingerprint": "fp-89349ac1fffeaf00",
+      "case_id": "case-10525816f914160b",
       "dataset_id": "llmail",
-      "group_id": "ndc-09a2785e50",
-      "source_id": "llmail:benign:77c15d3f4c4b2988",
+      "group_id": "llmail:phase1:ad51d1ba02b488b5",
+      "source_id": "llmail:phase1:ad51d1ba02b488b5",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-f07a3d9c5ef97b60",
-      "case_id": "case-30d2ce767d08836b",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_35:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_35:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-35f242194feb8830",
-      "case_id": "case-30dbe91a327d347d",
+      "case_fingerprint": "fp-ddda902c444eb1a7",
+      "case_id": "case-12e101a9e5593979",
       "dataset_id": "llmail",
-      "group_id": "ndc-d21687bbad",
-      "source_id": "llmail:benign:c7a3effc4bd8bfc4",
+      "group_id": "llmail:phase1:8e2b02c0d115a4de",
+      "source_id": "llmail:phase1:8e2b02c0d115a4de",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-34486de0e32e2e2e",
-      "case_id": "case-3405d23decbde128",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_0:injection_task_5",
-      "source_id": "agentdojo:banking:user_task_0:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-714f788973d61b0e",
-      "case_id": "case-37061b39c6802f53",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_2:injection_task_4",
-      "source_id": "agentdojo:travel:user_task_2:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-1b07497d09cee990",
-      "case_id": "case-3789dd25d42a61f5",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_15:injection_task_3",
-      "source_id": "agentdojo:slack:user_task_15:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-5a2bad8e8279841f",
-      "case_id": "case-378fbe6dd4fea7f0",
+      "case_fingerprint": "fp-1f1efeb7867b1b4e",
+      "case_id": "case-14863a767486d20c",
       "dataset_id": "llmail",
-      "group_id": "ndc-d21687bbad",
-      "source_id": "llmail:benign:cbec5cc3fcf2a55e",
+      "group_id": "llmail:phase1:b44857cac5b4a4d3",
+      "source_id": "llmail:phase1:b44857cac5b4a4d3",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b2d3787658f1f5e8",
-      "case_id": "case-37bfc61968e3137d",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_18:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_18:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-491843ba84a57124",
-      "case_id": "case-3812a6bab24e4bbf",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_5:injection_task_2",
-      "source_id": "agentdojo:banking:user_task_5:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-0ee7e04fc781d35d",
-      "case_id": "case-3c3cae3350ff31f1",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_10:injection_task_6",
-      "source_id": "agentdojo:travel:user_task_10:injection_task_6:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-5ff3fca7cea591af",
-      "case_id": "case-3d9218a14a14b383",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_11:injection_task_2",
-      "source_id": "agentdojo:travel:user_task_11:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-6a1ac659480b9e60",
-      "case_id": "case-3da3bda618098497",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_9:injection_task_5",
-      "source_id": "agentdojo:banking:user_task_9:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-913fde6affe525be",
-      "case_id": "case-3f4e66ce33bf3b6c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_37:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_37:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-cafb105009c67c60",
-      "case_id": "case-408c46c0733a4313",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_37:injection_task_5",
-      "source_id": "agentdojo:workspace:user_task_37:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-71cbe2c42ed441e7",
-      "case_id": "case-41ca4da6a204a50d",
+      "case_fingerprint": "fp-c32a922060310646",
+      "case_id": "case-14989c4ff0882139",
       "dataset_id": "llmail",
-      "group_id": "ndc-14116d7be8",
-      "source_id": "llmail:benign:9bd6ba9a3ab7e056",
+      "group_id": "llmail:phase1:b1e5bd9a7d0eff1f",
+      "source_id": "llmail:phase1:b1e5bd9a7d0eff1f",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2e03b258641b7f13",
-      "case_id": "case-52d94ceee0fedc1d",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_0:injection_task_3",
-      "source_id": "agentdojo:slack:user_task_0:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-044fc67a0a28794f",
-      "case_id": "case-53dfef14a64c2db2",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_36:injection_task_5",
-      "source_id": "agentdojo:workspace:user_task_36:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-1134861c8ab6ed18",
-      "case_id": "case-5449f2caacfd9aef",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_35:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_35:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-72dfd5f94c33e266",
-      "case_id": "case-5507081762d56070",
+      "case_fingerprint": "fp-277c0ca5700e2b11",
+      "case_id": "case-17104c1385fc31aa",
       "dataset_id": "llmail",
-      "group_id": "ndc-29e6225e42",
-      "source_id": "llmail:benign:bcee987f2856bb38",
+      "group_id": "llmail:phase1:639af5f8c1baaf93",
+      "source_id": "llmail:phase1:639af5f8c1baaf93",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e860a90e86adea05",
-      "case_id": "case-58ae202cd69fdae1",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_10:injection_task_0",
-      "source_id": "agentdojo:workspace:user_task_10:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-650dacdff660b59b",
-      "case_id": "case-5d7fc8a65c213125",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_18:injection_task_1",
-      "source_id": "agentdojo:slack:user_task_18:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-416f898fca531059",
-      "case_id": "case-5e3bfe4c1b9bf082",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_13:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_13:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-323b1b6d362b4590",
-      "case_id": "case-5fdf47e95328b605",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_4:injection_task_0",
-      "source_id": "agentdojo:banking:user_task_4:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-c1a89b3632ef8d9c",
-      "case_id": "case-619127f0753f5d1c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_2:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_2:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-5aeead5827d4dc7b",
-      "case_id": "case-632e6497e289b262",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_2:injection_task_5",
-      "source_id": "agentdojo:travel:user_task_2:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-d05906c99221c9c0",
-      "case_id": "case-64ca42e4eb0ceb3c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_26:injection_task_0",
-      "source_id": "agentdojo:workspace:user_task_26:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-b101796b3d8f9bee",
-      "case_id": "case-65f5d9bbec681615",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_19:injection_task_5",
-      "source_id": "agentdojo:travel:user_task_19:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-ac303abf8510e620",
-      "case_id": "case-69b65152e85aa98a",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_11:injection_task_6",
-      "source_id": "agentdojo:banking:user_task_11:injection_task_6:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-2fd40847ad174544",
-      "case_id": "case-6b3afb1d0b33ef49",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_35:injection_task_5",
-      "source_id": "agentdojo:workspace:user_task_35:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-648e501b05c48ff0",
-      "case_id": "case-6b4039d59a5b7fa6",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_39:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_39:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-4c9e04b76ceb616d",
-      "case_id": "case-6e914708640362c7",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_7:injection_task_5",
-      "source_id": "agentdojo:workspace:user_task_7:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-720dadbbce09da3b",
-      "case_id": "case-78865ab0c951a29c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_2:injection_task_4",
-      "source_id": "agentdojo:workspace:user_task_2:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-783e73227be9a9d1",
-      "case_id": "case-7f700462677178ab",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_19:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_19:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-91dff0b3cb9a2b79",
-      "case_id": "case-801b59a75fe666d1",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_0:injection_task_0",
-      "source_id": "agentdojo:travel:user_task_0:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-34e0cffb5613ee41",
-      "case_id": "case-81d94732613d915a",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_8:injection_task_4",
-      "source_id": "agentdojo:travel:user_task_8:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-a2696612444665cf",
-      "case_id": "case-8501c032f60c8808",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_9:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_9:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-19d72b5ea021b8ef",
-      "case_id": "case-8638706d858594d3",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_13:injection_task_0",
-      "source_id": "agentdojo:workspace:user_task_13:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-868753613a932ccb",
-      "case_id": "case-86ac2cbdf0e0dc8a",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_0:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_0:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-910df0925e638b6d",
-      "case_id": "case-8a53a2af07255eb6",
+      "case_fingerprint": "fp-d5a47c3737d5c137",
+      "case_id": "case-1ef3c63f19172835",
       "dataset_id": "llmail",
-      "group_id": "ndc-96202e8862",
-      "source_id": "llmail:benign:b16000a3e6acfbf4",
+      "group_id": "llmail:phase1:0fe4d59b557957c9",
+      "source_id": "llmail:phase1:0fe4d59b557957c9",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-29b09ef76928cdfb",
-      "case_id": "case-8e597a4e0caf8def",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_3:injection_task_4",
-      "source_id": "agentdojo:travel:user_task_3:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-6a1bd9ca8d87802e",
-      "case_id": "case-8fcff4c0acd2c05d",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_13:injection_task_6",
-      "source_id": "agentdojo:banking:user_task_13:injection_task_6:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-15a1a9e155989904",
-      "case_id": "case-913d68f6d9c13d5a",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_13:injection_task_8",
-      "source_id": "agentdojo:banking:user_task_13:injection_task_8:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-2b3270bb8bb840ad",
-      "case_id": "case-917cbf4ff4669221",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_14:injection_task_2",
-      "source_id": "agentdojo:slack:user_task_14:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-fca749c9c201f4e7",
-      "case_id": "case-9236b822c1c2d76b",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_5:injection_task_8",
-      "source_id": "agentdojo:banking:user_task_5:injection_task_8:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-9aab7e5f466d6ab1",
-      "case_id": "case-9283d413764191a0",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_14:injection_task_6",
-      "source_id": "agentdojo:banking:user_task_14:injection_task_6:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-f5fa03e529022855",
-      "case_id": "case-99870e86258a9ea7",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_17:injection_task_5",
-      "source_id": "agentdojo:slack:user_task_17:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-ea87e990aa12ef0d",
-      "case_id": "case-9b96943f4c36aea9",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_9:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_9:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-f783d5a5b27a6f75",
-      "case_id": "case-9cd330c8d859af58",
+      "case_fingerprint": "fp-89104cc5d0f2fdfa",
+      "case_id": "case-2b22ef7c19a46703",
       "dataset_id": "llmail",
-      "group_id": "ndc-a012face47",
-      "source_id": "llmail:benign:c6c831eb72015fc3",
+      "group_id": "llmail:phase1:a858dc2d42c5d3f5",
+      "source_id": "llmail:phase1:a858dc2d42c5d3f5",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-6fc1914d5952f46c",
-      "case_id": "case-9d629404dfd92a31",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_3:injection_task_3",
-      "source_id": "agentdojo:banking:user_task_3:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-ccf03e183a0cf837",
-      "case_id": "case-a5bf7da97d87d373",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_0:injection_task_8",
-      "source_id": "agentdojo:banking:user_task_0:injection_task_8:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-4c6d86d164b2d346",
-      "case_id": "case-a65910ee8b93974a",
+      "case_fingerprint": "fp-616ba06acb9791c8",
+      "case_id": "case-2f0e9b28f45ef1a2",
       "dataset_id": "llmail",
-      "group_id": "ndc-aa4e2b112f",
-      "source_id": "llmail:benign:98cb9d9b2ab24e8c",
+      "group_id": "llmail:phase1:e50525627932f295",
+      "source_id": "llmail:phase1:e50525627932f295",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b5916187f7a26155",
-      "case_id": "case-a6a42319b4c4477c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_9:injection_task_3",
-      "source_id": "agentdojo:slack:user_task_9:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-fe9904100c2c4585",
-      "case_id": "case-a6b24187a20dc367",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_1:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_1:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-250490bf155c29d7",
-      "case_id": "case-add17fa4582fee2e",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_30:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_30:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-e886e53a78d5c263",
-      "case_id": "case-b01d76677aa16314",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_23:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_23:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-40d9e3dc4d50ef6e",
-      "case_id": "case-b0233f0d6a9ba226",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_6:injection_task_4",
-      "source_id": "agentdojo:travel:user_task_6:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-8b372d02561f62d8",
-      "case_id": "case-b042d67214484b6b",
+      "case_fingerprint": "fp-76250702ee479ec9",
+      "case_id": "case-33318643f1c3e605",
       "dataset_id": "llmail",
-      "group_id": "ndc-b8cc24879e",
-      "source_id": "llmail:benign:c20a63cae4de053f",
+      "group_id": "llmail:phase1:e81175ba251ed76f",
+      "source_id": "llmail:phase1:e81175ba251ed76f",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2548d8c56b6d29ad",
-      "case_id": "case-b51b90df7d411811",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_6:injection_task_5",
-      "source_id": "agentdojo:slack:user_task_6:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-e818e18f7ac94d52",
-      "case_id": "case-b94516bba89a9c54",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_32:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_32:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-78f3196a54bd9231",
-      "case_id": "case-ba293f1ae0add955",
+      "case_fingerprint": "fp-7845f1d4ae475156",
+      "case_id": "case-34ec7ad134d3a90e",
       "dataset_id": "llmail",
-      "group_id": "ndc-74b1e1f869",
-      "source_id": "llmail:benign:bc1dfa372d04674f",
+      "group_id": "llmail:phase1:e346213f06c84df3",
+      "source_id": "llmail:phase1:e346213f06c84df3",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b2a320dfeb73ffff",
-      "case_id": "case-c006646fd0807f8b",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_18:injection_task_2",
-      "source_id": "agentdojo:travel:user_task_18:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-ae4d49dd3acf4a73",
-      "case_id": "case-c73cc7b5f471ed59",
+      "case_fingerprint": "fp-cb0a16930642e4f9",
+      "case_id": "case-3702bc5b71b03692",
       "dataset_id": "llmail",
-      "group_id": "ndc-4871d4f3ce",
-      "source_id": "llmail:benign:5e9992af54942e7f",
+      "group_id": "llmail:phase2:68fac7880ba79cd0",
+      "source_id": "llmail:phase2:68fac7880ba79cd0",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-9c5db26f3c6075a6",
-      "case_id": "case-cb502e01af26417c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_28:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_28:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-67d7884c80889cc5",
-      "case_id": "case-ceef77ddb3489043",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_14:injection_task_5",
-      "source_id": "agentdojo:slack:user_task_14:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-d0aa6767256db077",
-      "case_id": "case-cf8776198bfd06d6",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_13:injection_task_5",
-      "source_id": "agentdojo:banking:user_task_13:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-951d9a250dd66e6d",
-      "case_id": "case-d64d37b1fd1edd5e",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_20:injection_task_5",
-      "source_id": "agentdojo:slack:user_task_20:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-e301b678ea235ad3",
-      "case_id": "case-d94771ac54bc8ade",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_0:injection_task_3",
-      "source_id": "agentdojo:banking:user_task_0:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-70b2fa035deb9f25",
-      "case_id": "case-dac172a532e4c59f",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_12:injection_task_2",
-      "source_id": "agentdojo:workspace:user_task_12:injection_task_2:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-4233aa7320f597cd",
-      "case_id": "case-dc0e2fc0a93e6789",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_34:injection_task_0",
-      "source_id": "agentdojo:workspace:user_task_34:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-5438f0d435f80408",
-      "case_id": "case-dc3919338cf4f469",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_9:injection_task_4",
-      "source_id": "agentdojo:workspace:user_task_9:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-4292f804430b2e8a",
-      "case_id": "case-de0f413e5da5ecab",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_16:injection_task_0",
-      "source_id": "agentdojo:travel:user_task_16:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-c5b4738a55b7d237",
-      "case_id": "case-e1afe77badb9a7d7",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_4:injection_task_4",
-      "source_id": "agentdojo:workspace:user_task_4:injection_task_4:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-af7645377dc6baae",
-      "case_id": "case-e5e222f180b7873c",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_8:injection_task_8",
-      "source_id": "agentdojo:banking:user_task_8:injection_task_8:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-d2af1d8133b9c301",
-      "case_id": "case-e774d9f23903fc48",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_7:injection_task_0",
-      "source_id": "agentdojo:banking:user_task_7:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-8fd96747bf7eda20",
-      "case_id": "case-e86dcfb95d014bd6",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_13:injection_task_5",
-      "source_id": "agentdojo:workspace:user_task_13:injection_task_5:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-f741a3ddd4e45e89",
-      "case_id": "case-e9e3223956f34eb3",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_31:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_31:injection_task_1:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-d06930b0d2ca15a9",
-      "case_id": "case-f5fd471db74c0703",
+      "case_fingerprint": "fp-daaccb5d9f974760",
+      "case_id": "case-3ad457e699e66d49",
       "dataset_id": "llmail",
-      "group_id": "ndc-768aecae49",
-      "source_id": "llmail:benign:9c44218bf35c61ed",
+      "group_id": "llmail:phase1:95452e4a8b329279",
+      "source_id": "llmail:phase1:95452e4a8b329279",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-076153d3159b9abf",
-      "case_id": "case-f7e3af739c1a2269",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_39:injection_task_0",
-      "source_id": "agentdojo:workspace:user_task_39:injection_task_0:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-84eb9333d6346548",
-      "case_id": "case-faebb8f57f74ccb3",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_28:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_28:injection_task_3:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-c6edc9cdf7db1272",
-      "case_id": "case-fcb74fdd0386077a",
+      "case_fingerprint": "fp-d347892f0a87af62",
+      "case_id": "case-3b4d0d7ee481b970",
       "dataset_id": "llmail",
-      "group_id": "ndc-e1b748c69e",
-      "source_id": "llmail:benign:515ee3b2128907e5",
+      "group_id": "llmail:phase2:deaeef90f4e2719d",
+      "source_id": "llmail:phase2:deaeef90f4e2719d",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-abe143bb959e3957",
-      "case_id": "case-fcd8667d2e115fa4",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:banking:user_task_9:injection_task_8",
-      "source_id": "agentdojo:banking:user_task_9:injection_task_8:tool_result",
-      "split": "dev"
-    },
-    {
-      "case_fingerprint": "fp-0b746d890d080b13",
-      "case_id": "case-fe796a0e0e29ca33",
+      "case_fingerprint": "fp-5c5e4e995882e28e",
+      "case_id": "case-3bee6dc91f60b485",
       "dataset_id": "llmail",
-      "group_id": "ndc-d0c0ec9b70",
-      "source_id": "llmail:benign:4f03e0d6c5136058",
+      "group_id": "llmail:phase1:4f4ff04092d8ee06",
+      "source_id": "llmail:phase1:4f4ff04092d8ee06",
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-797a7d9be76820d9",
-      "case_id": "case-fe8a5c50ff89af0e",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_4:injection_task_3",
-      "source_id": "agentdojo:workspace:user_task_4:injection_task_3:tool_result",
+      "case_fingerprint": "fp-6cbda3657b53f95b",
+      "case_id": "case-3beeb35798c82337",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:e816b15ab89747f8",
+      "source_id": "llmail:phase1:e816b15ab89747f8",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-40c497b0c3161199",
+      "case_id": "case-3d0245085504d665",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:596e9a0cf8ed94f4",
+      "source_id": "llmail:phase1:596e9a0cf8ed94f4",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e89e3e34944b7366",
+      "case_id": "case-3d1bc3d6debe08a6",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:05746e02e0ccfefc",
+      "source_id": "llmail:phase1:05746e02e0ccfefc",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d94811018f6c666b",
+      "case_id": "case-41b8792a1b75ba74",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:a369aba0a6e9a6e1",
+      "source_id": "llmail:phase1:a369aba0a6e9a6e1",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-32a881c1b83fb324",
+      "case_id": "case-4297399a3adb6ef9",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:4d0235d60aca69ea",
+      "source_id": "llmail:phase2:4d0235d60aca69ea",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d9868e403f0edec0",
+      "case_id": "case-49b566390491aba8",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:7bb10d5ff2fe85fe",
+      "source_id": "llmail:phase1:7bb10d5ff2fe85fe",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-72e7717926507af1",
+      "case_id": "case-4a0974ed241122e7",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:9f1295e4237d13c5",
+      "source_id": "llmail:phase1:9f1295e4237d13c5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ba8749dfdbd0d78a",
+      "case_id": "case-4be2a81205308792",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:9d365fe707f24ef1",
+      "source_id": "llmail:phase1:9d365fe707f24ef1",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-cded549484effb5a",
+      "case_id": "case-4c9d7c924054f1a2",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:49a7ee18c5ec1943",
+      "source_id": "llmail:phase1:49a7ee18c5ec1943",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5475072728d8a1ff",
+      "case_id": "case-4e16cb11bcb6d968",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:591f29e899527ec2",
+      "source_id": "llmail:phase1:591f29e899527ec2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-00dc3bf5c5e63442",
+      "case_id": "case-53a22663a0998009",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:75119bf1416459ca",
+      "source_id": "llmail:phase1:75119bf1416459ca",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-de24dc561dac0d6f",
+      "case_id": "case-58acf6b9bf9a516a",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:4875b215eb814bea",
+      "source_id": "llmail:phase1:4875b215eb814bea",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4edbd8fec7dac374",
+      "case_id": "case-5ea4e005f6950665",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:0b8bd29e34a2c402",
+      "source_id": "llmail:phase1:0b8bd29e34a2c402",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-53088208d2977962",
+      "case_id": "case-5f3cc589e9783832",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:1b19188d12e89464",
+      "source_id": "llmail:phase1:1b19188d12e89464",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3c738431eecb9dbb",
+      "case_id": "case-5f3fa42b24f311a9",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:5b624de6de637f19",
+      "source_id": "llmail:phase1:5b624de6de637f19",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8b491f8d9a680343",
+      "case_id": "case-60fc150df369d3b1",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:cde4406abb8cfd60",
+      "source_id": "llmail:phase2:cde4406abb8cfd60",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-43f70558ff78d150",
+      "case_id": "case-628853414628c6b9",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:6e83a5176898ad73",
+      "source_id": "llmail:phase1:6e83a5176898ad73",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-97cae8701af73b1a",
+      "case_id": "case-632acbab3b6c651a",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:b5b980da9bf98829",
+      "source_id": "llmail:phase1:b5b980da9bf98829",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-06a595b0c619cdc2",
+      "case_id": "case-64e9c475f40ed11c",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:e2bbf5f3546ccac1",
+      "source_id": "llmail:phase2:e2bbf5f3546ccac1",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-cd849434e52e095d",
+      "case_id": "case-67242312e23c6731",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:d1b98aa20e6e7946",
+      "source_id": "llmail:phase1:d1b98aa20e6e7946",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b8ce19e3cc9f3d1a",
+      "case_id": "case-6fd105883173d1dc",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:d73b86e8e68d52f7",
+      "source_id": "llmail:phase1:d73b86e8e68d52f7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-18154ed60117cb23",
+      "case_id": "case-703d1920a34a188b",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:edcb45de012b6e1e",
+      "source_id": "llmail:phase1:edcb45de012b6e1e",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-eee3976db26ce2e4",
+      "case_id": "case-715e64ed76114abd",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:a1fe5d92f3cdd204",
+      "source_id": "llmail:phase1:a1fe5d92f3cdd204",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-07465f6017269367",
+      "case_id": "case-73fe0a7dac164de3",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:556cdd1925557204",
+      "source_id": "llmail:phase1:556cdd1925557204",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d1b2fffb3038d8ef",
+      "case_id": "case-7855a63757265542",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:54526cc3d5abe52f",
+      "source_id": "llmail:phase1:54526cc3d5abe52f",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-46c365778f6f9c5a",
+      "case_id": "case-7c3455709dc9c339",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:8e0aac1d490f5166",
+      "source_id": "llmail:phase1:8e0aac1d490f5166",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-36de594c39703512",
+      "case_id": "case-7c909e3396b51bc7",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:b4017e3073cfae2e",
+      "source_id": "llmail:phase1:b4017e3073cfae2e",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-dcb5ac0f1664cf98",
+      "case_id": "case-82f8d48458ead534",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:4bbb5257537872d9",
+      "source_id": "llmail:phase1:4bbb5257537872d9",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ac5371fc957e56f8",
+      "case_id": "case-83f47e7a67e6ab7e",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:ffd2b00034059841",
+      "source_id": "llmail:phase2:ffd2b00034059841",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7d5de8ff78ad083d",
+      "case_id": "case-843e969897f7d3aa",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:5f4f6a3069bdee2b",
+      "source_id": "llmail:phase1:5f4f6a3069bdee2b",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d2309829ceba5532",
+      "case_id": "case-859ab546103babc1",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:d7a9c86a3fe460fe",
+      "source_id": "llmail:phase1:d7a9c86a3fe460fe",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-18edd8c0161c37aa",
+      "case_id": "case-878093a424822b22",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:951799ee38f210be",
+      "source_id": "llmail:phase1:951799ee38f210be",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e9c9e9187606b454",
+      "case_id": "case-885763b7703754f3",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:4aa82e18c222be98",
+      "source_id": "llmail:phase1:4aa82e18c222be98",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-520fcac2dc935a7a",
+      "case_id": "case-899ecdba8fd1e84b",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:258b60db195d62eb",
+      "source_id": "llmail:phase1:258b60db195d62eb",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b04c1817f958d501",
+      "case_id": "case-8de2d822c1be15f1",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:eb951b67fc149099",
+      "source_id": "llmail:phase1:eb951b67fc149099",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2b122850143b8811",
+      "case_id": "case-8e44a71ad22083ac",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:a29e4e3f84376e15",
+      "source_id": "llmail:phase1:a29e4e3f84376e15",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-024749a739f76291",
+      "case_id": "case-91ffa2cd2d948ec8",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:7b635898ed6ef22f",
+      "source_id": "llmail:phase2:7b635898ed6ef22f",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-994fd7b02fc73921",
+      "case_id": "case-94dd897356a90a76",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:473d1cf02a6991ec",
+      "source_id": "llmail:phase1:473d1cf02a6991ec",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f2851253018c7a83",
+      "case_id": "case-97f89be268895947",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:e57dbfd4a5c6732f",
+      "source_id": "llmail:phase1:e57dbfd4a5c6732f",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-44908af48dd79226",
+      "case_id": "case-9ce30c46c708874e",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:ee5880940015f000",
+      "source_id": "llmail:phase2:ee5880940015f000",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d8ef0fd5a8e051cd",
+      "case_id": "case-a15de20f1ccf7e0d",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:282e021cfae731e5",
+      "source_id": "llmail:phase1:282e021cfae731e5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4e84d8986d17fd08",
+      "case_id": "case-a24c82788d8232c9",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:0e4920dc0ea25092",
+      "source_id": "llmail:phase1:0e4920dc0ea25092",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5b6ccbc0534be764",
+      "case_id": "case-a2d7fc01acfe7ac6",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:3fe66792fc69fdf3",
+      "source_id": "llmail:phase1:3fe66792fc69fdf3",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-eb0adbe51a2cdf6b",
+      "case_id": "case-a378d3c738b18a38",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:a9cadc80eb7a047a",
+      "source_id": "llmail:phase1:a9cadc80eb7a047a",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-577688c52320ff56",
+      "case_id": "case-a65d825df7404c6f",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:eb623e9d937519ba",
+      "source_id": "llmail:phase2:eb623e9d937519ba",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-53b8c04f849bbda1",
+      "case_id": "case-a82db115e71e08b8",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:340c7d1267980dc2",
+      "source_id": "llmail:phase1:340c7d1267980dc2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-156e91d568d5c0d3",
+      "case_id": "case-a9dd25d7ddbeb87f",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:9972012664d7ebec",
+      "source_id": "llmail:phase1:9972012664d7ebec",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0e95be28556778cf",
+      "case_id": "case-aa289800287ff657",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:e1a6cbe2e6f92149",
+      "source_id": "llmail:phase1:e1a6cbe2e6f92149",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2c1afffa29386798",
+      "case_id": "case-aa695ef99b590ea3",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:361f54c439176734",
+      "source_id": "llmail:phase1:361f54c439176734",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-abf70af26e4c7381",
+      "case_id": "case-ae0c8d6117510392",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:030f636c099c34e7",
+      "source_id": "llmail:phase2:030f636c099c34e7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8681d37abdc5f104",
+      "case_id": "case-aea19596e7b0c64d",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:6a10b6c1bb60dff9",
+      "source_id": "llmail:phase1:6a10b6c1bb60dff9",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-adf19081bd2ecf71",
+      "case_id": "case-af6e057f53bc1587",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:2d01ca0acef806ac",
+      "source_id": "llmail:phase1:2d01ca0acef806ac",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-abac52a8152c97ab",
+      "case_id": "case-b210feacb919c668",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:7a39e0dd30484b33",
+      "source_id": "llmail:phase1:7a39e0dd30484b33",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-60515333e280d262",
+      "case_id": "case-b495468660acc4bb",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:1e30363bcaf40e01",
+      "source_id": "llmail:phase2:1e30363bcaf40e01",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-514a703c89c1ee79",
+      "case_id": "case-b7376998d28c21d2",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:7351e789be3430ed",
+      "source_id": "llmail:phase2:7351e789be3430ed",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b2a5f7baddf482ad",
+      "case_id": "case-baf36b813a322205",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:1c35a13e17c70934",
+      "source_id": "llmail:phase1:1c35a13e17c70934",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-26e432f538cb9211",
+      "case_id": "case-bc65179a1c2e1ff6",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:0c9a36230811b725",
+      "source_id": "llmail:phase1:0c9a36230811b725",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0c3fbaf1ca703eff",
+      "case_id": "case-be2162ea32623706",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase2:28f5c579667d6368",
+      "source_id": "llmail:phase2:28f5c579667d6368",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-608d749575398777",
+      "case_id": "case-bf27821a057e3baf",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:5f9f242fb4fa2d21",
+      "source_id": "llmail:phase1:5f9f242fb4fa2d21",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ccbabe54dea1ad19",
+      "case_id": "case-c11a700c129d26be",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:6d58aca0a05021cd",
+      "source_id": "llmail:phase1:6d58aca0a05021cd",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1243ee049aafc99b",
+      "case_id": "case-c3571a054a45f8f8",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:3f99fa531b72b6c7",
+      "source_id": "llmail:phase1:3f99fa531b72b6c7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-075c41046860f080",
+      "case_id": "case-c5cb448bd6bc8677",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:0fd1b65a011e186c",
+      "source_id": "llmail:phase1:0fd1b65a011e186c",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e29076703c414f2b",
+      "case_id": "case-c7adb8faa2dc469c",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:f0e59bcc4c87da99",
+      "source_id": "llmail:phase1:f0e59bcc4c87da99",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-53192b96b71ac3c2",
+      "case_id": "case-c9bdd459ace3ac81",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:dbac41b633992e6a",
+      "source_id": "llmail:phase1:dbac41b633992e6a",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-27a80e476e9ba9bd",
+      "case_id": "case-ca7a987d1f88b8fa",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:54389f0b57971ddb",
+      "source_id": "llmail:phase1:54389f0b57971ddb",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8bfc8851e6323044",
+      "case_id": "case-ccaaf2e17c7aeb67",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:59b32834b4345816",
+      "source_id": "llmail:phase1:59b32834b4345816",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c222bb1b0cf20e6a",
+      "case_id": "case-cd05feb8d019c377",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:e3278e7a7b2fd77d",
+      "source_id": "llmail:phase1:e3278e7a7b2fd77d",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a9b22a704b62f877",
+      "case_id": "case-d600d4ab8b1f2d06",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:414a31f15efb55bc",
+      "source_id": "llmail:phase1:414a31f15efb55bc",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-83b8c262dec5eef2",
+      "case_id": "case-d779105147cd80e8",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:19a59a6956521e15",
+      "source_id": "llmail:phase1:19a59a6956521e15",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-bf8d2ba300e9f7a8",
+      "case_id": "case-daec741af3afd491",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:259123b961b6224f",
+      "source_id": "llmail:phase1:259123b961b6224f",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4ede1102ff0032f6",
+      "case_id": "case-e02555c5677535a2",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:8de8197442e32d71",
+      "source_id": "llmail:phase1:8de8197442e32d71",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-50cb00d465668b1d",
+      "case_id": "case-e3cace5b219509f9",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:dd379b284589251d",
+      "source_id": "llmail:phase1:dd379b284589251d",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-faf1a1790daa7b60",
+      "case_id": "case-e41ef72a7dcc8883",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:f188fc419573b944",
+      "source_id": "llmail:phase1:f188fc419573b944",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c8a0e3d2aa199dd0",
+      "case_id": "case-e47195d54a29dcbb",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:1ecc14ba30f26ae5",
+      "source_id": "llmail:phase1:1ecc14ba30f26ae5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-26e54d3aef1ec3ad",
+      "case_id": "case-f0db5e1a6aeb1459",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:4e84d7f12990dac4",
+      "source_id": "llmail:phase1:4e84d7f12990dac4",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f3e3c6c2f9459f4d",
+      "case_id": "case-f0dcadfb87c9f549",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:6c1fc7b5e889d2b7",
+      "source_id": "llmail:phase1:6c1fc7b5e889d2b7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-884e50b85860f3cd",
+      "case_id": "case-f32b2df42b099420",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:357e2f1cde8396f0",
+      "source_id": "llmail:phase1:357e2f1cde8396f0",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6b4953a3c55877e7",
+      "case_id": "case-f3acb981a6dcd40b",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:4feed8da5abee4e6",
+      "source_id": "llmail:phase1:4feed8da5abee4e6",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-523884b491e517b9",
+      "case_id": "case-f53a18dff78fcbab",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:75269b9f66783b2a",
+      "source_id": "llmail:phase1:75269b9f66783b2a",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e683d2937a9cbe05",
+      "case_id": "case-f61b964013c78f0a",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:d28c081e8731e581",
+      "source_id": "llmail:phase1:d28c081e8731e581",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-dacdd76f16b335cf",
+      "case_id": "case-f68975f605a5d808",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:edeaec2db0c4cc67",
+      "source_id": "llmail:phase1:edeaec2db0c4cc67",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3908fc4d6bd85292",
+      "case_id": "case-fccfd15f11c87096",
+      "dataset_id": "llmail",
+      "group_id": "llmail:phase1:94de430b13a0bc41",
+      "source_id": "llmail:phase1:94de430b13a0bc41",
       "split": "dev"
     }
   ],
-  "created_at": "2026-08-19T06:45:32Z",
+  "created_at": "2026-08-19T07:59:27Z",
   "created_from": {
     "agentdojo": {
       "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
@@ -812,7 +812,7 @@
       "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
     }
   },
-  "manifest_sha256": "sha256:b1e39001e0b5f3f6fd84016acdc272889e9bc55d7ea428f9bacbb4d71ce7aa48",
+  "manifest_sha256": "sha256:1bfe1c249b5a6c862a000c6c269326e140a0fe95ec4643df2d896ff6351c9fa1",
   "manifest_version": "v3.1",
   "n": 100,
   "project": "P1_external_instruction",

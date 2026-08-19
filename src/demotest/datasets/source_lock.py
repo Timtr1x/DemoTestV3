@@ -55,7 +55,7 @@ def hash_raw_snapshot(
     root: Path,
     *,
     relative_globs: Sequence[str] | None = None,
-    exclude_dirs: Sequence[str] = (".git",),
+    exclude_dirs: Sequence[str] = (".git", "__pycache__"),
 ) -> tuple[list[FileHash], str]:
     """Hash every file under ``root`` (or only those matching ``relative_globs``).
 

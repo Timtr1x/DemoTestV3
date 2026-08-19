@@ -29,6 +29,18 @@ from ..datasets.source_lock import (
 )
 
 
+def jsonl_dumps(obj: dict) -> str:
+    """Serialize one case to a JSONL-safe line.
+
+    ``json.dumps(ensure_ascii=False)`` leaves U+2028/U+2029 (Unicode line /
+    paragraph separators) literal, and ``str.splitlines()`` treats them as line
+    breaks — so a prompt embedding them would corrupt the one-object-per-line
+    contract. Normalize those two chars to their escaped forms.
+    """
+    blob = json.dumps(obj, ensure_ascii=False, sort_keys=True)
+    return blob.replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
+
+
 # --------------------------------------------------------------------------
 # acquire / verify-source
 # --------------------------------------------------------------------------
@@ -121,9 +133,14 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None) ->
     # write normalized snapshot (jsonl; one SecurityCase dict per line)
     ds.normalized_path.mkdir(parents=True, exist_ok=True)
     out = ds.normalized_path / "cases.jsonl"
+    # JSONL-safe dump + stable order: escape U+2028/U+2029 (real prompt payloads
+    # contain them and str.splitlines() would break the one-line-per-case
+    # contract), and sort by source_id so the snapshot is byte-stable across
+    # reruns even when the adapter streams in file order.
+    ordered = sorted(cases, key=lambda c: c.source_id)
     with out.open("w", encoding="utf-8") as f:
-        for c in cases:
-            f.write(json.dumps(c.to_dict(), ensure_ascii=False, sort_keys=True) + "\n")
+        for c in ordered:
+            f.write(jsonl_dumps(c.to_dict()) + "\n")
     # write a small provenance sidecar
     meta = {
         "dataset_id": ds.name,
@@ -156,20 +173,35 @@ def load_normalized(ds: DatasetSourceConfig):
     if not out.exists():
         raise DatasetSourceError(f"normalized snapshot missing: {out} (run 'dataset prepare')")
     cases = []
-    for line in out.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line:
-            cases.append(SecurityCase.from_dict(json.loads(line)))
+    for line in iter_normalized_lines(ds):
+        cases.append(SecurityCase.from_dict(json.loads(line)))
     return cases
+
+
+def iter_normalized_lines(ds: DatasetSourceConfig):
+    """Yield one JSONL line at a time (streaming) — bounded memory for 148K."""
+    from ..core.exceptions import DatasetSourceError as _DSE
+
+    out = ds.normalized_path / "cases.jsonl"
+    if not out.exists():
+        raise _DSE(f"normalized snapshot missing: {out} (run 'dataset prepare')")
+    with out.open("r", encoding="utf-8") as f:
+        for raw in f:
+            line = raw.strip()
+            if line:
+                yield line
 
 
 def verify_normalized(ds: DatasetSourceConfig) -> list[str]:
     problems: list[str] = []
+    cases: list = []
     try:
-        cases = load_normalized(ds)
+        for line in iter_normalized_lines(ds):
+            from ..core.models import SecurityCase as _SC
+            cases.append(_SC.from_dict(json.loads(line)))
     except DatasetSourceError as e:
         return [str(e)]
-    # case_id unique
+    # case_id unique — stream check first to fail fast
     seen: dict[str, int] = {}
     for c in cases:
         seen[c.case_id] = seen.get(c.case_id, 0) + 1
@@ -192,8 +224,7 @@ def verify_normalized(ds: DatasetSourceConfig) -> list[str]:
 
 
 def compute_stats(ds: DatasetSourceConfig) -> dict[str, Any]:
-    cases = load_normalized(ds)
-    n = len(cases)
+    n = 0
     by_phase: dict[str, int] = {}
     by_scenario: dict[str, int] = {}
     by_goal: dict[str, int] = {}
@@ -204,7 +235,10 @@ def compute_stats(ds: DatasetSourceConfig) -> dict[str, Any]:
     by_expected: dict[str, int] = {}
     lengths: list[int] = []
     clusters: set[str] = set()
-    for c in cases:
+    for line in iter_normalized_lines(ds):
+        from ..core.models import SecurityCase as _SC
+
+        c = _SC.from_dict(json.loads(line))
         m = c.metadata or {}
         ph = m.get("source_phase", "unknown") or "unknown"
         by_phase[ph] = by_phase.get(ph, 0) + 1
@@ -224,6 +258,7 @@ def compute_stats(ds: DatasetSourceConfig) -> dict[str, Any]:
         cid = m.get("near_dup_cluster_id")
         if cid:
             clusters.add(cid)
+        n += 1
     s = {
         "total": n,
         "by_expected": by_expected,

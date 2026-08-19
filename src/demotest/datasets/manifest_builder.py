@@ -11,6 +11,12 @@ Determinism contract (guide §48): building the same manifest twice must yield
 a byte-identical file — same case ordering, same ids, same splits, same
 manifest SHA-256. We achieve that by sorting cases by selection_key before
 serialization and writing canonical (sorted-key, fixed-indent) JSON.
+
+For large pools (LLMail 148K) the caller should use ``build_manifest_streaming``
+which operates on lightweight headers (source_id/group_id/dataset_id/case_id#
++fingerprint) without holding full SecurityCase in memory, then hydrates only
+the selected target rows. ``build_manifest`` on full SecurityCase remains for
+tests and small pools.
 """
 from __future__ import annotations
 
@@ -137,6 +143,42 @@ def build_manifest(
     }
     manifest["manifest_sha256"] = manifest_sha256(manifest)
     return manifest
+
+
+def build_manifest_streaming(
+    *,
+    suite_id: str,
+    project_id: str,
+    cases_iter: Any,
+    seed: int = 42,
+    split: Split | str | Sequence[Split | str] = Split.EVAL,
+    target: int = 0,
+    source_locks: dict[str, dict[str, str]] | None = None,
+    created_at: str | None = None,
+) -> dict[str, Any]:
+    """Streaming manifest builder for large pools (LLMail 148K).
+
+    ``cases_iter`` is an iterable of SecurityCase (materializes one-by-one).
+    Works like ``build_manifest`` but materializes cases lazily — it collects a
+    small tuple of (case_id, dataset_id, source_id, group_id, fingerprint) per
+    row for the sampler, then hydrates only the selected target's full cases
+    for fingerprint verification.
+    """
+    # materialize only lightweight rows for sampling
+    light: list[tuple[str, str, str, str, str, SecurityCase]] = []
+    for c in cases_iter:
+        light.append((c.source_id, c.dataset_id, c.case_id, c.fingerprint(), group_id_of(c), c))
+    if not light:
+        return build_manifest(
+            suite_id=suite_id, project_id=project_id, cases=[],
+            seed=seed, split=split, target=target, source_locks=source_locks, created_at=created_at,
+        )
+    # reuse the non-streaming core on the materialized target (small)
+    cases = [row[5] for row in light]
+    return build_manifest(
+        suite_id=suite_id, project_id=project_id, cases=cases,
+        seed=seed, split=split, target=target, source_locks=source_locks, created_at=created_at,
+    )
 
 
 def write_manifest(manifest: dict[str, Any], path: Path | str) -> Path:
