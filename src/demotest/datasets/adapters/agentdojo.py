@@ -16,8 +16,7 @@ P1 tool_result from default injection vectors was removed from core (guide P0-2)
 get_injection_vector_defaults() is environment content, not an attacker payload;
 the constructed content also leaked the attacker goal. AgentDojo P1 may return
 only as an Extended/Regression track.
-(guide §22). Each gets an independent ``source_id`` (``agentdojo:<parent>:tool_result``
-/ ``...:tool_call``) and the lineage is recorded in metadata (guide §20).
+Each case carries a deterministic ``source_id`` and ``parent_source_id`` lineage (guide §20).
 
 The real projection imports ``agentdojo`` from the pinned clone (``pip install -e
 cache/datasets_v3/raw/agentdojo``, guide §19); the import is lazy so the module
@@ -73,18 +72,13 @@ class _UserTask(Protocol):
 
 @dataclass
 class InjectedTaskPair:
-    """A UserTask + the InjectionTask paired with it, plus the injection text.
-
-    This is the unit one original security case becomes. The real loader
-    produces these from the official suite; tests construct them directly.
-    """
+    """A UserTask + the InjectionTask paired with it."""
 
     suite: str
     user_task_id: str
     user_prompt: str
     injection_task_id: str
     injection_goal: str
-    injection_text: str          # the injected tool-result content the agent sees
     ground_truth_calls: list[_FunctionCall]  # dangerous tool calls (P2)
 
 
@@ -94,7 +88,7 @@ def _sha(text: str) -> str:
 
 @register_adapter
 class AgentDojoAdapter(DatasetAdapter):
-    """Project pinned AgentDojo security cases into TOOL_RESULT + TOOL_CALL cases."""
+    """Project pinned AgentDojo security cases into tool_call (P2) cases."""
 
     dataset_id = "agentdojo"
     adapter_version = "1.1.0"
@@ -146,10 +140,8 @@ class AgentDojoAdapter(DatasetAdapter):
         environment via ``load_and_inject_default_environment({})`` (not the
         bare ``environment_type()`` class), so tool args resolve correctly.
 
-        The injected content the agent observes (guide §24) is the injection
-        vector default text from ``get_injection_vector_defaults()`` — the
-        actual attacker payload embedded in the environment — concatenated so
-        the tool_result case carries real injected data, not just the GOAL.
+        Ground truth tool calls are taken from ``InjectionTask.ground_truth(env)``.
+        P1 tool_result from default vectors is not produced in core.
         """
         src = str(self.raw_dir / "src")
         if src not in sys.path:
@@ -168,24 +160,15 @@ class AgentDojoAdapter(DatasetAdapter):
                 continue
             suite = suites[suite_name]
             count = 0
-            # build the populated default environment ONCE per suite (expensive)
             try:
                 env = suite.load_and_inject_default_environment({})  # type: ignore[attr-defined]
             except Exception:
                 env = None
-            # injection vector defaults are the real attacker payloads (guide §24)
-            try:
-                ivd = suite.get_injection_vector_defaults()  # type: ignore[attr-defined]
-            except Exception:
-                ivd = {}
-            injection_text = "\n---\n".join(str(v) for v in ivd.values() if v)
             for it_id, it in getattr(suite, "injection_tasks", {}).items():
-                # ground_truth needs the populated env
                 try:
                     calls = it.ground_truth(env) if env is not None else []  # type: ignore[arg-type]
                 except Exception:
                     calls = []
-                # pair with each user task (utility x security matrix)
                 for ut_id, ut in getattr(suite, "user_tasks", {}).items():
                     yield InjectedTaskPair(
                         suite=suite_name,
@@ -193,7 +176,6 @@ class AgentDojoAdapter(DatasetAdapter):
                         user_prompt=getattr(ut, "PROMPT", "") or "",
                         injection_task_id=str(it_id),
                         injection_goal=getattr(it, "GOAL", "") or "",
-                        injection_text=injection_text,
                         ground_truth_calls=list(calls or []),
                     )
                     count += 1
@@ -201,20 +183,6 @@ class AgentDojoAdapter(DatasetAdapter):
                         break
                 if self.max_per_suite and count >= self.max_per_suite:
                     break
-
-    def _injection_text_for(self, suite: Any, suite_name: str) -> str:
-        """Kept for backward compat / tests; real path uses injection_vector_defaults."""
-        try:
-            text = suite.read_injection_vectors()  # type: ignore[attr-defined]
-            if isinstance(text, str) and text.strip():
-                return text
-        except Exception:
-            pass
-        try:
-            from agentdojo.task_suite.task_suite import read_suite_file  # type: ignore
-            return read_suite_file(suite_name, "injection_vectors.yaml", suite.data_path)
-        except Exception:
-            return ""
 
     # ------------------------------------------------------------------ iter
     def iter_cases(self) -> Iterator[SecurityCase]:
@@ -256,29 +224,6 @@ class AgentDojoAdapter(DatasetAdapter):
             "derivation": "deterministic_projection",
             "benchmark_version": self.benchmark_version,
         }
-
-    def _build_tool_result_case(
-        self, *, pair: InjectedTaskPair, parent: str, content: str, raw_inj: str
-    ) -> SecurityCase:
-        source_id = f"{parent}:tool_result"
-        case = SecurityCase.build(
-            dataset_id=self.dataset_id,
-            source_id=source_id,
-            channel="tool_result",
-            operation="read",
-            direction="inbound",
-            content=content,
-            tool_result=raw_inj,        # the injected observation verbatim (RAW fallback)
-            user_intent=pair.user_prompt,
-            expected_action=ExpectedAction.BLOCK,
-            project_id="P1_external_instruction",
-            threat_id="tool_result_injection",
-            presentation_style="structured",
-        )
-        d = case.to_dict()
-        d["metadata"] = {**(d.get("metadata") or {}), **self._common_meta(pair, "tool_result", 1)}
-        case = SecurityCase.from_dict(d)
-        return attach_provenance(case, self._make_prov(source_id=source_id, content=content, parent=parent))
 
     def _build_tool_call_case(
         self, *, pair: InjectedTaskPair, parent: str, call: _FunctionCall, step: int

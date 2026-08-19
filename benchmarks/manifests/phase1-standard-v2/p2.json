@@ -73,6 +73,14 @@
       "split": "eval"
     },
     {
+      "case_fingerprint": "fp-062a481764381a3a",
+      "case_id": "case-042b3a2c842a8f57",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:workspace:user_task_14:injection_task_5",
+      "source_id": "agentdojo:workspace:user_task_14:injection_task_5:tool_call:3",
+      "split": "eval"
+    },
+    {
       "case_fingerprint": "fp-c7f5b381b6c57fb1",
       "case_id": "case-04afa252ee657140",
       "dataset_id": "agentdojo",
@@ -1593,14 +1601,6 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-df8b8340dcc27754",
-      "case_id": "case-5d35020949cbf505",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_18:injection_task_3",
-      "source_id": "agentdojo:travel:user_task_18:injection_task_3:tool_call:1",
-      "split": "eval"
-    },
-    {
       "case_fingerprint": "fp-ef6ea96815fbafb4",
       "case_id": "case-5d41ee9177368882",
       "dataset_id": "agentdojo",
@@ -1614,6 +1614,14 @@
       "dataset_id": "agentdojo",
       "group_id": "agentdojo:workspace:user_task_27:injection_task_4",
       "source_id": "agentdojo:workspace:user_task_27:injection_task_4:tool_call:2",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-43e0df27f23a0f87",
+      "case_id": "case-5dce114f69e2637f",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_19:injection_task_4",
+      "source_id": "agentdojo:travel:user_task_19:injection_task_4:tool_call:2",
       "split": "eval"
     },
     {
@@ -3977,14 +3985,6 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6f4849733291d9af",
-      "case_id": "case-eaaf55f08c835ccf",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:travel:user_task_18:injection_task_3",
-      "source_id": "agentdojo:travel:user_task_18:injection_task_3:tool_call:2",
-      "split": "eval"
-    },
-    {
       "case_fingerprint": "fp-95c8a0089ff5b0b3",
       "case_id": "case-eadbc9138c2efa65",
       "dataset_id": "agentdojo",
@@ -4330,7 +4330,7 @@
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
     }
   },
-  "manifest_sha256": "sha256:dcf4c6b591668995546227dee4008661bfee311437c91170771a6f35e779ccef",
+  "manifest_sha256": "sha256:250fb8cbd140f6d5ffa67f14303c6af046df7775ba0d3dee47252767c233cf41",
   "manifest_version": "v3.2",
   "n": 540,
   "project": "P2_tool_action",
@@ -4351,7 +4351,7 @@
   "strata": {
     "agentdojo_tool_call": {
       "actual": 540,
-      "filtered": 571,
+      "filtered": 569,
       "target": 540
     }
   },

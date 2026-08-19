@@ -191,9 +191,9 @@ def _llmail_bounded_pool(ds: DatasetSourceConfig, *, target_attacks: int = _LM_B
 def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, full: bool = False) -> PrepareReport:
     """Raw -> normalized + dedup. Writes a jsonl snapshot of SecurityCase dicts.
 
-    Default A (guide §33): LLMail is bounded to ~1900 attacks + 160 benign via
-    deterministic phase-stratified hash-rank (~7MB). Pass --full to materialize
-    the full 148545 candidate pool (483M, for provenance/evidence only).
+    Default A: LLMail is bounded to 3700 attacks + 160 benign via
+    BoundedHashSelector O(K) (~13M). Pass --full-source to materialize the
+    full 148K evidence pool (streamed, no near-dup O(N^2)), not for manifest.
     """
     bounded = (ds.name == "llmail" and max_cases is None and not full)
     if bounded:
@@ -208,14 +208,18 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, fu
     proj = load_dataset_projection(ds.name)
     dd = proj.dedup or {}
     near = dd.get("near_duplicate") or {}
+    # full-source evidence mode: disable O(N^2) near-duplicate clustering
+    do_near = bool(near.get("method")) and not full
     cases, rep = run_dedup(
         raw_cases,
         do_exact=bool(dd.get("exact", True)),
         do_normalized=bool(dd.get("normalized", True)),
-        do_near_duplicate=bool(near.get("method")),
+        do_near_duplicate=do_near,
         near_n=int(near.get("n", 5)),
         near_threshold=float(near.get("threshold", 0.85)),
     )
+    if full and near.get("method"):
+        rep.n_clusters = 0  # mark as not computed
     # write normalized snapshot (jsonl; one SecurityCase dict per line)
     ds.normalized_path.mkdir(parents=True, exist_ok=True)
     out = ds.normalized_path / "cases.jsonl"
@@ -228,16 +232,19 @@ def prepare_dataset(ds: DatasetSourceConfig, *, max_cases: int | None = None, fu
         for c in ordered:
             f.write(jsonl_dumps(c.to_dict()) + "\n")
     # write a small provenance sidecar
+    dedup_meta: dict = {
+            "exact_duplicates": rep.n_exact_duplicates,
+            "normalized_duplicates": rep.n_normalized_duplicates,
+            "near_duplicate_clusters": rep.n_clusters,
+        }
+    if full:
+        dedup_meta["near_duplicate"] = {"status": "not_computed", "reason": "full_source_evidence_mode"}
     meta = {
         "dataset_id": ds.name,
         "adapter_version": adapter_version,
         "revision": adapter_revision,
         "n_cases": len(cases),
-        "dedup": {
-            "exact_duplicates": rep.n_exact_duplicates,
-            "normalized_duplicates": rep.n_normalized_duplicates,
-            "near_duplicate_clusters": rep.n_clusters,
-        },
+        "dedup": dedup_meta,
     }
     (ds.normalized_path / "prepare.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -279,10 +286,11 @@ def iter_normalized_lines(ds: DatasetSourceConfig):
 
 
 def verify_normalized(ds: DatasetSourceConfig) -> list[str]:
-    """Streaming verify — checks incrementally without holding all payloads."""
+    """True streaming verify — never holds all SecurityCase in memory."""
+    from ..datasets.quality import validate_provenance
+
     problems: list[str] = []
     seen: dict[str, int] = {}
-    prov_cases: list = []
     try:
         for line in iter_normalized_lines(ds):
             from ..core.models import SecurityCase as _SC
@@ -291,13 +299,12 @@ def verify_normalized(ds: DatasetSourceConfig) -> list[str]:
             _ = c.fingerprint()
             if c.expected_action.value not in ("block", "allow"):
                 problems.append(f"{c.case_id}: bad expected_action {c.expected_action!r}")
-            prov_cases.append(c)
+            problems.extend(validate_provenance(c))
     except DatasetSourceError as e:
         return [str(e)]
     dupes = [cid for cid, n in seen.items() if n > 1]
     if dupes:
         problems.append(f"duplicate case_ids: {dupes[:10]}")
-    problems.extend(validate_provenance_block(prov_cases))
     return problems
 
 

@@ -105,6 +105,34 @@ def require_provenance(case: SecurityCase) -> dict[str, Any]:
     return prov
 
 
+def validate_provenance(case: SecurityCase) -> list[str]:
+    """Validate a single case's provenance (streaming-friendly).""" 
+    problems: list[str] = []
+    prov = get_provenance(case)
+    if prov is None:
+        return [f"{case.case_id}: missing metadata.source"]
+    for k in (
+        "source_dataset",
+        "source_revision",
+        "source_id",
+        "group_id",
+        "raw_sha256",
+        "normalized_sha256",
+        "adapter_name",
+        "adapter_version",
+        "quality_tier",
+        "derivation",
+    ):
+        v = prov.get(k)
+        if v in (None, "", []):
+            problems.append(f"{case.case_id}: source.{k} is empty")
+    if prov.get("quality_tier") not in QUALITY_TIERS:
+        problems.append(f"{case.case_id}: bad quality_tier={prov.get('quality_tier')!r}")
+    if prov.get("derivation") not in DERIVATIONS:
+        problems.append(f"{case.case_id}: bad derivation={prov.get('derivation')!r}")
+    return problems
+
+
 def validate_provenance_block(cases: list[SecurityCase]) -> list[str]:
     """Return a list of human-readable problems (empty == OK)."""
     problems: list[str] = []

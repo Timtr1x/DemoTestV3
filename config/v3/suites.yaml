@@ -20,7 +20,7 @@ suites:
     projects:
       P1_external_instruction:
         manifest: benchmarks/manifests/smoke-v2/p1.json
-        target: 100
+        target: 120
         strata:
           - id: llmail_attack
             dataset: llmail
@@ -47,7 +47,7 @@ suites:
     projects:
       P1_external_instruction:
         manifest: benchmarks/manifests/phase1-standard-v2/p1.json
-        target: 1740
+        target: 1674
         strata:
           - id: llmail_attack
             dataset: llmail
@@ -74,7 +74,7 @@ suites:
     projects:
       P1_external_instruction:
         manifest: benchmarks/manifests/phase1-full-v2/p1.json
-        target: 2900
+        target: 2683
         strata:
           - id: llmail_attack
             dataset: llmail
@@ -87,7 +87,7 @@ suites:
         max_cluster_share: 0.01
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-full-v2/p2.json
-        target: 773
+        target: 761
         strata:
           - id: agentdojo_tool_call
             dataset: agentdojo

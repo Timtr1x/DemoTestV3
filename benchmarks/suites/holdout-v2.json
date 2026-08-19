@@ -11,7 +11,7 @@
     },
     "P2_tool_action": {
       "manifest": "benchmarks/manifests/holdout-v2/p2.json",
-      "manifest_sha256": "sha256:7d8d115ca8194738b8100a0e91cb0a2744528044bbe6bd7de74dfd33b5dec83c",
+      "manifest_sha256": "sha256:974787639d0a0db32aae89e9d2bead3dc6072ada3ba42361dff3e116479403bd",
       "n": 150,
       "split": [
         "holdout"

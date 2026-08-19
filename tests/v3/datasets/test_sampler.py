@@ -78,3 +78,19 @@ def test_select_for_suite_deterministic():
 def test_group_id_falls_back_to_source_id():
     c = SecurityCase.build(dataset_id="t", source_id="lonely", channel="email", operation="read", content="x")
     assert group_id_of(c) == "lonely"
+def test_bounded_selector_heap_bounded_on_million():
+    from demotest.datasets.sampler import BoundedHashSelector
+    sel = BoundedHashSelector(capacity=10, namespace="test-million")
+    for i in range(1_000_000):
+        sel.offer(source_id=f"id_{i}", value=i)
+    assert len(sel._heap) == 10
+    assert len(sel._heap_ids) == 10
+    assert sel.max_retained == 10
+
+    # duplicate ids do not grow heap
+    sel2 = BoundedHashSelector(capacity=5, namespace="ns")
+    for _ in range(1000):
+        sel2.offer(source_id="dup", value=1)
+    assert len(sel2._heap) == 1
+    assert len(sel2._heap_ids) == 1
+

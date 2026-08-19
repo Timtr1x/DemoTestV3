@@ -969,7 +969,7 @@
       "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
     }
   },
-  "manifest_sha256": "sha256:da9f72c85e7f864c41043883b04afb15f439cbf58f5127b8f43dccf869517a6f",
+  "manifest_sha256": "sha256:e80a8a307c2dd0891ee8dbf247c7a784ef6770fead7998a85d05b35a75814df9",
   "manifest_version": "v3.2",
   "n": 120,
   "project": "P1_external_instruction",
@@ -1000,5 +1000,5 @@
     }
   },
   "suite": "smoke-v2",
-  "target": 100
+  "target": 120
 }

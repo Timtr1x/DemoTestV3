@@ -53,15 +53,7 @@ metadata:
 split_group:
   group_id: parent_source_id
 
-# Per-suite selection targets (P2 tool_call only; P1 is LLMail).
-suite_targets:
-  smoke-v2:
-    tool_call: 80
-  phase1-standard-v2:
-    tool_call: 540
-  phase1-full-v2:
-    tool_call: 773
-
+# suite_targets removed — source of truth is config/v3/suites.yaml.
 runtime:
   require_import: agentdojo.task_suite.load_suites
   inject_src_path: src

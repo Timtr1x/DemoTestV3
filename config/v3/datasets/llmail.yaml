@@ -81,15 +81,5 @@ stratification:
 split_group:
   group_id: near_dup_cluster_id
 
-# Per-suite selection targets for the LLMail portion (P1 is LLMail-only in v2).
-# Benign is 'all' — candidate pool is ~160, no sampling.
-suite_targets:
-  smoke-v1:
-    attack: 60
-    benign: 20
-  phase1-standard-v1:
-    attack: 1500
-    benign: 240
-  phase1-full-v1:
-    attack: 1900
-    benign: 400
+# suite_targets removed — source of truth is config/v3/suites.yaml (fix round).
+# Dataset YAML owns source/cleaning/quality; suite YAML owns quotas.

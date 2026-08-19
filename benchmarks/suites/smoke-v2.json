@@ -2,12 +2,12 @@
   "projects": {
     "P1_external_instruction": {
       "manifest": "benchmarks/manifests/smoke-v2/p1.json",
-      "manifest_sha256": "sha256:da9f72c85e7f864c41043883b04afb15f439cbf58f5127b8f43dccf869517a6f",
+      "manifest_sha256": "sha256:e80a8a307c2dd0891ee8dbf247c7a784ef6770fead7998a85d05b35a75814df9",
       "n": 120,
       "split": [
         "dev"
       ],
-      "target": 100
+      "target": 120
     },
     "P2_tool_action": {
       "manifest": "benchmarks/manifests/smoke-v2/p2.json",

@@ -2,23 +2,23 @@
   "projects": {
     "P1_external_instruction": {
       "manifest": "benchmarks/manifests/phase1-full-v2/p1.json",
-      "manifest_sha256": "sha256:56ebb3c640f73b75b90e90086c05a2ee7445ef9aeef523c3e74f0e1210378d83",
+      "manifest_sha256": "sha256:3076bec223213cd59e35056d9399fa4b20fc60c762f8737ddce479f8321e637b",
       "n": 2683,
       "split": [
         "eval",
         "holdout"
       ],
-      "target": 2900
+      "target": 2683
     },
     "P2_tool_action": {
       "manifest": "benchmarks/manifests/phase1-full-v2/p2.json",
-      "manifest_sha256": "sha256:b5b7d8127724f962f3eaf1393a216466da5391b9940babb55aa4472a53e940a0",
+      "manifest_sha256": "sha256:39b754994f5f016b48e4de086d168cda76dd3d2c6103305786a13d10d8b130cb",
       "n": 761,
       "split": [
         "eval",
         "holdout"
       ],
-      "target": 773
+      "target": 761
     }
   },
   "seed": 42,

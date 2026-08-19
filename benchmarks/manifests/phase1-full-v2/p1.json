@@ -21473,7 +21473,7 @@
       "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
     }
   },
-  "manifest_sha256": "sha256:56ebb3c640f73b75b90e90086c05a2ee7445ef9aeef523c3e74f0e1210378d83",
+  "manifest_sha256": "sha256:3076bec223213cd59e35056d9399fa4b20fc60c762f8737ddce479f8321e637b",
   "manifest_version": "v3.2",
   "n": 2683,
   "project": "P1_external_instruction",
@@ -21505,5 +21505,5 @@
     }
   },
   "suite": "phase1-full-v2",
-  "target": 2900
+  "target": 2683
 }

@@ -473,6 +473,14 @@
       "split": "holdout"
     },
     {
+      "case_fingerprint": "fp-df8b8340dcc27754",
+      "case_id": "case-5d35020949cbf505",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_18:injection_task_3",
+      "source_id": "agentdojo:travel:user_task_18:injection_task_3:tool_call:1",
+      "split": "holdout"
+    },
+    {
       "case_fingerprint": "fp-b1e38c1144204e05",
       "case_id": "case-63c6203d36d4f1b4",
       "dataset_id": "agentdojo",
@@ -985,14 +993,6 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-defad68e9d0ccf72",
-      "case_id": "case-c63048647be09938",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:workspace:user_task_25:injection_task_1",
-      "source_id": "agentdojo:workspace:user_task_25:injection_task_1:tool_call:1",
-      "split": "holdout"
-    },
-    {
       "case_fingerprint": "fp-95550db32b9bd9fe",
       "case_id": "case-c7bf81105d42219c",
       "dataset_id": "agentdojo",
@@ -1105,6 +1105,14 @@
       "split": "holdout"
     },
     {
+      "case_fingerprint": "fp-6f4849733291d9af",
+      "case_id": "case-eaaf55f08c835ccf",
+      "dataset_id": "agentdojo",
+      "group_id": "agentdojo:travel:user_task_18:injection_task_3",
+      "source_id": "agentdojo:travel:user_task_18:injection_task_3:tool_call:2",
+      "split": "holdout"
+    },
+    {
       "case_fingerprint": "fp-6b870c70cbe87a61",
       "case_id": "case-eec0f875546805db",
       "dataset_id": "agentdojo",
@@ -1191,14 +1199,6 @@
       "group_id": "agentdojo:slack:user_task_20:injection_task_5",
       "source_id": "agentdojo:slack:user_task_20:injection_task_5:tool_call:2",
       "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-62c8d33dc9509109",
-      "case_id": "case-ff46479cc1908177",
-      "dataset_id": "agentdojo",
-      "group_id": "agentdojo:slack:user_task_16:injection_task_2",
-      "source_id": "agentdojo:slack:user_task_16:injection_task_2:tool_call:3",
-      "split": "holdout"
     }
   ],
   "created_from": {
@@ -1210,7 +1210,7 @@
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
     }
   },
-  "manifest_sha256": "sha256:7d8d115ca8194738b8100a0e91cb0a2744528044bbe6bd7de74dfd33b5dec83c",
+  "manifest_sha256": "sha256:974787639d0a0db32aae89e9d2bead3dc6072ada3ba42361dff3e116479403bd",
   "manifest_version": "v3.2",
   "n": 150,
   "project": "P2_tool_action",
@@ -1231,7 +1231,7 @@
   "strata": {
     "agentdojo_tool_call": {
       "actual": 150,
-      "filtered": 190,
+      "filtered": 192,
       "target": 150
     }
   },

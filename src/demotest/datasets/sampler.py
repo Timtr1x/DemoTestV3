@@ -111,7 +111,7 @@ class BoundedHashSelector:
         self.namespace = str(namespace)
         # max-heap via negative int key: heap[0] is largest original key
         self._heap: list[tuple[int, str, Any]] = []
-        self._seen: set[str] = set()
+        self._heap_ids: set[str] = set()
 
     def _key_int(self, source_id: str) -> int:
         raw = f"{self.namespace}|{source_id}"
@@ -128,17 +128,19 @@ class BoundedHashSelector:
     def offer(self, *, source_id: str, value: Any) -> None:
         if self.capacity <= 0:
             return
-        if source_id in self._seen:
+        if source_id in self._heap_ids:
             return
-        self._seen.add(source_id)
         k = self._key_int(source_id)
         entry = (-k, source_id, value)
         if len(self._heap) < self.capacity:
             heapq.heappush(self._heap, entry)
+            self._heap_ids.add(source_id)
             return
         # heap full: evict worst (largest original key = smallest -k)
         if -self._heap[0][0] > k:
-            heapq.heapreplace(self._heap, entry)
+            evicted = heapq.heapreplace(self._heap, entry)
+            self._heap_ids.discard(evicted[1])
+            self._heap_ids.add(source_id)
 
     def selected(self) -> list[Any]:
         # return values sorted by hash ascending (deterministic)
@@ -237,15 +239,16 @@ def assign_splits_case_weighted(
     cum = 0
     for gid in sorted_groups:
         sz = group_sizes[gid]
-        # decide split by where the group's *start* sits
         if cum < dev_target:
-            # if adding this group overshoots, choose side with smaller error
-            if cum + sz > dev_target and abs(cum - dev_target) < abs(cum + sz - dev_target):
-                # keep in current split (DEV) already, next group will be EVAL
-                pass
-            sp = Split.DEV
+            if cum + sz > dev_target and abs(cum + sz - dev_target) < abs(cum - dev_target):
+                sp = Split.EVAL
+            else:
+                sp = Split.DEV
         elif cum < eval_target:
-            sp = Split.EVAL
+            if cum + sz > eval_target and abs(cum + sz - eval_target) < abs(cum - eval_target):
+                sp = Split.HOLDOUT
+            else:
+                sp = Split.EVAL
         else:
             sp = Split.HOLDOUT
         out[gid] = sp

@@ -93,6 +93,23 @@ def cmd_build(args) -> int:
     strata = getattr(ptarget, "strata", None)
     max_cluster_share = getattr(ptarget, "max_cluster_share", None)
     split_version = getattr(suite, "split_version", "split-v1") or "split-v1"
+    # Guard: full-source evidence (148K, near-dup not_computed) must not be used for manifest
+    for ds_id in _DATASETS_BY_PROJECT.get(args.project, []):
+        try:
+            from ..config import get_dataset as _gd
+            _ds = _gd(ds_id)
+            _prep = _ds.normalized_path / "prepare.json"
+            if _prep.exists():
+                import json as _js
+                _meta = _js.loads(_prep.read_text(encoding="utf-8"))
+                _nd = _meta.get("dedup", {}).get("near_duplicate", {})
+                if isinstance(_nd, dict) and _nd.get("status") == "not_computed":
+                    print(f"FAIL: {ds_id} normalized is full-source evidence (near-dup not_computed) — not for manifest build. Re-run 'dataset prepare --dataset {ds_id}' without --full-source.", file=sys.stderr)
+                    return 1
+        except SystemExit:
+            raise
+        except Exception:
+            pass
     cases = _project_cases(args.project)
     if not cases:
         print(f"FAIL: no normalized cases for project {args.project!r} (run 'dataset prepare')", file=sys.stderr)
