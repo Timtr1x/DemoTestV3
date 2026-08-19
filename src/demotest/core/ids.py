@@ -108,6 +108,21 @@ def manifest_hash(samples_blob: str) -> str:
     return _stable_sha(samples_blob, n=12)
 
 
+def dataset_snapshot_hash(cases: list) -> str:
+    """Hash the full dataset snapshot: sorted (case_id + fingerprint) of every
+    case (external review P0-2).
+
+    This is the real provenance input for ``run_id`` — not channel name strings.
+    Two runs that load different datasets (or the same dataset at different
+    versions) produce different snapshot hashes even if channels match.
+    """
+    from ..core.models import SecurityCase  # avoid cycle
+    lines: list[str] = []
+    for c in sorted(cases, key=lambda x: x.case_id):
+        lines.append(f"{c.case_id}:{c.fingerprint()}")
+    return _stable_sha("\n".join(lines), n=12)
+
+
 def request_hash(
     *,
     method: str,

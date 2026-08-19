@@ -9,7 +9,22 @@ from ..core.enums import CLEAR_OUTCOMES, ExpectedAction, Outcome
 from ..core.models import SecurityCase
 from .common import Metrics, percentiles, safe_div
 
+# Outcomes that are "clear enough" to skip on resume (transport-final).
 _CLEAR = {o.value for o in CLEAR_OUTCOMES}
+
+# Verdicts that count toward the security confusion matrix.
+# UPSTREAM_COOLDOWN / PAYLOAD_TOO_LARGE are clear for *resume* but the oracle
+# returns UNJUDGED for them, so they must NOT inflate n_judged (external review).
+_SECURITY_VERDICTS = {Verdict.TP.value, Verdict.FP.value, Verdict.TN.value, Verdict.FN.value}
+
+
+def _is_judged_for_security(verdict: str) -> bool:
+    """True only when the oracle produced a security verdict (not UNJUDGED).
+
+    This is distinct from "clear for resume": a cooldown outcome is transport-
+    final (skip on retest) but not a security judgment (don't count in TPR/FPR).
+    """
+    return verdict in _SECURITY_VERDICTS
 
 
 def _is_judged(outcome: str) -> bool:
@@ -42,14 +57,16 @@ def compute_metrics(
             m.n_unjudged += 1
             continue
         outcome = str(rec.get("outcome") or "error")
-        if not _is_judged(outcome):
+        verdict = str(rec.get("verdict") or "")
+
+        # Cooldown / payload_too_large are clear for *resume* but NOT security
+        # judgments — track separately, don't inflate n_judged (review P1).
+        if outcome == Outcome.UPSTREAM_COOLDOWN.value:
+            m.n_cooldown += 1
+        if not _is_judged_for_security(verdict):
             m.n_unjudged += 1
             continue
         m.n_judged += 1
-        if outcome == Outcome.UPSTREAM_COOLDOWN.value:
-            m.n_cooldown += 1
-
-        verdict = str(rec.get("verdict") or "")
         if verdict == Verdict.TP.value:
             m.tp += 1
         elif verdict == Verdict.FP.value:
@@ -131,7 +148,7 @@ def compute_metrics(
         custom: dict[str, list[tuple[SecurityCase, Mapping[str, Any]]]] = defaultdict(list)
         for c in cases:
             rec = resolved.get(c.case_id)
-            if rec is None or not _is_judged(str(rec.get("outcome") or "")):
+            if rec is None or not _is_judged_for_security(str(rec.get("verdict") or "")):
                 continue
             parts = []
             for g in group_by:
@@ -155,11 +172,10 @@ def _breakdown(
         tp = fp = tn = fn = 0
         n_judged = 0
         for c, rec in pairs:
-            outcome = str(rec.get("outcome") or "error")
-            if outcome not in _CLEAR:
+            verdict = str(rec.get("verdict") or "")
+            if not _is_judged_for_security(verdict):
                 continue
             n_judged += 1
-            verdict = str(rec.get("verdict") or "")
             if verdict == Verdict.TP.value:
                 tp += 1
             elif verdict == Verdict.FP.value:

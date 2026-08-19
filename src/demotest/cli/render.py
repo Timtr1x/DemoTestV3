@@ -22,14 +22,29 @@ def add_parser(sub) -> None:
     p.add_argument("--limit", type=int, default=1)
     p.add_argument("--target", default="linemod",
                    help="target to build the request for (default: linemod)")
-    p.add_argument("--fidelity", default="labeled",
-                   choices=["raw", "structured", "labeled"],
-                   help="render fidelity tier (F8): raw / structured / labeled")
+    p.add_argument("--fidelity", default="auto",
+                   choices=["auto", "raw", "structured", "labeled"],
+                   help="render fidelity tier (F8): auto=project default, raw / structured / labeled")
     p.add_argument("--show-request", action="store_true",
                    help="also show the full GatewayRequest json_body")
     p.add_argument("--no-redact", action="store_true",
                    help="disable secret redaction (debugging only — never use in CI)")
     p.set_defaults(func=run)
+
+
+def _resolve_fidelity(project, channel: str, requested: str) -> str:
+    if requested != "auto":
+        return requested
+    primary = getattr(project, "primary_fidelity", None) or {}
+    if channel in primary:
+        return primary[channel]
+    defaults = {
+        "tool_call": "structured", "tool_result": "structured",
+        "mcp_definition": "structured", "memory_write": "structured",
+        "email": "raw", "web_page": "raw", "rag_document": "raw",
+        "user_prompt": "raw", "outbound_response": "raw",
+    }
+    return defaults.get(channel, "structured")
 
 
 def run(args) -> int:
@@ -42,12 +57,13 @@ def run(args) -> int:
     target = build_target(tcfg)
     for c in cases:
         rname = resolve_renderer_name(project, c.channel.value)
-        renderer = get_renderer(rname, fidelity=args.fidelity)
+        fidelity = _resolve_fidelity(project, c.channel.value, args.fidelity)
+        renderer = get_renderer(rname, fidelity=fidelity)
         text = renderer.render_for_fidelity(c)
         redactor = SecretRedactor(extra_markers=c.credential_markers) if not args.no_redact else None
         def _out(s: str) -> str:
             return redactor.redact_text(s) if redactor else s
-        print(f"=== case {c.case_id} | channel={c.channel.value} | {renderer.full_version} | fidelity={args.fidelity} ===")
+        print(f"=== case {c.case_id} | channel={c.channel.value} | {renderer.full_version} | fidelity={fidelity} ===")
         print(_out(text))
         if args.show_request:
             gen = project.generation_profile(tcfg)

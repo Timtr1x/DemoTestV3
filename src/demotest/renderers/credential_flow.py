@@ -70,6 +70,20 @@ class CredentialFlowRenderer(CaseRenderer):
         self._check_channel(case)
         return self._render_structured_body(case, case.channel.value)
 
+    def render_raw(self, case: SecurityCase) -> str:
+        """RAW for credential flow: the natural payload that would carry the
+        secret, with no security label.
+
+        P0-3 (external review): the base class default returns ``case.content``,
+        which is often empty for tool_call/tool_result/memory_write cases where
+        the secret lives in ``tool_arguments`` / ``tool_result``. That would
+        mean the secret is never sent to the gateway — a false 0% leakage rate.
+        So RAW for credential flow delegates to the same structured body that
+        carries the secret payload, minus any CREDENTIAL_FLOW_CHECK label.
+        """
+        self._check_channel(case)
+        return self._render_structured_body(case, case.channel.value)
+
     def _render_structured_body(self, case: SecurityCase, ch: str) -> str:
         if ch == "tool_call":
             if not case.tool_name:

@@ -29,9 +29,30 @@ _SECRET_PATTERNS = [
 
 
 class SecretRedactor:
-    """Mask known secret patterns in strings / dicts / nested structures."""
+    """Mask known secret patterns in strings / dicts / nested structures.
+
+    Two layers of defense (external review P1-6):
+      1. **Pattern-based** — regex over string values (TEST_SECRET_*, Bearer, sk-*,
+         ``api_key=...`` assignments). Catches secrets embedded in free text.
+      2. **Key-based** — any value under a sensitive key name (api_key, token,
+         password, ...) is replaced wholesale. Catches secrets that don't match
+         any regex (e.g. ``{"api_key": "sr-gl-123456789abcdef"}``). Better to
+         over-redact than to leak.
+    """
 
     MASK = "<REDACTED>"
+
+    # Keys whose values are always masked, regardless of the value's shape.
+    SENSITIVE_KEYS = frozenset({
+        "api_key", "apikey", "api-key",
+        "authorization", "auth",
+        "token", "access_token", "access-token",
+        "refresh_token", "refresh-token",
+        "password", "passwd", "pwd",
+        "secret", "client_secret", "clientsecret",
+        "private_key", "privatekey",
+        "credential", "credentials",
+    })
 
     def __init__(self, extra_markers: Iterable[str] | None = None) -> None:
         self._extra = [m for m in (extra_markers or []) if m]
@@ -51,15 +72,22 @@ class SecretRedactor:
         if isinstance(d, str):
             return self.redact_text(d)
         if isinstance(d, dict):
-            return {self._redact_key(k): self.redact_dict(v) for k, v in d.items()}
+            return {self._redact_key(k): self._redact_value(k, v) for k, v in d.items()}
         if isinstance(d, (list, tuple)):
             t = type(d)
             return t(self.redact_dict(x) for x in d)
         return d
 
     def _redact_key(self, key: str) -> str:
-        # Mask values under secret-looking keys, but keep the key name readable.
+        # Keep the key name readable so logs stay debuggable.
         return str(key)
+
+    def _redact_value(self, key: str, value: Any) -> Any:
+        # P1-6: mask any value under a sensitive key wholesale, before
+        # recursing — catches secrets that don't match a regex pattern.
+        if isinstance(value, str) and str(key).lower() in self.SENSITIVE_KEYS:
+            return self.MASK
+        return self.redact_dict(value)
 
     def __call__(self, value: Any) -> Any:
         return self.redact_dict(value)

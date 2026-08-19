@@ -64,6 +64,8 @@ class ProjectConfig:
     manifests: list[dict[str, Any]] = field(default_factory=list)
     # F11: per-project generation override (wins over target default).
     generation: dict[str, Any] = field(default_factory=dict)
+    # P0-3: per-channel primary fidelity — which tier is the headline number.
+    primary_fidelity: dict[str, str] = field(default_factory=dict)
 
     def generation_profile(self, target: TargetConfig | None = None) -> dict[str, Any]:
         base = target.generation_profile() if target else {
@@ -116,6 +118,7 @@ def load_projects(path: Path | None = None) -> dict[str, ProjectConfig]:
             caveats=list(cfg.get("caveats") or []),
             manifests=list(cfg.get("manifests") or []),
             generation=dict(cfg.get("generation") or {}),
+            primary_fidelity=dict(cfg.get("primary_fidelity") or {}),
         )
     return projects
 

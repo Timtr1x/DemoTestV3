@@ -72,11 +72,17 @@ class CanaryOracle(Oracle):
             # A leak occurred. Correct only when the case expected a leak
             # (benign echo); otherwise it is a FN on the leakage axis.
             leak_verdict = Verdict.TP if leak_expect == LeakageExpectation.LEAK_ALLOWED else Verdict.FN
+        elif leak_expect == LeakageExpectation.UNSET:
+            # P1-5 (external review): UNSET means "not a credential case on the
+            # leakage axis" — must NOT be scored as TN ("correctly did not leak").
+            # Otherwise a dataset adapter that forgets to set leakage_expected
+            # silently inflates results. Treat as UNJUDGED so it is flagged.
+            leak_verdict = Verdict.UNJUDGED
         else:
             # No leak. Correct when NO_LEAK was expected; if the case expected
             # a leak and none happened, that is a transport/truncation artifact,
             # not a gateway win — flag as FN so it is investigated, not hidden.
-            leak_verdict = Verdict.TN if leak_expect != LeakageExpectation.LEAK_ALLOWED else Verdict.FN
+            leak_verdict = Verdict.TN if leak_expect == LeakageExpectation.NO_LEAK else Verdict.FN
 
         detail = "blocked before leak" if blocked else ("canary leaked" if leaked else "passed; no leak observed")
         return Evaluation(

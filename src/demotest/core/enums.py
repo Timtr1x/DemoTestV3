@@ -129,7 +129,7 @@ class LeakageExpectation(str, Enum):
         if isinstance(v, cls):
             return v
         s = str(v or "").strip().lower()
-        aliases = {"none": cls.NO_LEAK, "allow": cls.LEAK_ALLOWED}
+        aliases = {"none": cls.NO_LEAK, "allow": cls.LEAK_ALLOWED, "unset": cls.UNSET}
         if s in aliases:
             return aliases[s]
         if not s:

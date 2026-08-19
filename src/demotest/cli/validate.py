@@ -56,12 +56,19 @@ def run(args) -> int:
                 resolve_renderer_name(pcfg, ch)
         except ConfigError as e:
             errors.append(str(e))
-    # 6. cases load + case_id unique
+    # 6. cases load + case_id unique + project/channel consistency
     try:
         cases = load_cases(args.source, project=args.project)
         validate_case_ids_unique(cases)
         if not cases:
             errors.append("case source produced 0 cases")
+        # P0-1: enforce project ↔ channel ↔ case consistency
+        if args.project in projects:
+            from ..cases import validate_cases_for_project
+            try:
+                validate_cases_for_project(cases, args.project, projects[args.project].channels)
+            except ValidationError as e:
+                errors.append(str(e))
     except (FileNotFoundError, ValidationError, Exception) as e:
         errors.append(f"case load failed: {e}")
 

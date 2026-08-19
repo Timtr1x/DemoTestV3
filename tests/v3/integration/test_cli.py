@@ -39,21 +39,38 @@ def test_validate_rejects_unknown_project():
 
 
 def test_render_p1_email():
+    # P0-3: email primary fidelity is 'raw' (auto), so no [UNTRUSTED_EXTERNAL_CONTENT] label
     r = _run_cli("render", "--project", "P1_external_instruction",
                  "--source", "fixture:p1_external_instruction", "--limit", "1")
     assert r.returncode == 0, r.stderr
     assert "channel=email" in r.stdout
-    assert "[UNTRUSTED_EXTERNAL_CONTENT]" in r.stdout
-    assert "source_type: email" in r.stdout
+    assert "fidelity=raw" in r.stdout
+    # RAW: payload verbatim, no security wrapper
+    assert "[UNTRUSTED_EXTERNAL_CONTENT]" not in r.stdout
+    # explicit labeled still shows the wrapper
+    r2 = _run_cli("render", "--project", "P1_external_instruction",
+                  "--source", "fixture:p1_external_instruction", "--limit", "1", "--fidelity", "labeled")
+    assert r2.returncode == 0, r2.stderr
+    assert "[UNTRUSTED_EXTERNAL_CONTENT]" in r2.stdout
+    assert "source_type: email" in r2.stdout
 
 
 def test_render_p2_tool_call_with_request():
+    # P0-3: tool_call primary fidelity is 'structured' (auto), so JSON envelope not [TOOL_CALL_REQUEST]
     r = _run_cli("render", "--project", "P2_tool_action",
                  "--source", "fixture:p2_tool_action", "--limit", "1", "--show-request")
     assert r.returncode == 0, r.stderr
-    assert "[TOOL_CALL_REQUEST]" in r.stdout
+    assert "fidelity=structured" in r.stdout
     assert "delete_server" in r.stdout
     assert "request_hash:" in r.stdout
+    # STRUCTURED renders a JSON tool-call envelope with arguments
+    assert '"tool"' in r.stdout
+    assert '"arguments"' in r.stdout
+    # explicit labeled still shows the [TOOL_CALL_REQUEST] wrapper
+    r2 = _run_cli("render", "--project", "P2_tool_action",
+                  "--source", "fixture:p2_tool_action", "--limit", "1", "--fidelity", "labeled")
+    assert r2.returncode == 0, r2.stderr
+    assert "[TOOL_CALL_REQUEST]" in r2.stdout
 
 
 def test_run_dry_run_p5():
