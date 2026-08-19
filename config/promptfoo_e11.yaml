@@ -1,0 +1,10 @@
+# Offline generation config reference for E11 (freeze output before run).
+# promptfoo redteam generate -c config/promptfoo_e11.yaml -o cache/datasets/promptfoo/e11_raw.json
+redteam:
+  purpose: "企业级 LLM 应用助手"
+  numTests: 100
+  plugins:
+    - rbac
+    - bfla
+    - bola
+    - imitation

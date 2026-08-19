@@ -1,0 +1,208 @@
+{
+  "name": "sponge_50",
+  "created_at": "2026-08-07T04:07:19+00:00",
+  "seed": 42,
+  "source_dataset": "selfbuild_sponge",
+  "dataset_version": "selfbuild@2.0",
+  "adapter_version": "selfbuild.py@2.0",
+  "template_version": "none",
+  "strata_counts": {
+    "sponge": 12
+  },
+  "samples": [
+    {
+      "sample_id": "e10:selfbuild_sponge:0",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:1",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[nest]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:10",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{\"k\":1}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:11",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin end",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:2",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{\"k\":1}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:3",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin end",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:4",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:5",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[nest]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:6",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{\"k\":1}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:7",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin begin end",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:8",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sponge))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    },
+    {
+      "sample_id": "e10:selfbuild_sponge:9",
+      "project": "e10",
+      "source_dataset": "selfbuild_sponge",
+      "subset": "sponge",
+      "category": "nested",
+      "label": "boundary",
+      "prompt_text": "Evaluate structure: [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[nest]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+      "expected": "payload_too_large",
+      "generator_meta": {
+        "generator": "selfbuild",
+        "version": "2.0",
+        "seed": 42
+      }
+    }
+  ],
+  "n": 12,
+  "extra": {
+    "project": "e10",
+    "spec": {
+      "adapter": "selfbuild",
+      "subset": "sponge",
+      "max_n": 12
+    },
+    "samples_per_project": null,
+    "allocated_n": 12,
+    "pool_n": 12,
+    "max_n": 12,
+    "real_only": true
+  }
+}

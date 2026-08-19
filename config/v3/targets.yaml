@@ -1,0 +1,37 @@
+# V3 target configs (plan §37)
+# Project and Target are fully decoupled: the same case set can run against
+# LineMod, QwenGuard, or Gateway B without changing data (plan §38).
+#
+# classification (§37): the blocked decision is driven by config, not hardcoded.
+#   blocked_status  -> HTTP status the gateway returns when it blocks
+#   blocked_code    -> marker string that must appear in the body to confirm a
+#                      security block (distinguishes 403-auth from 403-security)
+targets:
+  linemod:
+    type: openai_gateway
+    url_env: LINEMOD_URL
+    key_env: LINEMOD_API_KEY
+    model_env: LINEMOD_MODEL
+    timeout: 60
+    benchmark_mode: true
+    headers:
+      X-LineMod-No-Failover: "true"
+    request:
+      temperature: 0
+      max_tokens: 8
+    classification:
+      blocked_status: 403
+      blocked_code: SECURITY_BLOCKED
+
+  qwen3guard:
+    type: classifier
+    url_env: QWEN3GUARD_URL
+    model_env: QWEN3GUARD_MODEL
+    timeout: 120
+    benchmark_mode: false
+    request:
+      temperature: 0
+      max_tokens: 64
+    classification:
+      blocked_status: 200   # classifier returns 200 with a Safety label
+      blocked_code: ""       # QwenGuard uses label parsing, not a body marker
