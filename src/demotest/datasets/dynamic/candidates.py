@@ -27,7 +27,7 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Literal
 
@@ -395,25 +395,32 @@ def _resolve_execution_spec(
     external_specs: dict[str, dict[str, Any]] | None = None,
     source_sha256: str = "",
 ) -> tuple[tuple[str, ...], tuple[str, ...], str, bool]:
-    """Prefer external sidecar; fallback to inline — never guess entry.
+    """External sidecar is the ONLY execution authority at intake.
+
+    Untrusted Skill bytes may ship their own ``demotest.skill.json`` /
+    ``runtime_spec.json`` — those are treated as Skill *data*, never as
+    DemoTest execution config, so this function deliberately does not read
+    them. Inline specs remain readable only on the legacy/test-only snapshot
+    path (snapshot._skill_meta, used when no materialization manifest exists).
 
     Returns (entry_command, declared_providers, spec_source, stale).
-    A sidecar spec is bound to the source_sha256 it was reviewed against:
-    if the skill bytes changed (re-crawl, upstream update), the old spec no
-    longer matches and the skill degrades to RUNTIME_SPEC_STALE instead of
-    silently executing the stale command.
+    A sidecar spec is valid only for the exact source_sha256 it was reviewed
+    against and must carry spec_version == RUNTIME_SPEC_VERSION; otherwise the
+    skill degrades to RUNTIME_SPEC_STALE instead of silently executing a
+    stale or unversioned command.
     """
     if external_specs is not None and skill_id in external_specs:
         d = external_specs[skill_id]
         spec_sha = str(d.get("source_sha256") or "")
-        if not spec_sha or not source_sha256 or spec_sha != source_sha256:
+        version_ok = str(d.get("spec_version") or "") == RUNTIME_SPEC_VERSION
+        if not version_ok or not spec_sha or not source_sha256 or spec_sha != source_sha256:
             return (), (), f"{RUNTIME_SPECS_DIRNAME}/{RUNTIME_SPECS_FILE}", True
         cmd = tuple(str(x) for x in (d.get("entry_command") or []))
         prov = tuple(str(x) for x in (d.get("declared_providers") or []))
         if cmd or prov:
             return cmd, prov, f"{RUNTIME_SPECS_DIRNAME}/{RUNTIME_SPECS_FILE}", False
-    cmd, prov, src = _read_execution_spec_inline(skill_dir)
-    return cmd, prov, src, False
+    # No valid sidecar — AGENT_REQUIRED. Skill-internal specs are inert data.
+    return (), (), "", False
 
 
 def _classify_skill_dir_nofollow(
@@ -780,6 +787,7 @@ def verify_candidates(root: Path | str | None = None) -> list[str]:
         problems.append(str(e))
     seen_ids: set[str] = set()
     seen_shas: set[str] = set()
+    sidecar_specs = _load_external_runtime_specs(root)
     for c in cands:
         if c.candidate_id in seen_ids:
             problems.append(f"duplicate candidate_id: {c.candidate_id}")
@@ -807,6 +815,17 @@ def verify_candidates(root: Path | str | None = None) -> list[str]:
         if c.reject_reason == "ACCEPT" and c.runtime_status not in ("RUNTIME_READY", "AGENT_REQUIRED", "RUNTIME_UNKNOWN", "RUNTIME_SPEC_STALE"):
             problems.append(f"ACCEPT with unexpected runtime_status: {c.candidate_id}")
         if c.reject_reason == "ACCEPT":
+            # candidates.jsonl runtime_* is a derived cache — it must agree
+            # with the sidecar authority on every ACCEPT row.
+            spec = sidecar_specs.get(c.candidate_id)
+            sidecar_ready = _sidecar_spec_valid(spec, c)
+            row_ready = c.runtime_status == "RUNTIME_READY" and c.runtime_eligible
+            if row_ready != sidecar_ready:
+                problems.append(
+                    f"runtime cache/sidecar mismatch: {c.candidate_id} "
+                    f"row={c.runtime_status} sidecar_ready={sidecar_ready}")
+            elif row_ready and tuple(str(x) for x in (spec.get("entry_command") or ())) != tuple(c.entry_command):
+                problems.append(f"entry_command cache/sidecar mismatch: {c.candidate_id}")
             staged = root / c.local_path if c.local_path else None
             if staged is None or not staged.exists():
                 # AGENT_REQUIRED may still be staged (it is ACCEPT source) — so must exist
@@ -826,6 +845,61 @@ def verify_candidates(root: Path | str | None = None) -> list[str]:
                 if c.local_path and staged is not None and staged.exists():
                     problems.append(f"{c.reject_reason} must not be staged: {c.candidate_id}")
     return problems
+
+
+def _sidecar_spec_valid(spec: dict[str, Any] | None, cand: SkillCandidate) -> bool:
+    """Live sidecar validation — runtime_specs.jsonl is the sole authority."""
+    if not spec:
+        return False
+    if str(spec.get("spec_version") or "") != RUNTIME_SPEC_VERSION:
+        return False
+    if str(spec.get("source_sha256") or "") != cand.source_sha256:
+        return False
+    return bool(spec.get("entry_command"))
+
+
+def _runtime_ready_from_sidecar(
+    pool: Path, cands: list[SkillCandidate],
+) -> list[SkillCandidate]:
+    """Re-derive RUNTIME_READY from the live sidecar, not the jsonl cache.
+
+    A candidate row claiming RUNTIME_READY without a valid matching sidecar
+    spec (or with a different command) is cache/sidecar drift — refuse the
+    whole materialization rather than silently trusting either copy.
+    """
+    specs = _load_external_runtime_specs(pool)
+    drifted: list[str] = []
+    ready: list[SkillCandidate] = []
+    for c in cands:
+        spec = specs.get(c.candidate_id)
+        ok = _sidecar_spec_valid(spec, c)
+        row_ready = c.runtime_status == "RUNTIME_READY" and c.runtime_eligible
+        if row_ready and not ok:
+            drifted.append(f"{c.candidate_id} (row RUNTIME_READY but sidecar missing/invalid)")
+            continue
+        if row_ready and ok:
+            spec_cmd = tuple(str(x) for x in (spec.get("entry_command") or ()))
+            spec_prov = tuple(str(x) for x in (spec.get("declared_providers") or ()))
+            if spec_cmd != tuple(c.entry_command) or spec_prov != tuple(c.declared_providers):
+                drifted.append(f"{c.candidate_id} (row command != sidecar command)")
+                continue
+        if ok:
+            ready.append(replace(
+                c,
+                runtime_status="RUNTIME_READY",
+                runtime_eligible=True,
+                entry_command=tuple(str(x) for x in (spec.get("entry_command") or ())),
+                declared_providers=tuple(str(x) for x in (spec.get("declared_providers") or ())),
+                execution_spec_source=f"{RUNTIME_SPECS_DIRNAME}/{RUNTIME_SPECS_FILE}",
+            ))
+    if drifted:
+        raise RuntimeError(
+            "materialize refused: candidate runtime cache disagrees with runtime_specs sidecar — "
+            + "; ".join(drifted[:8])
+            + (f" (+{len(drifted)-8} more)" if len(drifted) > 8 else "")
+            + ". Re-run runtime-spec set / import to rebuild the cache."
+        )
+    return ready
 
 
 def materialize_candidates(
@@ -867,7 +941,7 @@ def materialize_candidates(
     if not include_rejected:
         all_cands = [c for c in all_cands if c.reject_reason == "ACCEPT"]
         if require_runtime_ready:
-            all_cands = [c for c in all_cands if c.runtime_eligible and c.runtime_status == "RUNTIME_READY"]
+            all_cands = _runtime_ready_from_sidecar(pool, all_cands)
     if not all_cands:
         # Still write empty materialization manifest for provenance
         _write_materialization_manifest(dest, pool, seed, [])

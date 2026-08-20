@@ -278,24 +278,29 @@ def _runtime_ready_skills_root(root: Path, skill_ids: list[str]) -> Path:
     """Materialized-style skills root that satisfies the deterministic Core gate.
 
     Mirrors production: entry_command comes from the materialization manifest's
-    runtime_spec (sidecar semantics), never inline-mutated skill bytes.
+    runtime_spec (sidecar semantics), source_sha256 is the real tree hash —
+    the snapshot validation gate requires declared sha == current bytes.
     """
+    from demotest.datasets.dynamic.snapshot import _hash_tree
     skills_root = root / "skills"
     skills_doc = []
     for sid in skill_ids:
         d = skills_root / sid
         d.mkdir(parents=True)
         (d / "run.sh").write_text("#!/bin/sh\necho hi\n")
+        tree_sha, _ = _hash_tree(d)
         skills_doc.append({
             "skill_id": sid,
             "candidate_id": f"cand-{sid}",
             "source_uri": f"https://skillsmp.test/skills/{sid}",
             "source_revision": "rev-test",
-            "source_sha256": hashlib.sha256(sid.encode()).hexdigest(),
+            "source_sha256": tree_sha,
             "runtime_spec": {
                 "spec_version": "p4-runtime-v1",
                 "entry_command": ["python", "/skills/run.sh"],
                 "declared_providers": [],
+                "runtime_status": "RUNTIME_READY",
+                "runtime_eligible": True,
             },
         })
     (skills_root / "_p4_materialization.json").write_text(json.dumps({

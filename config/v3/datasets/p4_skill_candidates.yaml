@@ -17,6 +17,7 @@ policy:
   reject_reasons: [ACCEPT, REJECT_EMPTY, REJECT_OVERSIZE, REJECT_SYMLINK_ESCAPE, REJECT_SYMLINK, REJECT_DUPLICATE, REJECT_INCOMPLETE]
   runtime_status: [RUNTIME_READY, AGENT_REQUIRED, RUNTIME_UNKNOWN, SOURCE_REJECTED, RUNTIME_SPEC_STALE]
   hardening: "preflight symlink/size before hash/copy; REJECT_SYMLINK/OVERSIZE not staged; streaming hash; no auto-guessed entry; sidecar spec bound to source_sha256 — sha drift => RUNTIME_SPEC_STALE, never auto-execute"
+  execution_authority: "runtime_specs/runtime_specs.jsonl is the ONLY authority for P4 deterministic Core; candidates.jsonl runtime_* is a derived display cache; Skill-internal demotest.skill.json/runtime_spec.json are inert data at intake; materialize --require-runtime-ready re-validates sidecar live (candidate_id + spec_version + source_sha256 + entry_command) and refuses cache/sidecar drift"
 
 provenance:
   fields_required: [candidate_id, skill_id, source_type, source_uri, source_revision, source_sha256, acquired_at, acquisition_method, local_path, file_count, total_bytes, runtime_status, runtime_eligible, entry_command, declared_providers, execution_spec_source]
@@ -38,6 +39,7 @@ snapshot_binding:
   selected_runtime_specs_sha256: "sha over the selected skills' runtime_spec projection (not the whole sidecar file)"
   per_skill_source: "source_uri/source_revision/source_sha256/candidate_id/entry_command carried"
   immutable: "existing snap-id re-freeze is idempotent; different provenance/runtime/pipeline identity => refuse overwrite"
+  validation_gate: "materialized roots: actual skill set == manifest set; no symlink; tree sha == declared source_sha256; runtime spec from manifest only (inline ignored); RUNTIME_READY requires entry_command; fail-closed"
   windows_host: "python (not python3); container must expose python -> python3 (image shim via temp build context, pinned checkout never written)"
 
 review:

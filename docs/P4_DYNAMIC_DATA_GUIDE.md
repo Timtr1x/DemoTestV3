@@ -33,6 +33,8 @@ dev / eval / holdout
 
 sidecar 每条 spec 绑定写入时的 `source_sha256`；重新 crawl 后同一 `candidate_id` 字节变化（SHA 漂移）会自动降级为 `RUNTIME_SPEC_STALE`、不可执行，必须人工 `runtime-spec set` 重新确认，绝不沿用旧 spec 跑新代码。
 
+**执行契约信任边界**：真实 Skill 是不可信输入——Skill 自带的 `demotest.skill.json / runtime_spec.json` 只当作 Skill 数据，intake 不会据此给 `RUNTIME_READY`；`runtime_specs/runtime_specs.jsonl` 是 P4 deterministic Core 唯一 execution authority，`candidates.jsonl` 里的 `runtime_*` 只是派生展示缓存。`materialize --require-runtime-ready` 现场重读 sidecar 并校验 `candidate_id + spec_version + source_sha256 + 非空 entry_command`，缓存与 sidecar 不一致直接拒绝；snapshot 遇到 `_p4_materialization.json` 时执行 gate：实际 Skill 集合必须等于 manifest 声明集合、无 symlink、当前树 SHA == 声明 `source_sha256`，且 runtime spec 只取 manifest（Skill 内 inline metadata 完全忽略），任一不满足 fail-closed。
+
 ## 审查（fail-closed）
 
 新导出 `review.jsonl` 7 项 gates 默认为 `false`，`ACCEPTED` 必须人工逐项置 `true`；并严格校验 flow：`STDOUT_EXPOSURE -> stdout/TOOL_RESULT/DIRECT + marker in payload`，`NETWORK_EXFIL -> network/TOOL_CALL/PROJECTED + marker in payload`，`AUTHORIZED_SECRET_USE -> authorized_sink`，`REDACTED_OUTPUT -> safe_redaction`；未知 `flow_class` 不予 ACCEPT。`review-apply` / `freeze-reviewed` 绑定 `source traces.jsonl SHA / trace_meta SHA / verdict SHA`，`pending>0` 不许 freeze。

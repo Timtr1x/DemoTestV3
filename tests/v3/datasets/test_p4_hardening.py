@@ -51,33 +51,48 @@ def test_symlink_is_rejected_before_read_and_not_staged(tmp_path: Path):
 
 
 def test_runtime_eligibility_explicit_entry(tmp_path: Path):
-    from demotest.datasets.dynamic.candidates import import_local_candidates, load_candidates
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, load_candidates, upsert_runtime_spec,
+    )
     src = tmp_path / "src"
     src.mkdir()
-    # With entry_command -> RUNTIME_READY
-    _skill(src, "ready", {"SKILL.md": "# ready",
-                          "run.py": "print(1)",
-                          "demotest.skill.json": json.dumps({"entry_command": ["python", "/skills/run.py"]})})
-    # Without entry -> AGENT_REQUIRED, still ACCEPT source
+    # Inline spec inside untrusted Skill bytes is inert data — NOT readiness
+    _skill(src, "inline-only", {"SKILL.md": "# ready",
+                                "run.py": "print(1)",
+                                "demotest.skill.json": json.dumps({"entry_command": ["python", "/skills/run.py"]})})
     _skill(src, "agent-only", {"SKILL.md": "# agent", "helper.py": "x=1"})
     pool = tmp_path / "pool"
     import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
     cands = {c.skill_id: c for c in load_candidates(pool)}
-    assert cands["ready"].runtime_status == "RUNTIME_READY" and cands["ready"].runtime_eligible is True
-    assert cands["agent-only"].runtime_status == "AGENT_REQUIRED" and cands["agent-only"].runtime_eligible is False
+    assert cands["inline-only"].runtime_status == "AGENT_REQUIRED"
+    assert cands["inline-only"].runtime_eligible is False
+    assert cands["agent-only"].runtime_status == "AGENT_REQUIRED"
     assert cands["agent-only"].reject_reason == "ACCEPT"
+    # Only a human-reviewed sidecar grants RUNTIME_READY
+    upsert_runtime_spec(pool_root=pool, candidate_id="inline-only",
+                        entry_command=("python", "/skills/run.py"))
+    c2 = {c.skill_id: c for c in load_candidates(pool)}["inline-only"]
+    assert c2.runtime_status == "RUNTIME_READY" and c2.runtime_eligible is True
 
 
 def test_materialize_require_runtime_ready_filters(tmp_path: Path):
-    from demotest.datasets.dynamic.candidates import import_local_candidates, materialize_candidates
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, upsert_runtime_spec,
+    )
     src = tmp_path / "src"
     src.mkdir()
-    _skill(src, "ready", {"SKILL.md": "# ready", "demotest.skill.json": json.dumps({"entry_command": ["python", "/skills/run.py"]}), "run.py": "print(1)"})
+    _skill(src, "ready", {"SKILL.md": "# ready", "run.py": "print(1)"})
     _skill(src, "agent", {"SKILL.md": "# agent", "main.py": "print(1)"})
     pool = tmp_path / "pool"
     import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="ready",
+                        entry_command=("python", "/skills/run.py"))
     sel = materialize_candidates(pool_root=pool, dest_dir=tmp_path / "dest", require_runtime_ready=True)
     assert [c.skill_id for c in sel] == ["ready"]
+    # Materialized runtime_spec comes from the sidecar, not the jsonl cache
+    import json as _j
+    doc = _j.loads((tmp_path / "dest" / "_p4_materialization.json").read_text(encoding="utf-8"))
+    assert doc["skills"][0]["runtime_spec"]["entry_command"] == ["python", "/skills/run.py"]
 
 
 def test_materialize_dest_hygiene(tmp_path: Path):
@@ -117,20 +132,24 @@ def test_materialization_manifest_written(tmp_path: Path):
 
 
 def test_snapshot_binds_materialization_provenance(tmp_path: Path):
-    from demotest.datasets.dynamic.candidates import import_local_candidates, materialize_candidates
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, upsert_runtime_spec,
+    )
     from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot, load_snapshot
-    import json as _j
     src = tmp_path / "src"
     src.mkdir()
-    _skill(src, "a", {"SKILL.md": "# a", "demotest.skill.json": _j.dumps({"entry_command": ["python", "/skills/run.py"]}), "run.py": "print(1)"})
+    _skill(src, "a", {"SKILL.md": "# a", "run.py": "print(1)"})
     pool = tmp_path / "pool"
     import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z", source_revision="rev-123")
+    upsert_runtime_spec(pool_root=pool, candidate_id="a",
+                        entry_command=("python", "/skills/run.py"))
     dest = tmp_path / "mat"
-    materialize_candidates(pool_root=pool, dest_dir=dest, seed=42)
+    materialize_candidates(pool_root=pool, dest_dir=dest, seed=42, require_runtime_ready=True)
     snap_pool = tmp_path / "snaps"
     m = freeze_skill_snapshot(dest, pipeline_revision="pipe-rev", out_root=snap_pool)
     loaded = load_snapshot(m.snapshot_id, root=snap_pool)
     assert loaded.candidate_provenance.get("candidate_set_id", "").startswith("p4-candidates-")
+    assert loaded.candidate_provenance.get("selected_runtime_specs_sha256")
     assert loaded.skills[0].source_sha256  # carried
     assert loaded.skills[0].entry_command == ("python", "/skills/run.py")
 
@@ -203,24 +222,32 @@ def test_review_stdout_marker_mismatch_fails():
 # -- second-round hardening (execution identity / fail-closed collect) --------
 
 def _mat_root(root: Path, skill_ids: list[str]) -> Path:
-    """Materialized-style skills root (entry via runtime_spec, provenance attached)."""
+    """Materialized-style skills root (entry via runtime_spec, provenance attached).
+
+    source_sha256 must be the real tree hash — the snapshot validation gate
+    refuses declared-sha != current-bytes.
+    """
     import hashlib as _hl
+    from demotest.datasets.dynamic.snapshot import _hash_tree
     skills_root = root / "skills"
     skills_doc = []
     for sid in skill_ids:
         d = skills_root / sid
         d.mkdir(parents=True)
         (d / "run.sh").write_text("#!/bin/sh\necho hi\n")
+        tree_sha, _ = _hash_tree(d)
         skills_doc.append({
             "skill_id": sid,
             "candidate_id": f"cand-{sid}",
             "source_uri": f"https://skillsmp.test/skills/{sid}",
             "source_revision": "rev-test",
-            "source_sha256": _hl.sha256(sid.encode()).hexdigest(),
+            "source_sha256": tree_sha,
             "runtime_spec": {
                 "spec_version": "p4-runtime-v1",
                 "entry_command": ["python", "/skills/run.sh"],
                 "declared_providers": [],
+                "runtime_status": "RUNTIME_READY",
+                "runtime_eligible": True,
             },
         })
     (skills_root / "_p4_materialization.json").write_text(json.dumps({
@@ -558,3 +585,143 @@ def test_materialization_records_runtime_specs_file_sha(tmp_path: Path):
                            require_runtime_ready=True)
     doc = _j.loads((dest / "_p4_materialization.json").read_text(encoding="utf-8"))
     assert doc["runtime_specs_file_sha256"] == runtime_specs_sha256(pool)
+
+
+# -- execution-contract trust boundary (final gate before real data) -----------
+
+def test_untrusted_inline_spec_cannot_make_candidate_ready(tmp_path: Path):
+    """A real Skill shipping runtime_spec.json must not self-declare RUNTIME_READY."""
+    from demotest.datasets.dynamic.candidates import import_local_candidates, load_candidates
+    src = tmp_path / "src"
+    _skill(src, "evil", {
+        "SKILL.md": "# evil",
+        "evil.py": "print('pwn')",
+        "runtime_spec.json": json.dumps({"entry_command": ["python", "/skills/evil.py"]}),
+    })
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    c = {c.skill_id: c for c in load_candidates(pool)}["evil"]
+    assert c.reject_reason == "ACCEPT"  # source is fine as data
+    assert c.runtime_status == "AGENT_REQUIRED"
+    assert c.runtime_eligible is False
+    assert c.entry_command == ()
+
+
+def test_inline_spec_cannot_override_sidecar_at_snapshot(tmp_path: Path):
+    """Skill-internal runtime_spec.json must not beat the human sidecar."""
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, upsert_runtime_spec,
+    )
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot, load_snapshot
+    src = tmp_path / "src"
+    _skill(src, "s", {
+        "SKILL.md": "# s",
+        "safe.py": "print('safe')",
+        "evil.py": "print('pwn')",
+        # untrusted inline metadata ships with the Skill bytes
+        "runtime_spec.json": json.dumps({"entry_command": ["python", "/skills/evil.py"]}),
+    })
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    # human review picks the safe entry
+    upsert_runtime_spec(pool_root=pool, candidate_id="s",
+                        entry_command=("python", "/skills/safe.py"))
+    dest = tmp_path / "mat"
+    materialize_candidates(pool_root=pool, dest_dir=dest, require_runtime_ready=True)
+    snaps = tmp_path / "snaps"
+    m = freeze_skill_snapshot(dest, pipeline_revision="rev", out_root=snaps)
+    loaded = load_snapshot(m.snapshot_id, root=snaps)
+    assert loaded.skills[0].entry_command == ("python", "/skills/safe.py")
+
+
+def test_materialized_byte_drift_refuses_snapshot(tmp_path: Path):
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, upsert_runtime_spec,
+    )
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    src = tmp_path / "src"
+    _skill(src, "a", {"SKILL.md": "# a", "run.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="a",
+                        entry_command=("python", "/skills/run.py"))
+    dest = tmp_path / "mat"
+    materialize_candidates(pool_root=pool, dest_dir=dest, require_runtime_ready=True)
+    # bytes change between materialize and snapshot
+    (dest / "a" / "run.py").write_text("print('tampered')", encoding="utf-8")
+    with pytest.raises(RuntimeError, match="byte drift"):
+        freeze_skill_snapshot(dest, pipeline_revision="rev", out_root=tmp_path / "snaps")
+
+
+def test_extra_skill_dir_refuses_snapshot(tmp_path: Path):
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, upsert_runtime_spec,
+    )
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    src = tmp_path / "src"
+    _skill(src, "a", {"SKILL.md": "# a", "run.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="a",
+                        entry_command=("python", "/skills/run.py"))
+    dest = tmp_path / "mat"
+    materialize_candidates(pool_root=pool, dest_dir=dest, require_runtime_ready=True)
+    # smuggled-in skill with its own inline spec
+    _skill(dest, "skill-x", {
+        "run.py": "print('smuggled')",
+        "runtime_spec.json": json.dumps({"entry_command": ["python", "/skills/run.py"]}),
+    })
+    with pytest.raises(RuntimeError, match="not in materialization manifest"):
+        freeze_skill_snapshot(dest, pipeline_revision="rev", out_root=tmp_path / "snaps")
+
+
+def test_symlink_after_materialize_refuses_snapshot(tmp_path: Path):
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, upsert_runtime_spec,
+    )
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    src = tmp_path / "src"
+    _skill(src, "a", {"SKILL.md": "# a", "run.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="a",
+                        entry_command=("python", "/skills/run.py"))
+    dest = tmp_path / "mat"
+    materialize_candidates(pool_root=pool, dest_dir=dest, require_runtime_ready=True)
+    try:
+        (dest / "a" / "link").symlink_to(tmp_path / "host-secret.txt")
+    except Exception:
+        pytest.skip("symlink not supported on this FS")
+    with pytest.raises(RuntimeError, match="symlink"):
+        freeze_skill_snapshot(dest, pipeline_revision="rev", out_root=tmp_path / "snaps")
+
+
+def test_cache_sidecar_mismatch_refuses_materialize(tmp_path: Path):
+    """candidates.jsonl runtime_* is a display cache — sidecar is authority."""
+    from demotest.datasets.dynamic.candidates import (
+        RUNTIME_SPECS_DIRNAME, RUNTIME_SPECS_FILE,
+        import_local_candidates, load_candidates, materialize_candidates,
+        upsert_runtime_spec,
+    )
+    src = tmp_path / "src"
+    _skill(src, "a", {"SKILL.md": "# a", "run.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="a",
+                        entry_command=("python", "/skills/run.py"))
+    # Hand-edit the sidecar behind the cache's back: different command
+    spec_path = pool / RUNTIME_SPECS_DIRNAME / RUNTIME_SPECS_FILE
+    lines = [json.loads(x) for x in spec_path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    lines[0]["entry_command"] = ["python", "/skills/other.py"]
+    spec_path.write_text("\n".join(json.dumps(x, sort_keys=True) for x in lines) + "\n",
+                         encoding="utf-8")
+    with pytest.raises(RuntimeError, match="refused"):
+        materialize_candidates(pool_root=pool, dest_dir=tmp_path / "dest",
+                               require_runtime_ready=True)
+    # Row claiming ready with sidecar entry removed entirely -> also refuse
+    spec_path.write_text("", encoding="utf-8")
+    row = {c.skill_id: c for c in load_candidates(pool)}["a"]
+    assert row.runtime_status == "RUNTIME_READY"  # stale cache says ready
+    with pytest.raises(RuntimeError, match="refused"):
+        materialize_candidates(pool_root=pool, dest_dir=tmp_path / "dest2",
+                               require_runtime_ready=True)

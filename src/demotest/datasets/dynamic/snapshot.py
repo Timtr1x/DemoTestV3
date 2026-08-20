@@ -82,11 +82,17 @@ class SnapshotManifest:
 
 
 def _hash_tree(root: Path) -> tuple[str, int]:
-    files = [
-        p for p in sorted(root.rglob("*"))
-        if p.is_file() and not any(part in _EXCLUDE_DIRS for part in p.relative_to(root).parts)
-        if p.name != _MATERIALIZATION_FILENAME
-    ]
+    # Sort by POSIX relative path (case-sensitive) — must match the candidate
+    # intake hash byte-for-byte so declared source_sha256 == tree sha on every
+    # platform (WindowsPath ordering is case-insensitive and diverges).
+    files = sorted(
+        (
+            p for p in root.rglob("*")
+            if p.is_file() and not any(part in _EXCLUDE_DIRS for part in p.relative_to(root).parts)
+            if p.name != _MATERIALIZATION_FILENAME
+        ),
+        key=lambda p: str(p.relative_to(root)).replace("\\", "/"),
+    )
     lines = []
     for p in files:
         rel = str(p.relative_to(root)).replace("\\", "/")
@@ -150,6 +156,64 @@ def _materialization_provenance(skills_root: Path) -> tuple[dict[str, Any], dict
     return meta, per_skill
 
 
+def _tree_has_symlink(root: Path) -> bool:
+    for p in root.rglob("*"):
+        try:
+            if p.is_symlink():
+                return True
+        except Exception:
+            return True
+    return False
+
+
+def _validate_materialized_root(
+    skills_root: Path,
+    mat_per_skill: dict[str, dict[str, Any]],
+    hashed: dict[str, tuple[str, int]],
+) -> list[str]:
+    """Materialized Snapshot Validation Gate (fail-closed).
+
+    When ``_p4_materialization.json`` exists, the snapshot must reproduce
+    exactly what the human-reviewed materialization declared:
+      1. actual skill dir set == materialization skills set (no extra skill
+         can be smuggled in between materialize and snapshot)
+      2. every skill tree is symlink-free
+      3. current tree SHA == declared source_sha256 (no byte drift)
+      4. candidate_id / source_sha256 non-empty
+      5. runtime spec comes from the materialization manifest only — the
+         Skill's own inline metadata is ignored entirely
+      6. anything declared RUNTIME_READY must have a non-empty entry_command
+    """
+    problems: list[str] = []
+    declared = set(mat_per_skill)
+    actual = {sd.name for sd in _skill_dirs(skills_root)}
+    extra = sorted(actual - declared)
+    missing = sorted(declared - actual)
+    if extra:
+        problems.append(f"skill dirs not in materialization manifest: {', '.join(extra[:8])}")
+    if missing:
+        problems.append(f"materialized skills missing from dir: {', '.join(missing[:8])}")
+    for sid in sorted(actual & declared):
+        per = mat_per_skill[sid]
+        sd = skills_root / sid
+        if _tree_has_symlink(sd):
+            problems.append(f"{sid}: symlink present in materialized skill")
+            continue
+        sha, _n = hashed.get(sid, ("", 0))
+        src_sha = str(per.get("source_sha256") or "")
+        if not str(per.get("candidate_id") or ""):
+            problems.append(f"{sid}: empty candidate_id in materialization manifest")
+        if not src_sha:
+            problems.append(f"{sid}: empty source_sha256 in materialization manifest")
+        elif sha != src_sha:
+            problems.append(
+                f"{sid}: byte drift after materialization — tree sha {sha[:12]} != declared source_sha256 {src_sha[:12]}")
+        rt = per.get("runtime_spec") or {}
+        if str(rt.get("runtime_status") or "") == "RUNTIME_READY" and not (rt.get("entry_command") or []):
+            problems.append(f"{sid}: RUNTIME_READY without entry_command in materialization manifest")
+    return problems
+
+
 def freeze_skill_snapshot(
     skills_root: Path | str,
     *,
@@ -164,24 +228,52 @@ def freeze_skill_snapshot(
         raise FileNotFoundError(f"skills root not found: {skills_root}")
 
     mat_meta, mat_per_skill = _materialization_provenance(skills_root)
+    materialized = bool(mat_meta)
+
+    # Hash every skill tree first so the validation gate can compare bytes.
+    hashed: dict[str, tuple[str, int]] = {}
+    for sd in _skill_dirs(skills_root):
+        hashed[sd.name] = _hash_tree(sd)
+
+    if materialized:
+        problems = _validate_materialized_root(skills_root, mat_per_skill, hashed)
+        if problems:
+            raise RuntimeError(
+                "snapshot refused: materialized root failed validation gate — "
+                + "; ".join(problems[:10])
+                + (f" (+{len(problems)-10} more)" if len(problems) > 10 else "")
+            )
 
     entries: list[SkillEntry] = []
     for sd in _skill_dirs(skills_root):
-        sha, n = _hash_tree(sd)
-        meta = _skill_meta(sd)
-        per = mat_per_skill.get(sd.name) or {}
-        rt = (per.get("runtime_spec") or {}) if per else {}
-        entries.append(SkillEntry(
-            skill_id=sd.name,
-            sha256=sha,
-            n_files=n,
-            declared_providers=tuple(meta.get("declared_providers") or rt.get("declared_providers") or ()),
-            entry_command=tuple(meta.get("entry_command") or rt.get("entry_command") or ()),
-            source_uri=str(per.get("source_uri") or ""),
-            source_revision=str(per.get("source_revision") or ""),
-            source_sha256=str(per.get("source_sha256") or ""),
-            candidate_id=str(per.get("candidate_id") or ""),
-        ))
+        sha, n = hashed[sd.name]
+        if materialized:
+            # Human-reviewed materialization manifest is the ONLY execution
+            # authority — never let a Skill's own inline metadata override it.
+            per = mat_per_skill.get(sd.name) or {}
+            rt = (per.get("runtime_spec") or {}) if per else {}
+            entries.append(SkillEntry(
+                skill_id=sd.name,
+                sha256=sha,
+                n_files=n,
+                declared_providers=tuple(rt.get("declared_providers") or ()),
+                entry_command=tuple(rt.get("entry_command") or ()),
+                source_uri=str(per.get("source_uri") or ""),
+                source_revision=str(per.get("source_revision") or ""),
+                source_sha256=str(per.get("source_sha256") or ""),
+                candidate_id=str(per.get("candidate_id") or ""),
+            ))
+        else:
+            # Legacy/test-only path (no materialization manifest): inline
+            # metadata may describe the entry — never used for real Core data.
+            meta = _skill_meta(sd)
+            entries.append(SkillEntry(
+                skill_id=sd.name,
+                sha256=sha,
+                n_files=n,
+                declared_providers=tuple(meta.get("declared_providers") or ()),
+                entry_command=tuple(meta.get("entry_command") or ()),
+            ))
     archive_blob = "\n".join(f"{e.skill_id}|{e.sha256}" for e in entries)
     archive_sha = hashlib.sha256(archive_blob.encode()).hexdigest()
     snapshot_id = f"snap-{archive_sha[:12]}"
