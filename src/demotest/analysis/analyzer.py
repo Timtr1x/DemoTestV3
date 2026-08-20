@@ -97,6 +97,12 @@ def analyze(
     metrics.canary_echo_den = leak["canary_echo_den"]
     metrics.canary_echo_rate = leak["canary_echo_rate"]
     th = dict(thresholds or {})
+    # Extended is non-headline: do not reuse PASS/FAIL (review suggestion)
+    bt = str(benchmark_track or "core").strip().lower() or "core"
+    he = bool(headline_eligible)
+    if bt == "extended":
+        he = False
+    _pf = evaluate_thresholds(metrics, th) if he else "NON_HEADLINE"
     rep = AnalysisReport(
         project=project,
         run_id=run_id,
@@ -106,9 +112,9 @@ def analyze(
         leakage=leak,
         caveats=list(caveats or []),
         thresholds=th,
-        pass_fail=evaluate_thresholds(metrics, th),
+        pass_fail=_pf,
         manifest_name=manifest_name,
-        benchmark_track=str(benchmark_track or "core").lower(),
-        headline_eligible=bool(headline_eligible),
+        benchmark_track=bt,
+        headline_eligible=he,
     )
     return rep

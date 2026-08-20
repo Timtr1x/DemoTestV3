@@ -40,14 +40,25 @@ def build_suite_summary(suite_id: str) -> dict:
         manifest = load_manifest(mpath) if mpath.exists() else {}
         n = manifest.get("n", 0)
         total += n
+        # Phase 2.1: backward-compat — legacy Phase1 manifests have no track fields => core/headline
+        bt = manifest.get("benchmark_track")
+        if bt is None:
+            bt = getattr(ptarget, "track", "core")
+        hl = manifest.get("headline_eligible")
+        if hl is None:
+            hl = getattr(ptarget, "headline_eligible", str(bt).lower() == "core")
+        hl = bool(hl)
+        # enforce invariant even for compat path
+        if str(bt).lower() == "extended" and hl:
+            hl = False
         projects[pid] = {
             "manifest": ptarget.manifest,
             "manifest_sha256": manifest.get("manifest_sha256", ""),
             "n": n,
             "target": ptarget.target,
             "split": manifest.get("split", []),
-            "benchmark_track": manifest.get("benchmark_track", getattr(ptarget, "track", "core")),
-            "headline_eligible": manifest.get("headline_eligible", getattr(ptarget, "headline_eligible", True)),
+            "benchmark_track": str(bt).lower() if bt else "core",
+            "headline_eligible": hl,
         }
     from demotest.config import load_datasets as _ld2
     try:
@@ -72,6 +83,27 @@ def build_suite_summary(suite_id: str) -> dict:
                                 "adapter": lk.adapter_name, "adapter_version": lk.adapter_version}
             except Exception:
                 pass
+    # Phase 2.1: keep Phase1 frozen snapshots byte-identical to e4f4b79
+    LEGACY_FROZEN = {"smoke-v1","smoke-v2","phase1-standard-v1","phase1-standard-v2","phase1-full-v1","phase1-full-v2","holdout-v1","holdout-v2"}
+    if suite_id in LEGACY_FROZEN:
+        frozen_projects = {}
+        for pid, info in projects.items():
+            frozen_projects[pid] = {
+                "manifest": info["manifest"],
+                "manifest_sha256": info["manifest_sha256"],
+                "n": info["n"],
+                "split": info["split"],
+                "target": info["target"],
+            }
+        return {
+            "suite_id": suite_id,
+            "seed": suite.seed,
+            "split": suite.split,
+            "total_cases": total,
+            "projects": frozen_projects,
+            "source_locks": locks,
+            "suite_config_hash": _suite_config_hash(suite_id),
+        }
     return {
         "suite_id": suite_id,
         "seed": suite.seed,

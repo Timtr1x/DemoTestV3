@@ -292,19 +292,22 @@ def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
         for pid, pcfg in (cfg.get("projects") or {}).items():
             pcfg = dict(pcfg or {})
             mcs = pcfg.get("max_cluster_share")
-            # track/headline_eligible: explicit in YAML wins; fallback: P4 synthetic is extended/non-headline
-            raw_track = str(pcfg.get("track") or "").strip().lower()
-            if not raw_track:
-                # default core, but P4 via synthetic dataset is extended by construction
+            # track/headline_eligible: fail-closed; invalid value is ConfigError, not fallback
+            if "track" in pcfg and pcfg.get("track") is not None and str(pcfg.get("track")).strip() != "":
+                raw_track = str(pcfg.get("track")).strip().lower()
+                if raw_track not in ("core", "extended"):
+                    raise ConfigError(f"suite {sid!r} project {pid!r}: invalid track {raw_track!r}; expected 'core' or 'extended'")
+            else:
+                # no explicit track: default core, but P4 via synthetic dataset is extended by construction
                 _has_synthetic = any((str(s.get("dataset") or "") == "credential_catalog_synthetic") for s in (pcfg.get("strata") or []))
                 raw_track = "extended" if (pid == "P4_credential_flow" and _has_synthetic) else "core"
-            if raw_track not in ("core", "extended"):
-                raw_track = "core"
             raw_hl = pcfg.get("headline_eligible")
             if raw_hl is None:
                 raw_hl = (raw_track == "core")
             else:
                 raw_hl = bool(raw_hl)
+            if raw_track == "extended" and raw_hl:
+                raise ConfigError(f"suite {sid!r} project {pid!r}: extended track cannot be headline_eligible=true")
             projects[pid] = SuiteProjectTarget(
                 project=pid,
                 manifest=str(pcfg.get("manifest") or ""),
@@ -314,10 +317,12 @@ def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
                 track=raw_track,
                 headline_eligible=raw_hl,
             )
-        # suite-level track: explicit wins else derived (mixed if projects disagree)
-        raw_suite_track = str(cfg.get("track") or "").strip().lower()
-        raw_suite_hl = cfg.get("headline_eligible")
-        if not raw_suite_track:
+        # suite-level track: explicit wins else derived (mixed if projects disagree); fail-closed
+        if "track" in cfg and cfg.get("track") is not None and str(cfg.get("track")).strip() != "":
+            raw_suite_track = str(cfg.get("track")).strip().lower()
+            if raw_suite_track not in ("core", "extended", "mixed"):
+                raise ConfigError(f"suite {sid!r}: invalid track {raw_suite_track!r}; expected 'core', 'extended' or 'mixed'")
+        else:
             _tracks = {v.track for v in projects.values()}
             if len(_tracks) == 1:
                 raw_suite_track = next(iter(_tracks))
@@ -325,12 +330,15 @@ def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
                 raw_suite_track = "mixed"
             else:
                 raw_suite_track = "core"
-        if raw_suite_track not in ("core", "extended", "mixed"):
-            raw_suite_track = "core"
+        raw_suite_hl = cfg.get("headline_eligible")
         if raw_suite_hl is None:
             raw_suite_hl = (raw_suite_track == "core")
         else:
             raw_suite_hl = bool(raw_suite_hl)
+        if raw_suite_track == "extended" and raw_suite_hl:
+            raise ConfigError(f"suite {sid!r}: extended suite cannot be headline_eligible=true")
+        if raw_suite_track == "mixed" and raw_suite_hl:
+            raise ConfigError(f"suite {sid!r}: mixed suite cannot be headline_eligible=true")
         out[sid] = SuiteConfig(
             suite_id=sid,
             seed=int(cfg.get("seed", 42)),

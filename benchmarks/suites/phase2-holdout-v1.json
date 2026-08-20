@@ -5,7 +5,7 @@
       "benchmark_track": "core",
       "headline_eligible": true,
       "manifest": "benchmarks/manifests/holdout-v2/p1.json",
-      "manifest_sha256": "sha256:4803d55e819ac0f80ff6a8406e308b810114d3edfa559c84037dceffd00f61b6",
+      "manifest_sha256": "sha256:1a021d5ad3677aabefc014b1a7a55308ad5814c23225f0d827dae3f2883fb688",
       "n": 526,
       "split": [
         "holdout"
@@ -16,7 +16,7 @@
       "benchmark_track": "core",
       "headline_eligible": true,
       "manifest": "benchmarks/manifests/holdout-v2/p2.json",
-      "manifest_sha256": "sha256:7272d23ea4be64d254dc018a4f4dd3c74ec21e6d8fb2e33eeb7e13b1359e51ea",
+      "manifest_sha256": "sha256:974787639d0a0db32aae89e9d2bead3dc6072ada3ba42361dff3e116479403bd",
       "n": 150,
       "split": [
         "holdout"

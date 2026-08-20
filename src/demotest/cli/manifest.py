@@ -231,6 +231,17 @@ def cmd_suite_verify(args) -> int:
         if snap_entry.get("n") and snap_entry["n"] != manifest.get("n"):
             problems.append(f"{pid}: suite n {snap_entry['n']} != manifest n {manifest.get('n')}")
         problems.extend(verify_manifest(manifest))
+        # Phase 2.1: suite ↔ manifest track consistency (review)
+        m_track = str(manifest.get("benchmark_track") or "core").strip().lower() or "core"
+        m_hl = bool(manifest.get("headline_eligible", m_track == "core"))
+        # missing in old manifests => legacy core (backward-compat), but if present enforce
+        if manifest.get("benchmark_track") is not None or manifest.get("headline_eligible") is not None:
+            if m_track != ptarget.track:
+                problems.append(f"{pid}: manifest benchmark_track {m_track!r} != suite track {ptarget.track!r}")
+            if m_hl != ptarget.headline_eligible:
+                problems.append(f"{pid}: manifest headline_eligible {m_hl!r} != suite headline_eligible {ptarget.headline_eligible!r}")
+            if m_track == "extended" and m_hl:
+                problems.append(f"{pid}: extended track cannot be headline_eligible=true")
     if problems:
         for p in problems:
             print(f"FAIL: {p}", file=sys.stderr)

@@ -30,12 +30,22 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 from ..config import SuiteConfig  # noqa: F401
-from ..core.exceptions import ManifestError
+from ..core.exceptions import ConfigError, ManifestError
 from ..core.models import SecurityCase
 from .quality import get_provenance
 from .sampler import CaseHeader, Split, assign_splits, assign_splits_case_weighted, group_id_of, header_of, selection_key, split_key
 
 MANIFEST_VERSION = "v3.2"
+
+
+def validate_benchmark_track(track: str, headline_eligible: bool) -> None:
+    """Shared invariant (review P0-2/P0-3): extended => headline_eligible == False."""
+    tr = str(track or "").strip().lower()
+    if tr not in ("core", "extended"):
+        raise ConfigError(f"invalid benchmark_track {track!r}; expected 'core' or 'extended'")
+    if tr == "extended" and bool(headline_eligible):
+        raise ConfigError("extended track cannot be headline_eligible=true")
+
 
 
 def manifest_sha256(manifest: dict[str, Any]) -> str:
@@ -243,8 +253,7 @@ def build_manifest(
     if headline_eligible is None:
         headline_eligible = (benchmark_track == "core")
     benchmark_track = str(benchmark_track).lower()
-    if benchmark_track not in ("core", "extended"):
-        benchmark_track = "core"
+    validate_benchmark_track(benchmark_track, bool(headline_eligible))
     manifest: dict[str, Any] = {
         "manifest_version": MANIFEST_VERSION,
         "suite": suite_id,
@@ -368,8 +377,7 @@ def build_manifest_streaming(
     if headline_eligible is None:
         headline_eligible = (benchmark_track == "core")
     benchmark_track = str(benchmark_track).lower()
-    if benchmark_track not in ("core", "extended"):
-        benchmark_track = "core"
+    validate_benchmark_track(benchmark_track, bool(headline_eligible))
     manifest: dict[str, Any] = {
         "manifest_version": MANIFEST_VERSION,
         "suite": suite_id,
@@ -422,6 +430,16 @@ def verify_manifest(
         problems.append(
             f"manifest_sha256 mismatch: stored={manifest.get('manifest_sha256')} computed={recomputed}"
         )
+    # Phase 2.1: benchmark track invariants (review P0-2/P0-3) — missing => legacy core, present => strict
+    bt = manifest.get("benchmark_track")
+    he = manifest.get("headline_eligible")
+    if bt is not None or he is not None:
+        try:
+            validate_benchmark_track(str(bt or "core"), bool(he) if he is not None else (str(bt or "core").lower() == "core"))
+        except ConfigError as e:
+            problems.append(str(e))
+        if str(bt or "").lower() == "extended" and bool(he):
+            problems.append("manifest extended track cannot be headline_eligible=true")
     entries = manifest.get("cases") or []
     seen: dict[str, int] = {}
     for e in entries:

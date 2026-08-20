@@ -38,27 +38,46 @@ def run(args) -> int:
     for sf in stores:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
-    # Phase 2.1: propagate benchmark_track/headline_eligible from manifest when available
+    # Phase 2.1: bind to the manifest actually used for this run (review P0-1).
+    # Do NOT scan suites — the same project can appear in both Core and Extended suites.
+    # Prefer the manifest from --source manifest:<path>; fallback to suites only for legacy sources.
     _track = "core"
     _eligible = True
+    _manifest_name = ""
     try:
         from pathlib import Path as _P2
         from ..datasets.manifest_builder import load_manifest as _lm2
-        # try to find manifest by project via first suites entry
-        for _suite in __import__("demotest.config", fromlist=["load_suites"]).load_suites().values():
-            if args.project in _suite.projects:
-                _mp = _P2(_suite.projects[args.project].manifest)
-                if _mp.exists():
-                    _m = _lm2(_mp)
-                    _track = str(_m.get("benchmark_track") or _suite.projects[args.project].track or "core")
-                    _eligible = bool(_m.get("headline_eligible", _suite.projects[args.project].headline_eligible))
-                    break
+        manifest_path = None
+        if isinstance(args.source, str) and args.source.startswith("manifest:"):
+            manifest_path = args.source.split(":", 1)[1]
+        if manifest_path and _P2(manifest_path).exists():
+            _m = _lm2(_P2(manifest_path))
+            # backward-compat: missing fields => legacy core
+            _track = str(_m.get("benchmark_track") or "core").strip().lower() or "core"
+            if _track not in ("core", "extended"):
+                _track = "core"
+            _eligible = bool(_m.get("headline_eligible", _track == "core"))
+            if _track == "extended" and _eligible:
+                _eligible = False
+            _manifest_name = manifest_path
+        else:
+            # legacy source (fixture/legacy): best-effort from suites
+            for _suite in __import__("demotest.config", fromlist=["load_suites"]).load_suites().values():
+                if args.project in _suite.projects:
+                    _mp = _P2(_suite.projects[args.project].manifest)
+                    if _mp.exists():
+                        _m = _lm2(_mp)
+                        _track = str(_m.get("benchmark_track") or _suite.projects[args.project].track or "core").strip().lower() or "core"
+                        _eligible = bool(_m.get("headline_eligible", _suite.projects[args.project].headline_eligible))
+                        _manifest_name = str(_mp)
+                        break
     except Exception:
         pass
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,
         benchmark_track=_track, headline_eligible=_eligible,
+        manifest_name=_manifest_name,
     )
     if args.json:
         print(json.dumps(rep.to_dict(), ensure_ascii=False, indent=2, default=str))

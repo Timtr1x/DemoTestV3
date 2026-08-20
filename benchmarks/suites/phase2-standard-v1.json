@@ -5,7 +5,7 @@
       "benchmark_track": "core",
       "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-standard-v2/p1.json",
-      "manifest_sha256": "sha256:d49bb4ffd727c74e382ba85f7818dc41e67e3a5ededbec150701505198a1b1a9",
+      "manifest_sha256": "sha256:49927e5e067214664d8d37dcc4f87cd5256fd79df97360d85f2acf726cb48d73",
       "n": 1674,
       "split": [
         "eval"
@@ -16,7 +16,7 @@
       "benchmark_track": "core",
       "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-standard-v2/p2.json",
-      "manifest_sha256": "sha256:14a0e63132f6f7438e1b1bcd30afd3bc40e2903bcb0c5bbb9d11b62473b1bd80",
+      "manifest_sha256": "sha256:250fb8cbd140f6d5ffa67f14303c6af046df7775ba0d3dee47252767c233cf41",
       "n": 540,
       "split": [
         "eval"
