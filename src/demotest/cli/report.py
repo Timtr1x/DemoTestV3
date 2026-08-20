@@ -19,6 +19,8 @@ def add_parser(sub) -> None:
     p.add_argument("--target", default="linemod")
     p.add_argument("--run-version", required=True)
     p.add_argument("--out-dir", default=None)
+    p.add_argument("--allow-legacy-run-without-meta", action="store_true",
+                   help="allow old runs without _run_meta.json (default: fail-closed)")
     p.set_defaults(func=run)
 
 
@@ -38,18 +40,14 @@ def run(args) -> int:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
     # Use the SAME resolver as analyze — P0 fix: report must not default to core
-    from ..datasets.context import resolve_benchmark_context
+    from ..datasets.context import resolve_benchmark_context, verify_run_meta
     ctx = resolve_benchmark_context(args.source, project=args.project)
     try:
-        meta_path = base / "_run_meta.json"
-        if meta_path.exists():
-            meta = json.loads(meta_path.read_text(encoding="utf-8"))
-            exp_sha = meta.get("manifest_sha256")
-            if exp_sha and ctx.manifest_sha256 and exp_sha != ctx.manifest_sha256:
-                print(f"FAIL: manifest SHA mismatch: run meta {exp_sha} != --source {ctx.manifest_sha256}")
-                return 1
-    except Exception:
-        pass
+        verify_run_meta(base, ctx, expected_project=args.project, expected_target=args.target,
+                        expected_run_version=args.run_version, allow_legacy=args.allow_legacy_run_without_meta)
+    except Exception as e:
+        print(f"FAIL: provenance check failed: {e}", flush=True)
+        return 1
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,

@@ -88,11 +88,21 @@ def run(args) -> int:
         f"{ch}:{_resolve_fidelity(project, ch, args.fidelity)}"
         for ch in sorted(by_channel.keys())
     )
+
+    # Resolve benchmark context BEFORE computing run identity — manifest SHA/track
+    # must enter experiment_hash so Case-same-but-Manifest-different => different run_id
+    from ..datasets.context import resolve_benchmark_context
+    ctx = resolve_benchmark_context(args.source, project=args.project)
+
     experiment_hash = config_hash({
         "target": target_cfg_hash,
         "project": project_cfg_hash,
         "dataset": ds_hash,
         "fidelity": fidelity_blob,
+        # P1: bind manifest identity into run identity (review P1)
+        "manifest_sha256": ctx.manifest_sha256,
+        "benchmark_track": ctx.benchmark_track,
+        "headline_eligible": ctx.headline_eligible,
     })
     run_version = args.run_version or compute_run_id(
         target.target_name,
@@ -100,10 +110,6 @@ def run(args) -> int:
         "v3",
         ds_hash,
     )
-
-    # P1: provenance — resolve benchmark context BEFORE running (fail-closed on invalid track)
-    from ..datasets.context import resolve_benchmark_context
-    ctx = resolve_benchmark_context(args.source, project=args.project)
 
     total_ran = 0
     total_skipped = 0
@@ -124,27 +130,24 @@ def run(args) -> int:
         print(f"[run] {channel} ({rname}/{fidelity}): {label}={rr.ran} skipped={rr.skipped} written={rr.written}")
 
     # Write _run_meta.json for provenance chain Run → Manifest → Track
-    try:
-        source_type = "manifest" if args.source.startswith("manifest:") else ("fixture" if args.source.startswith("fixture:") else ("legacy" if args.source.startswith("legacy:") else "unknown"))
-        meta = {
-            "source": args.source,
-            "source_type": source_type,
-            "manifest": ctx.manifest_path,
-            "manifest_sha256": ctx.manifest_sha256,
-            "benchmark_track": ctx.benchmark_track,
-            "headline_eligible": ctx.headline_eligible,
-            "dataset_snapshot_hash": ds_hash,
-            "project_config_hash": project_cfg_hash,
-            "target_config_hash": target_cfg_hash,
-            "run_version": run_version,
-            "project": args.project,
-            "target": args.target,
-        }
-        meta_path = RESULTS_DIR / args.project / args.target / run_version / "_run_meta.json"
-        meta_path.parent.mkdir(parents=True, exist_ok=True)
-        meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    except Exception as e:
-        print(f"[run] WARN: failed to write _run_meta.json: {e}")
+    source_type = "manifest" if args.source.startswith("manifest:") else ("fixture" if args.source.startswith("fixture:") else ("legacy" if args.source.startswith("legacy:") else "unknown"))
+    meta = {
+        "source": args.source,
+        "source_type": source_type,
+        "manifest": ctx.manifest_path,
+        "manifest_sha256": ctx.manifest_sha256,
+        "benchmark_track": ctx.benchmark_track,
+        "headline_eligible": ctx.headline_eligible,
+        "dataset_snapshot_hash": ds_hash,
+        "project_config_hash": project_cfg_hash,
+        "target_config_hash": target_cfg_hash,
+        "run_version": run_version,
+        "project": args.project,
+        "target": args.target,
+    }
+    meta_path = RESULTS_DIR / args.project / args.target / run_version / "_run_meta.json"
+    meta_path.parent.mkdir(parents=True, exist_ok=True)
+    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     print(f"[run] total: ran={total_ran} skipped={total_skipped} "
           f"run_version={run_version} dry_run={args.dry_run} fidelity={args.fidelity}")

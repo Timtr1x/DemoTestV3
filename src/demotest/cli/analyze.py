@@ -18,19 +18,19 @@ def add_parser(sub) -> None:
     p.add_argument("--target", default="linemod")
     p.add_argument("--run-version", required=True)
     p.add_argument("--json", action="store_true", help="print full report as JSON")
+    p.add_argument("--allow-legacy-run-without-meta", action="store_true",
+                   help="allow old runs without _run_meta.json (default: fail-closed)")
     p.set_defaults(func=run)
 
 
 def run(args) -> int:
     project = get_project(args.project)
     cases = load_cases(args.source, project=args.project)
-    # merge per-channel result files (exclude combined artifacts)
     base = RESULTS_DIR / args.project / args.target / args.run_version
     stores = sorted(p for p in base.glob("*.jsonl") if not p.name.startswith("_"))
     if not stores:
         print(f"no result files at {base}")
         return 1
-    # combine: load all rows into one virtual store
     combined = base / "_combined.jsonl"
     combined.write_text("", encoding="utf-8")
     store = ResultStore(combined)
@@ -38,20 +38,15 @@ def run(args) -> int:
     for sf in stores:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
-    # Phase 2.1: use shared resolver — fail-closed on invalid manifest track
-    from ..datasets.context import resolve_benchmark_context
+    # Phase 2.1: shared resolver + mandatory provenance check for manifest-sourced runs
+    from ..datasets.context import resolve_benchmark_context, verify_run_meta
     ctx = resolve_benchmark_context(args.source, project=args.project)
-    # provenance: verify run meta SHA if present
     try:
-        meta_path = base / "_run_meta.json"
-        if meta_path.exists():
-            meta = json.loads(meta_path.read_text(encoding="utf-8"))
-            exp_sha = meta.get("manifest_sha256")
-            if exp_sha and ctx.manifest_sha256 and exp_sha != ctx.manifest_sha256:
-                print(f"FAIL: manifest SHA mismatch: run meta {exp_sha} != --source {ctx.manifest_sha256}", flush=True)
-                return 1
-    except Exception:
-        pass
+        verify_run_meta(base, ctx, expected_project=args.project, expected_target=args.target,
+                        expected_run_version=args.run_version, allow_legacy=args.allow_legacy_run_without_meta)
+    except Exception as e:
+        print(f"FAIL: provenance check failed: {e}", flush=True)
+        return 1
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,

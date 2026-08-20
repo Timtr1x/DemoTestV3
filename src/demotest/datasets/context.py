@@ -105,3 +105,41 @@ def resolve_benchmark_context(source: str, *, project: str = "") -> BenchmarkCon
         headline_eligible=eligible,
         manifest=manifest_dict,
     )
+
+
+def verify_run_meta(
+    base: Path,
+    ctx: BenchmarkContext,
+    *,
+    expected_project: str,
+    expected_target: str,
+    expected_run_version: str,
+    allow_legacy: bool = False,
+) -> dict[str, Any]:
+    """Mandatory provenance check for manifest-sourced runs (fail-closed).
+
+    - _run_meta.json must exist, parse, and carry manifest_sha256.
+    - SHA must match the --source manifest, project/target/run_version must match.
+    - allow_legacy permits old runs without meta (explicit opt-out) — but if the
+      file exists and fails SHA/identity checks we still fail hard even with
+      allow_legacy, because that is corruption, not legacy.
+    """
+    meta_path = base / "_run_meta.json"
+    if not meta_path.exists():
+        if allow_legacy:
+            return {}
+        raise ManifestError(f"missing _run_meta.json at {meta_path} for manifest-sourced run")
+    try:
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise ManifestError(f"corrupt _run_meta.json at {meta_path}: {e}")
+    sha = meta.get("manifest_sha256")
+    if not sha:
+        raise ManifestError(f"_run_meta.json missing manifest_sha256")
+    if ctx.manifest_sha256 and sha != ctx.manifest_sha256:
+        raise ManifestError(f"manifest SHA mismatch: run meta {sha} != --source {ctx.manifest_sha256}")
+    for key, expected in (("project", expected_project), ("target", expected_target), ("run_version", expected_run_version)):
+        got = meta.get(key)
+        if got != expected:
+            raise ManifestError(f"_run_meta.json {key}={got!r} != expected {expected!r}")
+    return meta

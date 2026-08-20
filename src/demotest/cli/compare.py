@@ -17,6 +17,8 @@ def add_parser(sub) -> None:
     p.add_argument("--run-a", required=True, help="target/run-version for side A, e.g. linemod/v1")
     p.add_argument("--run-b", required=True, help="target/run-version for side B")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--allow-legacy-run-without-meta", action="store_true",
+                   help="allow old runs without _run_meta.json (default: fail-closed)")
     p.set_defaults(func=run)
 
 
@@ -43,6 +45,17 @@ def run(args) -> int:
     base_b = RESULTS_DIR / args.project / b_parts[0] / b_parts[1]
     sa = _load_combined(base_a)
     sb = _load_combined(base_b)
+    # P1: compare must verify both sides bind to the same benchmark manifest
+    from ..datasets.context import resolve_benchmark_context, verify_run_meta
+    ctx = resolve_benchmark_context(args.source, project=args.project)
+    try:
+        verify_run_meta(base_a, ctx, expected_project=args.project, expected_target=a_parts[0],
+                        expected_run_version=a_parts[1], allow_legacy=args.allow_legacy_run_without_meta)
+        verify_run_meta(base_b, ctx, expected_project=args.project, expected_target=b_parts[0],
+                        expected_run_version=b_parts[1], allow_legacy=args.allow_legacy_run_without_meta)
+    except Exception as e:
+        print(f"FAIL: runs were not produced from the same benchmark manifest: {e}", flush=True)
+        return 1
     out = compare_runs(cases, {"A": sa, "B": sb}, project=args.project)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2, default=str))
