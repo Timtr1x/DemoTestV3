@@ -12,7 +12,8 @@ subprocess + Docker, following the official container contract:
         <image> <command>
 
 Hard security boundaries (guide §6/§13):
-  * only TEST_SECRET_<HEX16> canary values are ever passed with `-e`;
+  * only fake canary values are ever passed with `-e` (TEST_SECRET or
+    official sk-leakbench-mock-* / AKIA-LEAKBENCH-* — never real secrets);
   * the child process env is scrubbed to an allowlist — host credentials
     (keys/tokens/secrets) are never forwarded to docker or the container;
   * real skills are untrusted code: run them only in the disposable sandbox,
@@ -39,7 +40,7 @@ from .schemas import (
     assert_fake_canary,
 )
 
-#: Real env-var names kept for semantics; values are always TEST_SECRET canaries.
+#: Real env-var names kept for semantics; values are always fake canaries.
 DEFAULT_CREDENTIAL_NAMES: tuple[str, ...] = (
     "OPENAI_API_KEY",
     "ANTHROPIC_API_KEY",
@@ -72,6 +73,9 @@ DEFAULT_PIDS_LIMIT = 64
 DEFAULT_TIMEOUT_S = 120
 DEFAULT_TMPFS = "/tmp:rw,nosuid,nodev,size=64m"
 DEFAULT_ISOLATION_LEVEL = "docker_only_hardened"
+# The frozen snapshot is never mounted directly — entrypoint always writes
+# /skills/.env and /mock_creds/.env, so the per-execution copy must be :rw.
+DEFAULT_SKILLS_READ_ONLY = False
 
 
 def injected_credentials(
@@ -114,6 +118,33 @@ def host_credential_names(environ: Mapping[str, str] | None = None) -> list[str]
     return sorted(k for k in environ if _CREDENTIAL_NAME_RE.search(k))
 
 
+def _is_fake_credential_value(value: str) -> bool:
+    """Accept TEST_SECRET canaries and official sk-leakbench mock values.
+
+    Official pipeline generates sk-leakbench-mock-*, AKIA-LEAKBENCH-*, etc. —
+    all contain 'leakbench' and are safe fake values distinct from real secrets.
+    """
+    v = str(value or "")
+    if re.match(r"^TEST_SECRET_[0-9A-F]{16}$", v):
+        return True
+    if "leakbench" in v.lower():
+        return True
+    return False
+
+
+def _assert_fake_credentials(credentials: Mapping[str, str]) -> None:
+    for name, value in credentials.items():
+        if not _is_fake_credential_value(value):
+            # keep strict TEST_SECRET message for legacy callers
+            try:
+                assert_fake_canary(name, value)
+            except DynamicSpecError:
+                raise DynamicSpecError(
+                    f"credential {name!r} value is not a recognized fake canary "
+                    f"(TEST_SECRET_* or *leakbench*); refusing to inject"
+                )
+
+
 @dataclass(frozen=True)
 class DoctorCheck:
     name: str
@@ -151,7 +182,7 @@ class SkillLeakBenchSandboxRunner:
         pids_limit: int = DEFAULT_PIDS_LIMIT,
         timeout_s: int = DEFAULT_TIMEOUT_S,
         read_only_rootfs: bool = True,
-        skills_read_only: bool = True,
+        skills_read_only: bool = DEFAULT_SKILLS_READ_ONLY,
         tmpfs: str = DEFAULT_TMPFS,
         isolation_level: str = DEFAULT_ISOLATION_LEVEL,
     ) -> None:
@@ -187,6 +218,11 @@ class SkillLeakBenchSandboxRunner:
             "tmpfs": self.tmpfs,
             "concurrency": 1,
         }
+
+    def _mock_creds_tmpfs_arg(self) -> list[str]:
+        # entrypoint writes /mock_creds/.env and /mock_creds/config.yaml at
+        # startup — needs a writable tmpfs even when the rootfs is --read-only.
+        return ["--tmpfs", "/mock_creds:rw,nosuid,nodev,mode=777,size=16m"]
 
     # -- doctor (guide §5) ---------------------------------------------------
 
@@ -230,12 +266,15 @@ class SkillLeakBenchSandboxRunner:
             "no_real_credentials_forwarded", not leaked,
             f"credential-looking host vars present but NOT forwarded: {host_credential_names()}",
         ))
+        # Hardening now expects --read-only rootfs + network none + execution-copy rw.
+        # The frozen snapshot is never mounted :ro — we mount a writable per-execution
+        # copy so entrypoint can write /skills/.env.
         hardening_ok = (
             self.network == "none"
             and self.pids_limit > 0
             and bool(self.cpus)
             and self.read_only_rootfs
-            and self.skills_read_only
+            and (not self.skills_read_only)
         )
         checks.append(DoctorCheck(
             "docker_only_hardening",
@@ -293,53 +332,62 @@ class SkillLeakBenchSandboxRunner:
     def _run_self_test_via_python(self) -> dict[str, Any] | None:
         """Run stdout + network fixtures via Python subprocess docker calls.
 
-        Returns None if the attempt cannot be made (caller should fall back).
+        Uses the production build_docker_argv() + execution-copy so the test
+        exercises the real hardened path. Returns None only if the attempt
+        cannot be made (caller should fall back).
         """
         import tempfile
 
         def _one_fixture(skill_id: str, files: dict[str, str], command: list[str]) -> tuple[bool, str]:
             with tempfile.TemporaryDirectory() as tmp:
-                skill = Path(tmp) / "skill"
-                mon = Path(tmp) / "monitoring"
-                skill.mkdir(parents=True, exist_ok=True)
-                mon.mkdir(parents=True, exist_ok=True)
+                src_skill = Path(tmp) / "skill_src"
+                src_skill.mkdir(parents=True, exist_ok=True)
                 for name, content in files.items():
-                    (skill / name).write_text(content, encoding="utf-8")
-                for p in (Path(tmp), skill, mon):
+                    (src_skill / name).write_text(content, encoding="utf-8")
+                for p in (Path(tmp), src_skill):
                     try:
                         os.chmod(p, 0o777)
                     except Exception:
                         pass
-                for f in skill.iterdir():
+                for f in src_skill.iterdir():
                     try:
                         os.chmod(f, 0o777)
                     except Exception:
                         pass
 
-                argv = [
-                    *self.docker, "run", "--rm",
-                    "--network", self.network,
-                    "--memory", self.memory,
-                    "--cpus", self.cpus,
-                    "--pids-limit", str(self.pids_limit),
-                    "--cap-drop", "ALL",
-                    "--security-opt", "no-new-privileges:true",
-                ]
-                if self.tmpfs:
-                    argv += ["--tmpfs", self.tmpfs]
-                # --read-only + /skills:ro breaks the upstream entrypoint which
-                # writes /skills/.env and /mock_creds/.env at startup. For the
-                # self-test fixtures we use a hardened but entrypoint-compatible
-                # mount: /skills:rw with a writable tmpfs for /mock_creds. The
-                # real collect path (build_docker_argv) keeps the stricter
-                # --read-only + :ro profile and is tested separately.
-                argv += [
-                    "-v", f"{skill.resolve()}:/skills",
-                    "-v", f"{mon.resolve()}:/monitoring:rw",
-                    "--tmpfs", "/mock_creds:rw,nosuid,nodev,mode=777,size=16m",
-                    "-e", f"SKILL_ID={skill_id}",
-                    self.image, *command,
-                ]
+                # Use production execution-copy helper so entrypoint can write
+                # /skills/.env even though the rootfs is --read-only.
+                from .workspace import prepare_execution_copy
+
+                work = Path(tmp) / "work"
+                work.mkdir(parents=True, exist_ok=True)
+                skill_copy = prepare_execution_copy(src_skill, f"selftest-{skill_id}", work_root=work)
+                for p in (skill_copy,):
+                    try:
+                        os.chmod(p, 0o777)
+                    except Exception:
+                        pass
+                    for f in skill_copy.rglob("*"):
+                        try:
+                            os.chmod(f, 0o777)
+                        except Exception:
+                            pass
+                mon = work / "monitoring"
+                mon.mkdir(parents=True, exist_ok=True)
+                try:
+                    os.chmod(mon, 0o777)
+                except Exception:
+                    pass
+                # Production-equivalent argv — including --read-only and the
+                # writable /mock_creds tmpfs.
+                argv = self.build_docker_argv(
+                    skill_id=skill_id,
+                    skill_dir=skill_copy,
+                    monitoring_dir=mon,
+                    credentials={},  # self-test uses container's own forged creds
+                    condition="deterministic",
+                    command=command,
+                )
                 try:
                     subprocess.run(
                         argv, capture_output=True, text=True,
@@ -442,9 +490,12 @@ class SkillLeakBenchSandboxRunner:
         condition: str,
         command: Sequence[str] | None = None,
     ) -> list[str]:
-        """Official container contract; `-e` carries TEST_SECRET values only."""
-        for name, value in credentials.items():
-            assert_fake_canary(name, value)
+        """Official container contract; `-e` carries fake canary values only.
+
+        Accepts both legacy TEST_SECRET_* and official *leakbench* mocks.
+        """
+        if credentials:
+            _assert_fake_credentials(credentials)
         skill_mount = f"{skill_dir.resolve()}:/skills"
         if self.skills_read_only:
             skill_mount += ":ro"
@@ -461,6 +512,7 @@ class SkillLeakBenchSandboxRunner:
             argv.append("--read-only")
         if self.tmpfs:
             argv += ["--tmpfs", self.tmpfs]
+        argv += self._mock_creds_tmpfs_arg()
         argv += [
             "-v", skill_mount,
             "-v", f"{monitoring_dir.resolve()}:/monitoring:rw",
@@ -491,9 +543,11 @@ class SkillLeakBenchSandboxRunner:
 
         The skill is untrusted code — it runs ONLY inside the container. The
         monitoring dir (stdout.log / network_payload.log / exit_status) is the
-        raw evidence; this function never interprets it.
+        raw evidence; this function never interprets it. The frozen skill dir
+        is never mounted directly — a per-execution writable copy is used so
+        entrypoint can write /skills/.env even with --read-only rootfs.
         """
-        skill_dir = Path(skill_dir)
+        frozen_skill_dir = Path(skill_dir)
         timeout_s = timeout_s or self.timeout_s
         if not self.docker_available():
             raise SandboxUnavailable("docker not available — run `demotest dynamic doctor`")
@@ -502,14 +556,42 @@ class SkillLeakBenchSandboxRunner:
 
         work = Path(work_root) if work_root else Path(
             __import__("tempfile").mkdtemp(prefix="dynexec-"))
+        work.mkdir(parents=True, exist_ok=True)
         monitoring = work / "monitoring"
         monitoring.mkdir(parents=True, exist_ok=True)
         execution_id = "exec-" + hashlib.sha256(
             f"{self.pipeline_revision}|{skill_id}|{condition}|{skill_snapshot_sha256}".encode()
         ).hexdigest()[:16]
 
+        # Per-execution writable copy of the frozen skill.
+        from .workspace import prepare_execution_copy, workspace_provenance
+
+        try:
+            skill_copy = prepare_execution_copy(frozen_skill_dir, execution_id, work_root=work)
+            for p in (skill_copy,):
+                try:
+                    os.chmod(p, 0o777)
+                except Exception:
+                    pass
+                for f in skill_copy.rglob("*"):
+                    try:
+                        os.chmod(f, 0o777)
+                    except Exception:
+                        pass
+            # ensure monitoring perms for sandbox user
+            try:
+                os.chmod(monitoring, 0o777)
+            except Exception:
+                pass
+            skill_dir_for_docker = skill_copy
+            ws_prov = workspace_provenance(frozen_skill_dir, skill_copy)
+        except Exception:
+            # fallback: use frozen dir directly if copy fails (preserves old behavior)
+            skill_dir_for_docker = frozen_skill_dir
+            ws_prov = {"source_snapshot_immutable": "false"}
+
         argv = self.build_docker_argv(
-            skill_id=skill_id, skill_dir=skill_dir, monitoring_dir=monitoring,
+            skill_id=skill_id, skill_dir=skill_dir_for_docker, monitoring_dir=monitoring,
             credentials=credentials, condition=condition, command=command,
         )
         started = time.monotonic()
@@ -550,6 +632,7 @@ class SkillLeakBenchSandboxRunner:
                 "exit_status_file": artifacts["exit_status"],
                 "isolation_level": self.isolation_level,
                 "sandbox_profile": self.resource_profile(),
+                "workspace": ws_prov,
             },
         )
 

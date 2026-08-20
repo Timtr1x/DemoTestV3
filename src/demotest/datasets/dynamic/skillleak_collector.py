@@ -18,12 +18,14 @@ from typing import Any
 from ...config import get_dataset
 from ..source_lock import DatasetSourceLock, now_utc, write_source_lock
 from ..traces.models import CredentialTrace
+from .markers import SkillLeakBenchMarkerProvider
 from .parser import parse_execution
-from .sandbox import SkillLeakBenchSandboxRunner, injected_credentials
+from .sandbox import SkillLeakBenchSandboxRunner
 from .schemas import COLLECTOR_VERSION, DynamicExecutionRecord, trace_snapshot_sha256
 from .snapshot import SNAPSHOTS_ROOT, SnapshotManifest, load_snapshot
 
 DATASET_ID = "credential_dynamic_traces"
+COLLECTOR_DISPLAY = "dynamic-collector-v3"
 
 
 @dataclass(frozen=True)
@@ -82,6 +84,12 @@ class DynamicTraceCollector:
         self.snapshots_root = Path(snapshots_root) if snapshots_root else SNAPSHOTS_ROOT
         self.metadata_root = Path(metadata_root) if metadata_root else None
 
+    def _marker_provider(self) -> SkillLeakBenchMarkerProvider | None:
+        try:
+            return SkillLeakBenchMarkerProvider(self.runner.pipeline_root)
+        except Exception:
+            return None
+
     def collect(
         self,
         *,
@@ -101,6 +109,7 @@ class DynamicTraceCollector:
         skills = all_skills[start_idx:stop_idx]
         skipped_existing = 0
         attempted = 0
+        marker_provider = self._marker_provider()
 
         for entry in skills:
             if (entry.skill_id, condition) in completed:
@@ -108,10 +117,19 @@ class DynamicTraceCollector:
                 continue
             attempted += 1
             skill_dir = self.snapshots_root / snapshot_id / "skills" / entry.skill_id
-            creds = injected_credentials(
-                pipeline_revision=self.runner.pipeline_revision,
-                skill_id=entry.skill_id,
-            )
+            # Official forged markers — same values the container's entrypoint
+            # generates via mock_creds.generate_mock_credentials(skill_id).
+            if marker_provider is not None:
+                creds: dict[str, str] = marker_provider.markers_for_skill(entry.skill_id)
+            else:
+                from .sandbox import injected_credentials
+
+                creds = injected_credentials(
+                    pipeline_revision=self.runner.pipeline_revision,
+                    skill_id=entry.skill_id,
+                )
+            # Condition-isolated workdir: <raw>/executions/<snapshot>/<skill>/<condition>/
+            exec_work = self.raw_dir / "executions" / snapshot_id / entry.skill_id / condition
             try:
                 record = self.runner.run_skill(
                     skill_id=entry.skill_id,
@@ -121,7 +139,7 @@ class DynamicTraceCollector:
                     condition=condition,
                     declared_providers=entry.declared_providers,
                     command=entry.entry_command or None,
-                    work_root=self.raw_dir / "executions" / f"{snapshot_id}-{entry.skill_id}",
+                    work_root=exec_work,
                 )
             except Exception as e:
                 problems.append(f"{entry.skill_id}: sandbox error: {e}")
@@ -147,8 +165,8 @@ class DynamicTraceCollector:
     ) -> tuple[list[DynamicExecutionRecord], list[CredentialTrace]]:
         """Load same-snapshot state for serial batch resume.
 
-        Snapshot, pipeline, collector semantics and sandbox resource profile
-        must remain identical across batches.
+        Snapshot, pipeline, collector semantics, image digest and sandbox
+        resource profile must remain identical across batches.
         """
         meta_path = self.raw_dir / "trace_meta.json"
         exec_path = self.raw_dir / "executions.jsonl"
@@ -177,6 +195,14 @@ class DynamicTraceCollector:
         if existing_profile != current_profile:
             raise RuntimeError(
                 "sandbox resource/isolation profile changed; refusing to mix executions"
+            )
+        # Image digest drift must also be rejected — same profile can hide a rebuild.
+        current_digest = self.runner.image_digest()
+        existing_digest = str(meta.get("sandbox_image_digest") or "")
+        if existing_digest and current_digest and existing_digest != current_digest:
+            raise RuntimeError(
+                f"sandbox image digest changed: {existing_digest} -> {current_digest}; "
+                "refusing to mix executions from different images"
             )
 
         executions: list[DynamicExecutionRecord] = []
@@ -232,6 +258,13 @@ class DynamicTraceCollector:
             1 for t in traces
             if not (t.metadata.get("authorized_sink") or t.metadata.get("safe_redaction"))
         )
+        marker_prov = self._marker_provider()
+        cred_prov = marker_prov.provenance if marker_prov is not None else {
+            "credential_kind": "TEST_SECRET",
+            "credential_generator": "demotest/datasets/dynamic/sandbox.py:injected_credentials",
+            "credential_generator_revision": self.runner.pipeline_revision,
+            "credential_generator_sha256": "",
+        }
         meta = {
             "source_revision": self.runner.pipeline_revision,
             "n_traces": len(traces),
@@ -254,6 +287,7 @@ class DynamicTraceCollector:
             "pipeline_revision": self.runner.pipeline_revision,
             "execution_modes": sorted({r.execution_mode for r in executions}),
             "conditions": sorted({r.condition for r in executions}),
+            "credential_provenance": cred_prov,
         }
         _atomic_write_text(
             self.raw_dir / "trace_meta.json",
@@ -279,6 +313,7 @@ class DynamicTraceCollector:
                 "isolation_level": meta["isolation_level"],
                 "trace_hash": meta["trace_hash"],
                 "collector_version": COLLECTOR_VERSION,
+                "credential_provenance": cred_prov,
             },
             adapter_name=DATASET_ID,
             adapter_version="1.0.0",

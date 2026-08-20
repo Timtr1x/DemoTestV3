@@ -4,7 +4,8 @@ Subcommands:
   doctor    — environment gate: docker, pinned pipeline, image digest,
               optional official T3 self-test, credential-forwarding boundary
   snapshot  — freeze a skills directory into a pinned snapshot (per-skill SHA)
-  collect   — run a frozen snapshot through the sandbox → raw traces + lock
+  collect   — run a frozen snapshot through the sandbox → raw traces + lock (deterministic Core only)
+  agent-collect — Host-side AgentDriver differential (benign/adversarial, Extended)
   verify    — re-check snapshot + trace file hashes against trace_meta.json
 """
 from __future__ import annotations
@@ -59,16 +60,25 @@ def add_parser(sub) -> None:
     snap.add_argument("--created-at", default="")
     snap.set_defaults(func=cmd_snapshot)
 
-    col = sp.add_parser("collect", help="Run a frozen snapshot through the sandbox")
+    col = sp.add_parser("collect", help="Run a frozen snapshot through the sandbox (deterministic Core)")
     col.add_argument("--snapshot", required=True, help="snapshot id, e.g. snap-<hash12>")
     col.add_argument("--offset", type=int, default=0,
                      help="0-based index into the frozen skill snapshot")
     col.add_argument("--limit", type=int, default=10,
                      help="skills selected in this serial batch (default: 10)")
     col.add_argument("--condition", default="deterministic",
-                     choices=["deterministic", "benign", "adversarial"])
+                     choices=["deterministic"])
     _add_sandbox_args(col)
     col.set_defaults(func=cmd_collect)
+
+    aco = sp.add_parser("agent-collect", help="Host-side AgentDriver differential (Extended, non-headline)")
+    aco.add_argument("--snapshot", required=True, help="snapshot id")
+    aco.add_argument("--offset", type=int, default=0)
+    aco.add_argument("--limit", type=int, default=10)
+    aco.add_argument("--condition", default="benign", choices=["benign", "adversarial"])
+    aco.add_argument("--rounds", type=int, default=3, help="agent rounds per skill")
+    _add_sandbox_args(aco)
+    aco.set_defaults(func=cmd_agent_collect)
 
     ver = sp.add_parser("verify", help="Re-verify snapshot + trace hashes")
     ver.add_argument("--snapshot", required=True)
@@ -104,6 +114,9 @@ def cmd_snapshot(args) -> int:
 
 
 def cmd_collect(args) -> int:
+    if args.condition != "deterministic":
+        print("collect: only --condition deterministic is allowed for P4 Core; use agent-collect for benign/adversarial")
+        return 1
     runner = _runner(args)
     # hard gate: sandbox environment must be green before touching real skills
     rep = runner.doctor_checks(with_self_test=False)
@@ -132,6 +145,30 @@ def cmd_collect(args) -> int:
     for prob in report.problems:
         print(f"[collect][warn] {prob}")
     return 0 if not report.problems else 1
+
+
+def cmd_agent_collect(args) -> int:
+    """Extended Agent-driven differential — real API key stays on Host."""
+    runner = _runner(args)
+    rep = runner.doctor_checks(with_self_test=False)
+    if not rep.ok:
+        for c in rep.checks:
+            if c.required and not c.ok:
+                print(f"[FAIL] {c.name}: {c.detail}")
+        print("agent-collect refused: `demotest dynamic doctor` must pass first")
+        return 1
+    # Import lazily so Core never depends on agent deps
+    from ..datasets.dynamic.agents import OpenAICompatibleAgentDriver
+    from ..datasets.dynamic.agents.models import AgentConfig
+    driver = OpenAICompatibleAgentDriver(AgentConfig(
+        model=getattr(args, "model", "") or "",
+    ))
+    print(f"[agent-collect] snapshot={args.snapshot} condition={args.condition} rounds={args.rounds}")
+    print(f"[agent-collect] driver provenance: {driver.provenance}")
+    print("[agent-collect] Extended / non-headline — not yet wired to sandbox differential (scaffold ready)")
+    # Scaffold: full differential wiring (multi-round benign/adversarial) is
+    # staged for the next commit so P4 deterministic Core stays shippable.
+    return 0
 
 
 def cmd_verify(args) -> int:

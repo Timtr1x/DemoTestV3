@@ -33,9 +33,11 @@ Smoke 目标（`deterministic` 模式、fake-only、可复现）：先 5 个，�
 
 真实 Skill 为不可信代码。**优选**仍是 disposable Linux VM → Docker；没有 VM/WSL 时，允许 `docker_only_hardened` 进入 Core，但必须在 trace/source lock 中如实记录 isolation level。
 
-Docker-only Core 最低 profile：串行 `concurrency=1`、`--network none`、memory/CPU/PID limit、`--cap-drop ALL`、`no-new-privileges`、只读 `/skills`、默认只读 rootfs + tmpfs `/tmp`。不挂载 host home、docker.sock、SSH agent 或真实 credential，仅注入 `TEST_SECRET_*`。资源不足/timeout 记 unresolved，不得当 benign。
+Docker-only Core 最低 profile：串行 `concurrency=1`、`--network none`、memory/CPU/PID limit、`--cap-drop ALL`、`no-new-privileges`、只读 rootfs + tmpfs `/tmp` + tmpfs `/mock_creds`；冻结快照永不直接挂载，每次 execution 复制到可写工作区后以 `:rw` 挂载到 `/skills`，再配合 `official_forged_canary`（`sk-leakbench-mock-*` / `AKIA-LEAKBENCH-*`，与容器 entrypoint 完全同源）。`doctor --self-test` 必须走同一 `prepare_execution_copy → build_docker_argv → run_skill → parse_execution` 正式路径。
 
-同一 snapshot 使用 `--offset/--limit` 分批累积；collector 按 `(skill_id, condition)` 跳过已完成 execution。snapshot、pipeline revision、collector version 或 sandbox resource profile 变化时拒绝混跑。
+同一 snapshot 使用 `--offset/--limit` 分批累积；collector 按 `(skill_id, condition)` 跳过已完成 execution，execution 工作区按 `executions/<snapshot>/<skill>/<condition>/` 隔离。snapshot、pipeline revision、collector version、sandbox resource profile 或 image digest 变化时拒绝混跑；trace/source-lock 记录 `credential_provenance: official_forged_canary` 与完整 `sandbox_profile`。
+
+`demotest dynamic collect` 仅接受 `--condition deterministic`（P4 Core）；`benign/adversarial` 改由 `demotest dynamic agent-collect`（Host-side `AgentDriver`，真实 API Key 永不进入 Docker/trace/manifest），第一版数据保持 Extended / non-headline。
 
 规模不再按机器内存硬限制：先 Smoke 20–50 trace；Docker 稳定且真实候选充足后，可逐批扩到 500–1000 左右。Core 只接受真实 `DYNAMIC_TRACE`，绝不使用 synthetic 补数量。
 
