@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from collections import defaultdict
 from pathlib import Path
 
@@ -127,25 +128,8 @@ def run(args) -> int:
         print(f"FAIL: run preflight failed: {e}", flush=True)
         return 1
 
-    total_ran = 0
-    total_skipped = 0
-    for channel, group in sorted(by_channel.items()):
-        rname = resolve_renderer_name(project, channel)
-        fidelity = _resolve_fidelity(project, channel, args.fidelity)
-        renderer = get_renderer(rname, fidelity=fidelity)
-        store_path = RESULTS_DIR / args.project / args.target / run_version / f"{channel}.jsonl"
-        runner = build_runner(
-            project, target, renderer, store_path, run_version,
-            request_gap=args.gap, target_cfg=tcfg,
-        )
-        runner.max_attempts = args.max_attempts
-        rr = runner.run(group, dry_run=args.dry_run)
-        total_ran += rr.ran
-        total_skipped += rr.skipped
-        label = "dry-run" if args.dry_run else "ran"
-        print(f"[run] {channel} ({rname}/{fidelity}): {label}={rr.ran} skipped={rr.skipped} written={rr.written}")
-
-    # Write _run_meta.json for provenance chain Run → Manifest → Track
+    # Write _run_meta.json BEFORE the runner loop (atomic tmp+replace): if a live
+    # run crashes mid-way, results+meta coexist so crash-resume passes preflight.
     source_type = "manifest" if args.source.startswith("manifest:") else ("fixture" if args.source.startswith("fixture:") else ("legacy" if args.source.startswith("legacy:") else "unknown"))
     meta = {
         "source": args.source,
@@ -163,9 +147,29 @@ def run(args) -> int:
         "project": args.project,
         "target": args.target,
     }
-    meta_path = RESULTS_DIR / args.project / args.target / run_version / "_run_meta.json"
-    meta_path.parent.mkdir(parents=True, exist_ok=True)
-    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    meta_path = base_dir / "_run_meta.json"
+    base_dir.mkdir(parents=True, exist_ok=True)
+    tmp_meta = base_dir / "_run_meta.tmp"
+    tmp_meta.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    os.replace(tmp_meta, meta_path)
+
+    total_ran = 0
+    total_skipped = 0
+    for channel, group in sorted(by_channel.items()):
+        rname = resolve_renderer_name(project, channel)
+        fidelity = _resolve_fidelity(project, channel, args.fidelity)
+        renderer = get_renderer(rname, fidelity=fidelity)
+        store_path = RESULTS_DIR / args.project / args.target / run_version / f"{channel}.jsonl"
+        runner = build_runner(
+            project, target, renderer, store_path, run_version,
+            request_gap=args.gap, target_cfg=tcfg,
+        )
+        runner.max_attempts = args.max_attempts
+        rr = runner.run(group, dry_run=args.dry_run)
+        total_ran += rr.ran
+        total_skipped += rr.skipped
+        label = "dry-run" if args.dry_run else "ran"
+        print(f"[run] {channel} ({rname}/{fidelity}): {label}={rr.ran} skipped={rr.skipped} written={rr.written}")
 
     print(f"[run] total: ran={total_ran} skipped={total_skipped} "
           f"run_version={run_version} dry_run={args.dry_run} fidelity={args.fidelity}")

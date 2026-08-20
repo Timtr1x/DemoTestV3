@@ -289,3 +289,104 @@ def test_compare_b_wrong_manifest_fails(tmp_path: Path):
     finally:
         shutil.rmtree(base_a, ignore_errors=True)
         shutil.rmtree(base_b, ignore_errors=True)
+
+
+# --- Review d3a3bb3 housekeeping: adhoc validator + legacy experiment_hash --
+
+def _minimal_result_row(run_version: str) -> dict:
+    return {
+        "case_id": "fixture-case-1", "run_id": run_version,
+        "project": "P1_external_instruction", "channel": "email",
+        "expected": "block", "target": "linemod", "request_hash": "x",
+        "http_status": 200, "outcome": "block",
+    }
+
+
+def test_adhoc_fixture_run_and_analyze_ok(tmp_path: Path):
+    """fixture: runs are adhoc (manifest_sha256=None) and must analyze fine."""
+    import shutil
+    import types
+    from demotest.cli.run import run as run_cmd
+    from demotest.cli.analyze import run as analyze_cmd
+    from demotest.paths import RESULTS_DIR
+
+    rv = "test-adhoc-1"
+    base = RESULTS_DIR / "P1_external_instruction" / "linemod" / rv
+    args = types.SimpleNamespace(
+        project="P1_external_instruction", target="linemod",
+        source="fixture:p1_external_instruction", run_version=rv,
+        gap=0.01, dry_run=True, max_attempts=1, fidelity="auto",
+        adopt_legacy_run=False,
+    )
+    try:
+        assert run_cmd(args) == 0
+        meta = json.loads((base / "_run_meta.json").read_text(encoding="utf-8"))
+        assert meta["manifest_sha256"] is None
+        assert meta["benchmark_track"] == "adhoc"
+        assert meta["headline_eligible"] is False
+        # add one result row, then analyze must pass provenance (regression:
+        # validator used to reject adhoc for missing manifest_sha256)
+        (base / "email.jsonl").write_text(
+            json.dumps(_minimal_result_row(rv)) + "\n", encoding="utf-8")
+        aargs = types.SimpleNamespace(
+            project="P1_external_instruction", target="linemod",
+            source="fixture:p1_external_instruction", run_version=rv,
+            json=False, allow_legacy_run_without_meta=False,
+        )
+        assert analyze_cmd(aargs) == 0, "adhoc run must analyze without manifest SHA"
+    finally:
+        shutil.rmtree(base, ignore_errors=True)
+
+
+def test_adhoc_run_binding_manifest_fails(tmp_path: Path):
+    """An adhoc run whose meta suddenly carries a manifest SHA is corruption."""
+    from demotest.datasets.context import verify_run_meta
+    from demotest.core.exceptions import ManifestError
+    ctx = resolve_benchmark_context("fixture:p1_external_instruction", project="P1_external_instruction")
+    (tmp_path / "_run_meta.json").write_text(json.dumps({
+        "manifest_sha256": "sha256:" + "1" * 64, "project": "P1_external_instruction",
+        "target": "linemod", "run_version": "v1",
+    }), encoding="utf-8")
+    try:
+        verify_run_meta(tmp_path, ctx, expected_project="P1_external_instruction",
+                        expected_target="linemod", expected_run_version="v1")
+        assert False, "adhoc run with manifest SHA must fail"
+    except ManifestError as e:
+        assert "adhoc" in str(e).lower()
+
+
+def test_preflight_legacy_meta_without_experiment_hash_requires_adopt():
+    """Old-style meta (no experiment_hash) must be explicitly adopted."""
+    import shutil
+    import types
+    from demotest.cli.run import run as run_cmd
+    from demotest.paths import RESULTS_DIR
+
+    rv = "test-legacy-nohash"
+    base = RESULTS_DIR / "P1_external_instruction" / "linemod" / rv
+    base.mkdir(parents=True, exist_ok=True)
+    (base / "email.jsonl").write_text(
+        json.dumps(_minimal_result_row(rv)) + "\n", encoding="utf-8")
+    (base / "_run_meta.json").write_text(json.dumps({
+        "source": "manifest:benchmarks/manifests/smoke-v2/p1.json",
+        "source_type": "manifest",
+        "manifest": "benchmarks/manifests/smoke-v2/p1.json",
+        "manifest_sha256": _ctx_p1().manifest_sha256,
+        "benchmark_track": "core", "headline_eligible": True,
+        "project": "P1_external_instruction", "target": "linemod",
+        "run_version": rv,
+        # no experiment_hash / no fidelity — pre-d3a3bb3 meta
+    }), encoding="utf-8")
+
+    def _mk(adopt):
+        return types.SimpleNamespace(
+            project="P1_external_instruction", target="linemod",
+            source="manifest:benchmarks/manifests/smoke-v2/p1.json",
+            run_version=rv, gap=0.01, dry_run=True, max_attempts=1,
+            fidelity="auto", adopt_legacy_run=adopt)
+
+    try:
+        assert run_cmd(_mk(False)) == 1, "legacy meta without experiment_hash must fail"
+        assert run_cmd(_mk(True)) == 0, "--adopt-legacy-run must allow the resume"
+    finally:
+        shutil.rmtree(base, ignore_errors=True)

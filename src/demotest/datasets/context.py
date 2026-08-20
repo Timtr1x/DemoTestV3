@@ -107,10 +107,15 @@ def verify_run_meta(
     except Exception as e:
         raise ManifestError(f"corrupt _run_meta.json at {meta_path}: {e}")
     sha = meta.get("manifest_sha256")
-    if not sha:
-        raise ManifestError(f"_run_meta.json missing manifest_sha256")
-    if ctx.manifest_sha256 and sha != ctx.manifest_sha256:
-        raise ManifestError(f"manifest SHA mismatch: run meta {sha} != --source {ctx.manifest_sha256}")
+    if ctx.manifest_sha256 is None:
+        # adhoc run (fixture:/legacy:) must NOT bind a frozen manifest
+        if sha not in (None, ""):
+            raise ManifestError(f"adhoc run unexpectedly binds a manifest: {sha}")
+    else:
+        if not sha:
+            raise ManifestError("_run_meta.json missing manifest_sha256")
+        if sha != ctx.manifest_sha256:
+            raise ManifestError(f"manifest SHA mismatch: run meta {sha} != --source {ctx.manifest_sha256}")
     for key, expected in (("project", expected_project), ("target", expected_target), ("run_version", expected_run_version)):
         got = meta.get(key)
         if got != expected:
@@ -150,15 +155,28 @@ def run_preflight_check(
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
     except Exception as e:
         raise ManifestError(f"corrupt _run_meta.json at {meta_path}: {e}")
-    # manifest SHA (if manifest-sourced)
-    if ctx.manifest_sha256 and meta.get("manifest_sha256") != ctx.manifest_sha256:
+    # manifest SHA: manifest-sourced runs must match; adhoc runs must not bind one
+    if ctx.manifest_sha256 is None:
+        if meta.get("manifest_sha256") not in (None, ""):
+            raise ManifestError(
+                f"adhoc run unexpectedly binds a manifest: {meta.get('manifest_sha256')}"
+            )
+    elif meta.get("manifest_sha256") != ctx.manifest_sha256:
         raise ManifestError(
             f"existing run manifest_sha256 {meta.get('manifest_sha256')} != current {ctx.manifest_sha256}"
         )
-    # experiment hash covers dataset/project/target/fidelity — different config => different experiment
-    if meta.get("experiment_hash") and meta.get("experiment_hash") != experiment_hash:
+    # experiment hash covers dataset/project/target/fidelity — different config => different experiment.
+    # Legacy metas (pre-experiment_hash) must be explicitly adopted, same as results-without-meta.
+    old_exp = meta.get("experiment_hash")
+    if not old_exp:
+        if not allow_legacy_adopt:
+            raise ManifestError(
+                f"legacy run meta at {meta_path} has no experiment_hash; "
+                "cannot prove same experiment. Use --adopt-legacy-run to resume anyway."
+            )
+    elif old_exp != experiment_hash:
         raise ManifestError(
-            f"existing run experiment_hash {meta.get('experiment_hash')} != current {experiment_hash}"
+            f"existing run experiment_hash {old_exp} != current {experiment_hash}"
         )
     for key, expected in (("project", project), ("target", target), ("run_version", run_version)):
         if meta.get(key) != expected:
