@@ -97,3 +97,15 @@ datasets:
       license: MIT
     raw_dir: cache/datasets_v3/raw/credential_catalog_synthetic
     normalized_dir: cache/datasets_v3/normalized/credential_catalog_synthetic
+  credential_dynamic_traces:
+    adapter: credential_dynamic_traces
+    adapter_version: "1.0.0"
+    enabled: true
+    quality_tier: A
+    source:
+      type: derived
+      repo_id: skillleakbench_pipeline
+      revision: 682521a54f65045725e1e01076db449e402a78f9
+      license: MIT
+    raw_dir: cache/datasets_v3/raw/credential_dynamic_traces
+    normalized_dir: cache/datasets_v3/normalized/credential_dynamic_traces

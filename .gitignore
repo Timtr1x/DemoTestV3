@@ -15,5 +15,9 @@ cache/datasets_v3/normalized/
 # E10 oversized payloads — regenerate: python -m projects.e10_resource_abuse sample --force
 cache/sample_manifests/longctx_200.json
 cache/sample_manifests/repeat_bomb_100.json
+# P4 dynamic: skill snapshots are frozen skill code + sandbox execution artifacts —
+# code can be large; traces + executions are committed only via trace_meta hash.
+cache/datasets_v3/raw/skill_snapshots/
+cache/datasets_v3/raw/credential_dynamic_traces/
 *.log
 .DS_Store
