@@ -725,3 +725,114 @@ def test_cache_sidecar_mismatch_refuses_materialize(tmp_path: Path):
     with pytest.raises(RuntimeError, match="refused"):
         materialize_candidates(pool_root=pool, dest_dir=tmp_path / "dest2",
                                require_runtime_ready=True)
+
+
+# -- snapshot fail-closed leaks (final patch before real data) -----------------
+
+def test_snapshot_symlink_preflight_never_reads_target(tmp_path: Path, monkeypatch):
+    """Refusal alone is not enough — the symlink target must never be opened."""
+    from demotest.datasets.dynamic import snapshot as snap_mod
+    skills_root = _mat_root(tmp_path, ["skill-a"])
+    target = tmp_path / "host-secret.txt"
+    target.write_text("HOST SECRET", encoding="utf-8")
+    try:
+        (skills_root / "skill-a" / "secret-link").symlink_to(target)
+    except Exception:
+        pytest.skip("symlink not supported on this FS")
+    opened: list[str] = []
+    orig_open = Path.open
+
+    def spy(self, *a, **kw):
+        opened.append(str(self))
+        return orig_open(self, *a, **kw)
+
+    monkeypatch.setattr(Path, "open", spy)
+    with pytest.raises(RuntimeError, match="symlink"):
+        snap_mod.freeze_skill_snapshot(skills_root, pipeline_revision="rev",
+                                       out_root=tmp_path / "snaps")
+    # Neither the link nor its target was ever opened for reading
+    assert not any("secret-link" in p for p in opened)
+    assert not any(str(target) in p for p in opened)
+    # The preflight fired before any hashing of the poisoned skill
+    assert not (tmp_path / "snaps").exists()
+
+
+def test_hash_tree_itself_fail_closed_on_symlink(tmp_path: Path):
+    """Second line of defense: _hash_tree refuses symlinks even without preflight."""
+    from demotest.datasets.dynamic.snapshot import _hash_tree
+    d = tmp_path / "s"
+    d.mkdir()
+    (d / "a.txt").write_text("hi", encoding="utf-8")
+    target = tmp_path / "secret.txt"
+    target.write_text("secret", encoding="utf-8")
+    try:
+        (d / "link").symlink_to(target)
+    except Exception:
+        pytest.skip("symlink not supported on this FS")
+    with pytest.raises(RuntimeError, match="symlink"):
+        _hash_tree(d)
+
+
+def test_snapshot_symlink_preflight_simulated_no_read(tmp_path: Path, monkeypatch):
+    """Platform-independent: a symlink-flagged file is refused before any open()."""
+    from demotest.datasets.dynamic import snapshot as snap_mod
+    skills_root = _mat_root(tmp_path, ["skill-a"])
+    planted = skills_root / "skill-a" / "planted-link"
+    planted.write_text("would-be host target bytes", encoding="utf-8")
+
+    orig_is_symlink = Path.is_symlink
+
+    def fake_is_symlink(self):
+        if self == planted:
+            return True
+        return orig_is_symlink(self)
+
+    monkeypatch.setattr(Path, "is_symlink", fake_is_symlink)
+    opened: list[str] = []
+    orig_open = Path.open
+
+    def spy(self, *a, **kw):
+        opened.append(str(self))
+        return orig_open(self, *a, **kw)
+
+    monkeypatch.setattr(Path, "open", spy)
+    with pytest.raises(RuntimeError, match="symlink"):
+        snap_mod.freeze_skill_snapshot(skills_root, pipeline_revision="rev",
+                                       out_root=tmp_path / "snaps")
+    assert not any("planted-link" in p for p in opened)
+    assert not (tmp_path / "snaps").exists()
+
+    # _hash_tree direct call is likewise fail-closed before reading
+    with pytest.raises(RuntimeError, match="symlink"):
+        snap_mod._hash_tree(skills_root / "skill-a")
+    assert not any("planted-link" in p for p in opened)
+
+
+def test_malformed_materialization_manifest_refuses_snapshot(tmp_path: Path):
+    """A corrupt manifest must refuse — never degrade to the legacy inline path."""
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    variants = [
+        "{not valid json",                                   # JSON parse failure
+        json.dumps({"candidate_set_id": "x", "skills": {}}),  # skills not a list
+        json.dumps({"candidate_set_id": "", "skills": []}),   # empty candidate_set_id
+        json.dumps({"candidate_set_id": "x", "skills": [      # duplicate skill_id
+            {"skill_id": "a", "candidate_id": "c1", "source_sha256": "z"},
+            {"skill_id": "a", "candidate_id": "c2", "source_sha256": "z"},
+        ]}),
+        json.dumps({"candidate_set_id": "x", "skills": []}),  # empty manifest, non-empty dir
+    ]
+    for i, content in enumerate(variants):
+        root = tmp_path / f"case{i}" / "skills"
+        _skill(root, "a", {
+            "run.py": "print('x')",
+            # evil inline spec: if the snapshot silently fell back to legacy,
+            # this is exactly what would get executed
+            "runtime_spec.json": json.dumps({"entry_command": ["python", "/skills/run.py"]}),
+        })
+        (root / "_p4_materialization.json").write_text(content, encoding="utf-8")
+        with pytest.raises(RuntimeError, match="refused"):
+            freeze_skill_snapshot(root, pipeline_revision="rev",
+                                  out_root=tmp_path / f"snaps{i}")
+        # legacy fallback would have produced a snapshot dir — it must not exist
+        snaps = tmp_path / f"snaps{i}"
+        assert not snaps.exists() or not any(snaps.iterdir())

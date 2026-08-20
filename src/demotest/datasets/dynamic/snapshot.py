@@ -82,12 +82,20 @@ class SnapshotManifest:
 
 
 def _hash_tree(root: Path) -> tuple[str, int]:
+    # Fail-closed on any symlink: never follow a link into host files, not
+    # even to hash it. Callers must preflight with _tree_has_symlink first;
+    # this is the second line of defense.
     # Sort by POSIX relative path (case-sensitive) — must match the candidate
     # intake hash byte-for-byte so declared source_sha256 == tree sha on every
     # platform (WindowsPath ordering is case-insensitive and diverges).
+    scanned: list[Path] = []
+    for p in root.rglob("*"):
+        if p.is_symlink():
+            raise RuntimeError(f"snapshot refused: symlink in skill tree: {p.relative_to(root)}")
+        scanned.append(p)
     files = sorted(
         (
-            p for p in root.rglob("*")
+            p for p in scanned
             if p.is_file() and not any(part in _EXCLUDE_DIRS for part in p.relative_to(root).parts)
             if p.name != _MATERIALIZATION_FILENAME
         ),
@@ -120,27 +128,57 @@ def _skill_meta(skill_dir: Path) -> dict[str, Any]:
     return {}
 
 
-def _materialization_provenance(skills_root: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
-    """Load provenance from _p4_materialization.json if present."""
+def _materialization_provenance(
+    skills_root: Path,
+) -> tuple[dict[str, Any] | None, dict[str, dict[str, Any]]]:
+    """Load provenance from _p4_materialization.json.
+
+    Missing file -> (None, {}) selects the legacy/test-only path. A manifest
+    that EXISTS but is unreadable or structurally invalid raises — falling
+    back to legacy would let a corrupted manifest silently re-enable the
+    Skill's own inline execution spec (fail-open).
+    """
     p = skills_root / _MATERIALIZATION_FILENAME
     if not p.exists():
-        return {}, {}
+        return None, {}
+    if p.is_symlink():
+        raise RuntimeError("snapshot refused: materialization manifest is a symlink")
     try:
         doc = json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
-        return {}, {}
+    except Exception as e:
+        raise RuntimeError(
+            f"snapshot refused: {_MATERIALIZATION_FILENAME} exists but is not valid JSON ({e})"
+        ) from e
+    if not isinstance(doc, dict):
+        raise RuntimeError(f"snapshot refused: {_MATERIALIZATION_FILENAME} must be a JSON object")
+    raw_skills = doc.get("skills")
+    if not isinstance(raw_skills, list):
+        raise RuntimeError(f"snapshot refused: {_MATERIALIZATION_FILENAME} 'skills' must be a list")
+    candidate_set_id = str(doc.get("candidate_set_id") or "")
+    if not candidate_set_id:
+        raise RuntimeError(f"snapshot refused: {_MATERIALIZATION_FILENAME} has empty candidate_set_id")
+    per_skill: dict[str, dict[str, Any]] = {}
+    for s in raw_skills:
+        if not isinstance(s, dict):
+            raise RuntimeError(f"snapshot refused: {_MATERIALIZATION_FILENAME} skill entries must be objects")
+        sid = str(s.get("skill_id") or s.get("candidate_id") or "")
+        if not sid:
+            raise RuntimeError(f"snapshot refused: {_MATERIALIZATION_FILENAME} skill entry without skill_id")
+        if sid in per_skill:
+            raise RuntimeError(f"snapshot refused: {_MATERIALIZATION_FILENAME} duplicate skill_id {sid}")
+        per_skill[sid] = dict(s)
     raw = p.read_bytes()
     selected_specs_sha256 = ""
     # Hash of the *selected* runtime-spec projection (the specs for exactly the
     # skills in this materialization) — distinct from the whole sidecar file
     # hash recorded as runtime_specs_file_sha256 in the materialization doc.
     try:
-        rs_blob = json.dumps([s.get("runtime_spec") for s in sorted(doc.get("skills") or [], key=lambda x: str(x.get("skill_id") or ""))], sort_keys=True)
+        rs_blob = json.dumps([s.get("runtime_spec") for s in sorted(raw_skills, key=lambda x: str(x.get("skill_id") or ""))], sort_keys=True)
         selected_specs_sha256 = hashlib.sha256(rs_blob.encode()).hexdigest()
     except Exception:
         selected_specs_sha256 = ""
     meta = {
-        "candidate_set_id": str(doc.get("candidate_set_id") or ""),
+        "candidate_set_id": candidate_set_id,
         "candidate_policy_version": str(doc.get("candidate_policy_version") or ""),
         "seed": doc.get("seed"),
         "selection_sha256": str(doc.get("selection_sha256") or ""),
@@ -148,11 +186,6 @@ def _materialization_provenance(skills_root: Path) -> tuple[dict[str, Any], dict
         "selected_runtime_specs_sha256": selected_specs_sha256,
         "runtime_specs_file_sha256": str(doc.get("runtime_specs_file_sha256") or ""),
     }
-    per_skill: dict[str, dict[str, Any]] = {}
-    for s in (doc.get("skills") or []):
-        sid = str(s.get("skill_id") or s.get("candidate_id") or "")
-        if sid:
-            per_skill[sid] = dict(s)
     return meta, per_skill
 
 
@@ -228,11 +261,16 @@ def freeze_skill_snapshot(
         raise FileNotFoundError(f"skills root not found: {skills_root}")
 
     mat_meta, mat_per_skill = _materialization_provenance(skills_root)
-    materialized = bool(mat_meta)
+    materialized = mat_meta is not None
 
-    # Hash every skill tree first so the validation gate can compare bytes.
+    # No-follow preflight BEFORE any hashing: a symlink (including a symlinked
+    # top-level skill dir) must be rejected before a single target byte is
+    # read. _hash_tree re-checks internally as a second line of defense.
     hashed: dict[str, tuple[str, int]] = {}
     for sd in _skill_dirs(skills_root):
+        if sd.is_symlink() or _tree_has_symlink(sd):
+            raise RuntimeError(
+                f"snapshot refused: symlink present in skill dir {sd.name} (no-follow preflight)")
         hashed[sd.name] = _hash_tree(sd)
 
     if materialized:
@@ -369,7 +407,11 @@ def verify_snapshot(snapshot_id: str, *, root: Path | str | None = None) -> list
         if not sd.is_dir():
             problems.append(f"missing skill dir: {e.skill_id}")
             continue
-        sha, n = _hash_tree(sd)
+        try:
+            sha, n = _hash_tree(sd)
+        except RuntimeError as exc:
+            problems.append(f"skill {e.skill_id}: {exc}")
+            continue
         if sha != e.sha256:
             problems.append(f"skill {e.skill_id} sha256 drift: stored={e.sha256} actual={sha}")
         entries.append(e)
