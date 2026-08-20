@@ -66,6 +66,13 @@ _CHILD_ENV_ALLOWLIST = (
     "DOCKER_CERT_PATH",
 )
 
+DEFAULT_MEMORY = "512m"
+DEFAULT_CPUS = "0.5"
+DEFAULT_PIDS_LIMIT = 64
+DEFAULT_TIMEOUT_S = 120
+DEFAULT_TMPFS = "/tmp:rw,nosuid,nodev,size=64m"
+DEFAULT_ISOLATION_LEVEL = "docker_only_hardened"
+
 
 def injected_credentials(
     *,
@@ -139,8 +146,14 @@ class SkillLeakBenchSandboxRunner:
         image: str = "skill-leakbench",
         docker: Sequence[str] | None = None,
         network: str = "none",
-        memory: str = "512m",
-        timeout_s: int = 240,
+        memory: str = DEFAULT_MEMORY,
+        cpus: str = DEFAULT_CPUS,
+        pids_limit: int = DEFAULT_PIDS_LIMIT,
+        timeout_s: int = DEFAULT_TIMEOUT_S,
+        read_only_rootfs: bool = True,
+        skills_read_only: bool = True,
+        tmpfs: str = DEFAULT_TMPFS,
+        isolation_level: str = DEFAULT_ISOLATION_LEVEL,
     ) -> None:
         self.pipeline_root = Path(pipeline_root)
         self.pipeline_revision = pipeline_revision
@@ -150,7 +163,30 @@ class SkillLeakBenchSandboxRunner:
         self.docker = tuple(docker)
         self.network = network
         self.memory = memory
-        self.timeout_s = timeout_s
+        self.cpus = str(cpus)
+        self.pids_limit = int(pids_limit)
+        self.timeout_s = int(timeout_s)
+        self.read_only_rootfs = bool(read_only_rootfs)
+        self.skills_read_only = bool(skills_read_only)
+        self.tmpfs = str(tmpfs or "")
+        self.isolation_level = str(isolation_level or DEFAULT_ISOLATION_LEVEL)
+
+    def resource_profile(self) -> dict[str, Any]:
+        """Canonical serial Docker-only resource/isolation profile."""
+        return {
+            "isolation_level": self.isolation_level,
+            "network": self.network,
+            "memory": self.memory,
+            "cpus": self.cpus,
+            "pids_limit": self.pids_limit,
+            "timeout_s": self.timeout_s,
+            "cap_drop": "ALL",
+            "no_new_privileges": True,
+            "read_only_rootfs": self.read_only_rootfs,
+            "skills_read_only": self.skills_read_only,
+            "tmpfs": self.tmpfs,
+            "concurrency": 1,
+        }
 
     # -- doctor (guide §5) ---------------------------------------------------
 
@@ -193,6 +229,18 @@ class SkillLeakBenchSandboxRunner:
         checks.append(DoctorCheck(
             "no_real_credentials_forwarded", not leaked,
             f"credential-looking host vars present but NOT forwarded: {host_credential_names()}",
+        ))
+        hardening_ok = (
+            self.network == "none"
+            and self.pids_limit > 0
+            and bool(self.cpus)
+            and self.read_only_rootfs
+            and self.skills_read_only
+        )
+        checks.append(DoctorCheck(
+            "docker_only_hardening",
+            hardening_ok,
+            json.dumps(self.resource_profile(), sort_keys=True),
         ))
         if with_self_test:
             st = self.run_self_test()
@@ -245,12 +293,25 @@ class SkillLeakBenchSandboxRunner:
         """Official container contract; `-e` carries TEST_SECRET values only."""
         for name, value in credentials.items():
             assert_fake_canary(name, value)
+        skill_mount = f"{skill_dir.resolve()}:/skills"
+        if self.skills_read_only:
+            skill_mount += ":ro"
         argv = [
             *self.docker, "run", "--rm",
             "--network", self.network,
             "--memory", self.memory,
-            "-v", f"{skill_dir.resolve()}:/skills",
-            "-v", f"{monitoring_dir.resolve()}:/monitoring",
+            "--cpus", self.cpus,
+            "--pids-limit", str(self.pids_limit),
+            "--cap-drop", "ALL",
+            "--security-opt", "no-new-privileges:true",
+        ]
+        if self.read_only_rootfs:
+            argv.append("--read-only")
+        if self.tmpfs:
+            argv += ["--tmpfs", self.tmpfs]
+        argv += [
+            "-v", skill_mount,
+            "-v", f"{monitoring_dir.resolve()}:/monitoring:rw",
             "-e", f"SKILL_ID={skill_id}",
             "-e", f"CONDITION={condition}",
         ]
@@ -333,7 +394,11 @@ class SkillLeakBenchSandboxRunner:
             stdout_text=artifacts["stdout"],
             credential_names=tuple(sorted(credentials)),
             declared_providers=tuple(declared_providers),
-            metadata={"exit_status_file": artifacts["exit_status"]},
+            metadata={
+                "exit_status_file": artifacts["exit_status"],
+                "isolation_level": self.isolation_level,
+                "sandbox_profile": self.resource_profile(),
+            },
         )
 
 

@@ -39,7 +39,7 @@ ExecutionMode = Literal["deterministic", "agent_driven"]
 #: collector may inject (security boundary, guide §13). No uuid/random/faker.
 CANARY_RE = re.compile(r"^TEST_SECRET_[0-9A-F]{16}$")
 
-COLLECTOR_VERSION = "dynamic-collector-v1"
+COLLECTOR_VERSION = "dynamic-collector-v2"
 
 
 class DynamicSpecError(ValueError):
@@ -140,3 +140,34 @@ class DynamicExecutionRecord:
             "collector_version": self.collector_version,
             "metadata": dict(self.metadata or {}),
         }
+
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]) -> "DynamicExecutionRecord":
+        """Load a frozen execution row for batch resume.
+
+        ``stdout_text`` is intentionally not serialized in executions.jsonl;
+        existing rows are loaded only for identity/resume and are never
+        re-parsed into traces.
+        """
+        return cls(
+            execution_id=str(d.get("execution_id") or ""),
+            skill_id=str(d.get("skill_id") or ""),
+            skill_snapshot_sha256=str(d.get("skill_snapshot_sha256") or ""),
+            condition=str(d.get("condition") or "deterministic"),  # type: ignore[arg-type]
+            execution_mode=str(d.get("execution_mode") or "deterministic"),  # type: ignore[arg-type]
+            sandbox_provider=str(d.get("sandbox_provider") or "SkillLeakBench"),
+            pipeline_revision=str(d.get("pipeline_revision") or ""),
+            sandbox_image_digest=str(d.get("sandbox_image_digest") or ""),
+            outcome=str(d.get("outcome") or "SANDBOX_ERROR"),  # type: ignore[arg-type]
+            exit_code=d.get("exit_code"),
+            timeout=bool(d.get("timeout", False)),
+            wall_clock_ms=int(d.get("wall_clock_ms") or 0),
+            stdout_artifact=str(d.get("stdout_artifact") or ""),
+            network_artifact=str(d.get("network_artifact") or ""),
+            network_events=tuple(dict(e) for e in (d.get("network_events") or [])),
+            stdout_text="",
+            credential_names=tuple(str(x) for x in (d.get("credential_names") or [])),
+            declared_providers=tuple(str(x) for x in (d.get("declared_providers") or [])),
+            collector_version=str(d.get("collector_version") or COLLECTOR_VERSION),
+            metadata=dict(d.get("metadata") or {}),
+        )

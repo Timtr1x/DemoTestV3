@@ -325,3 +325,144 @@ def test_collector_freezes_lock_with_stub_runner(tmp_path: Path):
     # at minimum trace_meta snapshot hash matches file bytes
     meta = json.loads((raw_dir / "trace_meta.json").read_text(encoding="utf-8"))
     assert meta["snapshot_sha256"] == hashlib.sha256((raw_dir / "traces.jsonl").read_bytes()).hexdigest()
+
+
+# -- Docker-only hardening / serial batch-resume ----------------------------
+
+def test_build_docker_argv_uses_hardened_docker_only_profile(tmp_path: Path):
+    runner = SkillLeakBenchSandboxRunner(
+        pipeline_root=Path("cache/datasets_v3/raw/skillleakbench_pipeline"),
+        pipeline_revision="rev", memory="256m", cpus="0.5", pids_limit=64, timeout_s=90,
+    )
+    creds = injected_credentials(
+        pipeline_revision="rev", skill_id="s", names=("OPENAI_API_KEY",))
+    argv = runner.build_docker_argv(
+        skill_id="s", skill_dir=tmp_path, monitoring_dir=tmp_path,
+        credentials=creds, condition="deterministic")
+    joined = " ".join(argv)
+    assert "--network none" in joined
+    assert "--memory 256m" in joined
+    assert "--cpus 0.5" in joined
+    assert "--pids-limit 64" in joined
+    assert "--cap-drop ALL" in joined
+    assert "--security-opt no-new-privileges:true" in joined
+    assert "--read-only" in argv
+    assert any(x.endswith(":/skills:ro") for x in argv)
+    assert any(x.endswith(":/monitoring:rw") for x in argv)
+    assert runner.resource_profile()["concurrency"] == 1
+
+
+def test_parser_records_docker_only_isolation_metadata():
+    marker = canonical_canary(source_revision="rev123", skill_id="skill-demo",
+                              issue_id="OPENAI_API_KEY", trace_channel="dynamic")
+    rec = _rec(
+        stdout_text=f"prefix {marker} suffix",
+        metadata={
+            "isolation_level": "docker_only_hardened",
+            "sandbox_profile": {"memory": "256m", "cpus": "0.5", "concurrency": 1},
+        },
+    )
+    traces = parse_execution(rec, {"OPENAI_API_KEY": marker})
+    assert traces[0].metadata["isolation_level"] == "docker_only_hardened"
+    assert traces[0].metadata["sandbox_profile"]["concurrency"] == 1
+
+
+def test_collector_batches_accumulate_and_resume_without_rerun(tmp_path: Path):
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+
+    skills_root = tmp_path / "skills"
+    for sid in ("skill-a", "skill-b", "skill-c"):
+        (skills_root / sid).mkdir(parents=True)
+        (skills_root / sid / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    manifest = freeze_skill_snapshot(
+        skills_root, pipeline_revision="rev-batch", out_root=tmp_path / "snapshots")
+
+    class StubRunner:
+        pipeline_revision = "rev-batch"
+        isolation_level = "docker_only_hardened"
+        calls: list[str] = []
+        def image_digest(self): return "sha256:stub-image"
+        def resource_profile(self):
+            return {"isolation_level": self.isolation_level, "memory": "256m",
+                    "cpus": "0.5", "concurrency": 1}
+        def run_skill(self, *, skill_id, skill_dir, skill_snapshot_sha256,
+                      credentials, condition="deterministic", declared_providers=(),
+                      command=None, work_root=None, timeout_s=None):
+            self.calls.append(skill_id)
+            marker = credentials["OPENAI_API_KEY"]
+            return DynamicExecutionRecord(
+                execution_id=f"exec-{skill_id}-{condition}", skill_id=skill_id,
+                skill_snapshot_sha256=skill_snapshot_sha256, condition=condition,
+                execution_mode="deterministic", sandbox_provider="SkillLeakBench",
+                pipeline_revision=self.pipeline_revision,
+                sandbox_image_digest=self.image_digest(),
+                outcome="SUCCESS_REACHED_SECRET_PATH", exit_code=0, timeout=False,
+                stdout_text=f"leaked {marker}", credential_names=tuple(credentials),
+                metadata={"isolation_level": self.isolation_level,
+                          "sandbox_profile": self.resource_profile()},
+            )
+
+    runner = StubRunner()
+    raw_dir = tmp_path / "raw"
+    meta_root = tmp_path / "meta"; meta_root.mkdir()
+    collector = DynamicTraceCollector(
+        runner=runner, raw_dir=raw_dir,
+        snapshots_root=tmp_path / "snapshots", metadata_root=meta_root)
+
+    first = collector.collect(snapshot_id=manifest.snapshot_id, offset=0, limit=2)
+    assert first.n_skills_attempted == 2
+    assert first.n_traces == 2
+    second = collector.collect(snapshot_id=manifest.snapshot_id, offset=1, limit=2)
+    assert second.n_skills_selected == 2
+    assert second.n_skills_skipped_existing == 1
+    assert second.n_skills_attempted == 1
+    assert second.n_traces == 3
+    assert sorted(runner.calls) == ["skill-a", "skill-b", "skill-c"]
+
+
+def test_collector_refuses_profile_drift_across_batches(tmp_path: Path):
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+
+    skills_root = tmp_path / "skills"
+    (skills_root / "skill-a").mkdir(parents=True)
+    (skills_root / "skill-a" / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    manifest = freeze_skill_snapshot(
+        skills_root, pipeline_revision="rev-profile", out_root=tmp_path / "snapshots")
+
+    class StubRunner:
+        pipeline_revision = "rev-profile"
+        isolation_level = "docker_only_hardened"
+        def __init__(self, memory): self.memory = memory
+        def image_digest(self): return "sha256:stub-image"
+        def resource_profile(self):
+            return {"isolation_level": self.isolation_level, "memory": self.memory,
+                    "cpus": "0.5", "concurrency": 1}
+        def run_skill(self, *, skill_id, skill_dir, skill_snapshot_sha256,
+                      credentials, condition="deterministic", declared_providers=(),
+                      command=None, work_root=None, timeout_s=None):
+            marker = credentials["OPENAI_API_KEY"]
+            return DynamicExecutionRecord(
+                execution_id=f"exec-{skill_id}-{condition}", skill_id=skill_id,
+                skill_snapshot_sha256=skill_snapshot_sha256, condition=condition,
+                execution_mode="deterministic", sandbox_provider="SkillLeakBench",
+                pipeline_revision=self.pipeline_revision,
+                sandbox_image_digest=self.image_digest(),
+                outcome="SUCCESS_REACHED_SECRET_PATH", exit_code=0, timeout=False,
+                stdout_text=marker, credential_names=tuple(credentials),
+                metadata={"isolation_level": self.isolation_level,
+                          "sandbox_profile": self.resource_profile()},
+            )
+
+    raw_dir = tmp_path / "raw"
+    meta_root = tmp_path / "meta"; meta_root.mkdir()
+    DynamicTraceCollector(
+        runner=StubRunner("256m"), raw_dir=raw_dir,
+        snapshots_root=tmp_path / "snapshots", metadata_root=meta_root,
+    ).collect(snapshot_id=manifest.snapshot_id, limit=1)
+    with pytest.raises(RuntimeError, match="profile changed"):
+        DynamicTraceCollector(
+            runner=StubRunner("512m"), raw_dir=raw_dir,
+            snapshots_root=tmp_path / "snapshots", metadata_root=meta_root,
+        ).collect(snapshot_id=manifest.snapshot_id, limit=1)
