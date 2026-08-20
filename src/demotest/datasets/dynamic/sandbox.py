@@ -72,6 +72,8 @@ DEFAULT_CPUS = "0.5"
 DEFAULT_PIDS_LIMIT = 64
 DEFAULT_TIMEOUT_S = 120
 DEFAULT_TMPFS = "/tmp:rw,nosuid,nodev,size=64m"
+DEFAULT_MOCK_CREDS_TMPFS = "/mock_creds:rw,nosuid,nodev,mode=777,size=16m"
+DEFAULT_HOME_TMPFS = "/home/sandbox:rw,nosuid,nodev,mode=777,size=32m"
 DEFAULT_ISOLATION_LEVEL = "docker_only_hardened"
 # The frozen snapshot is never mounted directly — entrypoint always writes
 # /skills/.env and /mock_creds/.env, so the per-execution copy must be :rw.
@@ -216,16 +218,14 @@ class SkillLeakBenchSandboxRunner:
             "read_only_rootfs": self.read_only_rootfs,
             "skills_read_only": self.skills_read_only,
             "tmpfs": self.tmpfs,
+            "tmpfs_mounts": [self.tmpfs, DEFAULT_MOCK_CREDS_TMPFS, DEFAULT_HOME_TMPFS],
             "concurrency": 1,
         }
 
     def _mock_creds_tmpfs_arg(self) -> list[str]:
-        # entrypoint writes /mock_creds/.env, /mock_creds/config.yaml and
-        # honeypot files under /home/sandbox — all need writable tmpfs when
-        # the rootfs is --read-only.
         return [
-            "--tmpfs", "/mock_creds:rw,nosuid,nodev,mode=777,size=16m",
-            "--tmpfs", "/home/sandbox:rw,nosuid,nodev,mode=777,size=32m",
+            "--tmpfs", DEFAULT_MOCK_CREDS_TMPFS,
+            "--tmpfs", DEFAULT_HOME_TMPFS,
         ]
 
     # -- doctor (guide §5) ---------------------------------------------------

@@ -810,3 +810,58 @@ def test_command_exit_status_overrides_container_exit_code(monkeypatch, tmp_path
     assert rec.outcome != "SUCCESS_NO_SECRET_FLOW"
     assert rec.metadata["container_exit_code"] == 0
     assert rec.metadata["exit_status_file"] == "1"
+
+
+def test_resume_refuses_pre_honeypot_tmpfs_profile(tmp_path: Path):
+    """Old v3 cache without tmpfs_mounts must not resume under new v4 profile."""
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+    import json as _json
+
+    skills_root = tmp_path / "skills"
+    (skills_root / "skill-a").mkdir(parents=True)
+    (skills_root / "skill-a" / "run.sh").write_text("echo hi")
+    manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-tmpfs", out_root=tmp_path / "snapshots")
+
+    class NewRunner:
+        pipeline_revision = "rev-tmpfs"
+        pipeline_root = Path("cache/datasets_v3/raw/skillleakbench_pipeline")
+        def image_digest(self): return "sha256:stub"
+        def resource_profile(self):
+            from demotest.datasets.dynamic.sandbox import SkillLeakBenchSandboxRunner
+            return SkillLeakBenchSandboxRunner(
+                pipeline_root=self.pipeline_root, pipeline_revision=self.pipeline_revision
+            ).resource_profile()
+        def run_skill(self, **kw):
+            raise AssertionError("should not run — resume must be refused before execution")
+
+    raw_dir = tmp_path / "raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    # Simulate old cache: profile without tmpfs_mounts
+    old_profile = {k: v for k, v in NewRunner().resource_profile().items() if k != "tmpfs_mounts"}
+    (raw_dir / "trace_meta.json").write_text(_json.dumps({
+        "snapshot_id": manifest.snapshot_id,
+        "pipeline_revision": "rev-tmpfs",
+        "builder_version": "dynamic-collector-v4",
+        "sandbox_profile": old_profile,
+        "sandbox_image_digest": "sha256:stub",
+    }), encoding="utf-8")
+    (raw_dir / "executions.jsonl").write_text("", encoding="utf-8")
+    (raw_dir / "traces.jsonl").write_text("", encoding="utf-8")
+    meta_root = tmp_path / "meta"; meta_root.mkdir()
+    with pytest.raises(RuntimeError, match="profile changed"):
+        DynamicTraceCollector(runner=NewRunner(), raw_dir=raw_dir, snapshots_root=tmp_path / "snapshots", metadata_root=meta_root).collect(snapshot_id=manifest.snapshot_id, limit=1)
+
+
+def test_raw_credential_json_becomes_network_body():
+    from demotest.datasets.dynamic.sandbox import normalize_network_events
+
+    events = normalize_network_events('{"OPENAI_API_KEY":"sk-leakbench-mock-x"}')
+    assert len(events) == 1
+    assert "sk-leakbench-mock-x" in events[0]["body"]
+    # Delimited sinkhole format: delimiter line + raw json
+    events2 = normalize_network_events(
+        '--- proxy POST http://127.0.0.1:9999/collect ---\n'
+        '{"OPENAI_API_KEY":"sk-leakbench-mock-x"}\n'
+    )
+    assert any("sk-leakbench-mock-x" in e["body"] for e in events2)
