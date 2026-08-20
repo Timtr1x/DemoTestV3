@@ -59,6 +59,9 @@ def run(args) -> int:
     sa = _load_combined(base_a)
     sb = _load_combined(base_b)
     out = compare_runs(cases, {"A": sa, "B": sb}, project=args.project)
+    # mixed suites (phase2-*): core + extended share a run, but only core is headline
+    if ctx.benchmark_track == "extended" and not ctx.headline_eligible:
+        print("[note] extended source — this comparison is non-headline (overall headline = Core A/B only)", flush=True)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2, default=str))
     else:

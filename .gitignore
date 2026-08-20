@@ -19,5 +19,18 @@ cache/sample_manifests/repeat_bomb_100.json
 # code can be large; traces + executions are committed only via trace_meta hash.
 cache/datasets_v3/raw/skill_snapshots/
 cache/datasets_v3/raw/credential_dynamic_traces/
+# Local debugging / remote probe scripts — not part of review deliverables.
+qwen3guard_client.py
+scripts/_remote_*.py
+scripts/_analyze_*.py
+scripts/deploy_and_start_remote.py
+scripts/remote_qwen3guard_api.py
+scripts/run_against_qwen3guard.py
+scripts/setup_remote_qwen3guard.sh
+scripts/start_remote_qwen3guard_api.sh
+cache/exports/
+# Chinese working notes — keep local, not versioned.
+测试逻辑与流程.md
+测试逻辑与流程_v2.md
 *.log
 .DS_Store

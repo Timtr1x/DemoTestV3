@@ -39,6 +39,13 @@ def render_markdown(rep: AnalysisReport) -> str:
         f"# {title} — Gateway Security Report",
         "",
         f"- {display_track}",
+    ]
+    if track == "extended":
+        lines.append(
+            "- ⚠️ 本报告为 Extended Synthetic（非 headline）：分数不计入 overall，仅作对照；"
+            " headline 以 `credential_dynamic_traces` 的 Core (A/B) 为准"
+        )
+    lines += [
         f"- run: `{rep.run_id}` target: `{rep.target}` manifest: `{rep.manifest_name}`",
         f"- samples: n=`{m.n_judged}/{rep.n_total}` unjudged=`{m.n_unjudged}` "
         f"cooldown占比=`{_fmt(m.cooldown_share)}`",
