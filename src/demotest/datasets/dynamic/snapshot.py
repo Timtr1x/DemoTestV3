@@ -124,23 +124,23 @@ def _materialization_provenance(skills_root: Path) -> tuple[dict[str, Any], dict
     except Exception:
         return {}, {}
     raw = p.read_bytes()
-    runtime_spec_sha256 = ""
-    # External runtime_specs hash (separate file, but materialization is the binding point)
-    # We record it here so snapshot → execution identity covers it even if specs change later.
+    selected_specs_sha256 = ""
+    # Hash of the *selected* runtime-spec projection (the specs for exactly the
+    # skills in this materialization) — distinct from the whole sidecar file
+    # hash recorded as runtime_specs_file_sha256 in the materialization doc.
     try:
-        # Try to locate pool root from materialization metadata (candidate_set may hint)
-        # but for now hash the materialization doc's runtime_spec content
         rs_blob = json.dumps([s.get("runtime_spec") for s in sorted(doc.get("skills") or [], key=lambda x: str(x.get("skill_id") or ""))], sort_keys=True)
-        runtime_spec_sha256 = hashlib.sha256(rs_blob.encode()).hexdigest()
+        selected_specs_sha256 = hashlib.sha256(rs_blob.encode()).hexdigest()
     except Exception:
-        runtime_spec_sha256 = ""
+        selected_specs_sha256 = ""
     meta = {
         "candidate_set_id": str(doc.get("candidate_set_id") or ""),
         "candidate_policy_version": str(doc.get("candidate_policy_version") or ""),
         "seed": doc.get("seed"),
         "selection_sha256": str(doc.get("selection_sha256") or ""),
         "materialization_sha256": hashlib.sha256(raw).hexdigest(),
-        "runtime_spec_sha256": runtime_spec_sha256,
+        "selected_runtime_specs_sha256": selected_specs_sha256,
+        "runtime_specs_file_sha256": str(doc.get("runtime_specs_file_sha256") or ""),
     }
     per_skill: dict[str, dict[str, Any]] = {}
     for s in (doc.get("skills") or []):
@@ -186,14 +186,6 @@ def freeze_skill_snapshot(
     archive_sha = hashlib.sha256(archive_blob.encode()).hexdigest()
     snapshot_id = f"snap-{archive_sha[:12]}"
 
-    snap_dir = out_root / snapshot_id
-    skills_dst = snap_dir / "skills"
-    if skills_dst.exists():
-        shutil.rmtree(skills_dst)
-    skills_dst.mkdir(parents=True, exist_ok=True)
-    for e in entries:
-        shutil.copytree(skills_root / e.skill_id, skills_dst / e.skill_id)
-
     manifest = SnapshotManifest(
         snapshot_id=snapshot_id,
         pipeline_revision=pipeline_revision,
@@ -202,11 +194,44 @@ def freeze_skill_snapshot(
         archive_sha256=archive_sha,
         candidate_provenance=mat_meta,
     )
+
+    # Freeze means freeze: snapshot_id is content-defined over skill bytes, but
+    # the same bytes under a different runtime spec / provenance / pipeline must
+    # NOT silently overwrite the existing snapshot artifact.
+    snap_dir = out_root / snapshot_id
+    existing_json = snap_dir / "snapshot.json"
+    if existing_json.exists():
+        try:
+            existing = load_snapshot(snapshot_id, root=out_root)
+        except Exception as e:
+            raise RuntimeError(
+                f"snapshot {snapshot_id} exists but is unreadable ({e}); "
+                "refusing to overwrite a frozen snapshot"
+            ) from e
+        if _snapshot_identity(existing) == _snapshot_identity(manifest):
+            return existing  # idempotent re-freeze
+        raise RuntimeError(
+            f"snapshot {snapshot_id} already exists with different provenance/runtime/pipeline identity; "
+            "refusing to overwrite a frozen snapshot — materialize a new candidate set instead"
+        )
+
+    skills_dst = snap_dir / "skills"
+    skills_dst.mkdir(parents=True, exist_ok=True)
+    for e in entries:
+        shutil.copytree(skills_root / e.skill_id, skills_dst / e.skill_id)
+
     (snap_dir / "snapshot.json").write_text(
         json.dumps(manifest.to_dict(), ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
     return manifest
+
+
+def _snapshot_identity(m: SnapshotManifest) -> dict[str, Any]:
+    """Identity for the overwrite gate — everything except created_at."""
+    d = m.to_dict()
+    d.pop("created_at", None)
+    return d
 
 
 def load_snapshot(snapshot_id: str, *, root: Path | str | None = None) -> SnapshotManifest:

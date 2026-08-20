@@ -230,9 +230,12 @@ class DynamicTraceCollector:
                 raise RuntimeError(
                     f"materialization_sha256 changed: {existing_cand.get('materialization_sha256','')[:12]} -> {current_cand.get('materialization_sha256','')[:12]}; refusing resume"
                 )
-            # Runtime spec hash (if present) must also match
-            if existing_cand.get("runtime_spec_sha256") and current_cand.get("runtime_spec_sha256") and existing_cand.get("runtime_spec_sha256") != current_cand.get("runtime_spec_sha256"):
-                raise RuntimeError("runtime_spec_sha256 changed; refusing resume")
+            # Selected runtime-spec projection hash (if present) must also match
+            def _sel_spec_sha(d: dict) -> str:
+                return str(d.get("selected_runtime_specs_sha256") or d.get("runtime_spec_sha256") or "")
+            old_spec_sha, new_spec_sha = _sel_spec_sha(existing_cand), _sel_spec_sha(current_cand)
+            if old_spec_sha and new_spec_sha and old_spec_sha != new_spec_sha:
+                raise RuntimeError("selected_runtime_specs_sha256 changed; refusing resume")
 
         executions: list[DynamicExecutionRecord] = []
         if exec_path.exists():

@@ -402,3 +402,159 @@ def test_python_shim_does_not_mutate_pinned_dockerfile():
     text = df.read_text(encoding="utf-8")
     assert "DemoTest shim" not in text
     assert "ln -sf /usr/bin/python3 /usr/local/bin/python" not in text
+
+
+# -- third-round hardening (main@2f0b060 review items) -------------------------
+
+def test_runtime_spec_refuses_source_sha_drift(tmp_path: Path):
+    """P0: a spec reviewed for sha AAA must not execute sha BBB of the same skill."""
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, load_candidates, load_runtime_specs, upsert_runtime_spec,
+    )
+    src = tmp_path / "src"
+    _skill(src, "skill-a", {"SKILL.md": "# a", "main.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="skill-a",
+                        entry_command=("python", "/skills/main.py"))
+    c1 = {c.skill_id: c for c in load_candidates(pool)}["skill-a"]
+    assert c1.runtime_status == "RUNTIME_READY"
+    assert load_runtime_specs(pool)["skill-a"]["source_sha256"] == c1.source_sha256
+    # Upstream update: same candidate_id, different bytes
+    (src / "skill-a" / "main.py").write_text("print('v2')", encoding="utf-8")
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-02T00:00:00Z")
+    c2 = {c.skill_id: c for c in load_candidates(pool)}["skill-a"]
+    assert c2.source_sha256 != c1.source_sha256
+    assert c2.runtime_status == "RUNTIME_SPEC_STALE"
+    assert c2.runtime_eligible is False
+    assert c2.entry_command == ()  # stale spec is never executable
+    # verify accepts the stale state as coherent (not executable)
+    from demotest.datasets.dynamic.candidates import verify_candidates
+    assert verify_candidates(pool) == []
+    # Human re-confirm: a fresh upsert binds the new source_sha256
+    upsert_runtime_spec(pool_root=pool, candidate_id="skill-a",
+                        entry_command=("python", "/skills/main.py"))
+    c3 = {c.skill_id: c for c in load_candidates(pool)}["skill-a"]
+    assert c3.runtime_status == "RUNTIME_READY"
+    assert load_runtime_specs(pool)["skill-a"]["source_sha256"] == c3.source_sha256
+
+
+def test_prepare_build_context_never_mutates_pinned_checkout(tmp_path: Path):
+    import hashlib as _hl
+    import importlib.util as _iu
+
+    spec = _iu.spec_from_file_location(
+        "ensure_img", Path("scripts/ensure_skillleakbench_image.py"))
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    ctx = tmp_path / "pinned"
+    ctx.mkdir()
+    (ctx / "Dockerfile").write_text(
+        "FROM ubuntu:22.04\n"
+        "RUN chmod +x /usr/local/bin/sandbox_monitor.sh /usr/local/bin/entrypoint.sh\n",
+        encoding="utf-8")
+    for name in mod.FIX_FILES:
+        (ctx / name).write_bytes(b"#!/bin/bash\r\necho hi\r\n")
+    before = {p.name: _hl.sha256(p.read_bytes()).hexdigest() for p in ctx.iterdir()}
+
+    tmp_ctx = mod.prepare_build_context(ctx, tmp_path / "work")
+
+    after = {p.name: _hl.sha256(p.read_bytes()).hexdigest() for p in ctx.iterdir()}
+    assert before == after  # pinned checkout byte-identical
+    # temp context got the CRLF normalization + the python shim
+    assert b"\r\n" not in (tmp_ctx / "entrypoint.sh").read_bytes()
+    df_text = (tmp_ctx / "Dockerfile").read_text(encoding="utf-8")
+    assert "ln -sf /usr/bin/python3 /usr/local/bin/python" in df_text
+
+
+def test_skillsmp_import_official_phase1_layout(tmp_path: Path):
+    """Official SkillLeakBench layout: skills in repos/, metadata one level up."""
+    import hashlib as _hl
+    from demotest.datasets.dynamic.candidates import (
+        import_skillsmp_candidates, load_candidate_meta, load_candidates,
+    )
+    dl = tmp_path / "phase1_downloads"
+    repos = dl / "repos"
+    zips = dl / "zips"
+    zips.mkdir(parents=True)
+    (zips / "skill-1.zip").write_bytes(b"PK fake zip bytes")
+    _skill(repos, "skill-1", {"SKILL.md": "# s", "main.py": "print(1)"})
+    meta_file = dl / "skills_metadata.json"
+    meta_file.write_text(json.dumps([{
+        "skill_id": "skill-1",
+        "skill_name": "Cool Skill",
+        "repo_url": "https://github.com/acme/skills",
+        "branch": "main",
+        "skill_subdir": "skills/skill-1",
+        "skill_url": "https://skillsmp.example/skills/skill-1",
+        "updated_at": "2026-01-01T00:00:00Z",
+    }]), encoding="utf-8")
+
+    # Explicit two-arg form (most reproducible)
+    pool = tmp_path / "pool"
+    import_skillsmp_candidates(repos, metadata_path=meta_file, dest_root=pool,
+                               created_at="2026-01-01T00:00:00Z")
+    cands = {c.skill_id: c for c in load_candidates(pool)}
+    assert set(cands) == {"skill-1"}  # zips/ is not treated as a skill
+    c = cands["skill-1"]
+    assert c.source_uri == "https://skillsmp.example/skills/skill-1"
+    assert c.source_revision == "main"
+    assert c.repo_url == "https://github.com/acme/skills"
+    assert c.branch == "main"
+    assert c.skill_subdir == "skills/skill-1"
+    assert c.skill_url == "https://skillsmp.example/skills/skill-1"
+    assert c.updated_at == "2026-01-01T00:00:00Z"
+    meta = load_candidate_meta(pool)
+    assert meta.skills_metadata_sha256 == _hl.sha256(meta_file.read_bytes()).hexdigest()
+
+    # Auto-discovery fallback: metadata one level above repos/ is found
+    pool2 = tmp_path / "pool2"
+    import_skillsmp_candidates(repos, dest_root=pool2, created_at="2026-01-01T00:00:00Z")
+    c2 = {c.skill_id: c for c in load_candidates(pool2)}["skill-1"]
+    assert c2.repo_url == "https://github.com/acme/skills"
+
+
+def test_snapshot_refreeze_idempotent_and_refuses_drift(tmp_path: Path):
+    """freeze means freeze: identical -> idempotent, different identity -> refuse."""
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    skills_root = _mat_root(tmp_path, ["skill-a"])
+    snaps = tmp_path / "snaps"
+    m1 = freeze_skill_snapshot(skills_root, pipeline_revision="rev-a", out_root=snaps,
+                               created_at="2026-01-01T00:00:00Z")
+    snap_json = snaps / m1.snapshot_id / "snapshot.json"
+    before = snap_json.read_bytes()
+    # Identical re-freeze -> idempotent return, no rewrite
+    m2 = freeze_skill_snapshot(skills_root, pipeline_revision="rev-a", out_root=snaps,
+                               created_at="2026-01-02T00:00:00Z")
+    assert m2.snapshot_id == m1.snapshot_id
+    assert snap_json.read_bytes() == before
+    # Different pipeline revision -> refuse
+    with pytest.raises(RuntimeError, match="refusing to overwrite"):
+        freeze_skill_snapshot(skills_root, pipeline_revision="rev-b", out_root=snaps)
+    # Different runtime spec with same skill bytes -> same snapshot_id, refuse
+    doc = json.loads((skills_root / "_p4_materialization.json").read_text(encoding="utf-8"))
+    doc["skills"][0]["runtime_spec"]["entry_command"] = ["python", "/skills/other.py"]
+    (skills_root / "_p4_materialization.json").write_text(
+        json.dumps(doc, indent=2, sort_keys=True), encoding="utf-8")
+    with pytest.raises(RuntimeError, match="refusing to overwrite"):
+        freeze_skill_snapshot(skills_root, pipeline_revision="rev-a", out_root=snaps)
+
+
+def test_materialization_records_runtime_specs_file_sha(tmp_path: Path):
+    import json as _j
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, materialize_candidates, runtime_specs_sha256,
+        upsert_runtime_spec,
+    )
+    src = tmp_path / "src"
+    _skill(src, "a", {"SKILL.md": "# a", "run.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    upsert_runtime_spec(pool_root=pool, candidate_id="a",
+                        entry_command=("python", "/skills/run.py"))
+    dest = tmp_path / "dest"
+    materialize_candidates(pool_root=pool, dest_dir=dest, seed=42,
+                           require_runtime_ready=True)
+    doc = _j.loads((dest / "_p4_materialization.json").read_text(encoding="utf-8"))
+    assert doc["runtime_specs_file_sha256"] == runtime_specs_sha256(pool)

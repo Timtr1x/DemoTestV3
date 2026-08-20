@@ -29,7 +29,9 @@ dev / eval / holdout
 
 先 `lstat` preflight：任何 symlink 直接 `REJECT_SYMLINK_ESCAPE`，不 `read_bytes` 宿主机文件；`REJECT_SYMLINK_* / REJECT_OVERSIZE` 只记 metadata、不复制内容；重复 SHA 去重，`classification_hint` 等仅作优先级、不成标签；危险代码不拒。
 
-`REJECT_EMPTY / REJECT_OVERSIZE / REJECT_SYMLINK_ESCAPE / REJECT_DUPLICATE / REJECT_INCOMPLETE` 留在 `candidates.jsonl` 审计，`materialize` 默认只出 `ACCEPT`；P4 deterministic Core 应加 `--require-runtime-ready` 只取显式 `entry_command` 的 `RUNTIME_READY`（`demotest.skill.json / runtime_spec.json`），`SKILL.md`-only 为 `AGENT_REQUIRED` 留给 Extended。
+`REJECT_EMPTY / REJECT_OVERSIZE / REJECT_SYMLINK_ESCAPE / REJECT_DUPLICATE / REJECT_INCOMPLETE` 留在 `candidates.jsonl` 审计，`materialize` 默认只出 `ACCEPT`；P4 deterministic Core 应加 `--require-runtime-ready` 只取显式 `entry_command` 的 `RUNTIME_READY`（外置 `runtime_specs/runtime_specs.jsonl` sidecar，不改 Skill 字节），`SKILL.md`-only 为 `AGENT_REQUIRED` 留给 Extended。
+
+sidecar 每条 spec 绑定写入时的 `source_sha256`；重新 crawl 后同一 `candidate_id` 字节变化（SHA 漂移）会自动降级为 `RUNTIME_SPEC_STALE`、不可执行，必须人工 `runtime-spec set` 重新确认，绝不沿用旧 spec 跑新代码。
 
 ## 审查（fail-closed）
 
@@ -45,8 +47,14 @@ dev / eval / holdout
 python -m pytest tests/v3/datasets/test_p4_*.py -q
 
 demotest dynamic candidates import-local --skills-dir <dir>
-demotest dynamic candidates import-skillsmp --source <crawl-output>
+# 官方 SkillLeakBench 布局：Skill 在 repos/，metadata 在上一级 —— 显式两个参数最可复现
+demotest dynamic candidates import-skillsmp \
+  --skills-dir <phase1_downloads/repos> \
+  --metadata <phase1_downloads/skills_metadata.json>
+# 无 --metadata 时自动探测 <skills-dir>/skills_metadata.json 再 <skills-dir>/../skills_metadata.json
 demotest dynamic candidates verify
+# 人工确认 execution contract 后才写 sidecar（绑定当时 source_sha256）
+demotest dynamic candidates runtime-spec set --candidate-id <id> --entry-command python /skills/main.py
 demotest dynamic candidates materialize --dest-dir <skills-dir> --limit 35 --seed 42 --require-runtime-ready
 # 同一 materialize 产物只做一次：
 demotest dynamic snapshot --skills-dir <skills-dir>

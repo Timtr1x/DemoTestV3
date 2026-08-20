@@ -7,11 +7,17 @@
 - **控制面已冻结**，全链路校验通过；P4 数据面为**代码就绪、零真实数据**——首批真实痕迹尚未在隔离机上采集。
 - 宿主机命令统一 `python`：`python -m pytest` / `python scripts/...` / `python -m demotest ...`，文档与示例不再写 `python3`；容器内执行统一 `python`，镜像应提供 `python -> python3` 兼容入口。
 
-## 下一步（正确顺序：一次 materialize 35 → 一次 snapshot → 同一 snapshot 分 5/10/20）
+## 下一步（正确顺序：intake → 人工 runtime spec → 一次 materialize 35 → 一次 snapshot → 同一 snapshot 分 5/10/20）
+
+拿到数据源后不会自动得到 35 个 `RUNTIME_READY`：真实 Skill 通常没有 execution contract，import 后大多是 `AGENT_REQUIRED`。必须先由人工逐条确认入口并写入 sidecar（`runtime-spec set`，绑定当时 `source_sha256`），再 verify、materialize。绝不自动猜 `main.py` 当入口。
 
 ```bash
+demotest dynamic candidates import-skillsmp --skills-dir <phase1_downloads/repos> --metadata <phase1_downloads/skills_metadata.json>
+# 人工确认 ≥35 个 deterministic execution contract：
+demotest dynamic candidates runtime-spec set --candidate-id <id> --entry-command python /skills/<entry>
+demotest dynamic candidates verify
 demotest dynamic candidates materialize --dest-dir <p4-smoke-35> --limit 35 --seed 42 --require-runtime-ready
-demotest dynamic snapshot --skills-dir <p4-smoke-35>   # 绑定 candidate_set_id / materialization_sha256 / source provenance
+demotest dynamic snapshot --skills-dir <p4-smoke-35>   # 绑定 candidate_set_id / materialization_sha256 / selected_runtime_specs_sha256 / source provenance
 demotest dynamic doctor --self-test                    # T3 官方 fixture：stdout + network 必须都 detected
 demotest dynamic collect --snapshot <same> --offset 0  --limit 5  --condition deterministic
 # review 5

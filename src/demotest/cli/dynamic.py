@@ -82,7 +82,12 @@ def add_parser(sub) -> None:
     imp_local.set_defaults(func=cmd_candidates_import_local)
 
     imp_smp = cand_sp.add_parser("import-skillsmp", help="Import from a SkillsMP crawl output dir")
-    imp_smp.add_argument("--source", required=True, dest="crawl_dir", help="crawl output dir")
+    imp_smp.add_argument("--skills-dir", dest="crawl_dir", default=None,
+                         help="dir whose immediate sub-dirs are Skills (official: phase1_downloads/repos)")
+    imp_smp.add_argument("--metadata", dest="metadata_path", default=None,
+                         help="explicit skills_metadata.json path (official: phase1_downloads/skills_metadata.json)")
+    imp_smp.add_argument("--source", dest="crawl_dir_legacy", default=None,
+                         help="deprecated alias of --skills-dir")
     imp_smp.add_argument("--source-revision", default="")
     imp_smp.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
     imp_smp.set_defaults(func=cmd_candidates_import_skillsmp)
@@ -197,9 +202,15 @@ def cmd_candidates_import_local(args) -> int:
 
 
 def cmd_candidates_import_skillsmp(args) -> int:
+    crawl_dir = args.crawl_dir or args.crawl_dir_legacy
+    if not crawl_dir:
+        print("[FAIL] import-skillsmp: --skills-dir is required "
+              "(official layout: --skills-dir <phase1_downloads/repos> --metadata <phase1_downloads/skills_metadata.json>)")
+        return 1
     try:
         m = import_skillsmp_candidates(
-            args.crawl_dir,
+            crawl_dir,
+            metadata_path=args.metadata_path,
             dest_root=args.pool_root,
             source_revision=args.source_revision,
         )
@@ -207,7 +218,8 @@ def cmd_candidates_import_skillsmp(args) -> int:
         print(f"[FAIL] import-skillsmp: {e}")
         return 1
     print(f"[candidates] skillsmp -> {args.pool_root}  set={m.candidate_set_id} "
-          f"count={m.count} accepted={m.accepted_count} rejected={m.rejected_count}")
+          f"count={m.count} accepted={m.accepted_count} rejected={m.rejected_count} "
+          f"metadata_sha={(m.skills_metadata_sha256 or '')[:12]}")
     return 0
 
 

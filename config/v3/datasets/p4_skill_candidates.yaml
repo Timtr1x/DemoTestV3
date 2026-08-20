@@ -15,11 +15,13 @@ policy:
   selection_seed: 42
   oversize_bytes: 52428800
   reject_reasons: [ACCEPT, REJECT_EMPTY, REJECT_OVERSIZE, REJECT_SYMLINK_ESCAPE, REJECT_SYMLINK, REJECT_DUPLICATE, REJECT_INCOMPLETE]
-  runtime_status: [RUNTIME_READY, AGENT_REQUIRED, RUNTIME_UNKNOWN, SOURCE_REJECTED]
-  hardening: "preflight symlink/size before hash/copy; REJECT_SYMLINK/OVERSIZE not staged; streaming hash; no auto-guessed entry"
+  runtime_status: [RUNTIME_READY, AGENT_REQUIRED, RUNTIME_UNKNOWN, SOURCE_REJECTED, RUNTIME_SPEC_STALE]
+  hardening: "preflight symlink/size before hash/copy; REJECT_SYMLINK/OVERSIZE not staged; streaming hash; no auto-guessed entry; sidecar spec bound to source_sha256 — sha drift => RUNTIME_SPEC_STALE, never auto-execute"
 
 provenance:
   fields_required: [candidate_id, skill_id, source_type, source_uri, source_revision, source_sha256, acquired_at, acquisition_method, local_path, file_count, total_bytes, runtime_status, runtime_eligible, entry_command, declared_providers, execution_spec_source]
+  skillsmp_upstream: [repo_url, branch, skill_subdir, skill_url, updated_at, skills_metadata_sha256]
+  skillsmp_layout: "official phase1_downloads: --skills-dir <phase1_downloads/repos> --metadata <phase1_downloads/skills_metadata.json>; auto-fallback probes <dir>/skills_metadata.json then <dir>/../skills_metadata.json"
   source_real: true
   synthetic: false
   hints_are_not_labels: true
@@ -29,12 +31,14 @@ materialize:
   only_accepted_by_default: true
   p4_core: "add --require-runtime-ready for RUNTIME_READY only"
   dest_hygiene: "refuse non-empty dest unless --clean-dest"
-  provenance_file: "_p4_materialization.json"
+  provenance_file: "_p4_materialization.json (records runtime_specs_file_sha256 of whole sidecar)"
 
 snapshot_binding:
   materialization_sha256: "bound into snapshot.json candidate_provenance"
+  selected_runtime_specs_sha256: "sha over the selected skills' runtime_spec projection (not the whole sidecar file)"
   per_skill_source: "source_uri/source_revision/source_sha256/candidate_id/entry_command carried"
-  windows_host: "python (not python3); container must expose python -> python3"
+  immutable: "existing snap-id re-freeze is idempotent; different provenance/runtime/pipeline identity => refuse overwrite"
+  windows_host: "python (not python3); container must expose python -> python3 (image shim via temp build context, pinned checkout never written)"
 
 review:
   version: p4-review-v1
