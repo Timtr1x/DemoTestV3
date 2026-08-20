@@ -38,7 +38,10 @@ CANDIDATES_ROOT = DATASE_V3_RAW_DIR / "p4_skill_candidates"
 CANDIDATES_JSONL = "candidates.jsonl"
 CANDIDATE_META = "candidate_meta.json"
 STAGED_SKILLS_DIRNAME = "skills"
+RUNTIME_SPECS_DIRNAME = "runtime_specs"
+RUNTIME_SPECS_FILE = "runtime_specs.jsonl"
 MATERIALIZATION_FILENAME = "_p4_materialization.json"
+RUNTIME_SPEC_VERSION = "p4-runtime-v1"
 
 # Policy constants
 CANDIDATE_POLICY_VERSION = "p4-candidate-v2"
@@ -267,8 +270,13 @@ def _has_skill_entrypoint_nofollow(skill_dir: Path, regular_files: list[Path]) -
     return False
 
 
-def _read_execution_spec(skill_dir: Path) -> tuple[tuple[str, ...], tuple[str, ...], str]:
-    """Read explicit execution spec — never guess entry script."""
+def _read_execution_spec_inline(skill_dir: Path) -> tuple[tuple[str, ...], tuple[str, ...], str]:
+    """Inline spec inside the Skill dir (legacy) — external sidecar is preferred.
+
+    Real SkillsMP Skills will not contain demotest files; prefer the external
+    runtime_specs sidecar so source_sha256 stays clean. Inline files are still
+    supported for tests / backwards compat but not for clean provenance.
+    """
     for fname in ("demotest.skill.json", "runtime_spec.json"):
         meta_path = skill_dir / fname
         if meta_path.exists() and not meta_path.is_symlink():
@@ -283,6 +291,66 @@ def _read_execution_spec(skill_dir: Path) -> tuple[tuple[str, ...], tuple[str, .
             except Exception:
                 continue
     return (), (), ""
+
+
+def _load_external_runtime_specs(pool_root: Path) -> dict[str, dict[str, Any]]:
+    """Load external sidecar specs from <pool>/runtime_specs/runtime_specs.jsonl."""
+    p = pool_root / RUNTIME_SPECS_DIRNAME / RUNTIME_SPECS_FILE
+    if not p.exists():
+        return {}
+    out: dict[str, dict[str, Any]] = {}
+    for raw in p.read_text(encoding="utf-8").splitlines():
+        if not raw.strip():
+            continue
+        try:
+            d = json.loads(raw)
+            cid = str(d.get("candidate_id") or d.get("skill_id") or "")
+            if cid:
+                out[cid] = d
+        except Exception:
+            continue
+    return out
+
+
+def _load_skillsmp_metadata_index(crawl_root: Path) -> dict[str, dict[str, Any]]:
+    """Load official crawler output `skills_metadata.json` if present.
+
+    Expected to be a list of entries with skill_id/skill_name/repo_url/branch/
+    skill_subdir/skill_url/updated_at. Return skill_id -> entry dict.
+    """
+    for fname in ("skills_metadata.json", "skillsmp_metadata.json", "crawl_metadata.json"):
+        p = crawl_root / fname
+        if p.exists() and not p.is_symlink():
+            try:
+                data = json.loads(p.read_text(encoding="utf-8"))
+                # Handle list or dict wrapper
+                entries = data if isinstance(data, list) else (data.get("skills") or data.get("entries") or [])
+                out: dict[str, dict[str, Any]] = {}
+                for e in entries:
+                    if isinstance(e, dict):
+                        sid = str(e.get("skill_id") or e.get("id") or "")
+                        if sid:
+                            out[sid] = dict(e)
+                if out:
+                    return out
+            except Exception:
+                continue
+    return {}
+
+
+def _resolve_execution_spec(
+    skill_id: str,
+    skill_dir: Path,
+    external_specs: dict[str, dict[str, Any]] | None = None,
+) -> tuple[tuple[str, ...], tuple[str, ...], str]:
+    """Prefer external sidecar; fallback to inline — never guess entry."""
+    if external_specs is not None and skill_id in external_specs:
+        d = external_specs[skill_id]
+        cmd = tuple(str(x) for x in (d.get("entry_command") or []))
+        prov = tuple(str(x) for x in (d.get("declared_providers") or []))
+        if cmd or prov:
+            return cmd, prov, f"{RUNTIME_SPECS_DIRNAME}/{RUNTIME_SPECS_FILE}"
+    return _read_execution_spec_inline(skill_dir)
 
 
 def _classify_skill_dir_nofollow(
@@ -338,6 +406,7 @@ def import_local_candidates(
     staged.mkdir(parents=True, exist_ok=True)
     created_at = created_at or now_utc()
     acquired_at = created_at
+    external_specs = _load_external_runtime_specs(dest)
     candidates: list[SkillCandidate] = []
     seen_shas: set[str] = set()
     for sd in _skill_dirs(src):
@@ -362,7 +431,7 @@ def import_local_candidates(
         else:
             sha, n_files, total = _hash_skill_dir_streaming(sd, regular)
             reason = _classify_skill_dir_nofollow(sd, regular, total, has_symlink, seen_shas, sha)
-            entry_cmd, prov, spec_src = _read_execution_spec(sd)
+            entry_cmd, prov, spec_src = _resolve_execution_spec(sd.name, sd, external_specs)
         # Derive runtime eligibility
         if reason != "ACCEPT":
             runtime_status: str = "SOURCE_REJECTED"
@@ -441,6 +510,9 @@ def import_skillsmp_candidates(
     staged.mkdir(parents=True, exist_ok=True)
     created_at = created_at or now_utc()
     acquired_at = created_at
+    # Upstream SkillsMP metadata (if present) — do not discard repo_url/branch/etc.
+    upstream_index = _load_skillsmp_metadata_index(src)
+    external_specs = _load_external_runtime_specs(dest)
     candidates: list[SkillCandidate] = []
     seen_shas: set[str] = set()
     for sd in _skill_dirs(src):
@@ -465,7 +537,7 @@ def import_skillsmp_candidates(
         else:
             sha, n_files, total = _hash_skill_dir_streaming(sd, regular)
             reason = _classify_skill_dir_nofollow(sd, regular, total, has_symlink, seen_shas, sha)
-            entry_cmd, prov, spec_src = _read_execution_spec(sd)
+            entry_cmd, prov, spec_src = _resolve_execution_spec(sd.name, sd, external_specs)
         # Hints from optional metadata.json (if not symlink)
         class_hint = ""
         pattern_hints: tuple[str, ...] = ()
@@ -481,6 +553,13 @@ def import_skillsmp_candidates(
                 severity_hint = str(m.get("severity") or m.get("severity_hint") or "")
             except Exception:
                 pass
+        # Enrich with upstream SkillsMP provenance if available
+        upstream = upstream_index.get(skill_id) or {}
+        if upstream:
+            # Prefer upstream skill_url/repo_url over local src path for source_uri
+            src_uri = str(upstream.get("skill_url") or upstream.get("repo_url") or src.resolve())
+        else:
+            src_uri = str(src.resolve())
         if reason != "ACCEPT":
             runtime_status = "SOURCE_REJECTED"
             runtime_eligible = False
@@ -504,13 +583,16 @@ def import_skillsmp_candidates(
             if reason == "ACCEPT":
                 seen_shas.add(sha)
         rel_staged = f"{STAGED_SKILLS_DIRNAME}/{skill_id}" if (staged / skill_id).exists() else ""
+        # Upstream provenance for SkillsMP: keep repo_url/skill_url in source_uri
+        enriched_source_uri = src_uri if 'src_uri' in locals() else str(src.resolve())
+        enriched_source_rev = str(upstream.get("branch") or upstream.get("revision") or source_revision) if 'upstream' in locals() and upstream else source_revision
         cand = SkillCandidate(
             candidate_id=skill_id,
             skill_id=skill_id,
-            skill_name=skill_id,
+            skill_name=str(upstream.get("skill_name") or skill_id) if 'upstream' in locals() and upstream else skill_id,
             source_type="skillsmp",
-            source_uri=str(src.resolve()),
-            source_revision=source_revision,
+            source_uri=enriched_source_uri,
+            source_revision=enriched_source_rev,
             source_sha256=sha,
             acquired_at=acquired_at,
             acquisition_method="skillsmp_crawl",
@@ -770,3 +852,77 @@ def _write_materialization_manifest(dest: Path, pool: Path, seed: int, selected:
     p = dest / MATERIALIZATION_FILENAME
     p.write_text(json.dumps(doc, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return p
+
+
+def _runtime_specs_path(pool_root: Path) -> Path:
+    return pool_root / RUNTIME_SPECS_DIRNAME / RUNTIME_SPECS_FILE
+
+
+def load_runtime_specs(pool_root: Path | str | None = None) -> dict[str, dict[str, Any]]:
+    pool = Path(pool_root) if pool_root else CANDIDATES_ROOT
+    return _load_external_runtime_specs(pool)
+
+
+def upsert_runtime_spec(
+    *,
+    pool_root: Path | str | None = None,
+    candidate_id: str,
+    entry_command: tuple[str, ...],
+    declared_providers: tuple[str, ...] = (),
+) -> None:
+    """Create or update an external runtime spec (sidecar) for *candidate_id*.
+
+    Never writes into the staged Skill dir — source_sha256 stays clean.
+    """
+    pool = Path(pool_root) if pool_root else CANDIDATES_ROOT
+    cands = {c.candidate_id: c for c in load_candidates(pool)}
+    if candidate_id not in cands:
+        raise ValueError(f"candidate not found: {candidate_id}")
+    specs_dir = pool / RUNTIME_SPECS_DIRNAME
+    specs_dir.mkdir(parents=True, exist_ok=True)
+    specs = _load_external_runtime_specs(pool)
+    specs[candidate_id] = {
+        "candidate_id": candidate_id,
+        "entry_command": list(entry_command),
+        "declared_providers": list(declared_providers),
+        "spec_version": RUNTIME_SPEC_VERSION,
+    }
+    out = _runtime_specs_path(pool)
+    lines = [json.dumps(specs[k], ensure_ascii=False, sort_keys=True) for k in sorted(specs)]
+    out.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
+    # Re-derive runtime eligibility for this candidate without re-importing all
+    # (next verify/materialize will see the updated spec via _resolve).
+    # Also eagerly refresh the single candidate row in candidates.jsonl so
+    # verify reflects the new runtime_status without requiring a full re-import.
+    cand = cands[candidate_id]
+    new_status = "RUNTIME_READY" if entry_command else "AGENT_REQUIRED"
+    if cand.reject_reason != "ACCEPT":
+        new_status = "SOURCE_REJECTED"
+    updated = SkillCandidate(
+        candidate_id=cand.candidate_id, skill_id=cand.skill_id, skill_name=cand.skill_name,
+        source_type=cand.source_type, source_uri=cand.source_uri, source_revision=cand.source_revision,
+        source_sha256=cand.source_sha256, acquired_at=cand.acquired_at, acquisition_method=cand.acquisition_method,
+        classification_hint=cand.classification_hint, pattern_hints=cand.pattern_hints, severity_hint=cand.severity_hint,
+        local_path=cand.local_path, file_count=cand.file_count, total_bytes=cand.total_bytes,
+        static_candidate=cand.static_candidate, manual_priority=cand.manual_priority, source_real=cand.source_real,
+        synthetic=cand.synthetic, reject_reason=cand.reject_reason,
+        runtime_status=new_status, runtime_eligible=(new_status == "RUNTIME_READY"),
+        entry_command=tuple(entry_command), declared_providers=tuple(declared_providers),
+        execution_spec_source=f"{RUNTIME_SPECS_DIRNAME}/{RUNTIME_SPECS_FILE}",
+    )
+    all_cands = load_candidates(pool)
+    for i, c in enumerate(all_cands):
+        if c.candidate_id == candidate_id:
+            all_cands[i] = updated
+            break
+    (pool / CANDIDATES_JSONL).write_text(
+        "".join(json.dumps(c.to_dict(), ensure_ascii=False, sort_keys=True) + "\n" for c in sorted(all_cands, key=lambda x: x.candidate_id)),
+        encoding="utf-8",
+    )
+
+
+def runtime_specs_sha256(pool_root: Path | str | None = None) -> str:
+    p = _runtime_specs_path(Path(pool_root) if pool_root else CANDIDATES_ROOT)
+    if not p.exists():
+        return hashlib.sha256(b"").hexdigest()
+    return hashlib.sha256(p.read_bytes()).hexdigest()

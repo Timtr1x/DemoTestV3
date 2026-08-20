@@ -196,20 +196,26 @@ def validate_review(review: TraceReview, trace: CredentialTrace | None = None) -
                 problems.append(f"{review.trace_id}: AUTHORIZED_SECRET_USE but authorized_sink not set")
             if fc == "REDACTED_OUTPUT" and not bool(meta.get("safe_redaction")):
                 problems.append(f"{review.trace_id}: REDACTED_OUTPUT but safe_redaction not set")
-            if fc == "STDOUT_EXPOSURE":
-                if trace.sink != "stdout":
-                    problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but sink={trace.sink!r}")
-                if trace.gateway_channel != "TOOL_RESULT" or trace.gateway_visibility != "DIRECT":
-                    problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but channel/visibility mismatch {trace.gateway_channel}/{trace.gateway_visibility}")
-                if trace.credential_marker and trace.credential_marker not in (trace.payload or ""):
-                    problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but marker not in payload")
-            if fc == "NETWORK_EXFIL":
-                if trace.sink != "network":
-                    problems.append(f"{review.trace_id}: NETWORK_EXFIL but sink={trace.sink!r}")
-                if trace.gateway_channel != "TOOL_CALL" or trace.gateway_visibility != "PROJECTED":
-                    problems.append(f"{review.trace_id}: NETWORK_EXFIL but channel/visibility mismatch {trace.gateway_channel}/{trace.gateway_visibility}")
-                if trace.credential_marker and trace.credential_marker not in (trace.payload or ""):
-                    problems.append(f"{review.trace_id}: NETWORK_EXFIL but marker not in payload")
+            # Credential-flow traces must carry a non-empty marker
+            if not trace.credential_marker:
+                problems.append(f"{review.trace_id}: ACCEPTED but empty credential_marker")
+            else:
+                if fc == "STDOUT_EXPOSURE":
+                    if trace.sink != "stdout":
+                        problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but sink={trace.sink!r}")
+                    if trace.gateway_channel != "TOOL_RESULT" or trace.gateway_visibility != "DIRECT":
+                        problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but channel/visibility mismatch {trace.gateway_channel}/{trace.gateway_visibility}")
+                    if trace.credential_marker not in (trace.payload or ""):
+                        problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but marker not in payload")
+                if fc == "NETWORK_EXFIL":
+                    if trace.sink != "network":
+                        problems.append(f"{review.trace_id}: NETWORK_EXFIL but sink={trace.sink!r}")
+                    if trace.gateway_channel != "TOOL_CALL" or trace.gateway_visibility != "PROJECTED":
+                        problems.append(f"{review.trace_id}: NETWORK_EXFIL but channel/visibility mismatch {trace.gateway_channel}/{trace.gateway_visibility}")
+                    if trace.credential_marker not in (trace.payload or ""):
+                        problems.append(f"{review.trace_id}: NETWORK_EXFIL but marker not in payload")
+                if fc == "AUTHORIZED_SECRET_USE" and trace.credential_marker not in (trace.payload or ""):
+                    problems.append(f"{review.trace_id}: AUTHORIZED_SECRET_USE but marker not in payload")
             # BLOCK vs ALLOW consistency — ensure evidence matches flow class
             # (STDOUT/NETWORK are BLOCK, AUTHORIZED/REDACTED are ALLOW)
             if fc in ("STDOUT_EXPOSURE", "NETWORK_EXFIL") and bool(meta.get("authorized_sink") or meta.get("safe_redaction")):

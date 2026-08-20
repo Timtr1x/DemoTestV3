@@ -123,12 +123,24 @@ def _materialization_provenance(skills_root: Path) -> tuple[dict[str, Any], dict
         doc = json.loads(p.read_text(encoding="utf-8"))
     except Exception:
         return {}, {}
+    raw = p.read_bytes()
+    runtime_spec_sha256 = ""
+    # External runtime_specs hash (separate file, but materialization is the binding point)
+    # We record it here so snapshot → execution identity covers it even if specs change later.
+    try:
+        # Try to locate pool root from materialization metadata (candidate_set may hint)
+        # but for now hash the materialization doc's runtime_spec content
+        rs_blob = json.dumps([s.get("runtime_spec") for s in sorted(doc.get("skills") or [], key=lambda x: str(x.get("skill_id") or ""))], sort_keys=True)
+        runtime_spec_sha256 = hashlib.sha256(rs_blob.encode()).hexdigest()
+    except Exception:
+        runtime_spec_sha256 = ""
     meta = {
         "candidate_set_id": str(doc.get("candidate_set_id") or ""),
         "candidate_policy_version": str(doc.get("candidate_policy_version") or ""),
         "seed": doc.get("seed"),
         "selection_sha256": str(doc.get("selection_sha256") or ""),
-        "materialization_sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+        "materialization_sha256": hashlib.sha256(raw).hexdigest(),
+        "runtime_spec_sha256": runtime_spec_sha256,
     }
     per_skill: dict[str, dict[str, Any]] = {}
     for s in (doc.get("skills") or []):

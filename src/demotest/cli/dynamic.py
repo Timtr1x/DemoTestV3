@@ -91,6 +91,18 @@ def add_parser(sub) -> None:
     cand_ver.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
     cand_ver.set_defaults(func=cmd_candidates_verify)
 
+    cand_rs = cand_sp.add_parser("runtime-spec", help="Manage external runtime specs (sidecar, no Skill mutation)")
+    cand_rs_sub = cand_rs.add_subparsers(dest="runtime_spec_cmd", required=True)
+    rs_set = cand_rs_sub.add_parser("set", help="Set external runtime spec for a candidate")
+    rs_set.add_argument("--candidate-id", required=True)
+    rs_set.add_argument("--entry-command", nargs="+", required=True, help="e.g. python /skills/scripts/run.py")
+    rs_set.add_argument("--declared-providers", nargs="*", default=[], help="e.g. api.openai.com")
+    rs_set.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
+    rs_set.set_defaults(func=cmd_candidates_runtime_spec_set)
+    rs_list = cand_rs_sub.add_parser("list", help="List external runtime specs")
+    rs_list.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
+    rs_list.set_defaults(func=cmd_candidates_runtime_spec_list)
+
     cand_mat = cand_sp.add_parser("materialize", help="Deterministically materialize a subset for snapshot")
     cand_mat.add_argument("--dest-dir", required=True, help="output skills dir for demotest dynamic snapshot")
     cand_mat.add_argument("--limit", type=int, default=None, help="max Skills to materialize")
@@ -196,6 +208,33 @@ def cmd_candidates_import_skillsmp(args) -> int:
         return 1
     print(f"[candidates] skillsmp -> {args.pool_root}  set={m.candidate_set_id} "
           f"count={m.count} accepted={m.accepted_count} rejected={m.rejected_count}")
+    return 0
+
+
+def cmd_candidates_runtime_spec_set(args) -> int:
+    from ..datasets.dynamic.candidates import upsert_runtime_spec
+    try:
+        upsert_runtime_spec(
+            pool_root=args.pool_root,
+            candidate_id=args.candidate_id,
+            entry_command=tuple(args.entry_command),
+            declared_providers=tuple(args.declared_providers or []),
+        )
+    except Exception as e:
+        print(f"[FAIL] runtime-spec set: {e}")
+        return 1
+    print(f"[candidates] runtime-spec set {args.candidate_id}: {list(args.entry_command)}")
+    return 0
+
+
+def cmd_candidates_runtime_spec_list(args) -> int:
+    from ..datasets.dynamic.candidates import load_runtime_specs
+    specs = load_runtime_specs(args.pool_root)
+    if not specs:
+        print("[candidates] no runtime specs")
+        return 0
+    for cid, d in sorted(specs.items()):
+        print(f"{cid}: {d.get('entry_command')}  providers={d.get('declared_providers')}")
     return 0
 
 

@@ -198,3 +198,207 @@ def test_review_stdout_marker_mismatch_fails():
                       expected_action_valid=True)
     probs = validate_review(bad, tr)
     assert any("marker not in payload" in p for p in probs)
+
+
+# -- second-round hardening (execution identity / fail-closed collect) --------
+
+def _mat_root(root: Path, skill_ids: list[str]) -> Path:
+    """Materialized-style skills root (entry via runtime_spec, provenance attached)."""
+    import hashlib as _hl
+    skills_root = root / "skills"
+    skills_doc = []
+    for sid in skill_ids:
+        d = skills_root / sid
+        d.mkdir(parents=True)
+        (d / "run.sh").write_text("#!/bin/sh\necho hi\n")
+        skills_doc.append({
+            "skill_id": sid,
+            "candidate_id": f"cand-{sid}",
+            "source_uri": f"https://skillsmp.test/skills/{sid}",
+            "source_revision": "rev-test",
+            "source_sha256": _hl.sha256(sid.encode()).hexdigest(),
+            "runtime_spec": {
+                "spec_version": "p4-runtime-v1",
+                "entry_command": ["python", "/skills/run.sh"],
+                "declared_providers": [],
+            },
+        })
+    (skills_root / "_p4_materialization.json").write_text(json.dumps({
+        "candidate_set_id": "p4-candidates-testset",
+        "candidate_policy_version": "p4-candidate-v2",
+        "seed": 42,
+        "selection_sha256": _hl.sha256(b"test-selection").hexdigest(),
+        "skills": skills_doc,
+    }, indent=2, sort_keys=True), encoding="utf-8")
+    return skills_root
+
+
+def _stub_runner(rev: str):
+    from demotest.datasets.dynamic.schemas import DynamicExecutionRecord
+
+    class StubRunner:
+        pipeline_revision = rev
+        pipeline_root = Path("cache/datasets_v3/raw/skillleakbench_pipeline")
+
+        def image_digest(self):
+            return "sha256:stub-image"
+
+        def resource_profile(self):
+            return {"isolation_level": "docker_only_hardened", "concurrency": 1}
+
+        def run_skill(self, *, skill_id, skill_dir, skill_snapshot_sha256, credentials,
+                      condition="deterministic", declared_providers=(), command=None,
+                      work_root=None, timeout_s=None):
+            marker = next(iter(credentials.values()), "")
+            return DynamicExecutionRecord(
+                execution_id=f"exec-{skill_id}", skill_id=skill_id,
+                skill_snapshot_sha256=skill_snapshot_sha256,
+                condition=condition, execution_mode="deterministic",
+                sandbox_provider="SkillLeakBench", pipeline_revision=self.pipeline_revision,
+                sandbox_image_digest=self.image_digest(),
+                outcome="SUCCESS_REACHED_SECRET_PATH", exit_code=0, timeout=False,
+                stdout_text=f"leaked {marker}", stdout_artifact="", network_artifact="",
+                network_events=(), credential_names=tuple(credentials), declared_providers=(),
+            )
+
+    return StubRunner()
+
+
+def test_collect_refuses_missing_entry_command(tmp_path: Path):
+    """Deterministic Core must fail closed — no silent bash fallback."""
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+
+    skills_root = tmp_path / "skills"
+    (skills_root / "skill-a").mkdir(parents=True)
+    (skills_root / "skill-a" / "run.sh").write_text("echo hi")
+    manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-gate",
+                                     out_root=tmp_path / "snaps")
+    meta = tmp_path / "meta"; meta.mkdir()
+    collector = DynamicTraceCollector(runner=_stub_runner("rev-gate"), raw_dir=tmp_path / "raw",
+                                      snapshots_root=tmp_path / "snaps", metadata_root=meta)
+    with pytest.raises(RuntimeError, match="entry_command"):
+        collector.collect(snapshot_id=manifest.snapshot_id)
+
+
+def test_collect_refuses_missing_candidate_provenance(tmp_path: Path):
+    """Entry command alone is not enough — snapshot must carry candidate_set_id."""
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+
+    skills_root = tmp_path / "skills"
+    _skill(skills_root, "skill-a", {
+        "run.sh": "echo hi",
+        "demotest.skill.json": json.dumps({"entry_command": ["python", "/skills/run.sh"]}),
+    })
+    manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-gate2",
+                                     out_root=tmp_path / "snaps")
+    meta = tmp_path / "meta"; meta.mkdir()
+    collector = DynamicTraceCollector(runner=_stub_runner("rev-gate2"), raw_dir=tmp_path / "raw",
+                                      snapshots_root=tmp_path / "snaps", metadata_root=meta)
+    with pytest.raises(RuntimeError, match="candidate_set_id"):
+        collector.collect(snapshot_id=manifest.snapshot_id)
+
+
+def test_resume_refuses_candidate_set_drift(tmp_path: Path):
+    """Resume against a different candidate set must be refused."""
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+
+    skills_root = _mat_root(tmp_path, ["skill-a"])
+    manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-drift",
+                                     out_root=tmp_path / "snaps")
+    raw = tmp_path / "raw"
+    meta = tmp_path / "meta"; meta.mkdir()
+    DynamicTraceCollector(runner=_stub_runner("rev-drift"), raw_dir=raw,
+                          snapshots_root=tmp_path / "snaps", metadata_root=meta,
+                          ).collect(snapshot_id=manifest.snapshot_id, limit=1)
+    # Tamper: pretend the previous batch belonged to another candidate set
+    meta_path = raw / "trace_meta.json"
+    doc = json.loads(meta_path.read_text(encoding="utf-8"))
+    doc["candidate_provenance"]["candidate_set_id"] = "p4-candidates-OTHER"
+    meta_path.write_text(json.dumps(doc, indent=2, sort_keys=True), encoding="utf-8")
+    with pytest.raises(RuntimeError, match="candidate_set_id changed"):
+        DynamicTraceCollector(runner=_stub_runner("rev-drift"), raw_dir=raw,
+                              snapshots_root=tmp_path / "snaps", metadata_root=meta,
+                              ).collect(snapshot_id=manifest.snapshot_id, limit=1)
+
+
+def test_external_runtime_spec_sidecar_keeps_skill_bytes_clean(tmp_path: Path):
+    from demotest.datasets.dynamic.candidates import (
+        import_local_candidates, load_candidates, load_runtime_specs,
+        runtime_specs_sha256, upsert_runtime_spec,
+    )
+    src = tmp_path / "src"
+    _skill(src, "agent", {"SKILL.md": "# a", "main.py": "print(1)"})
+    pool = tmp_path / "pool"
+    import_local_candidates(src, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    cand = {c.skill_id: c for c in load_candidates(pool)}["agent"]
+    assert cand.runtime_status == "AGENT_REQUIRED"
+    staged = pool / cand.local_path
+    before = {p.relative_to(staged).as_posix(): p.read_bytes()
+              for p in sorted(staged.rglob("*")) if p.is_file()}
+    upsert_runtime_spec(pool_root=pool, candidate_id="agent",
+                        entry_command=("python", "/skills/main.py"),
+                        declared_providers=("api.openai.com",))
+    after = {p.relative_to(staged).as_posix(): p.read_bytes()
+             for p in sorted(staged.rglob("*")) if p.is_file()}
+    assert before == after  # staged Skill bytes untouched
+    specs = load_runtime_specs(pool)
+    assert specs["agent"]["entry_command"] == ["python", "/skills/main.py"]
+    assert specs["agent"]["spec_version"] == "p4-runtime-v1"
+    assert runtime_specs_sha256(pool)
+    cand2 = {c.skill_id: c for c in load_candidates(pool)}["agent"]
+    assert cand2.runtime_status == "RUNTIME_READY"
+    assert cand2.entry_command == ("python", "/skills/main.py")
+    assert cand2.declared_providers == ("api.openai.com",)
+    assert cand2.execution_spec_source.endswith("runtime_specs.jsonl")
+
+
+def test_skillsmp_import_consumes_skills_metadata(tmp_path: Path):
+    from demotest.datasets.dynamic.candidates import import_skillsmp_candidates, load_candidates
+    crawl = tmp_path / "crawl"
+    _skill(crawl, "skill-1", {"SKILL.md": "# s", "main.py": "print(1)"})
+    (crawl / "skills_metadata.json").write_text(json.dumps([{
+        "skill_id": "skill-1",
+        "skill_name": "Cool Skill",
+        "repo_url": "https://github.com/acme/skills",
+        "branch": "main",
+        "skill_subdir": "skills/skill-1",
+        "skill_url": "https://skillsmp.example/skills/skill-1",
+        "updated_at": "2026-01-01T00:00:00Z",
+    }]), encoding="utf-8")
+    pool = tmp_path / "pool"
+    import_skillsmp_candidates(crawl, dest_root=pool, created_at="2026-01-01T00:00:00Z")
+    c = {c.skill_id: c for c in load_candidates(pool)}["skill-1"]
+    assert c.source_uri == "https://skillsmp.example/skills/skill-1"
+    assert c.source_revision == "main"
+    assert c.skill_name == "Cool Skill"
+    assert c.source_type == "skillsmp"
+
+
+def test_review_empty_marker_fails_closed():
+    from demotest.datasets.dynamic.review import TraceReview, validate_review
+    from demotest.datasets.traces.models import CredentialTrace
+    tr = CredentialTrace(trace_id="t1", skill_id="sk", skill_name="sk", issue_id="OPENAI_API_KEY",
+                         academic_code="DYNAMIC", pattern="CREDENTIAL_FLOW", classification="Information Exposure", severity="high",
+                         sink="stdout", gateway_channel="TOOL_RESULT", gateway_visibility="DIRECT",
+                         flow_class="STDOUT_EXPOSURE", credential_marker="",
+                         payload="nothing here", trace_hash="sha256:abc",
+                         dynamic_confirmed=True, evidence_type="DYNAMIC_TRACE")
+    r = TraceReview(trace_id="t1", review_status="ACCEPTED",
+                    source_real=True, dynamic_execution_real=True, fake_credential_confirmed=True,
+                    marker_observed=True, sink_confirmed=True, gateway_projection_valid=True,
+                    expected_action_valid=True)
+    probs = validate_review(r, tr)
+    assert any("empty credential_marker" in p for p in probs)
+
+
+def test_python_shim_does_not_mutate_pinned_dockerfile():
+    """Shim lives only in the temp build context — pinned checkout stays clean."""
+    df = Path("cache/datasets_v3/raw/skillleakbench_pipeline/code/phase3_dynamic/Dockerfile")
+    if not df.exists():
+        pytest.skip("pinned pipeline checkout not present")
+    text = df.read_text(encoding="utf-8")
+    assert "DemoTest shim" not in text
+    assert "ln -sf /usr/bin/python3 /usr/local/bin/python" not in text

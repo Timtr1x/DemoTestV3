@@ -274,14 +274,46 @@ def test_snapshot_freeze_and_verify_roundtrip(tmp_path: Path):
     assert verify_snapshot(manifest.snapshot_id, root=tmp_path / "snapshots")
 
 
+def _runtime_ready_skills_root(root: Path, skill_ids: list[str]) -> Path:
+    """Materialized-style skills root that satisfies the deterministic Core gate.
+
+    Mirrors production: entry_command comes from the materialization manifest's
+    runtime_spec (sidecar semantics), never inline-mutated skill bytes.
+    """
+    skills_root = root / "skills"
+    skills_doc = []
+    for sid in skill_ids:
+        d = skills_root / sid
+        d.mkdir(parents=True)
+        (d / "run.sh").write_text("#!/bin/sh\necho hi\n")
+        skills_doc.append({
+            "skill_id": sid,
+            "candidate_id": f"cand-{sid}",
+            "source_uri": f"https://skillsmp.test/skills/{sid}",
+            "source_revision": "rev-test",
+            "source_sha256": hashlib.sha256(sid.encode()).hexdigest(),
+            "runtime_spec": {
+                "spec_version": "p4-runtime-v1",
+                "entry_command": ["python", "/skills/run.sh"],
+                "declared_providers": [],
+            },
+        })
+    (skills_root / "_p4_materialization.json").write_text(json.dumps({
+        "candidate_set_id": "p4-candidates-testset",
+        "candidate_policy_version": "p4-candidate-v2",
+        "seed": 42,
+        "selection_sha256": hashlib.sha256(b"test-selection").hexdigest(),
+        "skills": skills_doc,
+    }, indent=2, sort_keys=True), encoding="utf-8")
+    return skills_root
+
+
 def test_collector_freezes_lock_with_stub_runner(tmp_path: Path):
     """Collector orchestration + lock — stub runner avoids Docker."""
     from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
     from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
 
-    skills_root = tmp_path / "skills"
-    (skills_root / "skill-x").mkdir(parents=True)
-    (skills_root / "skill-x" / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    skills_root = _runtime_ready_skills_root(tmp_path, ["skill-x"])
     manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-collect",
                                      out_root=tmp_path / "snapshots")
 
@@ -395,10 +427,7 @@ def test_collector_batches_accumulate_and_resume_without_rerun(tmp_path: Path):
     from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
     from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
 
-    skills_root = tmp_path / "skills"
-    for sid in ("skill-a", "skill-b", "skill-c"):
-        (skills_root / sid).mkdir(parents=True)
-        (skills_root / sid / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    skills_root = _runtime_ready_skills_root(tmp_path, ["skill-a", "skill-b", "skill-c"])
     manifest = freeze_skill_snapshot(
         skills_root, pipeline_revision="rev-batch", out_root=tmp_path / "snapshots")
 
@@ -451,9 +480,7 @@ def test_collector_refuses_profile_drift_across_batches(tmp_path: Path):
     from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
     from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
 
-    skills_root = tmp_path / "skills"
-    (skills_root / "skill-a").mkdir(parents=True)
-    (skills_root / "skill-a" / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    skills_root = _runtime_ready_skills_root(tmp_path, ["skill-a"])
     manifest = freeze_skill_snapshot(
         skills_root, pipeline_revision="rev-profile", out_root=tmp_path / "snapshots")
 
@@ -499,9 +526,7 @@ def test_collector_refuses_image_digest_drift(tmp_path: Path):
     from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
     from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
 
-    skills_root = tmp_path / "skills"
-    (skills_root / "skill-a").mkdir(parents=True)
-    (skills_root / "skill-a" / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    skills_root = _runtime_ready_skills_root(tmp_path, ["skill-a"])
     manifest = freeze_skill_snapshot(
         skills_root, pipeline_revision="rev-img", out_root=tmp_path / "snapshots")
 
@@ -561,9 +586,7 @@ def test_execution_workdir_is_condition_isolated(tmp_path: Path):
     from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
     from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
 
-    skills_root = tmp_path / "skills"
-    (skills_root / "skill-a").mkdir(parents=True)
-    (skills_root / "skill-a" / "run.sh").write_text("#!/bin/sh\necho hi\n")
+    skills_root = _runtime_ready_skills_root(tmp_path, ["skill-a"])
     manifest = freeze_skill_snapshot(
         skills_root, pipeline_revision="rev-cond", out_root=tmp_path / "snapshots")
 

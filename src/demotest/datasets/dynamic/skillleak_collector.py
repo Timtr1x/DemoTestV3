@@ -113,6 +113,24 @@ class DynamicTraceCollector:
         attempted = 0
         marker_provider = self._marker_provider()
 
+        # P0-2: deterministic Core requires every selected skill to be
+        # execution-ready — do not silently fall back to bare bash.
+        if condition == "deterministic":
+            missing_exec = [e.skill_id for e in skills if not tuple(e.entry_command or ())]
+            if missing_exec:
+                raise RuntimeError(
+                    "collect refused: deterministic Core requires explicit entry_command for every selected skill — "
+                    f"missing: {', '.join(missing_exec[:8])}" + (f" (+{len(missing_exec)-8} more)" if len(missing_exec) > 8 else "") +
+                    ". Use candidates materialize --require-runtime-ready or fix the materialization spec."
+                )
+            # Also require upstream provenance (P0-4 identity binding)
+            cand_prov = dict(getattr(manifest, "candidate_provenance", {}) or {})
+            if not cand_prov.get("candidate_set_id"):
+                raise RuntimeError(
+                    "collect refused: snapshot has no candidate_provenance.candidate_set_id — "
+                    "re-materialize via candidates materialize and re-snapshot."
+                )
+
         for entry in skills:
             if (entry.skill_id, condition) in completed:
                 skipped_existing += 1
@@ -200,6 +218,21 @@ class DynamicTraceCollector:
                 f"sandbox image digest changed: {existing_digest} -> {current_digest}; "
                 "refusing to mix executions from different images"
             )
+        # P0-4: materialization identity must not drift across resume batches
+        existing_cand = dict(meta.get("candidate_provenance") or {})
+        current_cand = dict(getattr(manifest, "candidate_provenance", {}) or {})
+        if existing_cand or current_cand:
+            if existing_cand.get("candidate_set_id") != current_cand.get("candidate_set_id"):
+                raise RuntimeError(
+                    f"candidate_set_id changed: {existing_cand.get('candidate_set_id')} -> {current_cand.get('candidate_set_id')}; refusing resume"
+                )
+            if existing_cand.get("materialization_sha256") and current_cand.get("materialization_sha256") and existing_cand.get("materialization_sha256") != current_cand.get("materialization_sha256"):
+                raise RuntimeError(
+                    f"materialization_sha256 changed: {existing_cand.get('materialization_sha256','')[:12]} -> {current_cand.get('materialization_sha256','')[:12]}; refusing resume"
+                )
+            # Runtime spec hash (if present) must also match
+            if existing_cand.get("runtime_spec_sha256") and current_cand.get("runtime_spec_sha256") and existing_cand.get("runtime_spec_sha256") != current_cand.get("runtime_spec_sha256"):
+                raise RuntimeError("runtime_spec_sha256 changed; refusing resume")
 
         executions: list[DynamicExecutionRecord] = []
         if exec_path.exists():
