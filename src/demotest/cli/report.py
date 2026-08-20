@@ -32,6 +32,17 @@ def run(args) -> int:
     if not stores:
         print(f"no result files at {base}")
         return 1
+    # Use the SAME resolver as analyze — P0 fix: report must not default to core.
+    # Verify provenance BEFORE merging results.
+    from ..core.exceptions import ManifestError
+    from ..datasets.context import resolve_benchmark_context, verify_run_meta
+    ctx = resolve_benchmark_context(args.source, project=args.project)
+    try:
+        verify_run_meta(base, ctx, expected_project=args.project, expected_target=args.target,
+                        expected_run_version=args.run_version, allow_legacy=args.allow_legacy_run_without_meta)
+    except ManifestError as e:
+        print(f"FAIL: provenance check failed: {e}", flush=True)
+        return 1
     combined = base / "_combined.jsonl"
     combined.write_text("", encoding="utf-8")
     store = ResultStore(combined)
@@ -39,15 +50,6 @@ def run(args) -> int:
     for sf in stores:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
-    # Use the SAME resolver as analyze — P0 fix: report must not default to core
-    from ..datasets.context import resolve_benchmark_context, verify_run_meta
-    ctx = resolve_benchmark_context(args.source, project=args.project)
-    try:
-        verify_run_meta(base, ctx, expected_project=args.project, expected_target=args.target,
-                        expected_run_version=args.run_version, allow_legacy=args.allow_legacy_run_without_meta)
-    except Exception as e:
-        print(f"FAIL: provenance check failed: {e}", flush=True)
-        return 1
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,

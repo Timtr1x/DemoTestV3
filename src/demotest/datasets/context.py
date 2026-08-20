@@ -19,7 +19,7 @@ class BenchmarkContext:
     source: str
     manifest_path: str | None  # None for fixture:/legacy: sources
     manifest_sha256: str | None
-    benchmark_track: str  # core | extended
+    benchmark_track: str  # core | extended | adhoc (fixture/legacy)
     headline_eligible: bool
     manifest: dict[str, Any] | None  # loaded manifest dict if available
 
@@ -32,7 +32,7 @@ def resolve_benchmark_context(source: str, *, project: str = "") -> BenchmarkCon
       - missing track/headline fields -> legacy core compat (Phase 1 frozen)
       - invalid track value (present but not core/extended) -> ConfigError/ManifestError
       - extended + headline_eligible=true -> ConfigError
-      - fixture:/legacy: sources -> best-effort from suites.yaml, default core
+      - fixture:/legacy: sources -> adhoc, no frozen manifest identity (never headline)
     """
     if isinstance(source, str) and source.startswith("manifest:"):
         mpath = source.split(":", 1)[1]
@@ -69,41 +69,14 @@ def resolve_benchmark_context(source: str, *, project: str = "") -> BenchmarkCon
             headline_eligible=he,
             manifest=manifest,
         )
-    # fixture:/legacy: — best-effort from suites.yaml
-    track = "core"
-    eligible = True
-    manifest_path: str | None = None
-    manifest_sha: str | None = None
-    manifest_dict: dict[str, Any] | None = None
-    try:
-        from ..config import load_suites
-        for suite in load_suites().values():
-            if project and project in suite.projects:
-                pt = suite.projects[project]
-                mp = Path(pt.manifest)
-                if mp.exists():
-                    m = load_manifest(str(mp))
-                    # use manifest's own track if present, else suite's track
-                    bt_raw = m.get("benchmark_track")
-                    if bt_raw is not None:
-                        track = str(bt_raw).strip().lower() or "core"
-                        eligible = bool(m.get("headline_eligible", track == "core"))
-                    else:
-                        track = pt.track
-                        eligible = pt.headline_eligible
-                    manifest_path = str(mp)
-                    manifest_sha = m.get("manifest_sha256")
-                    manifest_dict = m
-                    break
-    except Exception:
-        pass
+    # fixture:/legacy: — no frozen benchmark identity; adhoc (never headline)
     return BenchmarkContext(
         source=source,
-        manifest_path=manifest_path,
-        manifest_sha256=manifest_sha,
-        benchmark_track=track,
-        headline_eligible=eligible,
-        manifest=manifest_dict,
+        manifest_path=None,
+        manifest_sha256=None,
+        benchmark_track="adhoc",
+        headline_eligible=False,
+        manifest=None,
     )
 
 
@@ -143,3 +116,50 @@ def verify_run_meta(
         if got != expected:
             raise ManifestError(f"_run_meta.json {key}={got!r} != expected {expected!r}")
     return meta
+
+
+def run_preflight_check(
+    base: Path,
+    ctx: BenchmarkContext,
+    *,
+    project: str,
+    target: str,
+    run_version: str,
+    experiment_hash: str,
+    fidelity_blob: str,
+    allow_legacy_adopt: bool = False,
+) -> None:
+    """Run-start preflight: prevent resume from a different experiment.
+
+    - If directory doesn't exist -> normal run, meta will be written.
+    - If meta exists -> experiment_hash + manifest_sha + identity must match,
+      even when no results exist yet (a prior dry-run already fixed the dir's identity).
+    - If results exist but no meta -> fail (unknown provenance); allow_legacy_adopt opt-in.
+    """
+    meta_path = base / "_run_meta.json"
+    if not base.exists():
+        return  # fresh run
+    if not meta_path.exists():
+        if not any(base.glob("*.jsonl")) or allow_legacy_adopt:
+            return  # no results yet, or explicit legacy adoption
+        raise ManifestError(
+            f"run directory {base} has existing results but no _run_meta.json; "
+            "cannot prove provenance. Use --adopt-legacy-run to resume anyway."
+        )
+    try:
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise ManifestError(f"corrupt _run_meta.json at {meta_path}: {e}")
+    # manifest SHA (if manifest-sourced)
+    if ctx.manifest_sha256 and meta.get("manifest_sha256") != ctx.manifest_sha256:
+        raise ManifestError(
+            f"existing run manifest_sha256 {meta.get('manifest_sha256')} != current {ctx.manifest_sha256}"
+        )
+    # experiment hash covers dataset/project/target/fidelity — different config => different experiment
+    if meta.get("experiment_hash") and meta.get("experiment_hash") != experiment_hash:
+        raise ManifestError(
+            f"existing run experiment_hash {meta.get('experiment_hash')} != current {experiment_hash}"
+        )
+    for key, expected in (("project", project), ("target", target), ("run_version", run_version)):
+        if meta.get(key) != expected:
+            raise ManifestError(f"existing run {key}={meta.get(key)!r} != current {expected!r}")

@@ -43,9 +43,9 @@ def run(args) -> int:
         return 2
     base_a = RESULTS_DIR / args.project / a_parts[0] / a_parts[1]
     base_b = RESULTS_DIR / args.project / b_parts[0] / b_parts[1]
-    sa = _load_combined(base_a)
-    sb = _load_combined(base_b)
-    # P1: compare must verify both sides bind to the same benchmark manifest
+    # P1: verify provenance BEFORE merging results — a manifest mismatch must
+    # fail without producing/reading any combined artifacts.
+    from ..core.exceptions import ManifestError
     from ..datasets.context import resolve_benchmark_context, verify_run_meta
     ctx = resolve_benchmark_context(args.source, project=args.project)
     try:
@@ -53,9 +53,11 @@ def run(args) -> int:
                         expected_run_version=a_parts[1], allow_legacy=args.allow_legacy_run_without_meta)
         verify_run_meta(base_b, ctx, expected_project=args.project, expected_target=b_parts[0],
                         expected_run_version=b_parts[1], allow_legacy=args.allow_legacy_run_without_meta)
-    except Exception as e:
+    except ManifestError as e:
         print(f"FAIL: runs were not produced from the same benchmark manifest: {e}", flush=True)
         return 1
+    sa = _load_combined(base_a)
+    sb = _load_combined(base_b)
     out = compare_runs(cases, {"A": sa, "B": sb}, project=args.project)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2, default=str))

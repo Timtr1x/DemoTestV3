@@ -27,6 +27,8 @@ def add_parser(sub) -> None:
                    choices=["auto", "raw", "structured", "labeled"],
                    help="render fidelity tier (F8): auto=project default, "
                         "raw=headline, structured=transport, labeled=enhancement")
+    p.add_argument("--adopt-legacy-run", action="store_true",
+                   help="resume from existing results without _run_meta.json (default: fail)")
     p.set_defaults(func=run)
 
 
@@ -91,7 +93,7 @@ def run(args) -> int:
 
     # Resolve benchmark context BEFORE computing run identity — manifest SHA/track
     # must enter experiment_hash so Case-same-but-Manifest-different => different run_id
-    from ..datasets.context import resolve_benchmark_context
+    from ..datasets.context import resolve_benchmark_context, run_preflight_check
     ctx = resolve_benchmark_context(args.source, project=args.project)
 
     experiment_hash = config_hash({
@@ -110,6 +112,20 @@ def run(args) -> int:
         "v3",
         ds_hash,
     )
+
+    # P1/P0: preflight — existing run directory must match current experiment before resume
+    base_dir = RESULTS_DIR / args.project / args.target / run_version
+    from ..core.exceptions import ManifestError
+    try:
+        run_preflight_check(
+            base_dir, ctx,
+            project=args.project, target=args.target, run_version=run_version,
+            experiment_hash=experiment_hash, fidelity_blob=fidelity_blob,
+            allow_legacy_adopt=args.adopt_legacy_run,
+        )
+    except ManifestError as e:
+        print(f"FAIL: run preflight failed: {e}", flush=True)
+        return 1
 
     total_ran = 0
     total_skipped = 0
@@ -141,6 +157,8 @@ def run(args) -> int:
         "dataset_snapshot_hash": ds_hash,
         "project_config_hash": project_cfg_hash,
         "target_config_hash": target_cfg_hash,
+        "fidelity": fidelity_blob,
+        "experiment_hash": experiment_hash,
         "run_version": run_version,
         "project": args.project,
         "target": args.target,
