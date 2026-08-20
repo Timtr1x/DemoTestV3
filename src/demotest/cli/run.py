@@ -1,6 +1,7 @@
 """demotest run — run cases against a target (plan §28, §29)."""
 from __future__ import annotations
 
+import json
 from collections import defaultdict
 from pathlib import Path
 
@@ -33,13 +34,9 @@ def _resolve_fidelity(project, channel: str, requested: str) -> str:
     """Map 'auto' to the project's per-channel primary fidelity (review P0-3)."""
     if requested != "auto":
         return requested
-    # per-channel primary fidelity: structured for channels where RAW drops
-    # critical security context, raw otherwise (review P0-3)
     primary = getattr(project, "primary_fidelity", None) or {}
     if channel in primary:
         return primary[channel]
-    # sensible defaults: tool_call/tool_result/mcp_definition/memory_write need
-    # structured (raw drops args/schema); email/web/rag/user_prompt use raw
     defaults = {
         "tool_call": "structured",
         "tool_result": "structured",
@@ -60,19 +57,13 @@ def run(args) -> int:
     target = build_target(tcfg)
     cases = load_cases(args.source, project=args.project)
 
-    # P0-1: enforce project ↔ channel ↔ case consistency BEFORE running.
     from ..cases import validate_cases_for_project
     validate_cases_for_project(cases, args.project, project.channels)
 
-    # group cases by channel — each channel uses one renderer
     by_channel: dict[str, list] = defaultdict(list)
     for c in cases:
         by_channel[c.channel.value].append(c)
 
-    # P0-2 / R4-1..3: real provenance for run_id.
-    # Target hash uses RESOLVED runtime config (actual model/URL), not env var
-    # names. Project hash includes generation profile. Both enter a single
-    # experiment_hash so any config change produces a different run_id.
     target_cfg_hash = config_hash({
         "name": target.target_name,
         "type": tcfg.type,
@@ -110,6 +101,10 @@ def run(args) -> int:
         ds_hash,
     )
 
+    # P1: provenance — resolve benchmark context BEFORE running (fail-closed on invalid track)
+    from ..datasets.context import resolve_benchmark_context
+    ctx = resolve_benchmark_context(args.source, project=args.project)
+
     total_ran = 0
     total_skipped = 0
     for channel, group in sorted(by_channel.items()):
@@ -127,6 +122,29 @@ def run(args) -> int:
         total_skipped += rr.skipped
         label = "dry-run" if args.dry_run else "ran"
         print(f"[run] {channel} ({rname}/{fidelity}): {label}={rr.ran} skipped={rr.skipped} written={rr.written}")
+
+    # Write _run_meta.json for provenance chain Run → Manifest → Track
+    try:
+        source_type = "manifest" if args.source.startswith("manifest:") else ("fixture" if args.source.startswith("fixture:") else ("legacy" if args.source.startswith("legacy:") else "unknown"))
+        meta = {
+            "source": args.source,
+            "source_type": source_type,
+            "manifest": ctx.manifest_path,
+            "manifest_sha256": ctx.manifest_sha256,
+            "benchmark_track": ctx.benchmark_track,
+            "headline_eligible": ctx.headline_eligible,
+            "dataset_snapshot_hash": ds_hash,
+            "project_config_hash": project_cfg_hash,
+            "target_config_hash": target_cfg_hash,
+            "run_version": run_version,
+            "project": args.project,
+            "target": args.target,
+        }
+        meta_path = RESULTS_DIR / args.project / args.target / run_version / "_run_meta.json"
+        meta_path.parent.mkdir(parents=True, exist_ok=True)
+        meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    except Exception as e:
+        print(f"[run] WARN: failed to write _run_meta.json: {e}")
 
     print(f"[run] total: ran={total_ran} skipped={total_skipped} "
           f"run_version={run_version} dry_run={args.dry_run} fidelity={args.fidelity}")

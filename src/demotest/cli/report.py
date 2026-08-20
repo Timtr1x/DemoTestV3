@@ -1,6 +1,7 @@
 """demotest report — write SUMMARY.md (plan §53)."""
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from ..analysis import analyze
@@ -9,7 +10,6 @@ from ..config import get_project
 from ..paths import REPORTS_DIR, RESULTS_DIR
 from ..reporting.markdown import write_markdown
 from ..storage.results import ResultStore
-from .analyze import run as _analyze  # reuse merging logic
 
 
 def add_parser(sub) -> None:
@@ -37,12 +37,26 @@ def run(args) -> int:
     for sf in stores:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
+    # Use the SAME resolver as analyze — P0 fix: report must not default to core
+    from ..datasets.context import resolve_benchmark_context
+    ctx = resolve_benchmark_context(args.source, project=args.project)
+    try:
+        meta_path = base / "_run_meta.json"
+        if meta_path.exists():
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            exp_sha = meta.get("manifest_sha256")
+            if exp_sha and ctx.manifest_sha256 and exp_sha != ctx.manifest_sha256:
+                print(f"FAIL: manifest SHA mismatch: run meta {exp_sha} != --source {ctx.manifest_sha256}")
+                return 1
+    except Exception:
+        pass
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,
-        manifest_name=args.source,
+        benchmark_track=ctx.benchmark_track, headline_eligible=ctx.headline_eligible,
+        manifest_name=ctx.manifest_path or args.source,
     )
     out_dir = Path(args.out_dir) if args.out_dir else (REPORTS_DIR / args.project / args.run_version)
     p = write_markdown(rep, out_dir)
-    print(f"[report] wrote {p}")
+    print(f"[report] wrote {p} track={rep.benchmark_track} headline_eligible={rep.headline_eligible}")
     return 0

@@ -38,46 +38,25 @@ def run(args) -> int:
     for sf in stores:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
-    # Phase 2.1: bind to the manifest actually used for this run (review P0-1).
-    # Do NOT scan suites — the same project can appear in both Core and Extended suites.
-    # Prefer the manifest from --source manifest:<path>; fallback to suites only for legacy sources.
-    _track = "core"
-    _eligible = True
-    _manifest_name = ""
+    # Phase 2.1: use shared resolver — fail-closed on invalid manifest track
+    from ..datasets.context import resolve_benchmark_context
+    ctx = resolve_benchmark_context(args.source, project=args.project)
+    # provenance: verify run meta SHA if present
     try:
-        from pathlib import Path as _P2
-        from ..datasets.manifest_builder import load_manifest as _lm2
-        manifest_path = None
-        if isinstance(args.source, str) and args.source.startswith("manifest:"):
-            manifest_path = args.source.split(":", 1)[1]
-        if manifest_path and _P2(manifest_path).exists():
-            _m = _lm2(_P2(manifest_path))
-            # backward-compat: missing fields => legacy core
-            _track = str(_m.get("benchmark_track") or "core").strip().lower() or "core"
-            if _track not in ("core", "extended"):
-                _track = "core"
-            _eligible = bool(_m.get("headline_eligible", _track == "core"))
-            if _track == "extended" and _eligible:
-                _eligible = False
-            _manifest_name = manifest_path
-        else:
-            # legacy source (fixture/legacy): best-effort from suites
-            for _suite in __import__("demotest.config", fromlist=["load_suites"]).load_suites().values():
-                if args.project in _suite.projects:
-                    _mp = _P2(_suite.projects[args.project].manifest)
-                    if _mp.exists():
-                        _m = _lm2(_mp)
-                        _track = str(_m.get("benchmark_track") or _suite.projects[args.project].track or "core").strip().lower() or "core"
-                        _eligible = bool(_m.get("headline_eligible", _suite.projects[args.project].headline_eligible))
-                        _manifest_name = str(_mp)
-                        break
+        meta_path = base / "_run_meta.json"
+        if meta_path.exists():
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            exp_sha = meta.get("manifest_sha256")
+            if exp_sha and ctx.manifest_sha256 and exp_sha != ctx.manifest_sha256:
+                print(f"FAIL: manifest SHA mismatch: run meta {exp_sha} != --source {ctx.manifest_sha256}", flush=True)
+                return 1
     except Exception:
         pass
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,
-        benchmark_track=_track, headline_eligible=_eligible,
-        manifest_name=_manifest_name,
+        benchmark_track=ctx.benchmark_track, headline_eligible=ctx.headline_eligible,
+        manifest_name=ctx.manifest_path or args.source,
     )
     if args.json:
         print(json.dumps(rep.to_dict(), ensure_ascii=False, indent=2, default=str))
@@ -91,4 +70,5 @@ def run(args) -> int:
             print("  by_channel:")
             for ch, g in sorted(m.by_channel.items()):
                 print(f"    {ch}: n={g['n_judged']} TPR={g['tpr']}")
+        print(f"  track={rep.benchmark_track} headline_eligible={rep.headline_eligible} manifest={rep.manifest_name}")
     return 0
