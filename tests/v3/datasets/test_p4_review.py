@@ -72,8 +72,8 @@ def test_accepted_requires_all_gates():
     bad = TraceReview(trace_id="t1", review_status="ACCEPTED", sink_confirmed=False)
     probs = validate_review(bad, tr)
     assert any("sink_confirmed" in p for p in probs)
-    # duplicate ACCEPTED
-    bad2 = TraceReview(trace_id="t1", review_status="ACCEPTED", duplicate=True)
+    # duplicate ACCEPTED — even with all gates True, duplicate must fail
+    bad2 = TraceReview(trace_id="t1", review_status="ACCEPTED", source_real=True, dynamic_execution_real=True, fake_credential_confirmed=True, marker_observed=True, sink_confirmed=True, gateway_projection_valid=True, expected_action_valid=True, duplicate=True)
     probs2 = validate_review(bad2, tr)
     assert any("duplicate" in p for p in probs2)
 
@@ -88,15 +88,20 @@ def test_apply_filters_and_detects_unknown_trace():
 
 def test_allow_trace_needs_evidence():
     # Parser would only produce ALLOW via authorized_sink / safe_redaction — review must agree
-    tr_allow = _tr("t1", authorized=True)
-    tr_block = _tr("t2")
-    # ACCEPTED on an allow trace is fine when the trace is marked authorized
-    ok = TraceReview(trace_id="t1", review_status="ACCEPTED")
+    tr_allow = _tr("t1", sink="network", authorized=True)
+    tr_allow = tr_allow.__class__(**{**tr_allow.to_dict(), "flow_class": "AUTHORIZED_SECRET_USE"})
+    # ACCEPTED on an allow trace is fine when the trace is marked authorized and all gates True
+    ok = TraceReview(trace_id="t1", review_status="ACCEPTED", source_real=True, dynamic_execution_real=True, fake_credential_confirmed=True, marker_observed=True, sink_confirmed=True, gateway_projection_valid=True, expected_action_valid=True)
     assert validate_review(ok, tr_allow) == []
     # But ACCEPTED without dynamic_confirmed fails
     bad_tr = _tr("t1", dynamic=False)
     probs = validate_review(ok, bad_tr)
     assert any("dynamic_confirmed" in p for p in probs)
+    # ALLOW trace without authorized_sink must fail even though gates are True
+    tr_block = _tr("t1", sink="network")
+    tr_block2 = tr_block.__class__(**{**tr_block.to_dict(), "flow_class": "AUTHORIZED_SECRET_USE"})
+    probs2 = validate_review(ok, tr_block2)
+    assert any("authorized_sink" in p for p in probs2)
 
 
 def test_summary_counts(tmp_path: Path):
@@ -123,9 +128,9 @@ def test_review_cli_flow_without_docker(tmp_path: Path):
     from demotest.cli.dynamic import cmd_review_export, cmd_review_apply, cmd_review_status
     import types
     assert cmd_review_export(types.SimpleNamespace(raw_dir=str(raw))) == 0
-    # edit: accept the trace
+    # edit: accept the trace — must set all 7 gates True (fail-closed)
     rp = raw / "reviews" / "review.jsonl"
-    revs = [TraceReview(trace_id="t1", review_status="ACCEPTED").to_dict()]
+    revs = [TraceReview(trace_id="t1", review_status="ACCEPTED", source_real=True, dynamic_execution_real=True, fake_credential_confirmed=True, marker_observed=True, sink_confirmed=True, gateway_projection_valid=True, expected_action_valid=True).to_dict()]
     rp.write_text("".join(_j.dumps(r, sort_keys=True) + "\n" for r in revs), encoding="utf-8")
     assert cmd_review_apply(types.SimpleNamespace(raw_dir=str(raw), review=str(rp))) == 0
     assert (raw / "reviews" / "reviewed_traces.jsonl").exists()

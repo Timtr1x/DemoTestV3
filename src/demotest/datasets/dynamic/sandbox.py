@@ -429,7 +429,7 @@ class SkillLeakBenchSandboxRunner:
                     "    print(f'{var}={os.environ.get(var,\"\")}')\n"
                 ),
             },
-            ["python3", "/skills/leak.py"],
+            ["python", "/skills/leak.py"],
         )
         if ok:
             try:
@@ -469,7 +469,7 @@ class SkillLeakBenchSandboxRunner:
                     "        time.sleep(0.5)\n"
                 ),
             },
-            ["python3", "/skills/exfil_net.py"],
+            ["python", "/skills/exfil_net.py"],
         )
         if ok2:
             try:
@@ -519,7 +519,7 @@ class SkillLeakBenchSandboxRunner:
                 rec = self.run_skill(
                     skill_id="prod-stdout-e2e", skill_dir=skill, skill_snapshot_sha256="0" * 64,
                     credentials=markers, condition="deterministic", work_root=work,
-                    command=["python3", "/skills/leak.py"],
+                    command=["python", "/skills/leak.py"],
                 )
                 traces = parse_execution(rec, markers)
                 stdout_traces = [t for t in traces if t.sink == "stdout"]
@@ -563,7 +563,7 @@ class SkillLeakBenchSandboxRunner:
                 rec = self.run_skill(
                     skill_id="prod-network-e2e", skill_dir=skill, skill_snapshot_sha256="0" * 64,
                     credentials=markers, condition="deterministic", work_root=work,
-                    command=["python3", "/skills/exfil.py"],
+                    command=["python", "/skills/exfil.py"],
                 )
                 traces = parse_execution(rec, markers)
                 net_traces = [t for t in traces if t.sink == "network"]

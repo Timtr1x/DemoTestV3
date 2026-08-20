@@ -99,6 +99,10 @@ def add_parser(sub) -> None:
     cand_mat.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
     cand_mat.add_argument("--include-rejected", action="store_true",
                           help="also materialize REJECT_* candidates (audit only, not for snapshot)")
+    cand_mat.add_argument("--clean-dest", action="store_true",
+                          help="allow non-empty dest by cleaning first (default: refuse if not empty)")
+    cand_mat.add_argument("--require-runtime-ready", action="store_true",
+                          help="P4 deterministic Core: only RUNTIME_READY (explicit entry_command)")
     cand_mat.set_defaults(func=cmd_candidates_materialize)
 
     snap = sp.add_parser("snapshot", help="Freeze a skills directory into a pinned snapshot")
@@ -229,6 +233,8 @@ def cmd_candidates_materialize(args) -> int:
             offset=args.offset,
             seed=args.seed,
             include_rejected=bool(args.include_rejected),
+            require_runtime_ready=bool(getattr(args, "require_runtime_ready", False)),
+            clean_dest=bool(getattr(args, "clean_dest", False)),
         )
     except Exception as e:
         print(f"[FAIL] materialize: {e}")
@@ -410,19 +416,64 @@ def cmd_freeze_reviewed(args) -> int:
     raw_dir = _resolve_raw_dir(args.raw_dir)
     rt = raw_dir / "reviews" / "reviewed_traces.jsonl"
     rm = raw_dir / "reviews" / "review_meta.json"
+    trace_path = raw_dir / "traces.jsonl"
+    meta_path = raw_dir / "trace_meta.json"
+    review_path = raw_dir / "reviews" / "review.jsonl"
     if not rt.exists() or not rm.exists():
         print(f"[FAIL] freeze-reviewed requires an accepted review first: run `review-export` then `review-apply`")
         return 1
     import json as _json
+    import hashlib as _hl
     meta = _json.loads(rm.read_text(encoding="utf-8"))
     n = meta.get("n_accepted", 0)
     if n == 0:
         print("[FAIL] freeze-reviewed: no accepted traces — need at least one accepted trace")
         return 1
-    # Verify distribution is not empty / synthetic-free is already guaranteed by collector
+    # Pending must be zero — every trace must have been verdict'd
+    # Count pending from the live review.jsonl (source of truth)
+    try:
+        from ..datasets.dynamic.review import load_reviews as _load_rev
+        from ..datasets.traces.models import CredentialTrace as _CT
+        traces = []
+        if trace_path.exists():
+            for raw in trace_path.read_text(encoding="utf-8").splitlines():
+                if raw.strip():
+                    traces.append(_CT.from_dict(_json.loads(raw)))
+        revs = _load_rev(raw_dir)
+        from ..datasets.dynamic.review import review_status_summary as _summ
+        summ = _summ(traces, revs) if traces else {"pending": 0}
+        if summ.get("pending", 0) > 0:
+            print(f"[FAIL] freeze-reviewed: pending={summ['pending']} — all traces must be ACCEPTED/REJECTED first")
+            return 1
+    except Exception as e:
+        print(f"[FAIL] freeze-reviewed pending check failed: {e}")
+        return 1
+    # Hash binding — reviewed artifact must match current source hashes
+    try:
+        current_trace_sha = _hl.sha256(trace_path.read_bytes()).hexdigest() if trace_path.exists() else ""
+        current_meta_sha = _hl.sha256(meta_path.read_bytes()).hexdigest() if meta_path.exists() else ""
+        current_rt_sha = _hl.sha256(rt.read_bytes()).hexdigest()
+        if meta.get("source_trace_sha256") and meta.get("source_trace_sha256") != current_trace_sha:
+            print(f"[FAIL] freeze-reviewed: source traces.jsonl drift (meta {meta.get('source_trace_sha256','')[:12]} != current {current_trace_sha[:12]})")
+            return 1
+        if meta.get("source_trace_meta_sha256") and meta.get("source_trace_meta_sha256") != current_meta_sha:
+            print(f"[FAIL] freeze-reviewed: source trace_meta.json drift")
+            return 1
+        if meta.get("sha256") != current_rt_sha:
+            print(f"[FAIL] freeze-reviewed: reviewed_traces.jsonl drift (meta {meta.get('sha256','')[:12]} != actual {current_rt_sha[:12]})")
+            return 1
+        # verdict hash must match current review.jsonl
+        if review_path.exists():
+            rev_blob = "\n".join(_json.dumps(r.to_dict(), sort_keys=True) for r in sorted(revs, key=lambda x: x.trace_id))
+            cur_verdict_sha = _hl.sha256(rev_blob.encode()).hexdigest()
+            if meta.get("verdict_sha256") and meta.get("verdict_sha256") != cur_verdict_sha:
+                print(f"[FAIL] freeze-reviewed: verdicts drift — re-run review-apply")
+                return 1
+    except Exception as e:
+        print(f"[FAIL] freeze-reviewed hash binding failed: {e}")
+        return 1
     print(f"[freeze-reviewed] DEV gate OK: {n} accepted traces  sha={meta.get('sha256','')[:16]}...")
-    print(f"  -> Next: run snapshot/collect Smoke with these reviewed traces as the DEV pool,")
-    print(f"     then after blind review freeze p4-dynamic-dev-v1 (adhoc, non-headline) before LineMod.")
+    print(f"  -> Next: after blind review freeze p4-dynamic-dev-v1 (adhoc, non-headline) before LineMod.")
     return 0
 
 

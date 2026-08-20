@@ -8,7 +8,7 @@ append-only verdict per trace:
 
 Review status
   ACCEPTED     — trace is real source_real + dynamic_execution_real + marker
-                 observed at declared sink, guitar projection/expected_action valid.
+                 observed at declared sink, gateway projection/expected_action valid.
   REJECTED     — trace is invalid / parser error / duplicate / not a security
                  boundary the gateway can express.
   NEEDS_REVIEW — default for new traces.
@@ -18,12 +18,15 @@ vs network), which artifact segment contains it, and that the gateway
 visibility is projectable. ALLOW traces require real evidence:
 AUTHORIZED_SECRET_USE (declared provider) or REDACTED_OUTPUT (real redaction).
 UNRESOLVED executions never become traces and therefore never enter review.
+
+Fail-closed: newly exported rows have all 7 evidence gates set to False;
+ACCEPTED requires every gate explicitly set to true by a human.
 """
 from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal
 
@@ -34,23 +37,25 @@ REVIEW_VERSION = "p4-review-v1"
 ReviewStatus = Literal["ACCEPTED", "REJECTED", "NEEDS_REVIEW"]
 REVIEW_STATUSES = ("ACCEPTED", "REJECTED", "NEEDS_REVIEW")
 
-# Default review dir is alongside dynamic traces
 REVIEW_DIRNAME = "reviews"
 REVIEW_EXPORT = "review.jsonl"
-REVIEW_VERDICTS = "review_verdicts.jsonl"
+
+# Allowed flow classes for ACCEPTED traces (guide §9/§11/§17)
+ALLOWED_FLOW_CLASSES = {"STDOUT_EXPOSURE", "NETWORK_EXFIL", "AUTHORIZED_SECRET_USE", "REDACTED_OUTPUT"}
 
 
 @dataclass(frozen=True)
 class TraceReview:
     trace_id: str
     review_status: ReviewStatus = "NEEDS_REVIEW"
-    source_real: bool = True
-    dynamic_execution_real: bool = True
-    fake_credential_confirmed: bool = True
-    marker_observed: bool = True
-    sink_confirmed: bool = True
-    gateway_projection_valid: bool = True
-    expected_action_valid: bool = True
+    # Fail-closed defaults — all evidence gates start False (P0-3)
+    source_real: bool = False
+    dynamic_execution_real: bool = False
+    fake_credential_confirmed: bool = False
+    marker_observed: bool = False
+    sink_confirmed: bool = False
+    gateway_projection_valid: bool = False
+    expected_action_valid: bool = False
     duplicate: bool = False
     parser_error: bool = False
     review_reason: str = ""
@@ -82,13 +87,13 @@ class TraceReview:
         return cls(
             trace_id=str(d.get("trace_id") or ""),
             review_status=str(d.get("review_status") or "NEEDS_REVIEW"),  # type: ignore[arg-type]
-            source_real=bool(d.get("source_real", True)),
-            dynamic_execution_real=bool(d.get("dynamic_execution_real", True)),
-            fake_credential_confirmed=bool(d.get("fake_credential_confirmed", True)),
-            marker_observed=bool(d.get("marker_observed", True)),
-            sink_confirmed=bool(d.get("sink_confirmed", True)),
-            gateway_projection_valid=bool(d.get("gateway_projection_valid", True)),
-            expected_action_valid=bool(d.get("expected_action_valid", True)),
+            source_real=bool(d.get("source_real", False)),
+            dynamic_execution_real=bool(d.get("dynamic_execution_real", False)),
+            fake_credential_confirmed=bool(d.get("fake_credential_confirmed", False)),
+            marker_observed=bool(d.get("marker_observed", False)),
+            sink_confirmed=bool(d.get("sink_confirmed", False)),
+            gateway_projection_valid=bool(d.get("gateway_projection_valid", False)),
+            expected_action_valid=bool(d.get("expected_action_valid", False)),
             duplicate=bool(d.get("duplicate", False)),
             parser_error=bool(d.get("parser_error", False)),
             review_reason=str(d.get("review_reason") or ""),
@@ -102,10 +107,6 @@ def _review_path(raw_dir: Path, name: str = REVIEW_EXPORT) -> Path:
     return raw_dir / REVIEW_DIRNAME / name
 
 
-# ---------------------------------------------------------------------------
-# Export / apply
-# ---------------------------------------------------------------------------
-
 def export_reviews(
     traces: list[CredentialTrace],
     *,
@@ -114,14 +115,14 @@ def export_reviews(
 ) -> Path:
     """Write ``review.jsonl`` — one row per trace, preserving prior verdicts.
 
-    New traces default to NEEDS_REVIEW; existing rows keep their verdict so
-    incremental batches can be exported without losing prior human work.
+    New traces default to NEEDS_REVIEW + all gates False (fail-closed); existing
+    rows keep their verdict so incremental batches can be exported without losing
+    prior human work.
     """
     raw_dir = Path(raw_dir)
     out_dir = raw_dir / REVIEW_DIRNAME
     out_dir.mkdir(parents=True, exist_ok=True)
     prior = existing_reviews or {}
-    # Merge existing file if present and no explicit prior passed
     prior_path = _review_path(raw_dir, REVIEW_EXPORT)
     if not prior and prior_path.exists():
         prior = {r.trace_id: r for r in load_reviews(raw_dir)}
@@ -131,7 +132,6 @@ def export_reviews(
             rows.append(prior[tr.trace_id])
         else:
             rows.append(TraceReview(trace_id=tr.trace_id))
-    # Deterministic export
     rows.sort(key=lambda r: r.trace_id)
     prior_path.write_text(
         "".join(json.dumps(r.to_dict(), ensure_ascii=False, sort_keys=True) + "\n" for r in rows),
@@ -163,14 +163,13 @@ def load_reviews_from_file(path: Path | str) -> list[TraceReview]:
 
 
 def validate_review(review: TraceReview, trace: CredentialTrace | None = None) -> list[str]:
-    """Return problem strings for one review row."""
+    """Return problem strings for one review row (fail-closed)."""
     problems: list[str] = []
     if review.review_status not in REVIEW_STATUSES:
         problems.append(f"{review.trace_id}: invalid review_status {review.review_status!r}")
     if review.review_schema_version != REVIEW_VERSION:
         problems.append(f"{review.trace_id}: wrong schema {review.review_schema_version!r} != {REVIEW_VERSION}")
     if review.review_status == "ACCEPTED":
-        # ACCEPTED must affirm all gates
         for field_name in ("source_real", "dynamic_execution_real", "fake_credential_confirmed",
                            "marker_observed", "sink_confirmed", "gateway_projection_valid",
                            "expected_action_valid"):
@@ -180,15 +179,41 @@ def validate_review(review: TraceReview, trace: CredentialTrace | None = None) -
             problems.append(f"{review.trace_id}: ACCEPTED but duplicate=true")
         if review.parser_error:
             problems.append(f"{review.trace_id}: ACCEPTED but parser_error=true")
-    if trace is not None:
-        meta = trace.metadata or {}
-        is_allow = bool(meta.get("authorized_sink") or meta.get("safe_redaction"))
-        if review.review_status == "ACCEPTED" and trace.evidence_type != "DYNAMIC_TRACE":
+    if trace is not None and review.review_status == "ACCEPTED":
+        if trace.evidence_type != "DYNAMIC_TRACE":
             problems.append(f"{review.trace_id}: ACCEPTED but evidence_type={trace.evidence_type}")
-        if review.review_status == "ACCEPTED" and not trace.dynamic_confirmed:
+        if not trace.dynamic_confirmed:
             problems.append(f"{review.trace_id}: ACCEPTED but dynamic_confirmed is false")
-        if review.review_status == "ACCEPTED" and not trace.trace_hash:
+        if not trace.trace_hash:
             problems.append(f"{review.trace_id}: ACCEPTED but missing trace_hash")
+        # Flow semantics — strict (P0-3 second half)
+        fc = str(trace.flow_class or "")
+        if fc not in ALLOWED_FLOW_CLASSES:
+            problems.append(f"{review.trace_id}: ACCEPTED but unknown flow_class {fc!r}")
+        else:
+            meta = trace.metadata or {}
+            if fc == "AUTHORIZED_SECRET_USE" and not bool(meta.get("authorized_sink")):
+                problems.append(f"{review.trace_id}: AUTHORIZED_SECRET_USE but authorized_sink not set")
+            if fc == "REDACTED_OUTPUT" and not bool(meta.get("safe_redaction")):
+                problems.append(f"{review.trace_id}: REDACTED_OUTPUT but safe_redaction not set")
+            if fc == "STDOUT_EXPOSURE":
+                if trace.sink != "stdout":
+                    problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but sink={trace.sink!r}")
+                if trace.gateway_channel != "TOOL_RESULT" or trace.gateway_visibility != "DIRECT":
+                    problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but channel/visibility mismatch {trace.gateway_channel}/{trace.gateway_visibility}")
+                if trace.credential_marker and trace.credential_marker not in (trace.payload or ""):
+                    problems.append(f"{review.trace_id}: STDOUT_EXPOSURE but marker not in payload")
+            if fc == "NETWORK_EXFIL":
+                if trace.sink != "network":
+                    problems.append(f"{review.trace_id}: NETWORK_EXFIL but sink={trace.sink!r}")
+                if trace.gateway_channel != "TOOL_CALL" or trace.gateway_visibility != "PROJECTED":
+                    problems.append(f"{review.trace_id}: NETWORK_EXFIL but channel/visibility mismatch {trace.gateway_channel}/{trace.gateway_visibility}")
+                if trace.credential_marker and trace.credential_marker not in (trace.payload or ""):
+                    problems.append(f"{review.trace_id}: NETWORK_EXFIL but marker not in payload")
+            # BLOCK vs ALLOW consistency — ensure evidence matches flow class
+            # (STDOUT/NETWORK are BLOCK, AUTHORIZED/REDACTED are ALLOW)
+            if fc in ("STDOUT_EXPOSURE", "NETWORK_EXFIL") and bool(meta.get("authorized_sink") or meta.get("safe_redaction")):
+                problems.append(f"{review.trace_id}: BLOCK flow but marked allow")
     return problems
 
 
@@ -196,11 +221,7 @@ def apply_reviews(
     traces: list[CredentialTrace],
     reviews: list[TraceReview],
 ) -> tuple[list[CredentialTrace], list[str]]:
-    """Filter traces to accepted ones; return (accepted_traces, problems).
-
-    Problems include duplicate trace_ids across reviews and validation failures.
-    NEEDS_REVIEW rows are excluded (neither accepted nor rejected — still pending).
-    """
+    """Filter traces to accepted ones; return (accepted_traces, problems)."""
     by_id = {t.trace_id: t for t in traces}
     seen: set[str] = set()
     problems: list[str] = []
@@ -218,14 +239,8 @@ def apply_reviews(
         if probs:
             problems.extend(probs)
         if r.review_status == "ACCEPTED":
-            # Only count as accepted if it has no validation problems
             if not [p for p in probs if r.trace_id in p]:
                 accepted.append(tr)
-        elif r.review_status == "REJECTED":
-            pass  # excluded, not a problem by itself
-        elif r.review_status == "NEEDS_REVIEW":
-            pass
-    # Traces with no review row at all are implicitly NEEDS_REVIEW — excluded, not an error
     return sorted(accepted, key=lambda t: t.trace_id), problems
 
 
@@ -262,8 +277,8 @@ def freeze_reviewed_traces(
 ) -> dict[str, Any]:
     """Write the reviewed-traces artifact for freeze-reviewed.
 
-    Produces ``<raw_dir>/reviews/reviewed_traces.jsonl`` (accepted traces only,
-    deterministic order) plus ``reviews/review_meta.json`` with provenance.
+    Produces ``<raw_dir>/reviews/reviewed_traces.jsonl`` + ``review_meta.json``
+    with hash binding to source traces, trace_meta, and verdicts.
     """
     raw_dir = Path(raw_dir)
     out_dir = raw_dir / REVIEW_DIRNAME
@@ -276,12 +291,34 @@ def freeze_reviewed_traces(
     )
     blob = out_path.read_bytes()
     sha = hashlib.sha256(blob).hexdigest()
+    # Bind source hashes
+    trace_path = raw_dir / "traces.jsonl"
+    trace_sha = hashlib.sha256(trace_path.read_bytes()).hexdigest() if trace_path.exists() else ""
+    meta_path = raw_dir / "trace_meta.json"
+    meta_sha = hashlib.sha256(meta_path.read_bytes()).hexdigest() if meta_path.exists() else ""
+    verdict_blob = "\n".join(json.dumps(r.to_dict(), sort_keys=True) for r in sorted(reviews, key=lambda x: x.trace_id))
+    verdict_sha = hashlib.sha256(verdict_blob.encode()).hexdigest()
+    # snapshot / candidate linkage if present
+    snap_id = ""
+    cand_id = ""
+    try:
+        m = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+        snap_id = str(m.get("snapshot_id") or "")
+        cand_id = str((m.get("candidate_provenance") or {}).get("candidate_set_id") or m.get("candidate_set_id") or "")
+    except Exception:
+        pass
     meta = {
         "review_schema_version": REVIEW_VERSION,
         "n_accepted": len(accepted),
         "n_reviews": len(reviews),
+        "n_pending": sum(1 for r in reviews if r.review_status == "NEEDS_REVIEW"),
         "sha256": sha,
         "trace_file": str(out_path),
+        "source_trace_sha256": trace_sha,
+        "source_trace_meta_sha256": meta_sha,
+        "verdict_sha256": verdict_sha,
+        "snapshot_id": snap_id,
+        "candidate_set_id": cand_id,
     }
     (out_dir / "review_meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n",

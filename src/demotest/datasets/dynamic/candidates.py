@@ -16,14 +16,18 @@ Security invariants
     they never become ground truth — BLOCK still requires a real sandbox trace.
   * Dangerous code is NOT a rejection reason — we are benchmarking leaky Skills.
   * No synthetic/template/LLM expansion.
+  * P4 deterministic Core requires explicit execution spec — no auto-guessed
+    entry_command. SKILL.md-only Skills are kept as AGENT_REQUIRED for the
+    Extended Agent-driven path.
+  * Intake must not read host files via symlink traversal — preflight rejects
+    any symlink before hashing or copying.
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import shutil
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal
 
@@ -34,12 +38,11 @@ CANDIDATES_ROOT = DATASE_V3_RAW_DIR / "p4_skill_candidates"
 CANDIDATES_JSONL = "candidates.jsonl"
 CANDIDATE_META = "candidate_meta.json"
 STAGED_SKILLS_DIRNAME = "skills"
+MATERIALIZATION_FILENAME = "_p4_materialization.json"
 
 # Policy constants
-CANDIDATE_POLICY_VERSION = "p4-candidate-v1"
+CANDIDATE_POLICY_VERSION = "p4-candidate-v2"
 DEFAULT_SELECTION_SEED = 42
-# Oversize guard — per-skill total bytes. Skills larger than this are flagged
-# REJECT_OVERSIZE (but still recorded, not silently dropped).
 OVERSIZE_BYTES = 50 * 1024 * 1024  # 50 MB
 
 CandidateSource = Literal["local_import", "skillsmp", "mixed"]
@@ -48,10 +51,11 @@ RejectReason = Literal[
     "REJECT_EMPTY",
     "REJECT_OVERSIZE",
     "REJECT_SYMLINK_ESCAPE",
+    "REJECT_SYMLINK",
     "REJECT_DUPLICATE",
     "REJECT_INCOMPLETE",
 ]
-
+RuntimeStatus = Literal["RUNTIME_READY", "AGENT_REQUIRED", "RUNTIME_UNKNOWN", "SOURCE_REJECTED"]
 
 _EXCLUDE_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
 
@@ -80,6 +84,12 @@ class SkillCandidate:
     source_real: bool = True
     synthetic: bool = False
     reject_reason: str = "ACCEPT"  # one of RejectReason
+    # Runtime eligibility (P0-1)
+    runtime_status: str = "RUNTIME_UNKNOWN"
+    runtime_eligible: bool = False
+    entry_command: tuple[str, ...] = ()
+    declared_providers: tuple[str, ...] = ()
+    execution_spec_source: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -103,6 +113,11 @@ class SkillCandidate:
             "source_real": self.source_real,
             "synthetic": self.synthetic,
             "reject_reason": self.reject_reason,
+            "runtime_status": self.runtime_status,
+            "runtime_eligible": self.runtime_eligible,
+            "entry_command": list(self.entry_command),
+            "declared_providers": list(self.declared_providers),
+            "execution_spec_source": self.execution_spec_source,
         }
 
     @classmethod
@@ -128,6 +143,11 @@ class SkillCandidate:
             source_real=bool(d.get("source_real", True)),
             synthetic=bool(d.get("synthetic", False)),
             reject_reason=str(d.get("reject_reason") or "ACCEPT"),
+            runtime_status=str(d.get("runtime_status") or "RUNTIME_UNKNOWN"),
+            runtime_eligible=bool(d.get("runtime_eligible", False)),
+            entry_command=tuple(str(x) for x in (d.get("entry_command") or [])),
+            declared_providers=tuple(str(x) for x in (d.get("declared_providers") or [])),
+            execution_spec_source=str(d.get("execution_spec_source") or ""),
         )
 
 
@@ -175,69 +195,115 @@ class CandidateSetManifest:
 
 
 # ---------------------------------------------------------------------------
-# File-level helpers
+# File-level helpers — preflight before any read (P0-2)
 # ---------------------------------------------------------------------------
 
-def _hash_skill_dir(skill_dir: Path) -> tuple[str, int, int]:
-    """SHA over sorted relpath|file-sha lines + file count + total bytes."""
-    files = [
-        p for p in sorted(skill_dir.rglob("*"))
-        if p.is_file() and not any(part in _EXCLUDE_DIRS for part in p.relative_to(skill_dir).parts)
-    ]
+def _scan_skill_dir_nofollow(skill_dir: Path) -> tuple[list[Path], int, bool]:
+    """Enumerate regular files without following symlinks.
+
+    Returns (regular_files, total_bytes via lstat, has_symlink).
+    """
+    regular: list[Path] = []
+    total = 0
+    has_symlink = False
+    for p in skill_dir.rglob("*"):
+        # Check symlink first via lstat — do not follow
+        try:
+            is_link = p.is_symlink()
+        except Exception:
+            has_symlink = True
+            continue
+        if is_link:
+            has_symlink = True
+            continue
+        # Exclude dirs
+        try:
+            rel_parts = p.relative_to(skill_dir).parts
+        except ValueError:
+            continue
+        if any(part in _EXCLUDE_DIRS for part in rel_parts):
+            continue
+        if p.is_file():
+            regular.append(p)
+            try:
+                total += p.stat().st_size
+            except Exception:
+                pass
+    return sorted(regular, key=lambda x: str(x.relative_to(skill_dir)).replace("\\", "/")), total, has_symlink
+
+
+def _hash_skill_dir_streaming(skill_dir: Path, regular_files: list[Path]) -> tuple[str, int, int]:
+    """SHA over sorted relpath|file-sha (streaming, no read_bytes)."""
     lines: list[str] = []
     total = 0
-    for p in files:
+    for p in regular_files:
         rel = str(p.relative_to(skill_dir)).replace("\\", "/")
-        sha = hashlib.sha256(p.read_bytes()).hexdigest()
+        h = hashlib.sha256()
+        with p.open("rb") as f:
+            for chunk in iter(lambda: f.read(8192), b""):
+                h.update(chunk)
+        sha = h.hexdigest()
         lines.append(f"{rel}|{sha}")
         total += p.stat().st_size
     archive_sha = hashlib.sha256("\n".join(lines).encode()).hexdigest() if lines else hashlib.sha256(b"").hexdigest()
-    return archive_sha, len(files), total
+    return archive_sha, len(regular_files), total
 
 
-def _has_symlink_escape(skill_dir: Path) -> bool:
-    """True if any symlink points outside skill_dir."""
-    for p in skill_dir.rglob("*"):
-        if p.is_symlink():
+def _has_skill_entrypoint_nofollow(skill_dir: Path, regular_files: list[Path]) -> bool:
+    """Presence of SKILL.md or common entrypoint without following symlinks."""
+    # Direct checks (regular files only, since symlink already excluded)
+    names = {str(p.relative_to(skill_dir)).replace("\\", "/").lower() for p in regular_files}
+    if "skill.md" in names:
+        return True
+    # any .py/.sh/.js/.ts at top-level is not sufficient for completeness anymore,
+    # but keep as before for source ACCEPT — runtime eligibility is separate.
+    for n in names:
+        if n.endswith(".py") or n.endswith(".sh") or n.endswith(".js") or n.endswith(".ts"):
+            return True
+    # subdir SKILL.md
+    for n in names:
+        if n.endswith("/skill.md") or n.endswith("\\skill.md"):
+            return True
+    return False
+
+
+def _read_execution_spec(skill_dir: Path) -> tuple[tuple[str, ...], tuple[str, ...], str]:
+    """Read explicit execution spec — never guess entry script."""
+    for fname in ("demotest.skill.json", "runtime_spec.json"):
+        meta_path = skill_dir / fname
+        if meta_path.exists() and not meta_path.is_symlink():
             try:
-                target = p.resolve()
-                # resolved target must stay within skill_dir
-                target.relative_to(skill_dir.resolve())
-            except ValueError:
-                return True
+                m = json.loads(meta_path.read_text(encoding="utf-8"))
+                cmd = tuple(str(x) for x in (m.get("entry_command") or []))
+                prov = tuple(str(x) for x in (m.get("declared_providers") or []))
+                if cmd:
+                    return cmd, prov, fname
+                if prov:
+                    return (), prov, fname
             except Exception:
-                return True
-    return False
+                continue
+    return (), (), ""
 
 
-def _has_skill_entrypoint(skill_dir: Path) -> bool:
-    """Presence of SKILL.md or common entrypoint is considered complete."""
-    if (skill_dir / "SKILL.md").exists():
-        return True
-    if (skill_dir / "skill.md").exists():
-        return True
-    # also accept any .py / .sh / .js entry
-    for pat in ("*.py", "*.sh", "*.js", "*.ts"):
-        if list(skill_dir.glob(pat)):
-            return True
-    # check subdir SKILL.md
-    for p in skill_dir.rglob("SKILL.md"):
-        if p.is_file():
-            return True
-    return False
-
-
-def _classify_skill_dir(skill_dir: Path, seen_shas: set[str], sha: str, n_files: int, total_bytes: int) -> str:
-    """Return RejectReason for this skill (ACCEPT if no issue)."""
-    if _has_symlink_escape(skill_dir):
+def _classify_skill_dir_nofollow(
+    skill_dir: Path,
+    regular_files: list[Path],
+    total_bytes: int,
+    has_symlink: bool,
+    seen_shas: set[str],
+    sha: str,
+) -> str:
+    """Return RejectReason (ACCEPT if no issue). Symlink/oversize checked first."""
+    if has_symlink:
         return "REJECT_SYMLINK_ESCAPE"
+    n_files = len(regular_files)
     if n_files == 0:
         return "REJECT_EMPTY"
     if total_bytes > OVERSIZE_BYTES:
         return "REJECT_OVERSIZE"
     if sha in seen_shas:
         return "REJECT_DUPLICATE"
-    if not _has_skill_entrypoint(skill_dir):
+    if not _has_skill_entrypoint_nofollow(skill_dir, regular_files):
         return "REJECT_INCOMPLETE"
     return "ACCEPT"
 
@@ -264,40 +330,67 @@ def import_local_candidates(
     created_at: str = "",
     selection_seed: int = DEFAULT_SELECTION_SEED,
 ) -> CandidateSetManifest:
-    """Import real Skills from a local directory into the candidate pool.
-
-    Each immediate sub-directory of *skills_dir* becomes one candidate. Files are
-    copied into ``<dest_root>/skills/<skill_id>`` so the pool is self-contained
-    and later materialize can run without the original directory.
-    """
     src = Path(skills_dir)
     if not src.is_dir():
         raise FileNotFoundError(f"skills dir not found: {src}")
     dest = Path(dest_root) if dest_root else CANDIDATES_ROOT
     staged = dest / STAGED_SKILLS_DIRNAME
     staged.mkdir(parents=True, exist_ok=True)
-    # Clean stale jsonl/meta from previous import — intake is idempotent per run
-    # but we keep staging additive? For now overwrite jsonl/meta, keep staged skills.
     created_at = created_at or now_utc()
     acquired_at = created_at
     candidates: list[SkillCandidate] = []
     seen_shas: set[str] = set()
     for sd in _skill_dirs(src):
         skill_id = sd.name
-        sha, n_files, total = _hash_skill_dir(sd)
-        reason = _classify_skill_dir(sd, seen_shas, sha, n_files, total)
-        # Copy to staged regardless of reject — audit retains the bytes (except duplicate
-        # second copy would collide; we skip duplicate copy but still record it)
-        staged_skill = staged / skill_id
-        if reason != "REJECT_DUPLICATE":
+        regular, total_lstat, has_symlink = _scan_skill_dir_nofollow(sd)
+        if has_symlink:
+            reason = "REJECT_SYMLINK_ESCAPE"
+            sha = hashlib.sha256(f"rejected:{reason}:{skill_id}".encode()).hexdigest()
+            n_files = len(regular)
+            total = total_lstat
+            entry_cmd: tuple[str, ...] = ()
+            prov: tuple[str, ...] = ()
+            spec_src = ""
+        elif total_lstat > OVERSIZE_BYTES:
+            reason = "REJECT_OVERSIZE"
+            sha = hashlib.sha256(f"rejected:{reason}:{skill_id}:{total_lstat}".encode()).hexdigest()
+            n_files = len(regular)
+            total = total_lstat
+            entry_cmd = ()
+            prov = ()
+            spec_src = ""
+        else:
+            sha, n_files, total = _hash_skill_dir_streaming(sd, regular)
+            reason = _classify_skill_dir_nofollow(sd, regular, total, has_symlink, seen_shas, sha)
+            entry_cmd, prov, spec_src = _read_execution_spec(sd)
+        # Derive runtime eligibility
+        if reason != "ACCEPT":
+            runtime_status: str = "SOURCE_REJECTED"
+            runtime_eligible = False
+        elif entry_cmd:
+            runtime_status = "RUNTIME_READY"
+            runtime_eligible = True
+        else:
+            runtime_status = "AGENT_REQUIRED"
+            runtime_eligible = False
+
+        # Copy to staged only for non-link / non-oversize (P0-2)
+        should_copy = reason not in ("REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_OVERSIZE")
+        if reason != "REJECT_DUPLICATE" and should_copy:
+            staged_skill = staged / skill_id
             if staged_skill.exists():
                 shutil.rmtree(staged_skill)
-            shutil.copytree(sd, staged_skill)
-            seen_shas.add(sha)
+            # copytree must not follow symlinks — we already rejected any symlink,
+            # so safe to copy regular files.
+            shutil.copytree(sd, staged_skill, symlinks=False)
+            if reason == "ACCEPT":
+                seen_shas.add(sha)
+            elif reason not in ("REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_OVERSIZE"):
+                seen_shas.add(sha)
         else:
-            # still track duplicate sha
-            pass
-        rel_staged = f"{STAGED_SKILLS_DIRNAME}/{skill_id}" if staged_skill.exists() else ""
+            if reason == "ACCEPT":
+                seen_shas.add(sha)
+        rel_staged = f"{STAGED_SKILLS_DIRNAME}/{skill_id}" if (staged / skill_id).exists() else ""
         cand = SkillCandidate(
             candidate_id=skill_id,
             skill_id=skill_id,
@@ -319,6 +412,11 @@ def import_local_candidates(
             source_real=True,
             synthetic=False,
             reject_reason=reason,
+            runtime_status=runtime_status,
+            runtime_eligible=runtime_eligible,
+            entry_command=entry_cmd,
+            declared_providers=prov,
+            execution_spec_source=spec_src,
         )
         candidates.append(cand)
 
@@ -335,13 +433,6 @@ def import_skillsmp_candidates(
     created_at: str = "",
     selection_seed: int = DEFAULT_SELECTION_SEED,
 ) -> CandidateSetManifest:
-    """Import from an official SkillsMP crawl output dir.
-
-    Expected layout: each skill is a sub-directory (same as local_import), but
-    source_type is ``skillsmp`` and classification_hint may be read from an
-    optional ``metadata.json`` inside each skill dir (if present). No network
-    call is made here — the caller must have already crawled.
-    """
     src = Path(crawl_output_dir)
     if not src.is_dir():
         raise FileNotFoundError(f"crawl output dir not found: {src}")
@@ -354,14 +445,33 @@ def import_skillsmp_candidates(
     seen_shas: set[str] = set()
     for sd in _skill_dirs(src):
         skill_id = sd.name
-        sha, n_files, total = _hash_skill_dir(sd)
-        reason = _classify_skill_dir(sd, seen_shas, sha, n_files, total)
-        # Optional hints
+        regular, total_lstat, has_symlink = _scan_skill_dir_nofollow(sd)
+        if has_symlink:
+            reason = "REJECT_SYMLINK_ESCAPE"
+            sha = hashlib.sha256(f"rejected:{reason}:{skill_id}".encode()).hexdigest()
+            n_files = len(regular)
+            total = total_lstat
+            entry_cmd: tuple[str, ...] = ()
+            prov: tuple[str, ...] = ()
+            spec_src = ""
+        elif total_lstat > OVERSIZE_BYTES:
+            reason = "REJECT_OVERSIZE"
+            sha = hashlib.sha256(f"rejected:{reason}:{skill_id}:{total_lstat}".encode()).hexdigest()
+            n_files = len(regular)
+            total = total_lstat
+            entry_cmd = ()
+            prov = ()
+            spec_src = ""
+        else:
+            sha, n_files, total = _hash_skill_dir_streaming(sd, regular)
+            reason = _classify_skill_dir_nofollow(sd, regular, total, has_symlink, seen_shas, sha)
+            entry_cmd, prov, spec_src = _read_execution_spec(sd)
+        # Hints from optional metadata.json (if not symlink)
         class_hint = ""
         pattern_hints: tuple[str, ...] = ()
         severity_hint = ""
         meta_path = sd / "metadata.json"
-        if meta_path.exists():
+        if meta_path.exists() and not meta_path.is_symlink() and reason not in ("REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_OVERSIZE"):
             try:
                 m = json.loads(meta_path.read_text(encoding="utf-8"))
                 class_hint = str(m.get("classification") or m.get("classification_hint") or "")
@@ -371,13 +481,29 @@ def import_skillsmp_candidates(
                 severity_hint = str(m.get("severity") or m.get("severity_hint") or "")
             except Exception:
                 pass
-        staged_skill = staged / skill_id
-        if reason != "REJECT_DUPLICATE":
+        if reason != "ACCEPT":
+            runtime_status = "SOURCE_REJECTED"
+            runtime_eligible = False
+        elif entry_cmd:
+            runtime_status = "RUNTIME_READY"
+            runtime_eligible = True
+        else:
+            runtime_status = "AGENT_REQUIRED"
+            runtime_eligible = False
+        should_copy = reason not in ("REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_OVERSIZE")
+        if reason != "REJECT_DUPLICATE" and should_copy:
+            staged_skill = staged / skill_id
             if staged_skill.exists():
                 shutil.rmtree(staged_skill)
-            shutil.copytree(sd, staged_skill)
-            seen_shas.add(sha)
-        rel_staged = f"{STAGED_SKILLS_DIRNAME}/{skill_id}" if staged_skill.exists() else ""
+            shutil.copytree(sd, staged_skill, symlinks=False)
+            if reason == "ACCEPT":
+                seen_shas.add(sha)
+            elif reason not in ("REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_OVERSIZE"):
+                seen_shas.add(sha)
+        else:
+            if reason == "ACCEPT":
+                seen_shas.add(sha)
+        rel_staged = f"{STAGED_SKILLS_DIRNAME}/{skill_id}" if (staged / skill_id).exists() else ""
         cand = SkillCandidate(
             candidate_id=skill_id,
             skill_id=skill_id,
@@ -399,6 +525,11 @@ def import_skillsmp_candidates(
             source_real=True,
             synthetic=False,
             reject_reason=reason,
+            runtime_status=runtime_status,
+            runtime_eligible=runtime_eligible,
+            entry_command=entry_cmd,
+            declared_providers=prov,
+            execution_spec_source=spec_src,
         )
         candidates.append(cand)
     return _write_pool(candidates, dest=dest, source="skillsmp",
@@ -416,7 +547,6 @@ def _write_pool(
     selection_seed: int,
 ) -> CandidateSetManifest:
     dest.mkdir(parents=True, exist_ok=True)
-    # Deterministic order
     candidates = sorted(candidates, key=lambda c: c.candidate_id)
     candidate_set_id = _candidate_set_id(candidates) if candidates else "p4-candidates-empty"
     jsonl_path = dest / CANDIDATES_JSONL
@@ -480,9 +610,10 @@ def verify_candidates(root: Path | str | None = None) -> list[str]:
         expected_id = _candidate_set_id(cands)
         if meta.candidate_set_id != expected_id:
             problems.append(f"candidate_set_id drift: meta={meta.candidate_set_id} expected={expected_id}")
+        if meta.selection_policy_version != CANDIDATE_POLICY_VERSION:
+            problems.append(f"policy version drift: meta={meta.selection_policy_version} != {CANDIDATE_POLICY_VERSION}")
     except FileNotFoundError as e:
         problems.append(str(e))
-    # Per-candidate checks
     seen_ids: set[str] = set()
     seen_shas: set[str] = set()
     for c in cands:
@@ -496,18 +627,38 @@ def verify_candidates(root: Path | str | None = None) -> list[str]:
             problems.append(f"synthetic candidate not allowed: {c.candidate_id}")
         if not c.source_real:
             problems.append(f"source_real must be true: {c.candidate_id}")
-        if c.reject_reason not in ("ACCEPT", "REJECT_EMPTY", "REJECT_OVERSIZE", "REJECT_SYMLINK_ESCAPE", "REJECT_DUPLICATE", "REJECT_INCOMPLETE"):
+        if c.reject_reason not in ("ACCEPT", "REJECT_EMPTY", "REJECT_OVERSIZE", "REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_DUPLICATE", "REJECT_INCOMPLETE"):
             problems.append(f"unknown reject_reason {c.reject_reason}: {c.candidate_id}")
-        # Staged file existence
+        if c.runtime_status not in ("RUNTIME_READY", "AGENT_REQUIRED", "RUNTIME_UNKNOWN", "SOURCE_REJECTED"):
+            problems.append(f"unknown runtime_status {c.runtime_status}: {c.candidate_id}")
+        if c.reject_reason == "ACCEPT" and c.runtime_status == "SOURCE_REJECTED":
+            problems.append(f"ACCEPT with SOURCE_REJECTED: {c.candidate_id}")
+        if c.reject_reason != "ACCEPT" and c.runtime_eligible:
+            problems.append(f"REJECT with runtime_eligible: {c.candidate_id}")
+        if c.runtime_eligible and not c.entry_command:
+            problems.append(f"runtime_eligible without entry_command: {c.candidate_id}")
+        # ACCEPT must have runtime_status coherent
+        if c.reject_reason == "ACCEPT" and c.runtime_status not in ("RUNTIME_READY", "AGENT_REQUIRED", "RUNTIME_UNKNOWN"):
+            problems.append(f"ACCEPT with unexpected runtime_status: {c.candidate_id}")
         if c.reject_reason == "ACCEPT":
             staged = root / c.local_path if c.local_path else None
             if staged is None or not staged.exists():
+                # AGENT_REQUIRED may still be staged (it is ACCEPT source) — so must exist
                 problems.append(f"ACCEPT candidate missing staged dir: {c.candidate_id} -> {c.local_path}")
             else:
-                sha, n_files, total = _hash_skill_dir(staged)
-                if sha != c.source_sha256:
-                    problems.append(f"staged sha drift: {c.candidate_id} stored={c.source_sha256[:12]} actual={sha[:12]}")
-        # REJECT_* must not be silently dropped — they stay in jsonl for audit
+                regular, _, has_sym = _scan_skill_dir_nofollow(staged)
+                if has_sym:
+                    problems.append(f"staged dir contains symlink: {c.candidate_id}")
+                else:
+                    sha, _, _ = _hash_skill_dir_streaming(staged, regular)
+                    if sha != c.source_sha256:
+                        problems.append(f"staged sha drift: {c.candidate_id} stored={c.source_sha256[:12]} actual={sha[:12]}")
+        else:
+            # REJECT_SYMLINK/OVERSIZE must NOT be staged (P0-2)
+            if c.reject_reason in ("REJECT_SYMLINK_ESCAPE", "REJECT_SYMLINK", "REJECT_OVERSIZE"):
+                staged = root / c.local_path if c.local_path else None
+                if c.local_path and staged is not None and staged.exists():
+                    problems.append(f"{c.reject_reason} must not be staged: {c.candidate_id}")
     return problems
 
 
@@ -519,20 +670,41 @@ def materialize_candidates(
     offset: int = 0,
     seed: int = DEFAULT_SELECTION_SEED,
     include_rejected: bool = False,
+    require_runtime_ready: bool = False,
+    clean_dest: bool = False,
 ) -> list[SkillCandidate]:
     """Deterministically select a subset and copy staged skills to *dest_dir*.
 
     Only ACCEPT candidates are considered by default. Selection is deterministic:
     candidates are ordered by ``sha256(candidate_set_id|seed|candidate_id)`` so
     the same pool+seed always yields the same subset (guide §15).
+
+    P4 deterministic Core should set ``require_runtime_ready=True`` so only
+    ``RUNTIME_READY`` Skills enter the snapshot (SKILL.md-only -> AGENT_REQUIRED
+    is kept in the pool but excluded from deterministic execution).
     """
     pool = Path(pool_root) if pool_root else CANDIDATES_ROOT
     dest = Path(dest_dir)
-    dest.mkdir(parents=True, exist_ok=True)
+    # Dest hygiene (P1): refuse non-empty dest unless explicitly cleaned
+    if dest.exists() and any(dest.iterdir()):
+        if not clean_dest:
+            raise RuntimeError(f"dest dir not empty: {dest} (use --clean-dest to overwrite)")
+        # clean
+        for child in list(dest.iterdir()):
+            if child.is_dir():
+                shutil.rmtree(child)
+            else:
+                child.unlink()
+    else:
+        dest.mkdir(parents=True, exist_ok=True)
     all_cands = load_candidates(pool)
     if not include_rejected:
         all_cands = [c for c in all_cands if c.reject_reason == "ACCEPT"]
+        if require_runtime_ready:
+            all_cands = [c for c in all_cands if c.runtime_eligible and c.runtime_status == "RUNTIME_READY"]
     if not all_cands:
+        # Still write empty materialization manifest for provenance
+        _write_materialization_manifest(dest, pool, seed, [])
         return []
     meta = None
     try:
@@ -555,5 +727,46 @@ def materialize_candidates(
         dst = dest / c.skill_id
         if dst.exists():
             shutil.rmtree(dst)
-        shutil.copytree(src, dst)
+        shutil.copytree(src, dst, symlinks=False)
+    _write_materialization_manifest(dest, pool, seed, selected)
     return selected
+
+
+def _write_materialization_manifest(dest: Path, pool: Path, seed: int, selected: list[SkillCandidate]) -> Path:
+    try:
+        meta = load_candidate_meta(pool)
+        candidate_set_id = meta.candidate_set_id
+        policy = meta.selection_policy_version
+    except Exception:
+        candidate_set_id = _candidate_set_id(load_candidates(pool))
+        policy = CANDIDATE_POLICY_VERSION
+    sel_blob = "\n".join(f"{c.candidate_id}|{c.source_sha256}" for c in sorted(selected, key=lambda x: x.candidate_id))
+    selection_sha256 = hashlib.sha256(sel_blob.encode()).hexdigest() if sel_blob else hashlib.sha256(b"").hexdigest()
+    doc = {
+        "candidate_set_id": candidate_set_id,
+        "candidate_policy_version": policy,
+        "seed": seed,
+        "selected_count": len(selected),
+        "selection_sha256": selection_sha256,
+        "skills": [
+            {
+                "candidate_id": c.candidate_id,
+                "skill_id": c.skill_id,
+                "source_type": c.source_type,
+                "source_uri": c.source_uri,
+                "source_revision": c.source_revision,
+                "source_sha256": c.source_sha256,
+                "runtime_spec": {
+                    "entry_command": list(c.entry_command),
+                    "declared_providers": list(c.declared_providers),
+                    "execution_spec_source": c.execution_spec_source,
+                    "runtime_status": c.runtime_status,
+                    "runtime_eligible": c.runtime_eligible,
+                },
+            }
+            for c in sorted(selected, key=lambda x: x.candidate_id)
+        ],
+    }
+    p = dest / MATERIALIZATION_FILENAME
+    p.write_text(json.dumps(doc, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return p

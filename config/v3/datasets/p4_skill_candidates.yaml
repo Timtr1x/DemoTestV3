@@ -1,7 +1,4 @@
 # P4 candidate pool — real Skill intake before snapshot (guide P4 D1/D2)
-# This is NOT a benchmark dataset itself; it is the provenance record for
-# "where did these real Skills come from" so every later trace can be
-# traced back to a staged, hashed skill copy.
 dataset_id: p4_skill_candidates
 pool_dir: cache/datasets_v3/raw/p4_skill_candidates
 staged_skills_dir: cache/datasets_v3/raw/p4_skill_candidates/skills
@@ -10,21 +7,38 @@ candidate_meta_file: cache/datasets_v3/raw/p4_skill_candidates/candidate_meta.js
 
 source_types: [local_import, skillsmp]
 intake_modes:
-  - import-local   # from a local directory of real Skills
-  - import-skillsmp # from an official SkillsMP crawl output dir
+  - import-local
+  - import-skillsmp
 
 policy:
-  version: p4-candidate-v1
+  version: p4-candidate-v2
   selection_seed: 42
-  oversize_bytes: 52428800  # 50 MB
-  reject_reasons: [ACCEPT, REJECT_EMPTY, REJECT_OVERSIZE, REJECT_SYMLINK_ESCAPE, REJECT_DUPLICATE, REJECT_INCOMPLETE]
+  oversize_bytes: 52428800
+  reject_reasons: [ACCEPT, REJECT_EMPTY, REJECT_OVERSIZE, REJECT_SYMLINK_ESCAPE, REJECT_SYMLINK, REJECT_DUPLICATE, REJECT_INCOMPLETE]
+  runtime_status: [RUNTIME_READY, AGENT_REQUIRED, RUNTIME_UNKNOWN, SOURCE_REJECTED]
+  hardening: "preflight symlink/size before hash/copy; REJECT_SYMLINK/OVERSIZE not staged; streaming hash; no auto-guessed entry"
 
 provenance:
-  fields_required: [candidate_id, skill_id, source_type, source_uri, source_revision, source_sha256, acquired_at, acquisition_method, local_path, file_count, total_bytes]
+  fields_required: [candidate_id, skill_id, source_type, source_uri, source_revision, source_sha256, acquired_at, acquisition_method, local_path, file_count, total_bytes, runtime_status, runtime_eligible, entry_command, declared_providers, execution_spec_source]
   source_real: true
   synthetic: false
-  hints_are_not_labels: true  # classification_hint / pattern_hints never become ground truth
+  hints_are_not_labels: true
 
 materialize:
   deterministic_rank: "sha256(candidate_set_id|seed|candidate_id)"
   only_accepted_by_default: true
+  p4_core: "add --require-runtime-ready for RUNTIME_READY only"
+  dest_hygiene: "refuse non-empty dest unless --clean-dest"
+  provenance_file: "_p4_materialization.json"
+
+snapshot_binding:
+  materialization_sha256: "bound into snapshot.json candidate_provenance"
+  per_skill_source: "source_uri/source_revision/source_sha256/candidate_id/entry_command carried"
+  windows_host: "python (not python3); container must expose python -> python3"
+
+review:
+  version: p4-review-v1
+  fail_closed: "7 gates default false; ACCEPTED requires every gate true"
+  flow_semantics: "AUTHORIZED->authorized_sink, REDACTED->safe_redaction, STDOUT/NETWORK marker in payload + channel/visibility check"
+  hash_binding: "source_trace_sha256 / source_trace_meta_sha256 / verdict_sha256 / snapshot_id / candidate_set_id"
+  freeze_gate: "pending must be 0"

@@ -256,6 +256,7 @@ class DynamicTraceCollector:
         )
         marker_prov = self._marker_provider()
         cred_prov = marker_prov.provenance
+        cand_prov = dict(getattr(manifest, "candidate_provenance", {}) or {})
         meta = {
             "source_revision": self.runner.pipeline_revision,
             "n_traces": len(traces),
@@ -272,6 +273,9 @@ class DynamicTraceCollector:
             "builder_version": COLLECTOR_VERSION,
             "snapshot_id": manifest.snapshot_id,
             "skill_snapshot_archive_sha256": manifest.archive_sha256,
+            "candidate_provenance": cand_prov,
+            "candidate_set_id": cand_prov.get("candidate_set_id", ""),
+            "materialization_sha256": cand_prov.get("materialization_sha256", ""),
             "sandbox_image_digest": self.runner.image_digest(),
             "sandbox_profile": self.runner.resource_profile() if hasattr(self.runner, "resource_profile") else {},
             "isolation_level": getattr(self.runner, "isolation_level", ""),
@@ -299,6 +303,9 @@ class DynamicTraceCollector:
                 "derived_from": "skillleakbench_pipeline",
                 "snapshot_id": manifest.snapshot_id,
                 "snapshot_sha256": manifest.archive_sha256,
+                "candidate_set_id": cand_prov.get("candidate_set_id", ""),
+                "materialization_sha256": cand_prov.get("materialization_sha256", ""),
+                "candidate_policy_version": cand_prov.get("candidate_policy_version", ""),
                 "sandbox_image_digest": self.runner.image_digest(),
                 "sandbox_profile": meta["sandbox_profile"],
                 "isolation_level": meta["isolation_level"],

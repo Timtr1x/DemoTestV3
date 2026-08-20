@@ -7,6 +7,13 @@ per-skill SHA-256 + archive SHA-256 + the pinned pipeline revision.
 
 snapshot_id is derived from the archive hash — re-freezing the same content
 yields the same id (deterministic), so snapshot identity is content-defined.
+
+P0-4: when snapshotting a materialized dir (created by
+candidates.materialize_candidates), the provenance in
+``_p4_materialization.json`` is carried into ``snapshot.json`` as
+``candidate_provenance`` (candidate_set_id, materialization_sha256,
+policy version, selected skills' source_uri/revision/sha). This restores
+the chain: Candidate → Materialization → Snapshot → Trace.
 """
 from __future__ import annotations
 
@@ -22,6 +29,7 @@ from ...paths import DATASE_V3_RAW_DIR
 SNAPSHOTS_ROOT = DATASE_V3_RAW_DIR / "skill_snapshots"
 
 _EXCLUDE_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
+_MATERIALIZATION_FILENAME = "_p4_materialization.json"
 
 
 @dataclass(frozen=True)
@@ -31,6 +39,11 @@ class SkillEntry:
     n_files: int
     declared_providers: tuple[str, ...] = ()
     entry_command: tuple[str, ...] = ()
+    # Provenance carried from materialization (P0-4)
+    source_uri: str = ""
+    source_revision: str = ""
+    source_sha256: str = ""
+    candidate_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -40,9 +53,10 @@ class SnapshotManifest:
     created_at: str
     skills: tuple[SkillEntry, ...] = field(default_factory=tuple)
     archive_sha256: str = ""
+    candidate_provenance: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        d: dict[str, Any] = {
             "snapshot_id": self.snapshot_id,
             "pipeline_revision": self.pipeline_revision,
             "created_at": self.created_at,
@@ -54,22 +68,34 @@ class SnapshotManifest:
                     "n_files": s.n_files,
                     "declared_providers": list(s.declared_providers),
                     "entry_command": list(s.entry_command),
+                    "source_uri": s.source_uri,
+                    "source_revision": s.source_revision,
+                    "source_sha256": s.source_sha256,
+                    "candidate_id": s.candidate_id,
                 }
                 for s in self.skills
             ],
         }
+        if self.candidate_provenance:
+            d["candidate_provenance"] = dict(self.candidate_provenance)
+        return d
 
 
 def _hash_tree(root: Path) -> tuple[str, int]:
-    """SHA-256 over sorted relpath|file-sha lines (same convention as locks)."""
     files = [
         p for p in sorted(root.rglob("*"))
         if p.is_file() and not any(part in _EXCLUDE_DIRS for part in p.relative_to(root).parts)
+        if p.name != _MATERIALIZATION_FILENAME
     ]
     lines = []
     for p in files:
         rel = str(p.relative_to(root)).replace("\\", "/")
-        lines.append(f"{rel}|{hashlib.sha256(p.read_bytes()).hexdigest()}")
+        # Streaming hash to avoid large read_bytes
+        h = hashlib.sha256()
+        with p.open("rb") as f:
+            for chunk in iter(lambda: f.read(8192), b""):
+                h.update(chunk)
+        lines.append(f"{rel}|{h.hexdigest()}")
     return hashlib.sha256("\n".join(lines).encode()).hexdigest(), len(files)
 
 
@@ -78,14 +104,38 @@ def _skill_dirs(skills_root: Path) -> list[Path]:
 
 
 def _skill_meta(skill_dir: Path) -> dict[str, Any]:
-    """Optional per-skill demotest.skill.json: declared providers + entry command."""
-    meta_path = skill_dir / "demotest.skill.json"
-    if not meta_path.exists():
-        return {}
+    for fname in ("demotest.skill.json", "runtime_spec.json"):
+        p = skill_dir / fname
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+    return {}
+
+
+def _materialization_provenance(skills_root: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    """Load provenance from _p4_materialization.json if present."""
+    p = skills_root / _MATERIALIZATION_FILENAME
+    if not p.exists():
+        return {}, {}
     try:
-        return json.loads(meta_path.read_text(encoding="utf-8"))
+        doc = json.loads(p.read_text(encoding="utf-8"))
     except Exception:
-        return {}
+        return {}, {}
+    meta = {
+        "candidate_set_id": str(doc.get("candidate_set_id") or ""),
+        "candidate_policy_version": str(doc.get("candidate_policy_version") or ""),
+        "seed": doc.get("seed"),
+        "selection_sha256": str(doc.get("selection_sha256") or ""),
+        "materialization_sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+    }
+    per_skill: dict[str, dict[str, Any]] = {}
+    for s in (doc.get("skills") or []):
+        sid = str(s.get("skill_id") or s.get("candidate_id") or "")
+        if sid:
+            per_skill[sid] = dict(s)
+    return meta, per_skill
 
 
 def freeze_skill_snapshot(
@@ -101,16 +151,24 @@ def freeze_skill_snapshot(
     if not skills_root.is_dir():
         raise FileNotFoundError(f"skills root not found: {skills_root}")
 
+    mat_meta, mat_per_skill = _materialization_provenance(skills_root)
+
     entries: list[SkillEntry] = []
     for sd in _skill_dirs(skills_root):
         sha, n = _hash_tree(sd)
         meta = _skill_meta(sd)
+        per = mat_per_skill.get(sd.name) or {}
+        rt = (per.get("runtime_spec") or {}) if per else {}
         entries.append(SkillEntry(
             skill_id=sd.name,
             sha256=sha,
             n_files=n,
-            declared_providers=tuple(meta.get("declared_providers") or ()),
-            entry_command=tuple(meta.get("entry_command") or ()),
+            declared_providers=tuple(meta.get("declared_providers") or rt.get("declared_providers") or ()),
+            entry_command=tuple(meta.get("entry_command") or rt.get("entry_command") or ()),
+            source_uri=str(per.get("source_uri") or ""),
+            source_revision=str(per.get("source_revision") or ""),
+            source_sha256=str(per.get("source_sha256") or ""),
+            candidate_id=str(per.get("candidate_id") or ""),
         ))
     archive_blob = "\n".join(f"{e.skill_id}|{e.sha256}" for e in entries)
     archive_sha = hashlib.sha256(archive_blob.encode()).hexdigest()
@@ -130,6 +188,7 @@ def freeze_skill_snapshot(
         created_at=created_at,
         skills=tuple(entries),
         archive_sha256=archive_sha,
+        candidate_provenance=mat_meta,
     )
     (snap_dir / "snapshot.json").write_text(
         json.dumps(manifest.to_dict(), ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -149,6 +208,7 @@ def load_snapshot(snapshot_id: str, *, root: Path | str | None = None) -> Snapsh
         pipeline_revision=str(d.get("pipeline_revision") or ""),
         created_at=str(d.get("created_at") or ""),
         archive_sha256=str(d.get("archive_sha256") or ""),
+        candidate_provenance=dict(d.get("candidate_provenance") or {}),
         skills=tuple(
             SkillEntry(
                 skill_id=str(s.get("skill_id") or ""),
@@ -156,6 +216,10 @@ def load_snapshot(snapshot_id: str, *, root: Path | str | None = None) -> Snapsh
                 n_files=int(s.get("n_files") or 0),
                 declared_providers=tuple(s.get("declared_providers") or ()),
                 entry_command=tuple(s.get("entry_command") or ()),
+                source_uri=str(s.get("source_uri") or ""),
+                source_revision=str(s.get("source_revision") or ""),
+                source_sha256=str(s.get("source_sha256") or ""),
+                candidate_id=str(s.get("candidate_id") or ""),
             )
             for s in (d.get("skills") or [])
         ),
