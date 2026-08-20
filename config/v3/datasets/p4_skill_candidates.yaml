@@ -1,0 +1,30 @@
+# P4 candidate pool — real Skill intake before snapshot (guide P4 D1/D2)
+# This is NOT a benchmark dataset itself; it is the provenance record for
+# "where did these real Skills come from" so every later trace can be
+# traced back to a staged, hashed skill copy.
+dataset_id: p4_skill_candidates
+pool_dir: cache/datasets_v3/raw/p4_skill_candidates
+staged_skills_dir: cache/datasets_v3/raw/p4_skill_candidates/skills
+candidates_file: cache/datasets_v3/raw/p4_skill_candidates/candidates.jsonl
+candidate_meta_file: cache/datasets_v3/raw/p4_skill_candidates/candidate_meta.json
+
+source_types: [local_import, skillsmp]
+intake_modes:
+  - import-local   # from a local directory of real Skills
+  - import-skillsmp # from an official SkillsMP crawl output dir
+
+policy:
+  version: p4-candidate-v1
+  selection_seed: 42
+  oversize_bytes: 52428800  # 50 MB
+  reject_reasons: [ACCEPT, REJECT_EMPTY, REJECT_OVERSIZE, REJECT_SYMLINK_ESCAPE, REJECT_DUPLICATE, REJECT_INCOMPLETE]
+
+provenance:
+  fields_required: [candidate_id, skill_id, source_type, source_uri, source_revision, source_sha256, acquired_at, acquisition_method, local_path, file_count, total_bytes]
+  source_real: true
+  synthetic: false
+  hints_are_not_labels: true  # classification_hint / pattern_hints never become ground truth
+
+materialize:
+  deterministic_rank: "sha256(candidate_set_id|seed|candidate_id)"
+  only_accepted_by_default: true
