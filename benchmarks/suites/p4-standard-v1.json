@@ -1,0 +1,34 @@
+{
+  "projects": {
+    "P4_credential_flow": {
+      "manifest": "benchmarks/manifests/p4-standard-v1/p4.json",
+      "manifest_sha256": "sha256:b70e518307aa3bd8c889e5f7187443ed4f76ba8c53362aa9dffa1a72f34b984a",
+      "n": 463,
+      "split": [
+        "eval"
+      ],
+      "target": 468
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "credential_catalog_synthetic": {
+      "adapter": "credential_catalog_synthetic",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
+    },
+    "credential_traces": {
+      "adapter": "credential_traces",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
+    }
+  },
+  "split": [
+    "eval"
+  ],
+  "suite_config_hash": "sha256:130ac4a8e3404adbb1771b8ace8cafa4d9889f054b6dbcd7c685c14853dbf797",
+  "suite_id": "p4-standard-v1",
+  "total_cases": 463
+}

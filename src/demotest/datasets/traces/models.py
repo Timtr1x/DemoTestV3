@@ -1,13 +1,10 @@
 """CredentialTrace — raw observation before gateway projection (guide §21).
 
-A CredentialTrace is NOT a SecurityCase. It records a real (or offline-
-deterministically-synthesized but lineage-faithful) observation: a secret
-injected as a fake canary appears in a concrete sink (stdout / network
-payload). The adapter then *projects* each trace deterministically into one
-SecurityCase (guide §22).
-
-The trace file is immutable: once written, a changed sandbox bumps trace-v1 ->
-trace-v2 (guide §24).
+Evidence types:
+  CATALOG_DERIVED — offline synthesis from the SkillLeakBench catalog taxonomy
+                    (Extended / synthetic, quality C, dynamic_confirmed=False)
+  DYNAMIC_TRACE   — real sandbox execution with forged third-party canary
+                    (P4 Core, quality A/B, dynamic_confirmed=True)
 """
 from __future__ import annotations
 
@@ -17,45 +14,36 @@ from typing import Any, Literal
 
 TraceSink = Literal["stdout", "network", "filesystem", "config_file", "env_file"]
 TraceChannel = Literal["TOOL_RESULT", "TOOL_CALL"]
+EvidenceType = Literal["CATALOG_DERIVED", "DYNAMIC_TRACE"]
 
 
 @dataclass(frozen=True)
 class CredentialTrace:
     trace_id: str
-    # catalog lineage
-    skill_id: str  # e.g. "277_creative-writer"
+    skill_id: str
     skill_name: str
-    issue_id: str  # e.g. "MAL-007" / "VUL-003" (the pattern_id for this issue)
-    academic_code: str  # e.g. "MAL-B" / "VUL-C"
-    pattern: str  # e.g. "Information Exposure"
-    classification: str  # vulnerable | malicious
+    issue_id: str
+    academic_code: str
+    pattern: str
+    classification: str
     severity: str
 
-    # trace identity
     sink: TraceSink
-    # gateway projection target (TOOL_RESULT for stdout, TOOL_CALL for network)
     gateway_channel: TraceChannel
-    # gateway visibility (guide §16)
     gateway_visibility: Literal["DIRECT", "PROJECTED"] = "DIRECT"
-    # flow class (guide §17)
-    flow_class: str = ""  # STDOUT_EXPOSURE / NETWORK_EXFIL / ...
-    # the fake canary placed in this trace (TEST_SECRET_*)
+    flow_class: str = ""
     credential_marker: str = ""
-    # the raw payload that carried the canary (verbatim or structured body)
     payload: str = ""
-    # for TOOL_CALL: the network destination / tool envelope
     destination: str = ""
     tool_name: str = ""
     tool_arguments: dict[str, Any] = field(default_factory=dict)
 
-    # quality
     dynamic_confirmed: bool = False
-    # lineage: which source revision + sandbox built this
+    evidence_type: EvidenceType = "CATALOG_DERIVED"  # type: ignore[assignment]
     source_revision: str = ""
     sandbox_version: str = ""
     trace_hash: str = ""
 
-    # extra structured context preserved for reporting
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -78,6 +66,7 @@ class CredentialTrace:
             "tool_name": self.tool_name,
             "tool_arguments": dict(self.tool_arguments or {}),
             "dynamic_confirmed": self.dynamic_confirmed,
+            "evidence_type": self.evidence_type,
             "source_revision": self.source_revision,
             "sandbox_version": self.sandbox_version,
             "trace_hash": self.trace_hash,
@@ -105,6 +94,7 @@ class CredentialTrace:
             tool_name=str(d.get("tool_name") or ""),
             tool_arguments=dict(d.get("tool_arguments") or {}),
             dynamic_confirmed=bool(d.get("dynamic_confirmed", False)),
+            evidence_type=str(d.get("evidence_type") or "CATALOG_DERIVED"),  # type: ignore[assignment]
             source_revision=str(d.get("source_revision") or ""),
             sandbox_version=str(d.get("sandbox_version") or ""),
             trace_hash=str(d.get("trace_hash") or ""),

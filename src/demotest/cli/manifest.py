@@ -22,7 +22,7 @@ from .dataset import cmd_hash  # noqa: F401
 _DATASETS_BY_PROJECT = {
     "P1_external_instruction": ["llmail"],
     "P2_tool_action": ["agentdojo"],
-    "P4_credential_flow": ["credential_traces"],
+    "P4_credential_flow": ["credential_catalog_synthetic", "credential_traces"],
 }
 
 

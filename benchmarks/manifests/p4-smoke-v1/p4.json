@@ -1,0 +1,860 @@
+{
+  "cases": [
+    {
+      "case_fingerprint": "fp-d237e169b9b6517f",
+      "case_id": "case-053112e10c653934",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_noreplyboter",
+      "source_id": "skillleak:56_noreplyboter:MAL-001:trace-9f5b765dd238:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f652279a74a7527b",
+      "case_id": "case-0631cb03fe7c4d75",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_atakanermis",
+      "source_id": "skillleak:56_atakanermis:benign-redacted:trace-benign-a97e5e74dc:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4b9d2de9f3c4d1eb",
+      "case_id": "case-085208871e455587",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_borahm",
+      "source_id": "skillleak:56_borahm:VUL-010:trace-7914505f9feb:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0824c6aab952286e",
+      "case_id": "case-086dac4727cf6d6b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_badguy1",
+      "source_id": "skillleak:56_badguy1:benign-redacted:trace-benign-c761320328:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b8ad00710126be2e",
+      "case_id": "case-09b3508df6d90a3c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_kaankacar",
+      "source_id": "skillleak:56_kaankacar:VUL-010:trace-d4e9d1e116b9:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1e5a79b8697ab836",
+      "case_id": "case-0a9e1332b634f38f",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_weather-data-fetcher",
+      "source_id": "skillleak:56_weather-data-fetcher:MAL-008:trace-4beb84709736:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d563ebe3fff4589d",
+      "case_id": "case-0b2eb7f43eb7129a",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_macterra",
+      "source_id": "skillleak:56_macterra:VUL-006:trace-04f3ec9e4aec:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e2e4f9a137041ed5",
+      "case_id": "case-0d1b2c584365bf8f",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_garmin-connect",
+      "source_id": "skillleak:56_garmin-connect:VUL-006:trace-896a97f2f53d:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f6f7fe95746a2762",
+      "case_id": "case-15342de59f8cf42c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_ad-ready",
+      "source_id": "skillleak:56_ad-ready:benign-authorized:trace-benign-de4835afa8:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-332c04d1baba3896",
+      "case_id": "case-18b9a75a9dce5a3b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_albert-mr",
+      "source_id": "skillleak:56_albert-mr:VUL-006:trace-81586c226463:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-87b0945581e55220",
+      "case_id": "case-25c281106b36381c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_aslaep123",
+      "source_id": "skillleak:56_aslaep123:benign-redacted:trace-benign-6eade2841b:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8fe5d4edcb50f249",
+      "case_id": "case-29ade0ca39e486f7",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_api-helper",
+      "source_id": "skillleak:56_api-helper:benign-redacted:trace-benign-d58fea99c7:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-37d3bbbad5d2c105",
+      "case_id": "case-2add0645b05b2aff",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_pacelabs",
+      "source_id": "skillleak:56_pacelabs:benign-redacted:trace-benign-93f343d380:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0a5f5da27e723c3c",
+      "case_id": "case-2b14be46d2c72d4c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_afajohn",
+      "source_id": "skillleak:56_afajohn:benign-redacted:trace-benign-32f3c5931d:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a2e1189f65cf2fbd",
+      "case_id": "case-2ee51f1adbdd139d",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_security-monitor",
+      "source_id": "skillleak:56_security-monitor:VUL-006:trace-105959459130:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e84780b5f0c375ab",
+      "case_id": "case-337b5342d1ab8f46",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_orlyjamie",
+      "source_id": "skillleak:56_orlyjamie:benign-authorized:trace-benign-42b4abb71c:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d0f6be741f733cba",
+      "case_id": "case-3d239d4b59eb99f2",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_bybit-trading",
+      "source_id": "skillleak:5392_bybit-trading:MAL-003:trace-061b0a0741ba:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-45b877fe3c0c54d8",
+      "case_id": "case-3f0e5cacc1eb3be9",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_lidarr",
+      "source_id": "skillleak:56_lidarr:VUL-010:trace-27a470993f01:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-470b8ac585ad2f74",
+      "case_id": "case-3f4bc427cd85d07a",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_rosepuppy",
+      "source_id": "skillleak:56_rosepuppy:VUL-006:trace-9f714692f39d:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-07e1a1e521fd0e24",
+      "case_id": "case-425f646b855c7614",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_albert-mr",
+      "source_id": "skillleak:56_albert-mr:VUL-010:trace-2c45ec578b8b:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b7fcca4a8fa2e4cc",
+      "case_id": "case-4620649f071ec1b1",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_garmin-connect",
+      "source_id": "skillleak:56_garmin-connect:benign-redacted:trace-benign-7a40ecf40f:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-aba495c2887caf2d",
+      "case_id": "case-4713a2fc9ae04ecc",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_leeknowsai",
+      "source_id": "skillleak:56_leeknowsai:benign-authorized:trace-benign-4b6bbd0698:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f9166bb42bcb3260",
+      "case_id": "case-4be8f5bed4aa5653",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_chrisk60331",
+      "source_id": "skillleak:56_chrisk60331:benign-authorized:trace-benign-145189bc35:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2b38a2809351e2be",
+      "case_id": "case-4decc5d8406677f7",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_heiheimaoya",
+      "source_id": "skillleak:56_heiheimaoya:VUL-010:trace-5753d5457bd3:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7e8d9d7a38527ea2",
+      "case_id": "case-4f024a9fbf2745ea",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_claude-code-usage",
+      "source_id": "skillleak:5392_claude-code-usage:benign-authorized:trace-benign-aa4ccb5e2f:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-11fd6326cf2041e8",
+      "case_id": "case-523c53cac21636f2",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_video-transcript",
+      "source_id": "skillleak:56_video-transcript:benign-redacted:trace-benign-706f6065e0:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-9e41fe6219aded74",
+      "case_id": "case-54f51a6a22847fd0",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_andywilliams",
+      "source_id": "skillleak:56_andywilliams:VUL-010:trace-8f722e252773:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-04686994ff8d67c5",
+      "case_id": "case-5cb65b86b3e9d9e8",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_andywilliams",
+      "source_id": "skillleak:56_andywilliams:benign-redacted:trace-benign-9f384f114e:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-dfd403c47bac0542",
+      "case_id": "case-5e501c58cf9f5cdd",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_cyberengage",
+      "source_id": "skillleak:56_cyberengage:MAL-001:trace-51bb8507a768:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7ce70b2c3d3bd606",
+      "case_id": "case-5f1463d7ea19d7d7",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_gkeep",
+      "source_id": "skillleak:5392_gkeep:VUL-010:trace-043e944a61d9:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-15d38e1fbe181ceb",
+      "case_id": "case-61f8b9e31f19b287",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_deep-research",
+      "source_id": "skillleak:56_deep-research:benign-authorized:trace-benign-b2c9572c0e:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d3f5469c19570364",
+      "case_id": "case-62bc55d9493b1169",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_yossiovadia",
+      "source_id": "skillleak:56_yossiovadia:VUL-010:trace-93d3e8212678:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-852d2ff4d65bfd3a",
+      "case_id": "case-6315115d24f3e18f",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_dropbox-integration",
+      "source_id": "skillleak:56_dropbox-integration:VUL-010:trace-63a4450238d9:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a0278a8fe0354468",
+      "case_id": "case-644eccce57dfb8c3",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_gardenchan",
+      "source_id": "skillleak:56_gardenchan:VUL-010:trace-8a84603d91b3:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-412ad7bb3a756c60",
+      "case_id": "case-6747fd5138644254",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_polymarket-correlation",
+      "source_id": "skillleak:56_polymarket-correlation:benign-authorized:trace-benign-657a2adf5d:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-891e54d7859a0430",
+      "case_id": "case-679aaa854cd9e09f",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_summarize",
+      "source_id": "skillleak:56_summarize:MAL-001:trace-5ce791fe1a34:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-99cf07ee4f817062",
+      "case_id": "case-688ed2dad58d5542",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_super-helper",
+      "source_id": "skillleak:56_super-helper:benign-redacted:trace-benign-7cbea09948:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0eeee8d646a731c2",
+      "case_id": "case-68b796dd598c1549",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_thomaslwang",
+      "source_id": "skillleak:56_thomaslwang:benign-redacted:trace-benign-862eba4d07:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2071d2b8fb062f41",
+      "case_id": "case-6c6fb9cdc3ead198",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_tezatezaz",
+      "source_id": "skillleak:56_tezatezaz:VUL-006:trace-769ea45d9f21:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-efecfc90ffd83f9f",
+      "case_id": "case-6f5f15b345d94830",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5393_reddit-trends",
+      "source_id": "skillleak:5393_reddit-trends:benign-redacted:trace-benign-96bec60d67:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6c5888f3187cd4e8",
+      "case_id": "case-6f84349cdb6eb10c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "2276_google-workspace",
+      "source_id": "skillleak:2276_google-workspace:benign-authorized:trace-benign-30ef414f66:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f13f7d3767960ac6",
+      "case_id": "case-6fd2f399f7108812",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_codecustard",
+      "source_id": "skillleak:56_codecustard:VUL-006:trace-f09f0412ec55:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0eafc94ca456aa57",
+      "case_id": "case-706eb252de6b62a9",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_atakanermis",
+      "source_id": "skillleak:56_atakanermis:VUL-006:trace-a60cfcf7101c:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b7d8296306cf9dee",
+      "case_id": "case-70f648e7a200d074",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_parallel",
+      "source_id": "skillleak:5392_parallel:benign-redacted:trace-benign-39e1d94ee6:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-78dc50b97352636b",
+      "case_id": "case-72a084d9e2fc741b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_yt-to-blog",
+      "source_id": "skillleak:56_yt-to-blog:VUL-006:trace-a730a1b696d0:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ede6eaa05eabca3a",
+      "case_id": "case-7395a74add92a8ac",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_topitip",
+      "source_id": "skillleak:56_topitip:VUL-010:trace-7c94efd1c758:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c39299d3ab7e9b29",
+      "case_id": "case-74480abe029ffada",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "4325_design-system-cli",
+      "source_id": "skillleak:4325_design-system-cli:VUL-006:trace-60ee007e2879:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-be94ef8186189590",
+      "case_id": "case-75c6d84457d9b1d0",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_snowshadow",
+      "source_id": "skillleak:56_snowshadow:VUL-010:trace-926fb357da86:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4112230475724aa7",
+      "case_id": "case-798a30d8f79c85ac",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_tezatezaz",
+      "source_id": "skillleak:56_tezatezaz:VUL-010:trace-17e2c2129d40:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f31762174d725d18",
+      "case_id": "case-80bece6afd2a2e17",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_novirusallowed",
+      "source_id": "skillleak:56_novirusallowed:benign-authorized:trace-benign-e74d7b93fb:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6a4edb08f6b1fe53",
+      "case_id": "case-81d9a7ab8baef3c7",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_picnic",
+      "source_id": "skillleak:5392_picnic:VUL-010:trace-a3612ba23bd7:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ff90ed72ef7933c8",
+      "case_id": "case-8278ede035455d96",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_moltbook-daily-digest",
+      "source_id": "skillleak:56_moltbook-daily-digest:benign-redacted:trace-benign-27a41efc7e:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c71bb6c8fe40e5ef",
+      "case_id": "case-82d9bc4174b20651",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_orlyjamie",
+      "source_id": "skillleak:56_orlyjamie:MAL-006:trace-9648f62bd43f:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-89812f14aabda3a6",
+      "case_id": "case-8690a1665c1717a4",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_trakt",
+      "source_id": "skillleak:56_trakt:VUL-006:trace-dcd173d5111f:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ccc211c6379e8da1",
+      "case_id": "case-8765420cf3f17959",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_govpredict-ai",
+      "source_id": "skillleak:56_govpredict-ai:benign-authorized:trace-benign-2258ca14e7:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-32569dd060c92355",
+      "case_id": "case-8b508078585ab8b1",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_gkeep",
+      "source_id": "skillleak:5392_gkeep:benign-authorized:trace-benign-490188ebcc:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-04bbbeabd072c65b",
+      "case_id": "case-8dc79d8a0026b32d",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_codecustard",
+      "source_id": "skillleak:56_codecustard:benign-authorized:trace-benign-26a631772e:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3a667cb28b386b5e",
+      "case_id": "case-8eebb11a0f877552",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_rhlsthrm",
+      "source_id": "skillleak:56_rhlsthrm:benign-authorized:trace-benign-ed8716984c:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-cbd33beb2bc2c8e8",
+      "case_id": "case-901ad0022fbd78ae",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_env-sync",
+      "source_id": "skillleak:56_env-sync:VUL-010:trace-ed45590e7d3e:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-35e7beb53be196af",
+      "case_id": "case-9026f40de0fba06b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_env-sync",
+      "source_id": "skillleak:56_env-sync:benign-authorized:trace-benign-f125b549e5:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4b08dbb7f2504968",
+      "case_id": "case-96bca69671a691c5",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_imsg-autoresponder",
+      "source_id": "skillleak:56_imsg-autoresponder:VUL-006:trace-d08bf901f9f3:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-23a607e96f27e8fc",
+      "case_id": "case-9b2ec200fe2e2eb2",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_recruitment",
+      "source_id": "skillleak:56_recruitment:benign-authorized:trace-benign-a10e685b0f:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d29ddb3b29ee1a59",
+      "case_id": "case-a534613482293854",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5405_ens-primary-name",
+      "source_id": "skillleak:5405_ens-primary-name:VUL-010:trace-b653bea3e77d:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-95020b814b60354c",
+      "case_id": "case-a6d94a6b5909643c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_api-helper",
+      "source_id": "skillleak:56_api-helper:MAL-001:trace-c70956146f3d:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2274e3c82c354777",
+      "case_id": "case-a90a3ebe3d5a9801",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_security-monitor",
+      "source_id": "skillleak:56_security-monitor:VUL-010:trace-8743dfcb01e9:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-84495920b452dcb5",
+      "case_id": "case-abb80aaf20484396",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_crazypeace",
+      "source_id": "skillleak:56_crazypeace:benign-authorized:trace-benign-5b60f9d113:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e15ac7836e935b27",
+      "case_id": "case-accb3f7c0b83fe2a",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_standard-agentic-commerce-engine",
+      "source_id": "skillleak:56_standard-agentic-commerce-engine:VUL-010:trace-f05704e262b0:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5a72833eba84615f",
+      "case_id": "case-aeaf75cdb5fa2697",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "3369_macos-spm-app-packaging",
+      "source_id": "skillleak:3369_macos-spm-app-packaging:benign-authorized:trace-benign-4dece727a2:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-63e4045e42f2cc93",
+      "case_id": "case-af9e968f6cb685ab",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_novirusallowed",
+      "source_id": "skillleak:56_novirusallowed:MAL-001:trace-70dde17ecb6e:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d75cb424df24e9ba",
+      "case_id": "case-b195413c307c282b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_borahm",
+      "source_id": "skillleak:56_borahm:benign-redacted:trace-benign-7038a84f67:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4a8b82e8ec49c4cf",
+      "case_id": "case-b1981d497226e689",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_crewai-workflows",
+      "source_id": "skillleak:56_crewai-workflows:benign-redacted:trace-benign-a9d0afb737:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f09ddfc09d30cffb",
+      "case_id": "case-b20026fc07bcce16",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_standard-agentic-commerce-engine",
+      "source_id": "skillleak:5392_standard-agentic-commerce-engine:benign-redacted:trace-benign-e507f1458c:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8251c1353f9ae9a0",
+      "case_id": "case-b324c4edc4fe8419",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_godaddy",
+      "source_id": "skillleak:56_godaddy:benign-redacted:trace-benign-a933ef8022:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8734eedbf5c3dc61",
+      "case_id": "case-b6f42eb8f9b0f7f0",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_tezatezaz",
+      "source_id": "skillleak:56_tezatezaz:benign-authorized:trace-benign-b398cbb656:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2d3c9fe513559b43",
+      "case_id": "case-b77ef704c925ff4f",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_codecustard",
+      "source_id": "skillleak:56_codecustard:VUL-010:trace-2c800212fe3a:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c1142aa7a7549c69",
+      "case_id": "case-b968e2b972043ff3",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_afajohn",
+      "source_id": "skillleak:56_afajohn:VUL-006:trace-f02d9ccc8ac4:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-35a8828ff1540b36",
+      "case_id": "case-ba04053b28a3d836",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_eltontay",
+      "source_id": "skillleak:56_eltontay:benign-redacted:trace-benign-d3334c51c1:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-bb7e60fa29eced65",
+      "case_id": "case-ba1cc73ced5e1839",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_badguy1",
+      "source_id": "skillleak:56_badguy1:MAL-002:trace-b8a9dc026d10:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0d791172643ece82",
+      "case_id": "case-c0f90be5f8083342",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_picnic",
+      "source_id": "skillleak:5392_picnic:benign-authorized:trace-benign-f8408d7f73:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-9380eb3fea853b9d",
+      "case_id": "case-c15fb819c167f68b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5392_claude-code-usage",
+      "source_id": "skillleak:5392_claude-code-usage:VUL-006:trace-6a6cfac697ad:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-36525555fa16887b",
+      "case_id": "case-c38d849b062fc67c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_security-monitor",
+      "source_id": "skillleak:56_security-monitor:benign-authorized:trace-benign-fb4d420b38:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-22d435ce1977116e",
+      "case_id": "case-c529d375e83b8cef",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_spiceoogway",
+      "source_id": "skillleak:56_spiceoogway:VUL-010:trace-5e61ebf33d64:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-37d6adcd40500f84",
+      "case_id": "case-d1e5255db780a50c",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_gog",
+      "source_id": "skillleak:56_gog:benign-authorized:trace-benign-c9bbae6c01:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e28cba20f95370c7",
+      "case_id": "case-d3d6cc716b9cfaad",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "900_backup-restore",
+      "source_id": "skillleak:900_backup-restore:VUL-010:trace-b0a361a0d180:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-391efccc1830a2ce",
+      "case_id": "case-d5f9b3b5bab8e730",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_lidarr",
+      "source_id": "skillleak:56_lidarr:benign-authorized:trace-benign-b2930ce026:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0919455b5a956ca6",
+      "case_id": "case-dca29eb169dc4818",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_contextoverflow",
+      "source_id": "skillleak:56_contextoverflow:VUL-006:trace-a8aa7878761e:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2d15bbbded400673",
+      "case_id": "case-dd8285a34a1e0e10",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "5405_ens-primary-name",
+      "source_id": "skillleak:5405_ens-primary-name:benign-authorized:trace-benign-482285d109:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b26b6475b9bf0ee8",
+      "case_id": "case-e50bc26fca8b5282",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_shay0j",
+      "source_id": "skillleak:56_shay0j:benign-authorized:trace-benign-134c5ad1f9:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4cfe93e526300194",
+      "case_id": "case-e50d742523937f22",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "4325_design-system-cli",
+      "source_id": "skillleak:4325_design-system-cli:benign-authorized:trace-benign-6a21f06924:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7541b31c2bf46c68",
+      "case_id": "case-e73fb4f701167c57",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_recruitment",
+      "source_id": "skillleak:56_recruitment:MAL-001:trace-f8815d03882f:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6155f9fac48f0891",
+      "case_id": "case-e7925ca835a8afda",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_leeknowsai",
+      "source_id": "skillleak:56_leeknowsai:VUL-006:trace-569c5a3ba0d7:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-cf7d7652f69ddd71",
+      "case_id": "case-eb6a43ee5fda2dd0",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_weather-data-fetcher",
+      "source_id": "skillleak:56_weather-data-fetcher:benign-redacted:trace-benign-f78a818888:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-182c8570e747fad9",
+      "case_id": "case-ed0b43278d17de74",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_govpredict-ai",
+      "source_id": "skillleak:56_govpredict-ai:MAL-001:trace-e9bd23603330:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-31e8f07c5ed3d056",
+      "case_id": "case-ee0b7e021ea0dbda",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_pacelabs",
+      "source_id": "skillleak:56_pacelabs:VUL-010:trace-043f83283f72:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-fef57bb8a81a62e5",
+      "case_id": "case-f06018993eb953a0",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_spiceoogway",
+      "source_id": "skillleak:56_spiceoogway:VUL-006:trace-f8681ae80b24:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6e13f7cfb0976bfb",
+      "case_id": "case-f1f42480c400094b",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_eyebots",
+      "source_id": "skillleak:56_eyebots:VUL-006:trace-4caaf64198cf:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a94279ce4af56b19",
+      "case_id": "case-f35cbad96dec5033",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_uid-node",
+      "source_id": "skillleak:56_uid-node:benign-authorized:trace-benign-fa38b54c98:network",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-35bad6406df2e59d",
+      "case_id": "case-f5533a5d884fb1ed",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_rosepuppy",
+      "source_id": "skillleak:56_rosepuppy:benign-redacted:trace-benign-b787597d91:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-17a4dafa9149dec7",
+      "case_id": "case-f5e5018be174da44",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_joe3112",
+      "source_id": "skillleak:56_joe3112:benign-redacted:trace-benign-4ca46cf614:stdout",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1dd69c5ae2583cf1",
+      "case_id": "case-f8d3311551bc72a0",
+      "dataset_id": "credential_catalog_synthetic",
+      "group_id": "56_super-helper",
+      "source_id": "skillleak:56_super-helper:MAL-001:trace-74e95b7436e8:network",
+      "split": "dev"
+    }
+  ],
+  "created_from": {
+    "credential_catalog_synthetic": {
+      "adapter": "credential_catalog_synthetic",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
+    },
+    "credential_traces": {
+      "adapter": "credential_traces",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
+    }
+  },
+  "manifest_sha256": "sha256:ebaf1471e6673a3fbb7817282a5a76e10ce761d131b98e8efb86f4dc54ce0f24",
+  "manifest_version": "v3.2",
+  "n": 100,
+  "project": "P4_credential_flow",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "dev"
+  ],
+  "strata": {
+    "cred_authorized_allow": {
+      "actual": 26,
+      "filtered": 26,
+      "target": 26
+    },
+    "cred_network_block": {
+      "actual": 12,
+      "filtered": 19,
+      "target": 19
+    },
+    "cred_redacted_allow": {
+      "actual": 22,
+      "filtered": 22,
+      "target": 22
+    },
+    "cred_stdout_block": {
+      "actual": 40,
+      "filtered": 85,
+      "target": 40
+    }
+  },
+  "suite": "p4-smoke-v1",
+  "target": 107
+}

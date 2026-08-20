@@ -7,14 +7,17 @@ single ``source`` key to keep SecurityCase's own schema stable (frozen core,
 guide §2).
 
 quality_tier (guide §24-§27):
-  A — real source / human attack / human-verified vuln
+  A — real source / human attack / human-verified vuln (direct trace)
   B — deterministic derivation from a real ground truth (e.g. AgentDojo
-      tool_result + tool_call from one original security case)
-  C — template / model-generated / mass rewrite (Phase 1 forbids; Extended only)
+      tool_result + tool_call from one original security case, or real network
+      trace projected to TOOL_CALL)
+  C — catalog-derived / template / model-generated / mass rewrite (Phase 2
+      synthetic Extended only; never counted as P4 Core)
 
 derivation:
-  original                — the case IS the original source row
+  original                 — the case IS the original source row / direct trace
   deterministic_projection — projected from a real benchmark case, no LLM
+  catalog_derived          — derived from a catalog taxonomy + template (P4 synthetic)
 """
 from __future__ import annotations
 
@@ -25,7 +28,7 @@ from typing import Any, Mapping
 from ..core.models import SecurityCase
 
 QUALITY_TIERS = ("A", "B", "C")
-DERIVATIONS = ("original", "deterministic_projection")
+DERIVATIONS = ("original", "deterministic_projection", "catalog_derived")
 
 
 class QualityTier(str, Enum):

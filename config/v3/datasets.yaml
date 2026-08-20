@@ -73,15 +73,27 @@ datasets:
       - README.md
     raw_dir: cache/datasets_v3/raw/skillleakbench_pipeline
     normalized_dir: cache/datasets_v3/normalized/skillleakbench_pipeline
-  credential_traces:
-    adapter: credential_traces
-    adapter_version: 1.0.0
+  credential_catalog_synthetic:
+    adapter: credential_catalog_synthetic
+    adapter_version: "1.0.0"
     enabled: true
-    quality_tier: B
+    quality_tier: C
     source:
       type: derived
-      repo_id: credential_traces
+      repo_id: credential_catalog_synthetic
       revision: 8264436a0483e2fc1aed84b80e5fde73ea52c3ca
       license: MIT
-    raw_dir: cache/datasets_v3/raw/credential_traces
-    normalized_dir: cache/datasets_v3/normalized/credential_traces
+    raw_dir: cache/datasets_v3/raw/credential_catalog_synthetic
+    normalized_dir: cache/datasets_v3/normalized/credential_catalog_synthetic
+  credential_traces:
+    adapter: credential_traces
+    adapter_version: "1.0.0"
+    enabled: false
+    quality_tier: C
+    source:
+      type: derived
+      repo_id: credential_catalog_synthetic
+      revision: 8264436a0483e2fc1aed84b80e5fde73ea52c3ca
+      license: MIT
+    raw_dir: cache/datasets_v3/raw/credential_catalog_synthetic
+    normalized_dir: cache/datasets_v3/normalized/credential_catalog_synthetic

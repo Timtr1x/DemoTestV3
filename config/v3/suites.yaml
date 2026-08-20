@@ -7,7 +7,7 @@ suites:
       P1_external_instruction:
         manifest: benchmarks/manifests/smoke-v2/p1.json
         target: 120
-        strata:
+        strata: &id001
         - id: llmail_attack
           dataset: llmail
           expected_action: block
@@ -20,36 +20,11 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/smoke-v2/p2.json
         target: 100
-        strata:
+        strata: &id002
         - id: agentdojo_tool_call
           dataset: agentdojo
           channel: tool_call
           count: 100
-      P4_credential_flow:
-        manifest: benchmarks/manifests/smoke-v2/p4.json
-        target: 120
-        strata:
-        - id: cred_stdout_block
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_result
-          count: 40
-        - id: cred_network_block
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_call
-          count: 30
-        - id: cred_authorized_allow
-          dataset: credential_traces
-          expected_action: allow
-          channel: tool_call
-          count: 30
-        - id: cred_redacted_allow
-          dataset: credential_traces
-          expected_action: allow
-          channel: tool_result
-          count: 20
-        max_cluster_share: 0.05
   phase1-standard-v2:
     seed: 42
     split: eval
@@ -58,7 +33,7 @@ suites:
       P1_external_instruction:
         manifest: benchmarks/manifests/phase1-standard-v2/p1.json
         target: 1674
-        strata:
+        strata: &id003
         - id: llmail_attack
           dataset: llmail
           expected_action: block
@@ -71,30 +46,11 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-standard-v2/p2.json
         target: 540
-        strata:
+        strata: &id004
         - id: agentdojo_tool_call
           dataset: agentdojo
           channel: tool_call
           count: 540
-      P4_credential_flow:
-        manifest: benchmarks/manifests/phase1-standard-v2/p4.json
-        target: 660
-        strata:
-        - id: cred_block_stdout
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_result
-          count: 393
-        - id: cred_block_network
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_call
-          count: 73
-        - id: cred_allow
-          dataset: credential_traces
-          expected_action: allow
-          count: all
-        max_cluster_share: 0.05
   phase1-full-v2:
     seed: 42
     split:
@@ -105,7 +61,7 @@ suites:
       P1_external_instruction:
         manifest: benchmarks/manifests/phase1-full-v2/p1.json
         target: 2683
-        strata:
+        strata: &id005
         - id: llmail_attack
           dataset: llmail
           expected_action: block
@@ -118,30 +74,11 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-full-v2/p2.json
         target: 761
-        strata:
+        strata: &id006
         - id: agentdojo_tool_call
           dataset: agentdojo
           channel: tool_call
           count: 773
-      P4_credential_flow:
-        manifest: benchmarks/manifests/phase1-full-v2/p4.json
-        target: 883
-        strata:
-        - id: cred_block_stdout
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_result
-          count: 524
-        - id: cred_block_network
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_call
-          count: 96
-        - id: cred_allow
-          dataset: credential_traces
-          expected_action: allow
-          count: all
-        max_cluster_share: 0.05
   holdout-v2:
     seed: 42
     split: holdout
@@ -150,7 +87,7 @@ suites:
       P1_external_instruction:
         manifest: benchmarks/manifests/holdout-v2/p1.json
         target: 580
-        strata:
+        strata: &id007
         - id: llmail_attack
           dataset: llmail
           expected_action: block
@@ -163,30 +100,11 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/holdout-v2/p2.json
         target: 150
-        strata:
+        strata: &id008
         - id: agentdojo_tool_call
           dataset: agentdojo
           channel: tool_call
           count: 150
-      P4_credential_flow:
-        manifest: benchmarks/manifests/holdout-v2/p4.json
-        target: 200
-        strata:
-        - id: cred_block_stdout
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_result
-          count: 120
-        - id: cred_block_network
-          dataset: credential_traces
-          expected_action: block
-          channel: tool_call
-          count: 20
-        - id: cred_allow
-          dataset: credential_traces
-          expected_action: allow
-          count: all
-        max_cluster_share: 0.05
   smoke-v1:
     seed: 42
     split: dev
@@ -229,3 +147,191 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/holdout-v1/p2.json
         target: 150
+  phase2-smoke-v1:
+    seed: 42
+    split:
+    - dev
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/smoke-v2/p1.json
+        target: 120
+        strata: *id001
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/smoke-v2/p2.json
+        target: 100
+        strata: *id002
+      P4_credential_flow:
+        manifest: benchmarks/manifests/phase2-smoke-v1/p4.json
+        target: 107
+        strata: &id009
+        - id: cred_stdout_block
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_result
+          count: 40
+        - id: cred_network_block
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_call
+          count: 19
+        - id: cred_authorized_allow
+          dataset: credential_catalog_synthetic
+          expected_action: allow
+          channel: tool_call
+          count: 26
+        - id: cred_redacted_allow
+          dataset: credential_catalog_synthetic
+          expected_action: allow
+          channel: tool_result
+          count: 22
+        max_cluster_share: 0.05
+  phase2-standard-v1:
+    seed: 42
+    split:
+    - eval
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-standard-v2/p1.json
+        target: 1674
+        strata: *id003
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-standard-v2/p2.json
+        target: 540
+        strata: *id004
+      P4_credential_flow:
+        manifest: benchmarks/manifests/phase2-standard-v1/p4.json
+        target: 468
+        strata: &id010
+        - id: cred_block_stdout
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_result
+          count: 274
+        - id: cred_block_network
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_call
+          count: 54
+        - id: cred_allow
+          dataset: credential_catalog_synthetic
+          expected_action: allow
+          count: all
+        max_cluster_share: 0.05
+  phase2-full-v1:
+    seed: 42
+    split:
+    - eval
+    - holdout
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-full-v2/p1.json
+        target: 2683
+        strata: *id005
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-full-v2/p2.json
+        target: 761
+        strata: *id006
+      P4_credential_flow:
+        manifest: benchmarks/manifests/phase2-full-v1/p4.json
+        target: 620
+        strata: &id011
+        - id: cred_block_stdout
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_result
+          count: 366
+        - id: cred_block_network
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_call
+          count: 72
+        - id: cred_allow
+          dataset: credential_catalog_synthetic
+          expected_action: allow
+          count: all
+        max_cluster_share: 0.05
+  phase2-holdout-v1:
+    seed: 42
+    split:
+    - holdout
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/holdout-v2/p1.json
+        target: 580
+        strata: *id007
+        max_cluster_share: 0.01
+      P2_tool_action:
+        manifest: benchmarks/manifests/holdout-v2/p2.json
+        target: 150
+        strata: *id008
+      P4_credential_flow:
+        manifest: benchmarks/manifests/phase2-holdout-v1/p4.json
+        target: 152
+        strata: &id012
+        - id: cred_block_stdout
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_result
+          count: 92
+        - id: cred_block_network
+          dataset: credential_catalog_synthetic
+          expected_action: block
+          channel: tool_call
+          count: 18
+        - id: cred_allow
+          dataset: credential_catalog_synthetic
+          expected_action: allow
+          count: all
+        max_cluster_share: 0.05
+  p4-smoke-v1:
+    seed: 42
+    split:
+    - dev
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4-smoke-v1/p4.json
+        target: 107
+        strata: *id009
+        max_cluster_share: 0.05
+  p4-standard-v1:
+    seed: 42
+    split:
+    - eval
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4-standard-v1/p4.json
+        target: 468
+        strata: *id010
+        max_cluster_share: 0.05
+  p4-full-v1:
+    seed: 42
+    split:
+    - eval
+    - holdout
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4-full-v1/p4.json
+        target: 620
+        strata: *id011
+        max_cluster_share: 0.05
+  p4-holdout-v1:
+    seed: 42
+    split:
+    - holdout
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4-holdout-v1/p4.json
+        target: 152
+        strata: *id012
+        max_cluster_share: 0.05
