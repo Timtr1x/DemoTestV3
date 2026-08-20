@@ -621,3 +621,192 @@ def test_official_marker_provider_matches_container(tmp_path: Path):
         assert any("leakbench" in v.lower() for v in markers.values())
         assert "ANTHROPIC_API_KEY" not in markers
         assert provider.provenance["credential_kind"] == "official_forged_canary"
+
+
+def test_run_skill_workspace_copy_failure_is_fatal(tmp_path: Path, monkeypatch):
+    from demotest.datasets.dynamic.sandbox import SkillLeakBenchSandboxRunner, SandboxUnavailable
+
+    runner = SkillLeakBenchSandboxRunner(
+        pipeline_root=Path("cache/datasets_v3/raw/skillleakbench_pipeline"),
+        pipeline_revision="rev",
+    )
+    # Force workspace copy to fail — must not fall back to frozen dir
+    import demotest.datasets.dynamic.workspace as ws
+
+    def _fail(*a, **kw):
+        raise OSError("copy failed")
+
+    monkeypatch.setattr(ws, "prepare_execution_copy", _fail)
+    # also patch the runner's internal import path
+    import demotest.datasets.dynamic.sandbox as sb
+
+    orig_ws = sb.__dict__.get("workspace", None)
+    frozen = tmp_path / "skill"
+    frozen.mkdir()
+    (frozen / "x").write_text("hi")
+    with pytest.raises(SandboxUnavailable, match="isolated execution workspace"):
+        runner.run_skill(
+            skill_id="s", skill_dir=frozen, skill_snapshot_sha256="a" * 64,
+            credentials={}, work_root=tmp_path / "work",
+        )
+
+
+def test_collector_marker_provider_failure_is_fatal(tmp_path: Path):
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+
+    skills_root = tmp_path / "skills"
+    (skills_root / "skill-a").mkdir(parents=True)
+    (skills_root / "skill-a" / "run.sh").write_text("echo hi")
+    manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-x", out_root=tmp_path / "snapshots")
+
+    class BadRunner:
+        pipeline_revision = "rev-x"
+        pipeline_root = Path(tmp_path / "no-such-pipeline")
+        def image_digest(self): return "sha256:stub"
+        def resource_profile(self): return {"isolation_level": "docker_only_hardened"}
+
+    raw_dir = tmp_path / "raw"
+    meta_root = tmp_path / "meta"; meta_root.mkdir()
+    collector = DynamicTraceCollector(runner=BadRunner(), raw_dir=raw_dir, snapshots_root=tmp_path / "snapshots", metadata_root=meta_root)
+    with pytest.raises(RuntimeError, match="marker provider unavailable"):
+        collector.collect(snapshot_id=manifest.snapshot_id, limit=1)
+
+
+def test_v2_collector_meta_refuses_v3_resume(tmp_path: Path):
+    from demotest.datasets.dynamic.snapshot import freeze_skill_snapshot
+    from demotest.datasets.dynamic.skillleak_collector import DynamicTraceCollector
+    import json as _json
+
+    skills_root = tmp_path / "skills"
+    (skills_root / "skill-a").mkdir(parents=True)
+    (skills_root / "skill-a" / "run.sh").write_text("echo hi")
+    manifest = freeze_skill_snapshot(skills_root, pipeline_revision="rev-v", out_root=tmp_path / "snapshots")
+
+    class Runner:
+        pipeline_revision = "rev-v"
+        pipeline_root = Path("cache/datasets_v3/raw/skillleakbench_pipeline")
+        def image_digest(self): return "sha256:stub"
+        def resource_profile(self): return {"isolation_level": "docker_only_hardened", "concurrency": 1}
+        def run_skill(self, *, skill_id, skill_dir, skill_snapshot_sha256, credentials, condition="deterministic", declared_providers=(), command=None, work_root=None, timeout_s=None):
+            return DynamicExecutionRecord(
+                execution_id=f"exec-{skill_id}", skill_id=skill_id, skill_snapshot_sha256=skill_snapshot_sha256,
+                condition=condition, execution_mode="deterministic", sandbox_provider="SkillLeakBench",
+                pipeline_revision=self.pipeline_revision, sandbox_image_digest=self.image_digest(),
+                outcome="SUCCESS_REACHED_SECRET_PATH", exit_code=0, timeout=False, stdout_text="x",
+                credential_names=tuple(credentials), metadata={"sandbox_profile": self.resource_profile()},
+            )
+
+    raw_dir = tmp_path / "raw"
+    meta_root = tmp_path / "meta"; meta_root.mkdir()
+    # Simulate an old v2 cache
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    (raw_dir / "trace_meta.json").write_text(_json.dumps({
+        "snapshot_id": manifest.snapshot_id,
+        "pipeline_revision": "rev-v",
+        "builder_version": "dynamic-collector-v2",
+        "sandbox_profile": Runner().resource_profile(),
+        "sandbox_image_digest": "sha256:stub",
+    }), encoding="utf-8")
+    (raw_dir / "executions.jsonl").write_text("", encoding="utf-8")
+    (raw_dir / "traces.jsonl").write_text("", encoding="utf-8")
+    with pytest.raises(RuntimeError, match="collector version"):
+        DynamicTraceCollector(runner=Runner(), raw_dir=raw_dir, snapshots_root=tmp_path / "snapshots", metadata_root=meta_root).collect(snapshot_id=manifest.snapshot_id, limit=1)
+
+
+def test_agent_driver_requires_explicit_model(monkeypatch):
+    from demotest.datasets.dynamic.agents.openai_compatible import OpenAICompatibleAgentDriver
+    from demotest.datasets.dynamic.agents.models import AgentConfig
+
+    monkeypatch.setenv("AGENT_BASE_URL", "https://example.com")
+    monkeypatch.setenv("AGENT_API_KEY", "sk-test")
+    monkeypatch.delenv("AGENT_MODEL", raising=False)
+    driver = OpenAICompatibleAgentDriver(AgentConfig(model=""))
+    with pytest.raises(RuntimeError, match="AGENT_MODEL is required"):
+        driver.run_turn(messages=[{"role": "user", "content": "hi"}])
+
+
+def test_session_action_does_not_override_condition(tmp_path: Path):
+    from demotest.datasets.dynamic.session import SandboxSession, SandboxAction
+
+    class FakeRunner:
+        last_condition = None
+        def run_skill(self, *, skill_id, skill_dir, skill_snapshot_sha256, credentials, condition="benign", work_root=None, **kw):
+            self.last_condition = condition
+            return type("R", (), {"stdout_text": "out", "network_events": (), "exit_code": 0, "stdout_artifact": str(work_root)})()
+
+    skill = tmp_path / "skill"
+    skill.mkdir()
+    (skill / "SKILL.md").write_text("do thing")
+    runner = FakeRunner()
+    sess = SandboxSession(runner=runner, skill_id="s", skill_dir=skill, skill_snapshot_sha256="a" * 64, credentials={}, work_root=tmp_path / "work", condition="benign")
+    sess.execute(SandboxAction(kind="execute_skill_entrypoint"))
+    assert runner.last_condition == "benign"
+    sess2 = SandboxSession(runner=runner, skill_id="s", skill_dir=skill, skill_snapshot_sha256="a" * 64, credentials={}, work_root=tmp_path / "work2", condition="adversarial")
+    sess2.execute(SandboxAction(kind="execute_skill_entrypoint"), condition="adversarial")
+    assert runner.last_condition == "adversarial"
+
+
+def test_read_declared_output_does_not_rerun_skill(tmp_path: Path):
+    from demotest.datasets.dynamic.session import SandboxSession, SandboxAction
+
+    calls = {"n": 0}
+
+    class FakeRunner:
+        def run_skill(self, **kw):
+            calls["n"] += 1
+            return type("R", (), {"stdout_text": "out", "network_events": (), "exit_code": 0, "stdout_artifact": "x"})()
+
+    skill = tmp_path / "skill"
+    skill.mkdir()
+    runner = FakeRunner()
+    sess = SandboxSession(runner=runner, skill_id="s", skill_dir=skill, skill_snapshot_sha256="a" * 64, credentials={}, work_root=tmp_path / "work")
+    sess.execute(SandboxAction(kind="execute_skill_entrypoint"))
+    assert calls["n"] == 1
+    sess.execute(SandboxAction(kind="read_declared_output"))
+    assert calls["n"] == 1
+
+
+def test_command_exit_status_overrides_container_exit_code(monkeypatch, tmp_path: Path):
+    from demotest.datasets.dynamic.sandbox import SkillLeakBenchSandboxRunner
+    import subprocess as _sp
+
+    runner = SkillLeakBenchSandboxRunner(
+        pipeline_root=Path("cache/datasets_v3/raw/skillleakbench_pipeline"),
+        pipeline_revision="rev",
+    )
+    # Mock docker run to write exit_status=1 while container returncode is 0
+    orig_run = _sp.run
+
+    def fake_run(argv, **kw):
+        # argv: [..., '-v', '<host>:/skills', '-v', '<host>/monitoring:/monitoring:rw', ...]
+        mon_host = None
+        for i, a in enumerate(argv):
+            if a == "-v" and i + 1 < len(argv) and ":/monitoring:" in argv[i + 1]:
+                raw = argv[i + 1].split(":")[0]
+                # On Windows the host path itself contains ':', so split(":")[0] truncates.
+                # Reconstruct via rsplit.
+                mon_host = Path(argv[i + 1].rsplit(":/monitoring", 1)[0])
+                break
+        if mon_host is not None:
+            mon_host.mkdir(parents=True, exist_ok=True)
+            (mon_host / "stdout.log").write_text("some output", encoding="utf-8")
+            (mon_host / "exit_status").write_text("1", encoding="utf-8")
+            (mon_host / "network_payload.log").write_text("", encoding="utf-8")
+        return type("P", (), {"returncode": 0})()
+
+    monkeypatch.setattr(_sp, "run", fake_run)
+    # image_digest is called inside run_skill — stub it
+    monkeypatch.setattr(runner, "image_digest", lambda: "sha256:stub")
+    monkeypatch.setattr(runner, "docker_available", lambda: True)
+    # Ensure pipeline check passes — create the expected dir
+    (Path("cache/datasets_v3/raw/skillleakbench_pipeline/code/phase3_dynamic")).mkdir(parents=True, exist_ok=True)
+
+    skill = tmp_path / "skill"
+    skill.mkdir()
+    (skill / "a").write_text("hi")
+    rec = runner.run_skill(skill_id="s", skill_dir=skill, skill_snapshot_sha256="a" * 64, credentials={}, work_root=tmp_path / "work")
+    assert rec.exit_code == 1
+    assert rec.outcome != "SUCCESS_NO_SECRET_FLOW"
+    assert rec.metadata["container_exit_code"] == 0
+    assert rec.metadata["exit_status_file"] == "1"

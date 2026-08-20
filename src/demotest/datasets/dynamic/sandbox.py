@@ -289,9 +289,9 @@ class SkillLeakBenchSandboxRunner:
                                       st.get("detail", "")))
             prod = self.run_production_trace_self_test()
             checks.append(DoctorCheck("production_stdout_trace_pass", prod.get("stdout_trace", False),
-                                      prod.get("detail", ""), required=False))
+                                      prod.get("detail", ""), required=True))
             checks.append(DoctorCheck("production_network_trace_pass", prod.get("network_trace", False),
-                                      prod.get("detail", ""), required=False))
+                                      prod.get("detail", ""), required=True))
         return DoctorReport(tuple(checks))
 
     def run_self_test(self) -> dict[str, Any]:
@@ -515,6 +515,7 @@ class SkillLeakBenchSandboxRunner:
                 rec = self.run_skill(
                     skill_id="prod-stdout-e2e", skill_dir=skill, skill_snapshot_sha256="0" * 64,
                     credentials=markers, condition="deterministic", work_root=work,
+                    command=["python3", "/skills/leak.py"],
                 )
                 traces = parse_execution(rec, markers)
                 stdout_traces = [t for t in traces if t.sink == "stdout"]
@@ -707,19 +708,40 @@ class SkillLeakBenchSandboxRunner:
         )
         started = time.monotonic()
         timed_out = False
+        container_exit_code: int | None = None
         try:
             proc = subprocess.run(
                 argv, timeout=timeout_s, check=False,
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                 env=scrub_child_env(),
             )
-            exit_code: int | None = proc.returncode
+            container_exit_code = proc.returncode
         except subprocess.TimeoutExpired:
             timed_out = True
-            exit_code = 124
+            container_exit_code = 124
         wall_ms = int((time.monotonic() - started) * 1000)
 
         artifacts = read_monitoring_dir(monitoring)
+        # Authoritative command status is /monitoring/exit_status (PIPESTATUS[0]
+        # inside entrypoint), not the container's outer returncode which can be
+        # 0 even when the skill itself crashed.
+        cmd_raw = artifacts.get("exit_status")
+        try:
+            command_exit_code: int | None = int(str(cmd_raw).strip()) if cmd_raw not in (None, "") else None
+        except (TypeError, ValueError):
+            command_exit_code = None
+        if timed_out:
+            exit_code: int | None = 124
+            outcome = "TIMEOUT"
+        elif command_exit_code is None:
+            exit_code = container_exit_code
+            outcome = "SANDBOX_ERROR"
+        elif command_exit_code != 0:
+            exit_code = command_exit_code
+            outcome = "FAILED_DEPENDENCY" if command_exit_code in (1, 2, 127, 126) else "SANDBOX_ERROR"
+        else:
+            exit_code = 0
+            outcome = "SUCCESS_NO_SECRET_FLOW"
         return DynamicExecutionRecord(
             execution_id=execution_id,
             skill_id=skill_id,
@@ -729,7 +751,7 @@ class SkillLeakBenchSandboxRunner:
             sandbox_provider="SkillLeakBench",
             pipeline_revision=self.pipeline_revision,
             sandbox_image_digest=self.image_digest(),
-            outcome="TIMEOUT" if timed_out else "SANDBOX_ERROR" if exit_code not in (0, None) else "SUCCESS_NO_SECRET_FLOW",
+            outcome=outcome,  # type: ignore[arg-type]
             exit_code=exit_code,
             timeout=timed_out,
             wall_clock_ms=wall_ms,
@@ -741,6 +763,7 @@ class SkillLeakBenchSandboxRunner:
             declared_providers=tuple(declared_providers),
             metadata={
                 "exit_status_file": artifacts["exit_status"],
+                "container_exit_code": container_exit_code,
                 "isolation_level": self.isolation_level,
                 "sandbox_profile": self.resource_profile(),
                 "workspace": ws_prov,
