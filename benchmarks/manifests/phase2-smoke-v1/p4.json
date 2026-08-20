@@ -1,4 +1,5 @@
 {
+  "benchmark_track": "extended",
   "cases": [
     {
       "case_fingerprint": "fp-d237e169b9b6517f",
@@ -807,15 +808,10 @@
       "adapter_version": "1.0.0",
       "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
       "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
-    },
-    "credential_traces": {
-      "adapter": "credential_traces",
-      "adapter_version": "1.0.0",
-      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
-      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     }
   },
-  "manifest_sha256": "sha256:1be556c7d9092b05fafd767b4a5b6f4a9c0f211fdbb8d32b9b032d20556bfa2d",
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:eec58887d5cc79c5fa549807b97b72900be906a422e8c346eaece9c9f47b476f",
   "manifest_version": "v3.2",
   "n": 100,
   "project": "P4_credential_flow",

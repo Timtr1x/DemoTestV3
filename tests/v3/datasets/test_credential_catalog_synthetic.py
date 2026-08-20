@@ -247,3 +247,118 @@ def test_suite_isolation_frozen_phase1_unchanged():
     for sid in ("phase2-smoke-v1", "phase2-standard-v1", "phase2-full-v1", "phase2-holdout-v1"):
         assert sid in data["suites"]
         assert "P4_credential_flow" in data["suites"][sid]["projects"]
+def test_dynamic_trace_requires_confirmed():
+    """DYNAMIC_TRACE BLOCK without dynamic_confirmed must fail (Core guard)."""
+    tr = CredentialTrace(
+        trace_id="trace-dyn-unconfirmed", skill_id="s1", skill_name="s1", issue_id="VUL-010", academic_code="VUL-C",
+        pattern="Information Exposure", classification="vulnerable", severity="HIGH",
+        sink="stdout", gateway_channel="TOOL_RESULT", gateway_visibility="DIRECT", flow_class="STDOUT_EXPOSURE",
+        credential_marker="TEST_SECRET_DDDDDDDDDDDDDDDD", payload="tool output: TEST_SECRET_DDDDDDDDDDDDDDDD",
+        destination="", tool_name="skill_stdout", tool_arguments={}, dynamic_confirmed=False,
+        evidence_type="DYNAMIC_TRACE", source_revision="revA", sandbox_version="t3", trace_hash="x",
+        metadata={},
+    )
+    with pytest.raises(ValueError, match="dynamic_confirmed"):
+        project_trace_to_case(tr, dataset_id="credential_traces", source_revision="revA", raw_sha256="deadbeef")
+    # same but confirmed True must pass
+    tr_ok = CredentialTrace(**{**tr.to_dict(), "dynamic_confirmed": True})
+    c = project_trace_to_case(tr_ok, dataset_id="credential_traces", source_revision="revA", raw_sha256="deadbeef")
+    from demotest.datasets.quality import get_provenance
+    prov = get_provenance(c)
+    assert prov["quality_tier"] == "A"
+
+
+def test_manifest_and_suite_track_hard_isolation():
+    """Phase 2.1: manifests and suite summaries must carry benchmark_track / headline_eligible."""
+    import json, pathlib
+    # P4 manifests are extended/non-headline
+    for rel in ["benchmarks/manifests/p4-smoke-v1/p4.json", "benchmarks/manifests/phase2-smoke-v1/p4.json"]:
+        j = json.loads(pathlib.Path(rel).read_text(encoding="utf-8"))
+        assert j.get("benchmark_track") == "extended"
+        assert j.get("headline_eligible") is False
+        # only enabled dataset in created_from
+        assert "credential_catalog_synthetic" in j.get("created_from", {})
+        assert "credential_traces" not in j.get("created_from", {})
+    # P1/P2 manifests are core/headline
+    for rel in ["benchmarks/manifests/smoke-v2/p1.json", "benchmarks/manifests/smoke-v2/p2.json"]:
+        j = json.loads(pathlib.Path(rel).read_text(encoding="utf-8"))
+        assert j.get("benchmark_track") == "core"
+        assert j.get("headline_eligible") is True
+    # suite summaries mirror
+    for rel in ["benchmarks/suites/p4-smoke-v1.json", "benchmarks/suites/phase2-smoke-v1.json"]:
+        j = json.loads(pathlib.Path(rel).read_text(encoding="utf-8"))
+        assert j.get("track") in ("extended", "mixed")
+        assert j.get("headline_eligible") is False
+        assert j["projects"]["P4_credential_flow"]["benchmark_track"] == "extended"
+        assert j["projects"]["P4_credential_flow"]["headline_eligible"] is False
+        assert "credential_traces" not in j.get("source_locks", {})
+
+
+def test_dynamic_trace_requires_confirmed():
+    """DYNAMIC_TRACE BLOCK without dynamic_confirmed must fail (Core guard)."""
+    tr = CredentialTrace(
+        trace_id="trace-dyn-unconfirmed", skill_id="s1", skill_name="s1", issue_id="VUL-010", academic_code="VUL-C",
+        pattern="Information Exposure", classification="vulnerable", severity="HIGH",
+        sink="stdout", gateway_channel="TOOL_RESULT", gateway_visibility="DIRECT", flow_class="STDOUT_EXPOSURE",
+        credential_marker="TEST_SECRET_DDDDDDDDDDDDDDDD", payload="tool output: TEST_SECRET_DDDDDDDDDDDDDDDD",
+        destination="", tool_name="skill_stdout", tool_arguments={}, dynamic_confirmed=False,
+        evidence_type="DYNAMIC_TRACE", source_revision="revA", sandbox_version="t3", trace_hash="x",
+        metadata={},
+    )
+    with pytest.raises(ValueError, match="dynamic_confirmed"):
+        project_trace_to_case(tr, dataset_id="credential_traces", source_revision="revA", raw_sha256="deadbeef")
+    tr_ok = CredentialTrace(**{**tr.to_dict(), "dynamic_confirmed": True})
+    c = project_trace_to_case(tr_ok, dataset_id="credential_traces", source_revision="revA", raw_sha256="deadbeef")
+    from demotest.datasets.quality import get_provenance
+    prov = get_provenance(c)
+    assert prov["quality_tier"] == "A"
+
+
+def test_manifest_and_suite_track_hard_isolation():
+    """Phase 2.1: manifests and suite summaries must carry benchmark_track / headline_eligible."""
+    import json as _js
+    for rel in ["benchmarks/manifests/p4-smoke-v1/p4.json", "benchmarks/manifests/phase2-smoke-v1/p4.json"]:
+        j = _js.loads(Path(rel).read_text(encoding="utf-8"))
+        assert j.get("benchmark_track") == "extended"
+        assert j.get("headline_eligible") is False
+        assert "credential_catalog_synthetic" in j.get("created_from", {})
+        assert "credential_traces" not in j.get("created_from", {})
+    for rel in ["benchmarks/manifests/smoke-v2/p1.json", "benchmarks/manifests/smoke-v2/p2.json"]:
+        j = _js.loads(Path(rel).read_text(encoding="utf-8"))
+        assert j.get("benchmark_track") == "core"
+        assert j.get("headline_eligible") is True
+    for rel in ["benchmarks/suites/p4-smoke-v1.json", "benchmarks/suites/phase2-smoke-v1.json"]:
+        j = _js.loads(Path(rel).read_text(encoding="utf-8"))
+        assert j.get("track") in ("extended", "mixed")
+        assert j.get("headline_eligible") is False
+        assert j["projects"]["P4_credential_flow"]["benchmark_track"] == "extended"
+        assert j["projects"]["P4_credential_flow"]["headline_eligible"] is False
+        assert "credential_traces" not in j.get("source_locks", {})
+
+
+def test_adapter_json_parse_immediate_fail_fast(tmp_path: Path):
+    """Bad JSON line must raise immediately, not after consuming good cases."""
+    from demotest.config import DatasetSourceConfig
+    from demotest.datasets.adapters.credential_catalog_synthetic import CredentialCatalogSyntheticAdapter
+    from demotest.core.exceptions import DatasetSourceError
+    good = {"trace_id":"t1","skill_id":"s1","skill_name":"s1","issue_id":"VUL-010","academic_code":"VUL-C","pattern":"Information Exposure","classification":"vulnerable","severity":"HIGH","sink":"stdout","gateway_channel":"TOOL_RESULT","gateway_visibility":"DIRECT","flow_class":"STDOUT_EXPOSURE","credential_marker":"TEST_SECRET_AAAAAAAAAAAAAAAA","payload":"tool output: TEST_SECRET_AAAAAAAAAAAAAAAA","destination":"","tool_name":"skill_stdout","tool_arguments":{},"dynamic_confirmed":False,"evidence_type":"CATALOG_DERIVED","source_revision":"revA","sandbox_version":"catalog-derived-v1","trace_hash":"x","metadata":{}}
+    good_line = json.dumps(good)
+    (tmp_path / "traces.jsonl").write_text(good_line + "\nNOT JSON\n" + good_line + "\n", encoding="utf-8")
+    sc = DatasetSourceConfig(name="credential_catalog_synthetic", adapter="credential_catalog_synthetic", source_type="derived", source_uri="x", revision="revA", raw_dir=str(tmp_path), normalized_dir=str(tmp_path / "norm"))
+    ad = CredentialCatalogSyntheticAdapter(source_config=sc, raw_dir=tmp_path, strict=True)
+    with pytest.raises(DatasetSourceError, match="line 2"):
+        list(ad.iter_cases())
+
+
+def test_analyzer_report_extended_marking():
+    """Analyzer and markdown must mark extended as non-headline."""
+    from demotest.analysis.analyzer import AnalysisReport
+    from demotest.reporting.markdown import render_markdown
+    rep = AnalysisReport(project="P4_credential_flow", benchmark_track="extended", headline_eligible=False)
+    md = render_markdown(rep)
+    assert "Extended Synthetic" in md
+    assert "non-headline" in md.lower()
+    assert "extended" in md.lower()
+    rep2 = AnalysisReport(project="P1_external_instruction", benchmark_track="core", headline_eligible=True)
+    md2 = render_markdown(rep2)
+    assert "Extended" not in md2

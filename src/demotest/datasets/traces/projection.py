@@ -52,8 +52,8 @@ def _validate(
             errs.append("BLOCK: sink required")
         if not trace.credential_marker:
             errs.append("BLOCK: credential_marker required")
-        # For real dynamic traces BLOCK must be dynamically confirmed. For the
-        # synthetic catalog track dynamic_confirmed is intentionally False.
+        if getattr(trace, "evidence_type", "") == "DYNAMIC_TRACE" and expected_action == ExpectedAction.BLOCK and not bool(getattr(trace, "dynamic_confirmed", False)):
+            errs.append("DYNAMIC_TRACE BLOCK requires dynamic_confirmed=true")
     else:  # ALLOW
         meta = trace.metadata or {}
         authorized = bool(meta.get("authorized_sink") or meta.get("authorized"))

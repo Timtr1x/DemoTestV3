@@ -63,11 +63,36 @@ def _project_cases(project_id: str):
     return all_cases
 
 
-def _source_locks_block(project_id: str) -> dict[str, dict[str, Any]]:
+def _source_locks_block(project_id: str, *, suite_id: str | None = None) -> dict[str, dict[str, Any]]:
     from ..datasets.source_lock import load_source_lock
+    from ..config import load_datasets as _ld
+
+    # Only include enabled datasets actually referenced by the suite strata if suite_id given
+    strata_datasets: set[str] | None = None
+    if suite_id:
+        try:
+            from ..config import get_suite as _gs2
+            suite = _gs2(suite_id)
+            pt = suite.projects.get(project_id)
+            if pt and pt.strata:
+                strata_datasets = {str(s.get("dataset") or "") for s in pt.strata if s.get("dataset")}
+                strata_datasets.discard("")
+        except Exception:
+            pass
+
+    try:
+        all_datasets = _ld()
+    except Exception:
+        all_datasets = {}
 
     blocks: dict[str, dict[str, Any]] = {}
     for ds_id in _DATASETS_BY_PROJECT.get(project_id, []):
+        # skip disabled datasets (review: P4 suite had both synthetic + disabled alias)
+        ds_cfg = all_datasets.get(ds_id)
+        if ds_cfg is not None and not ds_cfg.enabled:
+            continue
+        if strata_datasets is not None and ds_id not in strata_datasets:
+            continue
         try:
             lock = load_source_lock(ds_id)
             blocks[ds_id] = {
@@ -77,7 +102,6 @@ def _source_locks_block(project_id: str) -> dict[str, dict[str, Any]]:
                 "adapter_version": lock.adapter_version,
                 "benchmark_version": lock.extra.get("benchmark_version") if lock.extra else None,
             }
-            # prune None
             blocks[ds_id] = {k: v for k, v in blocks[ds_id].items() if v is not None}
         except Exception:
             continue
@@ -122,10 +146,12 @@ def cmd_build(args) -> int:
         seed=suite.seed,
         split=suite.split,
         target=target,
-        source_locks=_source_locks_block(args.project),
+        source_locks=_source_locks_block(args.project, suite_id=args.suite),
         strata=strata,
         max_cluster_share=max_cluster_share,
         split_version=split_version,
+        benchmark_track=getattr(ptarget, "track", "core"),
+        headline_eligible=getattr(ptarget, "headline_eligible", getattr(ptarget, "track", "core") == "core"),
     )
     out = Path(args.out) if args.out else Path(ptarget.manifest)
     if not args.out and not out.parent.exists():

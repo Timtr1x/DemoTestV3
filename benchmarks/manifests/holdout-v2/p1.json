@@ -1,4 +1,5 @@
 {
+  "benchmark_track": "core",
   "cases": [
     {
       "case_fingerprint": "fp-39a569ddb62a0a64",
@@ -4217,7 +4218,8 @@
       "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
     }
   },
-  "manifest_sha256": "sha256:1a021d5ad3677aabefc014b1a7a55308ad5814c23225f0d827dae3f2883fb688",
+  "headline_eligible": true,
+  "manifest_sha256": "sha256:4803d55e819ac0f80ff6a8406e308b810114d3edfa559c84037dceffd00f61b6",
   "manifest_version": "v3.2",
   "n": 526,
   "project": "P1_external_instruction",

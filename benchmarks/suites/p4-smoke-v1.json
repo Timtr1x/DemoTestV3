@@ -1,8 +1,11 @@
 {
+  "headline_eligible": false,
   "projects": {
     "P4_credential_flow": {
+      "benchmark_track": "extended",
+      "headline_eligible": false,
       "manifest": "benchmarks/manifests/p4-smoke-v1/p4.json",
-      "manifest_sha256": "sha256:ebaf1471e6673a3fbb7817282a5a76e10ce761d131b98e8efb86f4dc54ce0f24",
+      "manifest_sha256": "sha256:e68fc185391f69a1e6576592587c711cb79a73b41fdde3a47873ef9bc2155ffe",
       "n": 100,
       "split": [
         "dev"
@@ -17,12 +20,6 @@
       "adapter_version": "1.0.0",
       "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
       "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
-    },
-    "credential_traces": {
-      "adapter": "credential_traces",
-      "adapter_version": "1.0.0",
-      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
-      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     }
   },
   "split": [
@@ -30,5 +27,6 @@
   ],
   "suite_config_hash": "sha256:da158de2a30abe12fe5f7d69ce0ed7a8df993cdf718f0cb8f211aee87339aa9a",
   "suite_id": "p4-smoke-v1",
-  "total_cases": 100
+  "total_cases": 100,
+  "track": "extended"
 }

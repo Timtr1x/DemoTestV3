@@ -1,8 +1,11 @@
 {
+  "headline_eligible": false,
   "projects": {
     "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/holdout-v2/p1.json",
-      "manifest_sha256": "sha256:1a021d5ad3677aabefc014b1a7a55308ad5814c23225f0d827dae3f2883fb688",
+      "manifest_sha256": "sha256:4803d55e819ac0f80ff6a8406e308b810114d3edfa559c84037dceffd00f61b6",
       "n": 526,
       "split": [
         "holdout"
@@ -10,8 +13,10 @@
       "target": 580
     },
     "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/holdout-v2/p2.json",
-      "manifest_sha256": "sha256:974787639d0a0db32aae89e9d2bead3dc6072ada3ba42361dff3e116479403bd",
+      "manifest_sha256": "sha256:7272d23ea4be64d254dc018a4f4dd3c74ec21e6d8fb2e33eeb7e13b1359e51ea",
       "n": 150,
       "split": [
         "holdout"
@@ -19,8 +24,10 @@
       "target": 150
     },
     "P4_credential_flow": {
+      "benchmark_track": "extended",
+      "headline_eligible": false,
       "manifest": "benchmarks/manifests/phase2-holdout-v1/p4.json",
-      "manifest_sha256": "sha256:4dea2289a4f53133c30f07dcacf4a982b36dabfe7e7e0286d06771334b0c3fc9",
+      "manifest_sha256": "sha256:2b594d65855363b0e579bf4234e86699ac12f3c1fe53fea58b92718cde1c00ab",
       "n": 149,
       "split": [
         "holdout"
@@ -42,12 +49,6 @@
       "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
       "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     },
-    "credential_traces": {
-      "adapter": "credential_traces",
-      "adapter_version": "1.0.0",
-      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
-      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
-    },
     "llmail": {
       "adapter": "llmail",
       "adapter_version": "1.1.0",
@@ -60,5 +61,6 @@
   ],
   "suite_config_hash": "sha256:586231041f25b7f87066f67435a9b824b4433acb6c834444d2e62cf84625d6aa",
   "suite_id": "phase2-holdout-v1",
-  "total_cases": 825
+  "total_cases": 825,
+  "track": "mixed"
 }

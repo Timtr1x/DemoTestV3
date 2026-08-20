@@ -20,10 +20,25 @@ def _fmt_num(x: float | None) -> str:
 
 def render_markdown(rep: AnalysisReport) -> str:
     m = rep.metrics
-    title = rep.project or rep.manifest_name or "V3"
+    # Phase 2.1: hard isolation — extended track must not be mistaken for headline
+    track = str(getattr(rep, "benchmark_track", "core") or "core").lower()
+    eligible = bool(getattr(rep, "headline_eligible", track == "core"))
+    track_label = "Extended Synthetic" if track == "extended" else ("Core" if track == "core" else track)
+    if track == "extended":
+        title_suffix = " — Extended Synthetic (non-headline)"
+    elif not eligible:
+        title_suffix = " — Non-headline"
+    else:
+        title_suffix = ""
+    title = (rep.project or rep.manifest_name or "V3") + title_suffix
+    # decorate project display name for extended
+    display_track = f"benchmark_track=`{track}` headline_eligible=`{str(eligible).lower()}`"
+    if track == "extended":
+        display_track += " — ⚠️ Extended track excluded from overall headline"
     lines = [
         f"# {title} — Gateway Security Report",
         "",
+        f"- {display_track}",
         f"- run: `{rep.run_id}` target: `{rep.target}` manifest: `{rep.manifest_name}`",
         f"- samples: n=`{m.n_judged}/{rep.n_total}` unjudged=`{m.n_unjudged}` "
         f"cooldown占比=`{_fmt(m.cooldown_share)}`",

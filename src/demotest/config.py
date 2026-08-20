@@ -259,6 +259,9 @@ class SuiteProjectTarget:
     target: int = 0
     strata: list[dict] = field(default_factory=list)
     max_cluster_share: float | None = None
+    # Phase 2.1: hard isolation CORE vs EXTENDED (review P0 — Synthetic must not be headline)
+    track: str = "core"  # core | extended
+    headline_eligible: bool = True
 
 
 @dataclass
@@ -268,6 +271,8 @@ class SuiteConfig:
     split: list[str] = field(default_factory=list)  # ["eval"] or ["eval","holdout"]
     split_version: str = "split-v1"
     projects: dict[str, SuiteProjectTarget] = field(default_factory=dict)
+    track: str = "core"  # core | extended | mixed (suite-level convenience, not authoritative; per-project track is authoritative)
+    headline_eligible: bool = True
 
     def split_set(self) -> set[str]:
         s = self.split or ["eval"]
@@ -287,19 +292,53 @@ def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
         for pid, pcfg in (cfg.get("projects") or {}).items():
             pcfg = dict(pcfg or {})
             mcs = pcfg.get("max_cluster_share")
+            # track/headline_eligible: explicit in YAML wins; fallback: P4 synthetic is extended/non-headline
+            raw_track = str(pcfg.get("track") or "").strip().lower()
+            if not raw_track:
+                # default core, but P4 via synthetic dataset is extended by construction
+                _has_synthetic = any((str(s.get("dataset") or "") == "credential_catalog_synthetic") for s in (pcfg.get("strata") or []))
+                raw_track = "extended" if (pid == "P4_credential_flow" and _has_synthetic) else "core"
+            if raw_track not in ("core", "extended"):
+                raw_track = "core"
+            raw_hl = pcfg.get("headline_eligible")
+            if raw_hl is None:
+                raw_hl = (raw_track == "core")
+            else:
+                raw_hl = bool(raw_hl)
             projects[pid] = SuiteProjectTarget(
                 project=pid,
                 manifest=str(pcfg.get("manifest") or ""),
                 target=int(pcfg.get("target", 0)),
                 strata=list(pcfg.get("strata") or []),
                 max_cluster_share=float(mcs) if mcs is not None else None,
+                track=raw_track,
+                headline_eligible=raw_hl,
             )
+        # suite-level track: explicit wins else derived (mixed if projects disagree)
+        raw_suite_track = str(cfg.get("track") or "").strip().lower()
+        raw_suite_hl = cfg.get("headline_eligible")
+        if not raw_suite_track:
+            _tracks = {v.track for v in projects.values()}
+            if len(_tracks) == 1:
+                raw_suite_track = next(iter(_tracks))
+            elif len(_tracks) > 1:
+                raw_suite_track = "mixed"
+            else:
+                raw_suite_track = "core"
+        if raw_suite_track not in ("core", "extended", "mixed"):
+            raw_suite_track = "core"
+        if raw_suite_hl is None:
+            raw_suite_hl = (raw_suite_track == "core")
+        else:
+            raw_suite_hl = bool(raw_suite_hl)
         out[sid] = SuiteConfig(
             suite_id=sid,
             seed=int(cfg.get("seed", 42)),
             split=list(split),
             split_version=str(cfg.get("split_version", "split-v1")),
             projects=projects,
+            track=raw_suite_track,
+            headline_eligible=raw_suite_hl,
         )
     return out
 

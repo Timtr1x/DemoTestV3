@@ -46,12 +46,25 @@ def build_suite_summary(suite_id: str) -> dict:
             "n": n,
             "target": ptarget.target,
             "split": manifest.get("split", []),
+            "benchmark_track": manifest.get("benchmark_track", getattr(ptarget, "track", "core")),
+            "headline_eligible": manifest.get("headline_eligible", getattr(ptarget, "headline_eligible", True)),
         }
-    from demotest.cli.manifest import _DATASETS_BY_PROJECT
+    from demotest.config import load_datasets as _ld2
+    try:
+        _all_ds = _ld2()
+    except Exception:
+        _all_ds = {}
     locks = {}
-    for pid in suite.projects:
-        for ds_id in _DATASETS_BY_PROJECT.get(pid, []):
+    for pid, ptarget in suite.projects.items():
+        # only enabled + strata-referenced datasets
+        strata_ds = {str(s.get("dataset") or "") for s in (ptarget.strata or []) if s.get("dataset")}
+        for ds_id in (__import__("demotest.cli.manifest", fromlist=["_DATASETS_BY_PROJECT"])._DATASETS_BY_PROJECT.get(pid, [])):
             if ds_id in locks:
+                continue
+            ds_cfg = _all_ds.get(ds_id)
+            if ds_cfg is not None and not ds_cfg.enabled:
+                continue
+            if strata_ds and ds_id not in strata_ds:
                 continue
             try:
                 lk = load_source_lock(ds_id)
@@ -67,6 +80,8 @@ def build_suite_summary(suite_id: str) -> dict:
         "projects": projects,
         "source_locks": locks,
         "suite_config_hash": _suite_config_hash(suite_id),
+        "track": getattr(suite, "track", "core"),
+        "headline_eligible": getattr(suite, "headline_eligible", True),
     }
 
 

@@ -1,8 +1,11 @@
 {
+  "headline_eligible": false,
   "projects": {
     "P4_credential_flow": {
+      "benchmark_track": "extended",
+      "headline_eligible": false,
       "manifest": "benchmarks/manifests/p4-holdout-v1/p4.json",
-      "manifest_sha256": "sha256:ce2d46b0bff477bbd3f8b1b638f5c5c22bd1e32613cbfe058461a6f7df5dcbd4",
+      "manifest_sha256": "sha256:2e8918e0915fedab66dd0d10c57a593c8cae2e640f5b1954228cd3aab9e972b5",
       "n": 149,
       "split": [
         "holdout"
@@ -17,12 +20,6 @@
       "adapter_version": "1.0.0",
       "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
       "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
-    },
-    "credential_traces": {
-      "adapter": "credential_traces",
-      "adapter_version": "1.0.0",
-      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
-      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     }
   },
   "split": [
@@ -30,5 +27,6 @@
   ],
   "suite_config_hash": "sha256:524fe0a65f2d36e69a2e0426af2cc6d7aec753bc542bfa238a0262e88e1012c9",
   "suite_id": "p4-holdout-v1",
-  "total_cases": 149
+  "total_cases": 149,
+  "track": "extended"
 }

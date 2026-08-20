@@ -38,9 +38,27 @@ def run(args) -> int:
     for sf in stores:
         for row in ResultStore(sf).load():
             store.append(CaseResult.from_dict(row))
+    # Phase 2.1: propagate benchmark_track/headline_eligible from manifest when available
+    _track = "core"
+    _eligible = True
+    try:
+        from pathlib import Path as _P2
+        from ..datasets.manifest_builder import load_manifest as _lm2
+        # try to find manifest by project via first suites entry
+        for _suite in __import__("demotest.config", fromlist=["load_suites"]).load_suites().values():
+            if args.project in _suite.projects:
+                _mp = _P2(_suite.projects[args.project].manifest)
+                if _mp.exists():
+                    _m = _lm2(_mp)
+                    _track = str(_m.get("benchmark_track") or _suite.projects[args.project].track or "core")
+                    _eligible = bool(_m.get("headline_eligible", _suite.projects[args.project].headline_eligible))
+                    break
+    except Exception:
+        pass
     rep = analyze(
         cases, store, project=args.project, run_id=args.run_version,
         target=args.target, thresholds=project.thresholds, caveats=project.caveats,
+        benchmark_track=_track, headline_eligible=_eligible,
     )
     if args.json:
         print(json.dumps(rep.to_dict(), ensure_ascii=False, indent=2, default=str))

@@ -1,8 +1,11 @@
 {
+  "headline_eligible": false,
   "projects": {
     "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/smoke-v2/p1.json",
-      "manifest_sha256": "sha256:e80a8a307c2dd0891ee8dbf247c7a784ef6770fead7998a85d05b35a75814df9",
+      "manifest_sha256": "sha256:2d326bd27f56fa526b8eac5098f17c2f0ff5bbf0c321cc9b1b2f6716013fc309",
       "n": 120,
       "split": [
         "dev"
@@ -10,8 +13,10 @@
       "target": 120
     },
     "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/smoke-v2/p2.json",
-      "manifest_sha256": "sha256:aae1785370d1832aa6b952e4e08825fc22efa73d82180fd59b708b6b9272c125",
+      "manifest_sha256": "sha256:2083433257ce5d8eb966bcfb15b731e2eec08b709b26a37c6af5a01894cae4a0",
       "n": 100,
       "split": [
         "dev"
@@ -19,8 +24,10 @@
       "target": 100
     },
     "P4_credential_flow": {
+      "benchmark_track": "extended",
+      "headline_eligible": false,
       "manifest": "benchmarks/manifests/phase2-smoke-v1/p4.json",
-      "manifest_sha256": "sha256:1be556c7d9092b05fafd767b4a5b6f4a9c0f211fdbb8d32b9b032d20556bfa2d",
+      "manifest_sha256": "sha256:eec58887d5cc79c5fa549807b97b72900be906a422e8c346eaece9c9f47b476f",
       "n": 100,
       "split": [
         "dev"
@@ -42,12 +49,6 @@
       "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
       "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
     },
-    "credential_traces": {
-      "adapter": "credential_traces",
-      "adapter_version": "1.0.0",
-      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
-      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
-    },
     "llmail": {
       "adapter": "llmail",
       "adapter_version": "1.1.0",
@@ -60,5 +61,6 @@
   ],
   "suite_config_hash": "sha256:6a524c39e4181ad0a8c82af16ca2344811c9bb0619c458dfdf76a1bfe20ff0c8",
   "suite_id": "phase2-smoke-v1",
-  "total_cases": 320
+  "total_cases": 320,
+  "track": "mixed"
 }

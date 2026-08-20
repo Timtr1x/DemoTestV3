@@ -1,4 +1,5 @@
 {
+  "benchmark_track": "core",
   "cases": [
     {
       "case_fingerprint": "fp-6f26f87b66a18a17",
@@ -1210,7 +1211,8 @@
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
     }
   },
-  "manifest_sha256": "sha256:974787639d0a0db32aae89e9d2bead3dc6072ada3ba42361dff3e116479403bd",
+  "headline_eligible": true,
+  "manifest_sha256": "sha256:7272d23ea4be64d254dc018a4f4dd3c74ec21e6d8fb2e33eeb7e13b1359e51ea",
   "manifest_version": "v3.2",
   "n": 150,
   "project": "P2_tool_action",

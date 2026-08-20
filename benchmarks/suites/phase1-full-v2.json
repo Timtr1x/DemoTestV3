@@ -1,8 +1,11 @@
 {
+  "headline_eligible": true,
   "projects": {
     "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-full-v2/p1.json",
-      "manifest_sha256": "sha256:3076bec223213cd59e35056d9399fa4b20fc60c762f8737ddce479f8321e637b",
+      "manifest_sha256": "sha256:fc9e0cd23f64ebad94579e40478e5d64407a00010926de55513494567a941cac",
       "n": 2683,
       "split": [
         "eval",
@@ -11,8 +14,10 @@
       "target": 2683
     },
     "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-full-v2/p2.json",
-      "manifest_sha256": "sha256:39b754994f5f016b48e4de086d168cda76dd3d2c6103305786a13d10d8b130cb",
+      "manifest_sha256": "sha256:9a748c23a6b213fdc2a9906f3c8ddf995c84f2e7c2c6b9dac759e4b7aca3fa68",
       "n": 761,
       "split": [
         "eval",
@@ -42,5 +47,6 @@
   ],
   "suite_config_hash": "sha256:d490b71712bd2d264d19c21f39f4dc16489a8b8d09f537c0507c0281cf2daa25",
   "suite_id": "phase1-full-v2",
-  "total_cases": 3444
+  "total_cases": 3444,
+  "track": "core"
 }

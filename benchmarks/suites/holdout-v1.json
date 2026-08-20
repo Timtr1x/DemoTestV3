@@ -1,6 +1,9 @@
 {
+  "headline_eligible": true,
   "projects": {
     "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/holdout-v1/p1.json",
       "manifest_sha256": "sha256:50ca793ba339d63158895646a1117a947765ffa1091344e24a1048e57e010020",
       "n": 820,
@@ -10,6 +13,8 @@
       "target": 580
     },
     "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/holdout-v1/p2.json",
       "manifest_sha256": "sha256:b959df688b9d587198183208a8c3a5ade5a42d1f1b59d3799fa209041a0aff8b",
       "n": 187,
@@ -39,5 +44,6 @@
   ],
   "suite_config_hash": "sha256:dcfedeeb23544e64379c87ae15fb60e122fa1f4573fd6e50d37b38037f487a79",
   "suite_id": "holdout-v1",
-  "total_cases": 1007
+  "total_cases": 1007,
+  "track": "core"
 }

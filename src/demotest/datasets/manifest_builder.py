@@ -159,6 +159,8 @@ def build_manifest(
     strata: list[dict[str, Any]] | None = None,
     max_cluster_share: float | None = None,
     split_version: str = "split-v1",
+    benchmark_track: str | None = None,
+    headline_eligible: bool | None = None,
 ) -> dict[str, Any]:
     """Build a frozen manifest dict for one project within a suite.
 
@@ -223,6 +225,26 @@ def build_manifest(
 
     # created_from: include adapter version + benchmark_version when available
     cf = source_locks or {}
+    # Phase 2.1 hard isolation: benchmark_track / headline_eligible derived from suite config if not explicit
+    if benchmark_track is None or headline_eligible is None:
+        try:
+            from ..config import get_suite as _gs
+            _suite = _gs(suite_id)
+            _pt = _suite.projects.get(project_id)
+            if _pt is not None:
+                if benchmark_track is None:
+                    benchmark_track = getattr(_pt, "track", "core") or "core"
+                if headline_eligible is None:
+                    headline_eligible = bool(getattr(_pt, "headline_eligible", benchmark_track == "core"))
+        except Exception:
+            pass
+    if benchmark_track is None:
+        benchmark_track = "core"
+    if headline_eligible is None:
+        headline_eligible = (benchmark_track == "core")
+    benchmark_track = str(benchmark_track).lower()
+    if benchmark_track not in ("core", "extended"):
+        benchmark_track = "core"
     manifest: dict[str, Any] = {
         "manifest_version": MANIFEST_VERSION,
         "suite": suite_id,
@@ -230,6 +252,8 @@ def build_manifest(
         "seed": seed,
         "split": sorted(allowed),
         "target": target,
+        "benchmark_track": benchmark_track,
+        "headline_eligible": bool(headline_eligible),
         "created_from": cf,
         "selection_policy": {
             "algorithm": "hash_rank_v1",
@@ -258,6 +282,8 @@ def build_manifest_streaming(
     strata: list[dict[str, Any]] | None = None,
     max_cluster_share: float | None = None,
     split_version: str = "split-v1",
+    benchmark_track: str | None = None,
+    headline_eligible: bool | None = None,
 ) -> dict[str, Any]:
     """Streaming manifest builder — collects headers only, not full cases.
 
@@ -325,6 +351,25 @@ def build_manifest_streaming(
         strata_report = {}
 
     entries.sort(key=lambda e: e.case_id)
+    if benchmark_track is None or headline_eligible is None:
+        try:
+            from ..config import get_suite as _gs2
+            _suite2 = _gs2(suite_id)
+            _pt2 = _suite2.projects.get(project_id)
+            if _pt2 is not None:
+                if benchmark_track is None:
+                    benchmark_track = getattr(_pt2, "track", "core") or "core"
+                if headline_eligible is None:
+                    headline_eligible = bool(getattr(_pt2, "headline_eligible", benchmark_track == "core"))
+        except Exception:
+            pass
+    if benchmark_track is None:
+        benchmark_track = "core"
+    if headline_eligible is None:
+        headline_eligible = (benchmark_track == "core")
+    benchmark_track = str(benchmark_track).lower()
+    if benchmark_track not in ("core", "extended"):
+        benchmark_track = "core"
     manifest: dict[str, Any] = {
         "manifest_version": MANIFEST_VERSION,
         "suite": suite_id,
@@ -332,6 +377,8 @@ def build_manifest_streaming(
         "seed": seed,
         "split": sorted(allowed),
         "target": target,
+        "benchmark_track": benchmark_track,
+        "headline_eligible": bool(headline_eligible),
         "created_from": source_locks or {},
         "selection_policy": {
             "algorithm": "hash_rank_v1",

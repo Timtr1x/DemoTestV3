@@ -66,7 +66,10 @@ class CredentialCatalogSyntheticAdapter(DatasetAdapter):
                 try:
                     yield CredentialTrace.from_dict(json.loads(line))
                 except Exception as e:
-                    self._rejected.append({"lineno": lineno, "error": str(e), "line": line[:300]})
+                    rec = {"lineno": lineno, "error": str(e), "line": line[:300]}
+                    self._rejected.append(rec)
+                    if self.strict:
+                        raise DatasetSourceError(f"credential_catalog_synthetic JSON parse failed at line {lineno}: {e}") from e
 
     def _raw_sha256(self) -> str:
         # Authoritative: the lock's raw_sha256 (snapshot hash of the file bytes,

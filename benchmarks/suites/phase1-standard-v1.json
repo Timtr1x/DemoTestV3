@@ -1,6 +1,9 @@
 {
+  "headline_eligible": true,
   "projects": {
     "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-standard-v1/p1.json",
       "manifest_sha256": "sha256:4f9e89c124e0eba0bd483f72d9ddac99fd06137be2679ae39ecd76179307c286",
       "n": 1740,
@@ -10,6 +13,8 @@
       "target": 1740
     },
     "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-standard-v1/p2.json",
       "manifest_sha256": "sha256:72060568ec9a5de490caf45a5167ca493bd76afea9cb9bc2fc7f71875382dc98",
       "n": 540,
@@ -39,5 +44,6 @@
   ],
   "suite_config_hash": "sha256:a8612e05837a5131ced16ae4807255777340535a668b690b94790a38dfc36eb3",
   "suite_id": "phase1-standard-v1",
-  "total_cases": 2280
+  "total_cases": 2280,
+  "track": "core"
 }

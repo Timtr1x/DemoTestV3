@@ -23,6 +23,8 @@ class AnalysisReport:
     thresholds: dict[str, Any] = field(default_factory=dict)
     pass_fail: str = "N/A"
     manifest_name: str = ""
+    benchmark_track: str = "core"  # core | extended
+    headline_eligible: bool = True
 
     def to_dict(self) -> dict[str, Any]:
         m = self.metrics
@@ -30,6 +32,8 @@ class AnalysisReport:
             "project": self.project,
             "run_id": self.run_id,
             "target": self.target,
+            "benchmark_track": self.benchmark_track,
+            "headline_eligible": self.headline_eligible,
             "n_total": self.n_total,
             "n_judged": m.n_judged,
             "n_unjudged": m.n_unjudged,
@@ -81,6 +85,8 @@ def analyze(
     thresholds: dict[str, Any] | None = None,
     caveats: list[str] | None = None,
     manifest_name: str = "",
+    benchmark_track: str = "core",
+    headline_eligible: bool = True,
 ) -> AnalysisReport:
     if isinstance(store, Path):
         store = ResultStore(store)
@@ -102,5 +108,7 @@ def analyze(
         thresholds=th,
         pass_fail=evaluate_thresholds(metrics, th),
         manifest_name=manifest_name,
+        benchmark_track=str(benchmark_track or "core").lower(),
+        headline_eligible=bool(headline_eligible),
     )
     return rep
