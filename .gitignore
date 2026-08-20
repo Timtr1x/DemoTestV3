@@ -29,6 +29,10 @@ scripts/run_against_qwen3guard.py
 scripts/setup_remote_qwen3guard.sh
 scripts/start_remote_qwen3guard_api.sh
 cache/exports/
+cache/results_v3/
+C/
+src/demotest.egg-info/
+scripts/qwen3guard_eval.py
 # Chinese working notes — keep local, not versioned.
 测试逻辑与流程.md
 测试逻辑与流程_v2.md
