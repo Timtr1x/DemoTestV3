@@ -1,0 +1,4 @@
+# Keep shell scripts as LF even on Windows (core.autocrlf=mangled CRLF breaks shebangs)
+*.sh text eol=lf
+*.py text eol=lf
+Dockerfile text eol=lf

@@ -150,7 +150,10 @@ def _dynamic_metadata(record: DynamicExecutionRecord, *, credential_name: str,
         "timeout": record.timeout,
         "collector_version": record.collector_version,
         "outcome": outcome,
+        "isolation_level": str((record.metadata or {}).get("isolation_level") or ""),
     }
+    if (record.metadata or {}).get("sandbox_profile"):
+        meta["sandbox_profile"] = dict(record.metadata["sandbox_profile"])
     if network_event is not None:
         meta["network_method"] = str(network_event.get("method") or "")
         meta["network_destination"] = str(network_event.get("destination") or "")

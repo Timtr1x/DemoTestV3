@@ -4,7 +4,8 @@ Subcommands:
   doctor    — environment gate: docker, pinned pipeline, image digest,
               optional official T3 self-test, credential-forwarding boundary
   snapshot  — freeze a skills directory into a pinned snapshot (per-skill SHA)
-  collect   — run a frozen snapshot through the sandbox → raw traces + lock
+  collect   — run a frozen snapshot through the sandbox → raw traces + lock (deterministic Core only)
+  agent-collect — Host-side AgentDriver differential (benign/adversarial, Extended)
   verify    — re-check snapshot + trace file hashes against trace_meta.json
 """
 from __future__ import annotations
@@ -20,7 +21,7 @@ from ..datasets.source_lock import load_source_lock
 from ..core.exceptions import DatasetSourceError
 
 
-def _runner() -> SkillLeakBenchSandboxRunner:
+def _runner(args=None) -> SkillLeakBenchSandboxRunner:
     try:
         lk = load_source_lock("skillleakbench_pipeline")
         revision = lk.revision
@@ -28,7 +29,20 @@ def _runner() -> SkillLeakBenchSandboxRunner:
         revision = ""
     from ..config import get_dataset
     root = get_dataset("skillleakbench_pipeline").raw_path
-    return SkillLeakBenchSandboxRunner(pipeline_root=root, pipeline_revision=revision)
+    return SkillLeakBenchSandboxRunner(
+        pipeline_root=root, pipeline_revision=revision,
+        memory=getattr(args, "memory", "512m"),
+        cpus=getattr(args, "cpus", "0.5"),
+        pids_limit=getattr(args, "pids_limit", 64),
+        timeout_s=getattr(args, "timeout_s", 120),
+    )
+
+
+def _add_sandbox_args(p) -> None:
+    p.add_argument("--memory", default="512m", help="per-container memory limit")
+    p.add_argument("--cpus", default="0.5", help="per-container CPU quota")
+    p.add_argument("--pids-limit", type=int, default=64, help="per-container PID limit")
+    p.add_argument("--timeout-s", type=int, default=120, help="per-skill wall-clock timeout")
 
 
 def add_parser(sub) -> None:
@@ -38,6 +52,7 @@ def add_parser(sub) -> None:
     doc = sp.add_parser("doctor", help="Check docker / pinned pipeline / image / T3 self-test")
     doc.add_argument("--self-test", action="store_true",
                      help="run the official T3 self-test (requires docker + bash)")
+    _add_sandbox_args(doc)
     doc.set_defaults(func=cmd_doctor)
 
     snap = sp.add_parser("snapshot", help="Freeze a skills directory into a pinned snapshot")
@@ -45,12 +60,25 @@ def add_parser(sub) -> None:
     snap.add_argument("--created-at", default="")
     snap.set_defaults(func=cmd_snapshot)
 
-    col = sp.add_parser("collect", help="Run a frozen snapshot through the sandbox")
+    col = sp.add_parser("collect", help="Run a frozen snapshot through the sandbox (deterministic Core)")
     col.add_argument("--snapshot", required=True, help="snapshot id, e.g. snap-<hash12>")
-    col.add_argument("--limit", type=int, default=None)
+    col.add_argument("--offset", type=int, default=0,
+                     help="0-based index into the frozen skill snapshot")
+    col.add_argument("--limit", type=int, default=10,
+                     help="skills selected in this serial batch (default: 10)")
     col.add_argument("--condition", default="deterministic",
-                     choices=["deterministic", "benign", "adversarial"])
+                     choices=["deterministic"])
+    _add_sandbox_args(col)
     col.set_defaults(func=cmd_collect)
+
+    aco = sp.add_parser("agent-collect", help="Host-side AgentDriver differential (Extended, non-headline)")
+    aco.add_argument("--snapshot", required=True, help="snapshot id")
+    aco.add_argument("--offset", type=int, default=0)
+    aco.add_argument("--limit", type=int, default=10)
+    aco.add_argument("--condition", default="benign", choices=["benign", "adversarial"])
+    aco.add_argument("--rounds", type=int, default=3, help="agent rounds per skill")
+    _add_sandbox_args(aco)
+    aco.set_defaults(func=cmd_agent_collect)
 
     ver = sp.add_parser("verify", help="Re-verify snapshot + trace hashes")
     ver.add_argument("--snapshot", required=True)
@@ -58,7 +86,7 @@ def add_parser(sub) -> None:
 
 
 def cmd_doctor(args) -> int:
-    runner = _runner()
+    runner = _runner(args)
     rep = runner.doctor_checks(with_self_test=bool(args.self_test))
     for c in rep.checks:
         mark = "PASS" if c.ok else ("FAIL" if c.required else "SKIP")
@@ -86,7 +114,10 @@ def cmd_snapshot(args) -> int:
 
 
 def cmd_collect(args) -> int:
-    runner = _runner()
+    if args.condition != "deterministic":
+        print("collect: only --condition deterministic is allowed for P4 Core; use agent-collect for benign/adversarial")
+        return 1
+    runner = _runner(args)
     # hard gate: sandbox environment must be green before touching real skills
     rep = runner.doctor_checks(with_self_test=False)
     if not rep.ok:
@@ -96,9 +127,16 @@ def cmd_collect(args) -> int:
         print("collect refused: `demotest dynamic doctor` must pass first")
         return 1
     collector = DynamicTraceCollector(runner=runner)
-    report = collector.collect(
-        snapshot_id=args.snapshot, limit=args.limit, condition=args.condition)
-    print(f"[collect] snapshot={report.snapshot_id} skills={report.n_skills_attempted} "
+    try:
+        report = collector.collect(
+            snapshot_id=args.snapshot, offset=args.offset, limit=args.limit,
+            condition=args.condition)
+    except RuntimeError as e:
+        print(f"collect refused: {e}")
+        return 1
+    print(f"[collect] snapshot={report.snapshot_id} offset={report.offset} limit={report.limit} "
+          f"selected={report.n_skills_selected} attempted={report.n_skills_attempted} "
+          f"skipped_existing={report.n_skills_skipped_existing} "
           f"executions={report.n_executions} traces={report.n_traces} "
           f"(stdout={report.n_stdout_block} network={report.n_network_block} "
           f"allow={report.n_allow} unresolved={report.n_unresolved})")
@@ -107,6 +145,30 @@ def cmd_collect(args) -> int:
     for prob in report.problems:
         print(f"[collect][warn] {prob}")
     return 0 if not report.problems else 1
+
+
+def cmd_agent_collect(args) -> int:
+    """Extended Agent-driven differential — real API key stays on Host."""
+    runner = _runner(args)
+    rep = runner.doctor_checks(with_self_test=False)
+    if not rep.ok:
+        for c in rep.checks:
+            if c.required and not c.ok:
+                print(f"[FAIL] {c.name}: {c.detail}")
+        print("agent-collect refused: `demotest dynamic doctor` must pass first")
+        return 1
+    # Import lazily so Core never depends on agent deps
+    from ..datasets.dynamic.agents import OpenAICompatibleAgentDriver
+    from ..datasets.dynamic.agents.models import AgentConfig
+    driver = OpenAICompatibleAgentDriver(AgentConfig(
+        model=getattr(args, "model", "") or "",
+    ))
+    print(f"[agent-collect] snapshot={args.snapshot} condition={args.condition} rounds={args.rounds}")
+    print(f"[agent-collect] driver provenance: {driver.provenance}")
+    print("[agent-collect] Extended / non-headline — not yet wired to sandbox differential (scaffold ready)")
+    # Scaffold: full differential wiring (multi-round benign/adversarial) is
+    # staged for the next commit so P4 deterministic Core stays shippable.
+    return 0
 
 
 def cmd_verify(args) -> int:
