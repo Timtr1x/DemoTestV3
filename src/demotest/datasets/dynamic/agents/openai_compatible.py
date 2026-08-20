@@ -24,7 +24,8 @@ class OpenAICompatibleAgentDriver(AgentDriver):
             api_key = os.environ.get("OPENAI_API_KEY", "")
         self._base_url = base_url.rstrip("/").removesuffix("/v1")
         self._api_key = api_key
-        self._model = os.environ.get("AGENT_MODEL", "") or self.config.model
+        # Model is a benchmark variable — never silently default.
+        self._model = (os.environ.get("AGENT_MODEL", "") or self.config.model or "").strip()
 
     def run_turn(
         self,
@@ -37,9 +38,11 @@ class OpenAICompatibleAgentDriver(AgentDriver):
                 f"missing {self.config.base_url_env} or {self.config.api_key_env} — "
                 "real API key must be set on Host, never in Docker"
             )
+        if not self._model:
+            raise RuntimeError("AGENT_MODEL is required for benchmark runs — refusing implicit model")
         url = f"{self._base_url}/v1/chat/completions"
         body = {
-            "model": self._model or "gpt-4o-mini",
+            "model": self._model,
             "messages": messages,
             "temperature": self.config.temperature,
             "max_tokens": self.config.max_tokens,

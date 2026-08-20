@@ -39,7 +39,7 @@ ExecutionMode = Literal["deterministic", "agent_driven"]
 #: collector may inject (security boundary, guide §13). No uuid/random/faker.
 CANARY_RE = re.compile(r"^TEST_SECRET_[0-9A-F]{16}$")
 
-COLLECTOR_VERSION = "dynamic-collector-v2"
+COLLECTOR_VERSION = "dynamic-collector-v3"
 
 
 class DynamicSpecError(ValueError):

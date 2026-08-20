@@ -25,7 +25,6 @@ from .schemas import COLLECTOR_VERSION, DynamicExecutionRecord, trace_snapshot_s
 from .snapshot import SNAPSHOTS_ROOT, SnapshotManifest, load_snapshot
 
 DATASET_ID = "credential_dynamic_traces"
-COLLECTOR_DISPLAY = "dynamic-collector-v3"
 
 
 @dataclass(frozen=True)
@@ -84,11 +83,14 @@ class DynamicTraceCollector:
         self.snapshots_root = Path(snapshots_root) if snapshots_root else SNAPSHOTS_ROOT
         self.metadata_root = Path(metadata_root) if metadata_root else None
 
-    def _marker_provider(self) -> SkillLeakBenchMarkerProvider | None:
+    def _marker_provider(self) -> SkillLeakBenchMarkerProvider:
         try:
             return SkillLeakBenchMarkerProvider(self.runner.pipeline_root)
-        except Exception:
-            return None
+        except Exception as e:
+            raise RuntimeError(
+                "official SkillLeakBench credential marker provider unavailable; "
+                "Core collection refused"
+            ) from e
 
     def collect(
         self,
@@ -119,15 +121,9 @@ class DynamicTraceCollector:
             skill_dir = self.snapshots_root / snapshot_id / "skills" / entry.skill_id
             # Official forged markers — same values the container's entrypoint
             # generates via mock_creds.generate_mock_credentials(skill_id).
-            if marker_provider is not None:
-                creds: dict[str, str] = marker_provider.markers_for_skill(entry.skill_id)
-            else:
-                from .sandbox import injected_credentials
-
-                creds = injected_credentials(
-                    pipeline_revision=self.runner.pipeline_revision,
-                    skill_id=entry.skill_id,
-                )
+            # Core never falls back to TEST_SECRET — that would diverge from
+            # the container's actual injected values.
+            creds: dict[str, str] = marker_provider.markers_for_skill(entry.skill_id)
             # Condition-isolated workdir: <raw>/executions/<snapshot>/<skill>/<condition>/
             exec_work = self.raw_dir / "executions" / snapshot_id / entry.skill_id / condition
             try:
@@ -259,12 +255,7 @@ class DynamicTraceCollector:
             if not (t.metadata.get("authorized_sink") or t.metadata.get("safe_redaction"))
         )
         marker_prov = self._marker_provider()
-        cred_prov = marker_prov.provenance if marker_prov is not None else {
-            "credential_kind": "TEST_SECRET",
-            "credential_generator": "demotest/datasets/dynamic/sandbox.py:injected_credentials",
-            "credential_generator_revision": self.runner.pipeline_revision,
-            "credential_generator_sha256": "",
-        }
+        cred_prov = marker_prov.provenance
         meta = {
             "source_revision": self.runner.pipeline_revision,
             "n_traces": len(traces),
