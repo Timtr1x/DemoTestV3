@@ -14,6 +14,7 @@ Subcommands:
 """
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -100,7 +101,9 @@ def add_parser(sub) -> None:
     cand_rs_sub = cand_rs.add_subparsers(dest="runtime_spec_cmd", required=True)
     rs_set = cand_rs_sub.add_parser("set", help="Set external runtime spec for a candidate")
     rs_set.add_argument("--candidate-id", required=True)
-    rs_set.add_argument("--entry-command", nargs="+", required=True, help="e.g. python /skills/scripts/run.py")
+    rs_set.add_argument("--entry-command", nargs=argparse.REMAINDER, required=True,
+                        help="everything after this flag is the entry command, e.g. "
+                             "--entry-command python /skills/scripts/run.py --input /skills/data.json")
     rs_set.add_argument("--declared-providers", nargs="*", default=[], help="e.g. api.openai.com")
     rs_set.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
     rs_set.set_defaults(func=cmd_candidates_runtime_spec_set)
@@ -225,17 +228,23 @@ def cmd_candidates_import_skillsmp(args) -> int:
 
 def cmd_candidates_runtime_spec_set(args) -> int:
     from ..datasets.dynamic.candidates import upsert_runtime_spec
+    entry = list(args.entry_command or ())
+    if entry and entry[0] == "--":
+        entry = entry[1:]
+    if not entry:
+        print("[FAIL] runtime-spec set: --entry-command must not be empty")
+        return 1
     try:
         upsert_runtime_spec(
             pool_root=args.pool_root,
             candidate_id=args.candidate_id,
-            entry_command=tuple(args.entry_command),
+            entry_command=tuple(entry),
             declared_providers=tuple(args.declared_providers or []),
         )
     except Exception as e:
         print(f"[FAIL] runtime-spec set: {e}")
         return 1
-    print(f"[candidates] runtime-spec set {args.candidate_id}: {list(args.entry_command)}")
+    print(f"[candidates] runtime-spec set {args.candidate_id}: {entry}")
     return 0
 
 
