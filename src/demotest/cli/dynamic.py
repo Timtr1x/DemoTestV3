@@ -138,6 +138,9 @@ def add_parser(sub) -> None:
                      help="skills selected in this serial batch (default: 10)")
     col.add_argument("--condition", default="deterministic",
                      choices=["deterministic"])
+    col.add_argument("--raw-dir", default=None,
+                     help="dynamic raw dir (default: credential_dynamic_traces); use a separate "
+                          "dir per snapshot — the resume guard refuses mixed snapshot ids")
     _add_sandbox_args(col)
     col.set_defaults(func=cmd_collect)
 
@@ -334,7 +337,7 @@ def cmd_collect(args) -> int:
                 print(f"[FAIL] {c.name}: {c.detail}")
         print("collect refused: `demotest dynamic doctor` must pass first")
         return 1
-    collector = DynamicTraceCollector(runner=runner)
+    collector = DynamicTraceCollector(runner=runner, raw_dir=args.raw_dir)
     try:
         report = collector.collect(
             snapshot_id=args.snapshot, offset=args.offset, limit=args.limit,
