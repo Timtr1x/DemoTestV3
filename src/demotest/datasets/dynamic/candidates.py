@@ -788,6 +788,10 @@ def verify_candidates(root: Path | str | None = None) -> list[str]:
     seen_ids: set[str] = set()
     seen_shas: set[str] = set()
     sidecar_specs = _load_external_runtime_specs(root)
+    # Source-bound credential bindings (source-bound-v1) — schema violations
+    # and source_sha256 drift surface here as verify problems.
+    from .credential_bindings import validate_bindings_against_pool
+    problems.extend(validate_bindings_against_pool(root))
     for c in cands:
         if c.candidate_id in seen_ids:
             problems.append(f"duplicate candidate_id: {c.candidate_id}")
@@ -973,6 +977,11 @@ def materialize_candidates(
 
 
 def _write_materialization_manifest(dest: Path, pool: Path, seed: int, selected: list[SkillCandidate]) -> Path:
+    from .credential_bindings import (
+        credential_bindings_sha256,
+        load_credential_bindings,
+        materialization_bindings,
+    )
     try:
         meta = load_candidate_meta(pool)
         candidate_set_id = meta.candidate_set_id
@@ -980,6 +989,9 @@ def _write_materialization_manifest(dest: Path, pool: Path, seed: int, selected:
     except Exception:
         candidate_set_id = _candidate_set_id(load_candidates(pool))
         policy = CANDIDATE_POLICY_VERSION
+    # Fail-closed: a malformed bindings sidecar aborts materialization rather
+    # than silently dropping the source-bound profile.
+    bindings = load_credential_bindings(pool)
     sel_blob = "\n".join(f"{c.candidate_id}|{c.source_sha256}" for c in sorted(selected, key=lambda x: x.candidate_id))
     selection_sha256 = hashlib.sha256(sel_blob.encode()).hexdigest() if sel_blob else hashlib.sha256(b"").hexdigest()
     doc = {
@@ -991,6 +1003,9 @@ def _write_materialization_manifest(dest: Path, pool: Path, seed: int, selected:
         # Whole sidecar file identity (vs the per-selection projection hashed
         # by the snapshot as selected_runtime_specs_sha256).
         "runtime_specs_file_sha256": runtime_specs_sha256(pool),
+        # source-bound-v1 sidecar identity; per-skill projections below carry
+        # only rows anchored to the exact materialized source_sha256.
+        "credential_bindings_file_sha256": credential_bindings_sha256(pool),
         "skills": [
             {
                 "candidate_id": c.candidate_id,
@@ -1006,6 +1021,7 @@ def _write_materialization_manifest(dest: Path, pool: Path, seed: int, selected:
                     "runtime_status": c.runtime_status,
                     "runtime_eligible": c.runtime_eligible,
                 },
+                "credential_bindings": materialization_bindings(bindings, c.candidate_id, c.source_sha256),
             }
             for c in sorted(selected, key=lambda x: x.candidate_id)
         ],

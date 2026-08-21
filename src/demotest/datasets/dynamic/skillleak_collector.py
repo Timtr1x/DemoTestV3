@@ -18,6 +18,7 @@ from typing import Any
 from ...config import get_dataset
 from ..source_lock import DatasetSourceLock, now_utc, write_source_lock
 from ..traces.models import CredentialTrace
+from .credential_bindings import OFFICIAL_BASELINE_PROFILE, SOURCE_BOUND_PROFILE
 from .markers import SkillLeakBenchMarkerProvider
 from .parser import parse_execution
 from .sandbox import SkillLeakBenchSandboxRunner
@@ -112,6 +113,7 @@ class DynamicTraceCollector:
         skipped_existing = 0
         attempted = 0
         marker_provider = self._marker_provider()
+        cand_prov = dict(getattr(manifest, "candidate_provenance", {}) or {})
 
         # P0-2: deterministic Core requires every selected skill to be
         # execution-ready — do not silently fall back to bare bash.
@@ -124,7 +126,6 @@ class DynamicTraceCollector:
                     ". Use candidates materialize --require-runtime-ready or fix the materialization spec."
                 )
             # Also require upstream provenance (P0-4 identity binding)
-            cand_prov = dict(getattr(manifest, "candidate_provenance", {}) or {})
             if not cand_prov.get("candidate_set_id"):
                 raise RuntimeError(
                     "collect refused: snapshot has no candidate_provenance.candidate_set_id — "
@@ -142,6 +143,21 @@ class DynamicTraceCollector:
             # Core never falls back to TEST_SECRET — that would diverge from
             # the container's actual injected values.
             creds: dict[str, str] = marker_provider.markers_for_skill(entry.skill_id)
+            # source-bound-v1: merge human-confirmed custom credential names
+            # (deterministic leakbench-sourcebound-* canaries). Names can never
+            # collide with the official forged namespace (sidecar loader rule),
+            # so the merge cannot redefine an official baseline canary.
+            entry_bindings = [dict(b) for b in (entry.credential_bindings or ())]
+            bound_names: list[str] = []
+            for b in entry_bindings:
+                name = str(b.get("credential_name") or "")
+                canary = str(b.get("canary") or "")
+                if name and canary:
+                    creds[name] = canary
+                    bound_names.append(name)
+            credential_profile = (
+                SOURCE_BOUND_PROFILE if bound_names else OFFICIAL_BASELINE_PROFILE
+            )
             # Condition-isolated workdir: <raw>/executions/<snapshot>/<skill>/<condition>/
             exec_work = self.raw_dir / "executions" / snapshot_id / entry.skill_id / condition
             try:
@@ -158,6 +174,14 @@ class DynamicTraceCollector:
             except Exception as e:
                 problems.append(f"{entry.skill_id}: sandbox error: {e}")
                 continue
+            # Layered reporting: every execution row records which credential
+            # profile produced it — source-bound rows must never be reported
+            # as "official SkillLeakBench T3 as-is".
+            record.metadata["credential_profile"] = credential_profile
+            if bound_names:
+                record.metadata["bound_credential_names"] = sorted(bound_names)
+                record.metadata["credential_bindings_file_sha256"] = str(
+                    cand_prov.get("credential_bindings_file_sha256") or "")
             executions.append(record)
             traces.extend(parse_execution(record, creds))
             completed.add((entry.skill_id, condition))
@@ -236,6 +260,12 @@ class DynamicTraceCollector:
             old_spec_sha, new_spec_sha = _sel_spec_sha(existing_cand), _sel_spec_sha(current_cand)
             if old_spec_sha and new_spec_sha and old_spec_sha != new_spec_sha:
                 raise RuntimeError("selected_runtime_specs_sha256 changed; refusing resume")
+            # source-bound-v1 sidecar identity must not drift across batches either
+            old_bind_sha = str(existing_cand.get("credential_bindings_file_sha256") or "")
+            new_bind_sha = str(current_cand.get("credential_bindings_file_sha256") or "")
+            if old_bind_sha and new_bind_sha and old_bind_sha != new_bind_sha:
+                raise RuntimeError(
+                    "credential_bindings_file_sha256 changed; refusing to mix credential profiles")
 
         executions: list[DynamicExecutionRecord] = []
         if exec_path.exists():
@@ -319,6 +349,12 @@ class DynamicTraceCollector:
             "execution_modes": sorted({r.execution_mode for r in executions}),
             "conditions": sorted({r.condition for r in executions}),
             "credential_provenance": cred_prov,
+            # Layered reporting: which credential profiles produced these rows
+            "credential_profiles": sorted({
+                str(r.metadata.get("credential_profile") or OFFICIAL_BASELINE_PROFILE)
+                for r in executions
+            }),
+            "credential_bindings_file_sha256": cand_prov.get("credential_bindings_file_sha256", ""),
         }
         _atomic_write_text(
             self.raw_dir / "trace_meta.json",

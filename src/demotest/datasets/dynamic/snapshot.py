@@ -44,6 +44,10 @@ class SkillEntry:
     source_revision: str = ""
     source_sha256: str = ""
     candidate_id: str = ""
+    # source-bound-v1 projections from the materialization manifest:
+    # tuple of {"credential_name", "credential_kind", "canary"} — empty for
+    # official-baseline-only skills.
+    credential_bindings: tuple[dict[str, Any], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -72,6 +76,7 @@ class SnapshotManifest:
                     "source_revision": s.source_revision,
                     "source_sha256": s.source_sha256,
                     "candidate_id": s.candidate_id,
+                    "credential_bindings": [dict(b) for b in s.credential_bindings],
                 }
                 for s in self.skills
             ],
@@ -185,6 +190,7 @@ def _materialization_provenance(
         "materialization_sha256": hashlib.sha256(raw).hexdigest(),
         "selected_runtime_specs_sha256": selected_specs_sha256,
         "runtime_specs_file_sha256": str(doc.get("runtime_specs_file_sha256") or ""),
+        "credential_bindings_file_sha256": str(doc.get("credential_bindings_file_sha256") or ""),
     }
     return meta, per_skill
 
@@ -244,6 +250,27 @@ def _validate_materialized_root(
         rt = per.get("runtime_spec") or {}
         if str(rt.get("runtime_status") or "") == "RUNTIME_READY" and not (rt.get("entry_command") or []):
             problems.append(f"{sid}: RUNTIME_READY without entry_command in materialization manifest")
+        # source-bound-v1: every projected binding must recompute to its declared
+        # canary and respect the naming rules — a tampered projection is refused.
+        from .credential_bindings import (
+            _NAME_RE,
+            OFFICIAL_FORGED_ENV_NAMES,
+            source_bound_canary,
+        )
+        cid = str(per.get("candidate_id") or "")
+        for b in per.get("credential_bindings") or []:
+            name = str(b.get("credential_name") or "")
+            canary = str(b.get("canary") or "")
+            if not name or not _NAME_RE.match(name):
+                problems.append(f"{sid}: invalid credential_name in credential_bindings: {name!r}")
+            elif name in OFFICIAL_FORGED_ENV_NAMES:
+                problems.append(f"{sid}: credential_bindings collides with official forged namespace: {name}")
+            elif cid and src_sha:
+                expected = source_bound_canary(cid, src_sha, name)
+                if canary != expected:
+                    problems.append(
+                        f"{sid}: credential_bindings canary mismatch for {name} — "
+                        "projection does not match the deterministic source-bound rule")
     return problems
 
 
@@ -300,6 +327,9 @@ def freeze_skill_snapshot(
                 source_revision=str(per.get("source_revision") or ""),
                 source_sha256=str(per.get("source_sha256") or ""),
                 candidate_id=str(per.get("candidate_id") or ""),
+                credential_bindings=tuple(
+                    dict(b) for b in (per.get("credential_bindings") or ())
+                ),
             ))
         else:
             # Legacy/test-only path (no materialization manifest): inline
@@ -387,6 +417,9 @@ def load_snapshot(snapshot_id: str, *, root: Path | str | None = None) -> Snapsh
                 source_revision=str(s.get("source_revision") or ""),
                 source_sha256=str(s.get("source_sha256") or ""),
                 candidate_id=str(s.get("candidate_id") or ""),
+                credential_bindings=tuple(
+                    dict(b) for b in (s.get("credential_bindings") or ())
+                ),
             )
             for s in (d.get("skills") or [])
         ),

@@ -111,6 +111,28 @@ def add_parser(sub) -> None:
     rs_list.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
     rs_list.set_defaults(func=cmd_candidates_runtime_spec_list)
 
+    cand_cb = cand_sp.add_parser(
+        "credential-binding",
+        help="Manage source-bound-v1 credential bindings (human-confirmed custom env names)")
+    cand_cb_sub = cand_cb.add_subparsers(dest="credential_binding_cmd", required=True)
+    cb_set = cand_cb_sub.add_parser(
+        "set", help="Confirm a custom credential name found in the skill source (source-bound-v1)")
+    cb_set.add_argument("--candidate-id", required=True)
+    cb_set.add_argument("--credential-name", required=True,
+                        help="exact env-var name the source actually reads (e.g. CRUN_API_KEY); "
+                             "never guessed from the skill name, never model-generated")
+    cb_set.add_argument("--credential-kind", default="env_var",
+                        help="env_var | dotenv | config_file | ...")
+    cb_set.add_argument("--evidence-file", required=True,
+                        help="path inside the skill tree where the read was confirmed")
+    cb_set.add_argument("--evidence", required=True,
+                        help="short human note / code excerpt proving the source reads this name")
+    cb_set.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
+    cb_set.set_defaults(func=cmd_candidates_credential_binding_set)
+    cb_list = cand_cb_sub.add_parser("list", help="List source-bound credential bindings")
+    cb_list.add_argument("--pool-root", default=str(CANDIDATES_ROOT))
+    cb_list.set_defaults(func=cmd_candidates_credential_binding_list)
+
     cand_mat = cand_sp.add_parser("materialize", help="Deterministically materialize a subset for snapshot")
     cand_mat.add_argument("--dest-dir", required=True, help="output skills dir for demotest dynamic snapshot")
     cand_mat.add_argument("--limit", type=int, default=None, help="max Skills to materialize")
@@ -259,6 +281,55 @@ def cmd_candidates_runtime_spec_list(args) -> int:
         return 0
     for cid, d in sorted(specs.items()):
         print(f"{cid}: {d.get('entry_command')}  providers={d.get('declared_providers')}")
+    return 0
+
+
+def cmd_candidates_credential_binding_set(args) -> int:
+    from ..datasets.dynamic.credential_bindings import (
+        CredentialBindingError,
+        upsert_credential_binding,
+    )
+    try:
+        b = upsert_credential_binding(
+            pool_root=args.pool_root,
+            candidate_id=args.candidate_id,
+            credential_name=args.credential_name,
+            credential_kind=args.credential_kind,
+            evidence_file=args.evidence_file,
+            evidence=args.evidence,
+        )
+    except CredentialBindingError as e:
+        print(f"[FAIL] credential-binding set: {e}")
+        return 1
+    except Exception as e:
+        print(f"[FAIL] credential-binding set: {e}")
+        return 1
+    print(f"[candidates] credential-binding set {b.candidate_id}: {b.credential_name} "
+          f"({b.credential_kind}) canary={b.canary}")
+    print(f"  evidence: {b.evidence_file} — {b.evidence}")
+    print("  profile: source-bound-v1 (layered separately from the official baseline)")
+    return 0
+
+
+def cmd_candidates_credential_binding_list(args) -> int:
+    from ..datasets.dynamic.credential_bindings import (
+        CredentialBindingError,
+        credential_bindings_sha256,
+        load_credential_bindings,
+    )
+    try:
+        bindings = load_credential_bindings(args.pool_root)
+    except CredentialBindingError as e:
+        print(f"[FAIL] credential-binding list: {e}")
+        return 1
+    if not bindings:
+        print("[candidates] no credential bindings (official-baseline profile only)")
+        return 0
+    for b in bindings:
+        print(f"{b.candidate_id}: {b.credential_name} ({b.credential_kind}) "
+              f"canary={b.canary} evidence={b.evidence_file}")
+    print(f"[candidates] {len(bindings)} binding(s), "
+          f"file_sha256={credential_bindings_sha256(args.pool_root)[:16]}...")
     return 0
 
 
