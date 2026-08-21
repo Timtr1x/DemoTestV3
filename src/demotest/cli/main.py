@@ -46,6 +46,8 @@ def _add_dynamic_parser(sub) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    if argv is None:
+        argv = sys.argv[1:]
     parser = argparse.ArgumentParser(
         prog="demotest",
         description="DemoTest V3 — Gateway Security Benchmark Framework",
@@ -60,8 +62,14 @@ def main(argv: list[str] | None = None) -> int:
     report_cmd.add_parser(sub)
     compare_cmd.add_parser(sub)
     dataset_cmd.add_parser(sub)
-    _add_dynamic_parser(sub)
     manifest_cmd.add_parser(sub)
+    # Lazy acquisition CLI: import + register ONLY when the user actually
+    # invoked `demotest dynamic ...`. Any other invocation (validate/render/
+    # run/analyze/report/compare/dataset/manifest) must never load
+    # demotest.datasets.dynamic.* (docs/PROJECT_SCOPE.md §3).
+    first = next((a for a in argv if not a.startswith("-")), None)
+    if first == "dynamic":
+        _add_dynamic_parser(sub)
 
     args = parser.parse_args(argv)
     try:

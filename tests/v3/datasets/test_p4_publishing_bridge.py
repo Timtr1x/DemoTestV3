@@ -47,39 +47,29 @@ DYNAMIC_MODULES = [
 ]
 
 
-def _guard() -> None:
-    """Install raising sentinels so any Dynamic import fails loudly."""
-    for name in DYNAMIC_MODULES:
-        sentinel = types.ModuleType(name)
-        sentinel.__getattr__ = lambda attr: (_ for _ in ()).throw(
-            RuntimeError(f"Dynamic acquisition module '{name}' must not be imported by benchmark path")
-        )
-        sentinel.__path__ = []
-        sys.modules[name] = sentinel
-
-
 @contextlib.contextmanager
 def _no_dynamic_guard():
     """Assert the benchmark path never imports Dynamic-acquisition modules.
 
-    Two mechanisms, both decisive:
+    Order is load-bearing:
       1. Purge every already-imported ``demotest.*`` module so the benchmark
          path must be imported FRESH inside the guard (no cached-module
-         shortcuts hiding an acquisition dependency).
+         shortcuts hiding an acquisition dependency). This must happen BEFORE
+         the sentinels are installed — purging after would delete them.
       2. Install raising sentinels for each Dynamic acquisition module, so any
          fresh import attempt fails loudly.
     All ``sys.modules`` entries are restored afterward for later tests.
     """
     saved_all = dict(sys.modules)
+    for name in [n for n in list(sys.modules) if n == "demotest" or n.startswith("demotest.")]:
+        del sys.modules[name]
     for name in DYNAMIC_MODULES:
         sentinel = types.ModuleType(name)
-        sentinel.__getattr__ = lambda attr: (_ for _ in ()).throw(
-            RuntimeError(f"Dynamic acquisition module '{name}' must not be imported by benchmark path")
+        sentinel.__getattr__ = lambda attr, _n=name: (_ for _ in ()).throw(
+            RuntimeError(f"Dynamic acquisition module '{_n}' must not be imported by benchmark path")
         )
         sentinel.__path__ = []
         sys.modules[name] = sentinel
-    for name in [n for n in list(sys.modules) if n == "demotest" or n.startswith("demotest.")]:
-        del sys.modules[name]
     try:
         yield
     finally:
@@ -213,14 +203,13 @@ def test_adapter_fail_closed_on_reviewed_artifact(tmp_path: Path):
 def test_full_chain_no_dynamic_frozen_manifest(monkeypatch, tmp_path: Path):
     """Frozen manifest -> validate -> render -> HTTP run -> analyze -> report.
 
-    No Dynamic acquisition: every command runs under the purge+guard context
-    (fresh demotest imports + raising sentinels), and the run goes through a
-    real HTTP POST to a local scripted gateway reusing
-    tests/v3/contract/fake_server.py (blocked_body) — no sockets to real
-    services, no Docker, no SkillsMP, no SkillLeakBench, no candidate/snapshot/
-    credential binding.
+    Every command goes through the REAL ``demotest.cli.main.main([...])``
+    (argparse parser + dispatcher, not module functions), inside the purge+
+    guard context (fresh demotest imports + raising sentinels), and the run
+    POSTs to a local scripted gateway reusing tests/v3/contract/fake_server.py
+    (blocked_body) — no sockets to real services, no Docker, no SkillsMP, no
+    SkillLeakBench, no candidate/snapshot/credential binding.
     """
-    import argparse
     import http.server
     import os
     import threading
@@ -256,34 +245,30 @@ def test_full_chain_no_dynamic_frozen_manifest(monkeypatch, tmp_path: Path):
     run_version = f"p4-bridge-it-{os.getpid()}-{time.time_ns()}"
     out_dir = tmp_path / "report"
     try:
-        with _no_dynamic_guard():
-            from demotest.cli import analyze as cli_analyze
-            from demotest.cli import render as cli_render
-            from demotest.cli import report as cli_report
-            from demotest.cli import run as cli_run
-            from demotest.cli import validate as cli_validate
+        with _no_dynamic_guard():  # any Dynamic import now raises RuntimeError
+            from demotest.cli.main import main
 
-            def ns(**kw) -> argparse.Namespace:
-                return argparse.Namespace(**kw)
+            def step(name: str, argv: list[str]) -> None:
+                rc = main(argv)
+                assert rc == 0, f"demotest {name} returned rc={rc} (expected 0)"
 
-            assert cli_validate.run(ns(project="P4_credential_flow", target="linemod",
-                                       source=source, no_key_check=True)) == 0
-            assert cli_render.run(ns(project="P4_credential_flow", source=source,
-                                     case_id=None, limit=1, target="linemod",
-                                     fidelity="auto", show_request=True,
-                                     no_redact=False)) == 0
-            assert cli_run.run(ns(project="P4_credential_flow", target="linemod",
-                                  source=source, run_version=run_version, gap=0.0,
-                                  dry_run=False, max_attempts=4, fidelity="auto",
-                                  adopt_legacy_run=False)) == 0
-            assert cli_analyze.run(ns(project="P4_credential_flow", source=source,
-                                      target="linemod", run_version=run_version,
-                                      json=False,
-                                      allow_legacy_run_without_meta=False)) == 0
-            assert cli_report.run(ns(project="P4_credential_flow", source=source,
-                                     target="linemod", run_version=run_version,
-                                     out_dir=str(out_dir),
-                                     allow_legacy_run_without_meta=False)) == 0
+            step("validate", ["validate", "--project", "P4_credential_flow",
+                              "--target", "linemod", "--source", source,
+                              "--no-key-check"])
+            step("render", ["render", "--project", "P4_credential_flow",
+                            "--source", source, "--limit", "1",
+                            "--target", "linemod", "--show-request"])
+            step("run", ["run", "--project", "P4_credential_flow",
+                         "--target", "linemod", "--source", source,
+                         "--run-version", run_version, "--gap", "0.0",
+                         "--max-attempts", "4"])
+            step("analyze", ["analyze", "--project", "P4_credential_flow",
+                             "--source", source, "--target", "linemod",
+                             "--run-version", run_version])
+            step("report", ["report", "--project", "P4_credential_flow",
+                            "--source", source, "--target", "linemod",
+                            "--run-version", run_version,
+                            "--out-dir", str(out_dir)])
     finally:
         srv.shutdown()
         srv.server_close()
@@ -293,6 +278,41 @@ def test_full_chain_no_dynamic_frozen_manifest(monkeypatch, tmp_path: Path):
     text = summary.read_text(encoding="utf-8")
     assert "TP=`1`" in text and "TPR=`100.00%`" in text
     assert "headline_eligible=`false`" in text
+
+
+def test_dynamic_cli_lazy_registration_intact(capsys):
+    """Lazy registration must keep `dynamic ...` usable AND keep benchmark
+    invocations Dynamic-free at the dispatcher level.
+
+      1. ``main(["dynamic", "--help"])`` exits SystemExit(0) only if the
+         subcommand was registered on demand — argparse would exit 2 with
+         "invalid choice" otherwise.
+      2. A benchmark invocation (render --help) must register nothing and
+         import zero demotest.datasets.dynamic.* modules.
+    """
+    from demotest.cli.main import main
+
+    with pytest.raises(SystemExit) as ei:
+        main(["dynamic", "--help"])
+    assert ei.value.code == 0
+    out = capsys.readouterr().out
+    assert "candidates" in out, "dynamic help lost its acquisition subcommands"
+    assert "review-apply" in out, "dynamic help lost its review subcommands"
+
+    # Drop what `dynamic --help` cached, so the delta below is decisive —
+    # otherwise the sentinel modules would already be in `before`.
+    for name in [n for n in list(sys.modules)
+                 if n == "demotest.datasets.dynamic" or n.startswith("demotest.datasets.dynamic.")]:
+        del sys.modules[name]
+    before = set(sys.modules)
+    with pytest.raises(SystemExit) as ei2:
+        main(["render", "--help"])
+    assert ei2.value.code == 0
+    capsys.readouterr()
+    leaked = [k for k in set(sys.modules) - before
+              if k == "demotest.datasets.dynamic"
+              or k.startswith("demotest.datasets.dynamic.")]
+    assert not leaked, f"benchmark CLI imported Dynamic-acquisition modules: {leaked}"
 
 
 def test_frozen_manifest_not_headline_single_real_case():
