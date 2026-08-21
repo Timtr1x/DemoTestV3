@@ -1,0 +1,13 @@
+{
+  "candidate_set_id": "",
+  "n_accepted": 1,
+  "n_pending": 0,
+  "n_reviews": 1,
+  "review_schema_version": "p4-review-v1",
+  "sha256": "b20432389266dd2a34cdc91891fe40b6eeb6df56695546fab381dd8cbe7ad488",
+  "snapshot_id": "",
+  "source_trace_meta_sha256": "",
+  "source_trace_sha256": "",
+  "trace_file": "benchmarks\\frozen\\datasets\\credential_dynamic_traces\\raw\\reviews\\reviewed_traces.jsonl",
+  "verdict_sha256": "8647a201cdc0e1f89a33a209e9d5a6829eb71dbe668d95f938f445c4ff163fcf"
+}

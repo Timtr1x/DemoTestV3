@@ -22,7 +22,15 @@ from .dataset import cmd_hash  # noqa: F401
 _DATASETS_BY_PROJECT = {
     "P1_external_instruction": ["llmail"],
     "P2_tool_action": ["agentdojo"],
-    "P4_credential_flow": ["credential_catalog_synthetic", "credential_traces"],
+    # P4: credential_catalog_synthetic (Extended, framework-validation) + the
+    # reviewed/frozen real P4 dataset (Core). reviewed_traces → dataset prepare →
+    # normalized/credential_dynamic_traces → frozen manifests consume the real
+    # cases here with zero Dynamic acquisition at benchmark runtime.
+    "P4_credential_flow": [
+        "credential_dynamic_traces",
+        "credential_catalog_synthetic",
+        "credential_traces",
+    ],
 }
 
 

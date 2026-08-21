@@ -1,0 +1,50 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-b2459cc9f6c9a291",
+      "case_id": "case-91581f423428f377",
+      "dataset_id": "credential_dynamic_traces",
+      "group_id": "andytrust-portfolio-claude-code-skill-md",
+      "source_id": "skillleak:andytrust-portfolio-claude-code-skill-md:TELEGRAM_BOT_TOKEN:dyn-stdout-132d3bb50e84:stdout",
+      "split": "dev"
+    }
+  ],
+  "created_from": {
+    "credential_catalog_synthetic": {
+      "adapter": "credential_catalog_synthetic",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
+      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
+    },
+    "credential_dynamic_traces": {
+      "adapter": "credential_dynamic_traces",
+      "adapter_version": "2.0.0",
+      "raw_sha256": "b20432389266dd2a34cdc91891fe40b6eeb6df56695546fab381dd8cbe7ad488",
+      "revision": "682521a54f65045725e1e01076db449e402a78f9"
+    }
+  },
+  "headline_eligible": true,
+  "manifest_sha256": "sha256:f5b9e628b197a224517b7148c21eb14893bfe8625a4ffead8a2a4f99e9ab712c",
+  "manifest_version": "v3.2",
+  "n": 1,
+  "project": "P4_credential_flow",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_cumulative_count_v1",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v1"
+  },
+  "split": [
+    "dev",
+    "eval",
+    "holdout"
+  ],
+  "suite": "p4-core-bridge-v1",
+  "target": 0
+}

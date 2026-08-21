@@ -1,5 +1,15 @@
 # P4 Dynamic 候选与审查（D1–D4）
 
+> **⚠ OPTIONAL DATASET ACQUISITION — 不参与 Benchmark 运行时**
+>
+> 整条 Dynamic 采集链（SkillsMP crawl → candidate → runtime-spec → materialize → snapshot →
+> Docker collect → review → split → freeze）是**可选的数据采集工具**，不是 Benchmark 规范的一部分。
+> 正式 P4 Benchmark 的输入是冻结后的 **reviewed_traces.jsonl + review_meta.json**
+> （提交于 `benchmarks/frozen/datasets/credential_dynamic_traces/`），经
+> `CredentialDynamicTracesAdapter` → `dataset prepare` → normalized → manifest 进入主链，
+> 全程**不需要 Docker / SkillLeakBench / SkillsMP / candidate / snapshot / credential binding**。
+> 边界与路线图见 [`docs/PROJECT_SCOPE.md`](PROJECT_SCOPE.md)。不要扩展本篇描述的采集功能。
+
 本文只覆盖 **P4 Dynamic 数据生产的前置链路**：候选集 → 审查 → 切分。沙箱执行与冻结仍见 `docs/P4_DYNAMIC_ROADMAP.md`。
 
 > 约束：宿主机 / Windows 命令统一用 `python`（`python -m pytest` / `python scripts/...` / `python -m demotest ...`），不再写 `python3`。Docker 镜像内若仅有 `python3`，应在镜像中提供 `python -> python3` 兼容入口。

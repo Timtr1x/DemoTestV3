@@ -99,7 +99,7 @@ datasets:
     normalized_dir: cache/datasets_v3/normalized/credential_catalog_synthetic
   credential_dynamic_traces:
     adapter: credential_dynamic_traces
-    adapter_version: "1.0.0"
+    adapter_version: "2.0.0"
     enabled: true
     quality_tier: A
     source:
@@ -107,5 +107,10 @@ datasets:
       repo_id: skillleakbench_pipeline
       revision: 682521a54f65045725e1e01076db449e402a78f9
       license: MIT
-    raw_dir: cache/datasets_v3/raw/credential_dynamic_traces
-    normalized_dir: cache/datasets_v3/normalized/credential_dynamic_traces
+    # PUBLISHING BRIDGE: the formal input is the HUMAN-FROZEN reviewed artifact
+    # (raw/reviews/reviewed_traces.jsonl + review_meta.json), NOT the ephemeral
+    # sandbox traces.jsonl. This lives under benchmarks/ so it is COMMITTED and a
+    # fresh clone runs validate -> render -> run -> analyze -> report with zero
+    # Docker / SkillLeakBench / SkillsMP / candidate / snapshot / binding.
+    raw_dir: benchmarks/frozen/datasets/credential_dynamic_traces/raw
+    normalized_dir: benchmarks/frozen/datasets/credential_dynamic_traces/normalized

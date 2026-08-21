@@ -1,5 +1,16 @@
 # P4 Dynamic 采集路线（冻结声明）
 
+> **⚠ OPTIONAL DATASET ACQUISITION — 不参与 Benchmark 运行时**
+>
+> 本文描述的是**可选的数据采集路线**，不是 Benchmark 规范。正式 P4 Benchmark 输入是
+> 冻结后的 **reviewed_traces.jsonl + review_meta.json**（提交于
+> `benchmarks/frozen/datasets/credential_dynamic_traces/`），经
+> `CredentialDynamicTracesAdapter` → `dataset prepare` → normalized → manifest 进入
+> `validate → render → run → analyze → report` 主链，全程**不需要 Docker /
+> SkillLeakBench / SkillsMP / candidate / snapshot / credential binding**。
+> 若未执行本路线采集数据，Benchmark 仍可用已冻结的 P4 Dataset 运行。
+> 边界见 [`docs/PROJECT_SCOPE.md`](PROJECT_SCOPE.md)。
+
 ## 当前状态（`main@9723067` 后）
 
 - 合成链路已冻结为 **Extended / non-headline**：`credential_catalog_synthetic`（`C / catalog_derived`，`benchmark_track=extended, headline_eligible=false`），仅作对照，不计入 overall。
