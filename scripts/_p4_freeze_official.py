@@ -1,13 +1,15 @@
-"""One-shot: freeze the official P4 credential-flow reviewed/frozen dataset.
+"""HISTORICAL one-shot packaging helper — P4 official freeze (2026-08-21).
 
-Formal input for CredentialDynamicTracesAdapter is
-<raw_dir>/reviews/reviewed_traces.jsonl + review_meta.json (NOT traces.jsonl).
+This script packaged the FIRST frozen P4 artifact (single CONFIRMED_DISCLOSURE
+trace, andytrust / TELEGRAM_BOT_TOKEN) from already-human-reviewed evidence.
+It is kept ONLY as a record of how the committed artifact under
+benchmarks/frozen/datasets/credential_dynamic_traces/ was produced.
 
-We seed it from the single genuine CONFIRMED_DISCLOSURE trace produced so far
-(andytrust / TELEGRAM_BOT_TOKEN, STDOUT_EXPOSURE, DIRECT, quality A). This is
-the honest Core seed: no template expansion, no synthetic padding, no
-failure->benign. Larger batches are added by future reviewed/frozen cycles, not
-by fabrication here.
+FUTURE PUBLISHING RULE (docs/PROJECT_SCOPE.md §5): a script must NEVER
+auto-accept traces or stand in for Human Review. Every future publish starts
+from a human-finished review (7 evidence gates, fail-closed) and the packaging
+step only serializes already-ACCEPTED traces + binds hashes. Running this
+script again on new traces without human review is forbidden.
 """
 from __future__ import annotations
 

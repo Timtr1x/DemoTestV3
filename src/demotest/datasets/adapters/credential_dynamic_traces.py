@@ -113,8 +113,10 @@ class CredentialDynamicTracesAdapter(DatasetAdapter):
         n_accepted = int(meta.get("n_accepted", -1))
         if n_accepted != len(lines):
             problems.append(f"n_accepted={n_accepted} != lines in artifact {len(lines)}")
-        sha = str(meta.get("sha256", ""))
-        if sha and sha != self._reviewed_sha256():
+        sha = str(meta.get("sha256") or "")
+        if not sha:
+            problems.append("review_meta.sha256 is missing (frozen artifact must bind its hash)")
+        elif sha != self._reviewed_sha256():
             problems.append("reviewed artifact SHA != review_meta.sha256 (frozen artifact modified)")
         return problems
 

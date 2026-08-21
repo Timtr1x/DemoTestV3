@@ -11,12 +11,6 @@
     }
   ],
   "created_from": {
-    "credential_catalog_synthetic": {
-      "adapter": "credential_catalog_synthetic",
-      "adapter_version": "1.0.0",
-      "raw_sha256": "f1fea890229384109a909b3c24a45601bbd11686634f7759f54c049b9a20cde6",
-      "revision": "8264436a0483e2fc1aed84b80e5fde73ea52c3ca"
-    },
     "credential_dynamic_traces": {
       "adapter": "credential_dynamic_traces",
       "adapter_version": "2.0.0",
@@ -24,8 +18,8 @@
       "revision": "682521a54f65045725e1e01076db449e402a78f9"
     }
   },
-  "headline_eligible": true,
-  "manifest_sha256": "sha256:f5b9e628b197a224517b7148c21eb14893bfe8625a4ffead8a2a4f99e9ab712c",
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:6503173c3a20789c7c7bd323f7ccb28a3db98f772e693dc2ee27a1e0345dcf79",
   "manifest_version": "v3.2",
   "n": 1,
   "project": "P4_credential_flow",

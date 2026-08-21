@@ -131,6 +131,7 @@ A dataset is accepted only when: source is real, official artifact location is k
 - Every Core trace must satisfy: `source_real && dynamic_execution_real && fake_credential_confirmed && marker_observed && sink_confirmed && gateway_projection_valid && expected_action_valid` (the 7 review gates, fail-closed).
 - Traces become benchmark data only after `review-apply` → `freeze-reviewed` → `P4DatasetAdapter` → `SecurityCase`. A frozen `p4_credential_flow_v1` artifact must run through `validate → render → run → analyze → report` without Docker/SkillsMP/SkillLeakBench/binding.
 - The frozen artifact is **committed** (`benchmarks/frozen/datasets/credential_dynamic_traces/`), so the benchmark never depends on the acquisition sidecar.
+- Headline gate: until the dataset holds ≥20 real reviewed traces, a P4 manifest stays `benchmark_track=core, headline_eligible=false`. `p4-core-bridge-v1` (1 real trace) is exactly that — core track, not headline. The formal headline P4 suite is created only after the ≥20-trace acceptance.
 - The synthetic catalog suite (`credential_catalog_synthetic`, quality C) is **Extended / framework-validation only** — it is never the real P4 headline and does not count toward the ≥20 real-traces target.
 
 ## 6. References

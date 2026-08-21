@@ -62,19 +62,29 @@ def _guard() -> None:
 def _no_dynamic_guard():
     """Assert the benchmark path never imports Dynamic-acquisition modules.
 
-    Installs raising sentinels for each Dynamic module, runs the block, and
-    restores the real modules afterward so later tests are unaffected.
+    Two mechanisms, both decisive:
+      1. Purge every already-imported ``demotest.*`` module so the benchmark
+         path must be imported FRESH inside the guard (no cached-module
+         shortcuts hiding an acquisition dependency).
+      2. Install raising sentinels for each Dynamic acquisition module, so any
+         fresh import attempt fails loudly.
+    All ``sys.modules`` entries are restored afterward for later tests.
     """
-    saved = {name: sys.modules.get(name) for name in DYNAMIC_MODULES}
-    _guard()
+    saved_all = dict(sys.modules)
+    for name in DYNAMIC_MODULES:
+        sentinel = types.ModuleType(name)
+        sentinel.__getattr__ = lambda attr: (_ for _ in ()).throw(
+            RuntimeError(f"Dynamic acquisition module '{name}' must not be imported by benchmark path")
+        )
+        sentinel.__path__ = []
+        sys.modules[name] = sentinel
+    for name in [n for n in list(sys.modules) if n == "demotest" or n.startswith("demotest.")]:
+        del sys.modules[name]
     try:
         yield
     finally:
-        for name, mod in saved.items():
-            if mod is None:
-                sys.modules.pop(name, None)
-            else:
-                sys.modules[name] = mod
+        sys.modules.clear()
+        sys.modules.update(saved_all)
 
 
 
@@ -190,3 +200,119 @@ def test_adapter_fail_closed_on_reviewed_artifact(tmp_path: Path):
     meta_p.write_text(json.dumps(meta), encoding="utf-8")
     with pytest.raises(DatasetSourceError, match="n_pending"):
         list(CredentialDynamicTracesAdapter(raw_dir=tmp_path, strict=True).iter_cases())
+
+    # sha256 missing entirely — must also fail closed (no empty-string pass-through)
+    meta["n_pending"] = 0
+    meta["n_accepted"] = 1
+    del meta["sha256"]
+    meta_p.write_text(json.dumps(meta), encoding="utf-8")
+    with pytest.raises(DatasetSourceError, match="sha256 is missing"):
+        list(CredentialDynamicTracesAdapter(raw_dir=tmp_path, strict=True).iter_cases())
+
+
+def test_full_chain_no_dynamic_frozen_manifest(monkeypatch, tmp_path: Path):
+    """Frozen manifest -> validate -> render -> HTTP run -> analyze -> report.
+
+    No Dynamic acquisition: every command runs under the purge+guard context
+    (fresh demotest imports + raising sentinels), and the run goes through a
+    real HTTP POST to a local scripted gateway reusing
+    tests/v3/contract/fake_server.py (blocked_body) — no sockets to real
+    services, no Docker, no SkillsMP, no SkillLeakBench, no candidate/snapshot/
+    credential binding.
+    """
+    import argparse
+    import http.server
+    import os
+    import threading
+    import time
+
+    _contract = Path(__file__).resolve().parents[1] / "contract"
+    if str(_contract) not in sys.path:
+        sys.path.insert(0, str(_contract))
+    from fake_server import blocked_body  # tests/v3/contract/fake_server.py
+
+    manifest = (Path(__file__).resolve().parents[3]
+                / "benchmarks" / "manifests" / "p4-core-bridge-v1" / "p4.json")
+    source = f"manifest:{manifest}"
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_POST(self) -> None:  # noqa: N802 — always block
+            body = blocked_body(scanner="guardrail").encode()
+            self.send_response(403)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, *args) -> None:  # quiet
+            pass
+
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    port = srv.server_address[1]
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    monkeypatch.setenv("LINEMOD_URL", f"http://127.0.0.1:{port}/v1/chat/completions")
+    monkeypatch.setenv("LINEMOD_API_KEY", "test-key")
+    monkeypatch.setenv("LINEMOD_MODEL", "test-model")
+    run_version = f"p4-bridge-it-{os.getpid()}-{time.time_ns()}"
+    out_dir = tmp_path / "report"
+    try:
+        with _no_dynamic_guard():
+            from demotest.cli import analyze as cli_analyze
+            from demotest.cli import render as cli_render
+            from demotest.cli import report as cli_report
+            from demotest.cli import run as cli_run
+            from demotest.cli import validate as cli_validate
+
+            def ns(**kw) -> argparse.Namespace:
+                return argparse.Namespace(**kw)
+
+            assert cli_validate.run(ns(project="P4_credential_flow", target="linemod",
+                                       source=source, no_key_check=True)) == 0
+            assert cli_render.run(ns(project="P4_credential_flow", source=source,
+                                     case_id=None, limit=1, target="linemod",
+                                     fidelity="auto", show_request=True,
+                                     no_redact=False)) == 0
+            assert cli_run.run(ns(project="P4_credential_flow", target="linemod",
+                                  source=source, run_version=run_version, gap=0.0,
+                                  dry_run=False, max_attempts=4, fidelity="auto",
+                                  adopt_legacy_run=False)) == 0
+            assert cli_analyze.run(ns(project="P4_credential_flow", source=source,
+                                      target="linemod", run_version=run_version,
+                                      json=False,
+                                      allow_legacy_run_without_meta=False)) == 0
+            assert cli_report.run(ns(project="P4_credential_flow", source=source,
+                                     target="linemod", run_version=run_version,
+                                     out_dir=str(out_dir),
+                                     allow_legacy_run_without_meta=False)) == 0
+    finally:
+        srv.shutdown()
+        srv.server_close()
+
+    summary = out_dir / "SUMMARY.md"
+    assert summary.exists(), "report SUMMARY.md was not written"
+    text = summary.read_text(encoding="utf-8")
+    assert "TP=`1`" in text and "TPR=`100.00%`" in text
+    assert "headline_eligible=`false`" in text
+
+
+def test_frozen_manifest_not_headline_single_real_case():
+    """p4-core-bridge-v1 covers 1 real reviewed trace — core track but NOT headline,
+    and its provenance must not imply a Core/Synthetic mixed pool."""
+    import json as _json
+
+    from demotest.datasets.manifest_builder import load_manifest
+
+    m = load_manifest(
+        Path(__file__).resolve().parents[3] / "benchmarks" / "manifests" / "p4-core-bridge-v1" / "p4.json"
+    )
+    assert m["benchmark_track"] == "core"
+    assert m["headline_eligible"] is False
+    assert m["n"] >= 1
+    # every entry is from the real dataset
+    for e in m["cases"]:
+        assert e["dataset_id"] == "credential_dynamic_traces"
+    # created_from provenance: only the dataset that actually contributes cases
+    cf = m.get("created_from") or {}
+    assert "credential_dynamic_traces" in cf
+    assert "credential_catalog_synthetic" not in cf
+    assert "credential_traces" not in cf
