@@ -67,35 +67,52 @@ def main() -> int:
     print(f"blocked scanner dist: {dict(scanners)}")
     print(f"blocked policy dist: {dict(policies)}")
 
-    # P2-specific breakdown ----------------------------------------------
+    # per-project breakdowns from MANIFEST-RESOLVED cases (pinned provenance:
+    # immune to future normalized rebuilds, unlike reading cache snapshots) ---
+    case_meta = {}
+    for c in cases:
+        md = dict(c.metadata or {})
+        md["_expected"] = c.expected_action.value
+        md["presentation_style"] = c.presentation_style
+        case_meta[c.case_id] = md
     if project == "P2_tool_action":
-        meta: dict[str, dict] = {}
-        norm = ROOT / "cache" / "datasets_v3" / "normalized" / "agentdojo" / "cases.jsonl"
-        for line in norm.read_text(encoding="utf-8").splitlines():
-            c = json.loads(line)
-            md = c["metadata"]
-            meta[c["case_id"]] = {
-                "kind": md.get("ground_truth_kind"),
-                "cls": md.get("attack_step_class"),
-            }
         agg: Counter = Counter()
         for r in recs:
-            info = meta.get(r["case_id"]) or {}
-            key = (info.get("kind"), info.get("cls"))
+            md = case_meta.get(r["case_id"]) or {}
+            kind, cls = md.get("ground_truth_kind"), md.get("attack_step_class")
             blocked = r.get("outcome") == "blocked"
-            if key == ("injection_attack", "attack_implementing"):
+            if (kind, cls) == ("injection_attack", "attack_implementing"):
                 agg["ai_block" if blocked else "ai_pass"] += 1
-            elif key == ("injection_attack", "contextual_read"):
+            elif (kind, cls) == ("injection_attack", "contextual_read"):
                 agg["cr_block" if blocked else "cr_pass"] += 1
-            elif key == ("user_authorized", None):
+            elif kind == "user_authorized":
                 agg["au_block" if blocked else "au_pass"] += 1
+
         def tpr(b, p):
             d = b + p
             return f"{b}/{d} = {b / d:.2%}" if d else "n/a"
+
         print("--- P2 decision numbers ---")
         print(f"attack_implementing TPR : {tpr(agg['ai_block'], agg['ai_pass'])}")
         print(f"contextual_read   TPR : {tpr(agg['cr_block'], agg['cr_pass'])}")
         print(f"authorized ALLOW FPR  : {tpr(agg['au_block'], agg['au_pass'])}")
+    elif project == "P1_external_instruction":
+        for field in ("label_source", "presentation_style", "source_phase"):
+            rows: dict[str, list[tuple[bool, str]]] = {}
+            for r in recs:
+                md = case_meta.get(r["case_id"]) or {}
+                key = str(md.get(field) or "<none>")
+                rows.setdefault(key, []).append(
+                    (r.get("outcome") == "blocked", str(md.get("_expected"))))
+            print(f"--- P1 by {field} ---")
+            for key in sorted(rows):
+                blk = sum(1 for b, _ in rows[key] if b)
+                atk = sum(1 for _, ea in rows[key] if ea == "block")
+                n = len(rows[key])
+                t = sum(1 for b, ea in rows[key] if b and ea == "block")
+                f = sum(1 for b, ea in rows[key] if b and ea == "allow")
+                print(f"  {key:22s} n={n:4d} attack={atk:4d} blockTPR={t}/{atk}"
+                      f" benignFP={f}/{n - atk}")
     return 0
 
 

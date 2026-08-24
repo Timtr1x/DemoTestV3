@@ -44,7 +44,8 @@ v3 suites from `main@40ed5f7`.
 2. False-positive cost is high on both projects: half of user-authorized tool
    calls and a third of benign emails are blocked. Combined with the single
    prompt_injection scanner doing all the work, the pattern is consistent
-   with "any injected-looking content is treated as an attack".
+   with broad prompt-injection sensitivity and substantial
+   benign/authorized blocking.
 3. Smoke slices are small (contextual_read n=16); these are directional
    signals. The standard eval (P1 1674 + P2 743) exists to firm them up.
 
