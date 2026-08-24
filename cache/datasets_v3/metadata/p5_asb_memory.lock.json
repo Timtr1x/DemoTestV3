@@ -1,0 +1,12 @@
+{
+  "acquired_at": "2026-08-24T09:36:16Z",
+  "adapter_name": "p5_asb_memory",
+  "adapter_version": "1.0.0",
+  "dataset_id": "p5_asb_memory",
+  "extra": {},
+  "license": "MIT",
+  "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+  "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4",
+  "source_type": "github",
+  "source_uri": "agiresearch/ASB"
+}

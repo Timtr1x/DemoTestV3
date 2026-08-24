@@ -506,3 +506,30 @@ suites:
             count: all
         track: core
         headline_eligible: false
+
+# ---------------------------------------------------------------------------
+# P5 Phase 2A proof suite (attack-only, no FPR claims yet): ASB memory-poison
+# BLOCK side through the real pipeline. Headline stays false until a real
+# benign memory-write control exists.
+# ---------------------------------------------------------------------------
+  p5-asb-proof-v0:
+    seed: 42
+    # all splits eligible so the small proof set is fully selected — this
+    # suite validates the ADAPTER->MEMORY_WRITE->LineMod pipeline, not split
+    # policy (headline=false regardless).
+    split:
+    - dev
+    - eval
+    - holdout
+    split_version: split-v2
+    projects:
+      P5_memory_write:
+        manifest: benchmarks/manifests/p5-asb-proof-v0/p5.json
+        target: 8
+        strata:
+          - id: asb_memory_poison_block
+            dataset: p5_asb_memory
+            expected_action: block
+            count: all
+        track: core
+        headline_eligible: false

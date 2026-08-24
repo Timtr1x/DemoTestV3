@@ -114,3 +114,19 @@ datasets:
     # Docker / SkillLeakBench / SkillsMP / candidate / snapshot / binding.
     raw_dir: benchmarks/frozen/datasets/credential_dynamic_traces/raw
     normalized_dir: benchmarks/frozen/datasets/credential_dynamic_traces/normalized
+
+  p5_asb_memory:
+    adapter: p5_asb_memory
+    adapter_version: 1.0.0
+    enabled: true
+    quality_tier: B
+    source:
+      type: github
+      repository: agiresearch/ASB
+      revision: 1f561dccf92d55302368fa67679b4ba9d9c8fdc4
+      license: MIT
+      hash_globs:
+      - data/all_attack_tools.jsonl
+      - data/all_normal_tools.jsonl
+    raw_dir: cache/datasets_v3/raw/p5_asb_memory
+    normalized_dir: cache/datasets_v3/normalized/p5_asb_memory

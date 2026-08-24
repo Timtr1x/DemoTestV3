@@ -111,7 +111,7 @@ this survey replaces that lineage.
 ### Candidate 1: Agent Security Bench — verdict **PARTIAL** (closest to READY)
 
 `agiresearch/ASB` — official, ICLR 2025 (arXiv 2410.02644), **MIT**, 289
-stars, 20 commits.
+stars, 20 commits. **PINNED @ `1f561dccf92d55302368fa67679b4ba9d9c8fdc4`** (acquired; Phase 2A fidelity proof in docs/results/P5_PHASE2A_PROJECTION_FIDELITY.md).
 
 Verified by direct download and inspection:
 
@@ -130,11 +130,18 @@ Verified by direct download and inspection:
 
 Mapping assessment:
 
-- BLOCK side maps cleanly: each entry's `Attacker Instruction` +
-  `Description` is the malicious rule about to be persisted ->
-  `SecurityCase(content=<instruction+description>, channel=MEMORY_WRITE,
-  expected_action=block, quality_tier=B, derivation=deterministic_projection)`,
-  `source_id=asb:mp:<n>`. Deterministic; no LLM; no runtime needed.
+- BLOCK side source material is official and sufficient: the 400 attack
+  entries carry the malicious content ASB embeds into its persisted memory
+  records. CAUTION (review-corrected): ASB's actual memory write serializes
+  `Agent + Task + Workflow(runtime-generated) + Tools`, where the static
+  attacker contribution inside `Tools` is ONLY the tool descriptor
+  `{name: <Attacker Tool>, description: <Description>}` — `Attacker
+  Instruction` is NOT part of that persisted structure, and `Workflow`
+  must never be fabricated. The exact P5 memory-write representation
+  therefore requires a deterministic projection fidelity specification
+  based on the static attacker-tool descriptor (Phase 2A deliverable),
+  metadata `derivation=deterministic_projection, quality=B,
+  source_field=attacker_tool_definition`; no LLM, no runtime.
 - Fictional scenarios (`crypto_miner_01` etc.) are the benchmark's own
   official content — acceptable on the same grounds as AgentDojo's fictional
   environments (and unlike copying a PDF).
@@ -172,7 +179,7 @@ returned nothing relevant.
 
 | project | candidate | artifact | license | GT | benign | verdict |
 |---|---|---|---|---|---|---|
-| P3 | MCPTox | 477 poisoned MCP tool defs (verified) | **missing** | implicit all-block | **absent in repo** | PARTIAL |
+| P3 | MCPTox | 485 poisoned MCP tool defs + 485 eval pairings @ f85189f9 (cloned & counted) | **missing** | implicit all-block | **absent in repo** | PARTIAL |
 | P3 | DCI D_real (arXiv 2606.04769) | none published | n/a | n/a | n/a | NOT FOUND |
 | P5 | ASB (agiresearch/ASB) | 400 attack entries + 20 normal tools (downloaded & counted) | MIT | label=attack (all 400) | **no memory-write-shaped controls** | PARTIAL |
 | P5 | AgentPoison | triggers generated, data off-repo | MIT | backdoor ASR | n/a | not suitable |

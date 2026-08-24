@@ -1,0 +1,107 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-18b285b78241dacd",
+      "case_id": "case-0fb6812a7ca3fd07",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:005",
+      "source_id": "asb:mp:005",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-07a8594a33fab6f6",
+      "case_id": "case-37921847b8128c9e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:001",
+      "source_id": "asb:mp:001",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-158ba584c3b88913",
+      "case_id": "case-6735ce8096deea14",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:008",
+      "source_id": "asb:mp:008",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-68ad4cfeeebc98b2",
+      "case_id": "case-6cf55ec385a6ce95",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:004",
+      "source_id": "asb:mp:004",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-49c45453b60fc63e",
+      "case_id": "case-91859667c5bb2cc5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:003",
+      "source_id": "asb:mp:003",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c8fc053c4195efc3",
+      "case_id": "case-9cbb203e9e557900",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:002",
+      "source_id": "asb:mp:002",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0ce04750ac3f35db",
+      "case_id": "case-c348fdeef197a649",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:007",
+      "source_id": "asb:mp:007",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-220d9e9618921f51",
+      "case_id": "case-d36aebcb035973c5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:mp:006",
+      "source_id": "asb:mp:006",
+      "split": "eval"
+    }
+  ],
+  "created_from": {
+    "p5_asb_memory": {
+      "adapter": "p5_asb_memory",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+      "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
+    }
+  },
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:665d59c6ab6359708ec9a74f156e56cfd25fb5c8e18e142bf43185a1a33c18df",
+  "manifest_version": "v3.2",
+  "n": 8,
+  "project": "P5_memory_write",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "dev",
+    "eval",
+    "holdout"
+  ],
+  "strata": {
+    "asb_memory_poison_block": {
+      "actual": 8,
+      "filtered": 8,
+      "target": "all"
+    }
+  },
+  "suite": "p5-asb-proof-v0",
+  "target": 8
+}

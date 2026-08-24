@@ -1,0 +1,36 @@
+{
+  "headline_eligible": true,
+  "projects": {
+    "P5_memory_write": {
+      "benchmark_track": "core",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/p5-asb-proof-v0/p5.json",
+      "manifest_sha256": "sha256:665d59c6ab6359708ec9a74f156e56cfd25fb5c8e18e142bf43185a1a33c18df",
+      "n": 8,
+      "split": [
+        "dev",
+        "eval",
+        "holdout"
+      ],
+      "target": 8
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "p5_asb_memory": {
+      "adapter": "p5_asb_memory",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+      "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
+    }
+  },
+  "split": [
+    "dev",
+    "eval",
+    "holdout"
+  ],
+  "suite_config_hash": "sha256:f010d238c438289f3c5aadbac380b8e95127e585870cc954ee8903837eb32063",
+  "suite_id": "p5-asb-proof-v0",
+  "total_cases": 8,
+  "track": "core"
+}

@@ -1,0 +1,40 @@
+# ASB memory-poisoning adapter config (Phase 2A — projection fidelity).
+#
+# Source: agiresearch/ASB @ 1f561dcc… (ICLR 2025, arXiv 2410.02644, MIT).
+# The adapter projects the STATIC attacker tool descriptor (the OpenAI
+# function descriptor ASB embeds inside its persisted memory `Tools` field)
+# as SecurityCase(channel=MEMORY_WRITE, expected_action=block). `Attacker
+# Instruction` and `Workflow` are excluded from content by the fidelity spec —
+# see src/demotest/datasets/adapters/asb_memory.py for the full rationale.
+
+dataset_id: p5_asb_memory
+
+files:
+  attack_tools:
+    - data/all_attack_tools.jsonl
+
+projection:
+  channel: memory_write
+  operation: write_memory
+  direction: outbound
+  project: P5_memory_write
+  expected_action: block
+  content_source: attacker_tool_definition
+
+metadata:
+  source_dataset: asb
+  quality_tier: B
+  derivation: deterministic_projection
+  keep:
+    - attacker_tool
+    - attack_type
+    - aggressive
+    - corresponding_agent
+    - attacker_instruction
+    - attack_goal
+    - source_field
+    - ground_truth_kind
+
+# Each entry is one case; group_id = source_id so splits never separate it.
+split_group:
+  group_id: parent_source_id

@@ -112,6 +112,10 @@ def _build_adapter(ds: DatasetSourceConfig, max_cases: int | None):
         return LLMailAdapter(source_config=ds, max_attack_per_phase=max_cases)
     if ds.adapter == "agentdojo":
         return AgentDojoAdapter(source_config=ds, max_per_suite=max_cases)
+    if ds.adapter == "p5_asb_memory":
+        from ..datasets.adapters.asb_memory import AsbMemoryAdapter
+
+        return AsbMemoryAdapter(source_config=ds, max_entries=max_cases)
     return get_adapter(ds.adapter, source_config=ds)
 
 
