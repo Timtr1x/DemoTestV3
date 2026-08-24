@@ -12,11 +12,18 @@
 # tool_call only (quality B, deterministic_projection).
 #
 # Phase 1.5 (v1.2.0): two ground-truth kinds from the SAME pinned benchmark.
-#   injection_attack -> BLOCK  InjectionTask.ground_truth(env), filtered through
-#                              the committed human review
-#                              agentdojo_injection_gt_calls.json (fail-closed):
-#                              attack-implementing calls stay BLOCK, preparatory
-#                              read-only calls reviewed "exclude" are dropped.
+#   injection_attack -> BLOCK  InjectionTask.ground_truth(env) with CONTEXT-
+#                              AWARE authorization: a call is skipped only if
+#                              it EXACTLY matches (function + canonical args)
+#                              one of the PAIRED UserTask's own
+#                              ground_truth(clean env) calls; otherwise it is
+#                              an injection-added off-task/attack action.
+#                              Kept cases are annotated with
+#                              attack_step_class=attack_implementing|
+#                              contextual_read from the committed call-role
+#                              review agentdojo_injection_gt_calls.json
+#                              (fail-closed; roles never decide
+#                              expected_action).
 #   user_authorized  -> ALLOW  UserTask.ground_truth(clean env) — the user's own
 #                              authorized tool calls; never synthesized,
 #                              rewritten, or template-expanded.

@@ -17,13 +17,15 @@ the current adapter semantics. Do not run new baselines against them.
 ## Current lineage
 
 - `*-v2/` (`smoke-v2`, `phase1-standard-v2`, `phase1-full-v2`, `holdout-v2`)
-  — historical but VALID baseline: P1 = LLMail only, P2 = AgentDojo
-  tool_call BLOCK side. Superseded by v3 only by the addition of P2 ALLOW
-  controls (Phase 1.5); still reproducible from the pinned sources.
+  — historical artifacts preserved; original adapter lineage required for
+  strict reproduction (P1 = LLMail only, P2 = AgentDojo tool_call BLOCK side
+  as projected by adapter 1.1.x). Superseded by v3 (P2 ALLOW controls +
+  context-aware authorization).
 - `*-v3/` (`smoke-v3`, `phase1-standard-v3`, `phase1-full-v3`, `holdout-v3`)
-  — active suites (Phase 1.5): P2 now carries official BLOCK + ALLOW ground
-  truth (`ground_truth_kind = injection_attack | user_authorized`), enabling
-  Dangerous Tool Call TPR **and** Authorized Tool Call FPR.
+  — active suites (Phase 1.5): P2 carries official BLOCK + ALLOW ground truth
+  (`ground_truth_kind = injection_attack | user_authorized`, with
+  `attack_step_class` on BLOCK cases), enabling Dangerous Tool Call TPR **and**
+  Authorized Tool Call FPR.
 - `p4-*` / `phase2-*` — P4 credential-flow suites (synthetic = Extended /
   framework-validation; `p4-core-bridge-v1` is the real frozen seed,
   core/non-headline).

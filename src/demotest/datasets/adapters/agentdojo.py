@@ -18,10 +18,14 @@ v1.2.0 (Phase 1.5) adds the official benign control on the SAME benchmark:
     itself defines — projected as expected_action=ALLOW, metadata
     ground_truth_kind=user_authorized, grouped per UserTask so multi-step
     trajectories never span splits. Nothing is synthesized/rewritten.
-  * Injection ground-truth calls are filtered through the committed human
-    review config/v3/datasets/agentdojo_injection_gt_calls.json (fail-closed):
-    only attack-implementing calls stay BLOCK; preparatory read-only calls
-    reviewed "exclude" are dropped.
+  * Context-aware authorization for the BLOCK side: an injection-induced
+    call is projected BLOCK unless it EXACTLY matches one of the paired
+    UserTask's own ground_truth(clean env) calls — function AND canonical
+    args (same function name with different arguments is NOT authorized).
+    The committed call-role review
+    config/v3/datasets/agentdojo_injection_gt_calls.json annotates each kept
+    case via metadata attack_step_class (attack_implementing |
+    contextual_read); it never decides expected_action by itself.
 
 P1 tool_result from default injection vectors was removed from core (guide P0-2):
 get_injection_vector_defaults() is environment content, not an attacker payload;
@@ -40,7 +44,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field as dataclass_field
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Protocol
 
@@ -91,6 +95,28 @@ class InjectedTaskPair:
     injection_task_id: str
     injection_goal: str
     ground_truth_calls: list[_FunctionCall]  # dangerous tool calls (P2)
+    # Phase 1.5 P0 fix — context-aware authorization, parallel to
+    # ground_truth_calls:
+    #   call_authorized[i] = the injection-induced call EXACTLY matches one of
+    #     THIS UserTask's official ground_truth(clean env) calls
+    #     (function AND canonical args) -> user already authorizes it.
+    #   call_roles[i] = committed call-role review
+    #     ("attack_implementing" | "contextual_read"); annotation only, it
+    #     does NOT decide expected_action.
+    # Empty lists (synthetic providers) mean "not computed": nothing is
+    # skipped and no attack_step_class is attached.
+    call_authorized: list[bool] = dataclass_field(default_factory=list)
+    call_roles: list[str] = dataclass_field(default_factory=list)
+
+
+def _canonical_call(fn: str, args: Any) -> tuple[str, str]:
+    """Canonical comparable form of a tool call — function AND arguments.
+
+    Arguments participate in authorization: send_money(recipient=Apple) is
+    NOT equal to send_money(recipient=<attacker IBAN>) even though the
+    function name matches (Phase 1.5 P0 requirement).
+    """
+    return fn, json.dumps(args or {}, sort_keys=True, ensure_ascii=False, default=str)
 
 
 @dataclass
@@ -154,11 +180,14 @@ class AgentDojoAdapter(DatasetAdapter):
 
     # ------------------------------------------------------------------ GT review
     def _gt_verdicts(self) -> dict[tuple[str, str, int], dict[str, Any]]:
-        """Load the committed per-call review verdicts (Phase 1.5 step 4).
+        """Load the committed CALL-ROLE review (Phase 1.5, P0-fixed).
 
-        Fail-closed: the file must exist, must have been reviewed at exactly
-        the pinned revision, and every ground-truth call the suites produce is
-        looked up in it (enforced in ``_load_real_pairs``).
+        The review annotates each injection ground-truth call with its role
+        (attack_implementing | contextual_read). It does NOT decide
+        expected_action — authorization is computed per pair from the paired
+        UserTask's own ground truth. Fail-closed: the file must exist, must
+        have been reviewed at exactly the pinned revision, and every
+        ground-truth call the suites produce is looked up in it.
         """
         from ...config import DATASETS_CONFIG_DIR
 
@@ -179,7 +208,7 @@ class AgentDojoAdapter(DatasetAdapter):
         for v in doc.get("calls", []):
             out[(str(v["suite"]), str(v["injection_task_id"]), int(v["step"]))] = {
                 "function": str(v["function"]),
-                "verdict": str(v["verdict"]),
+                "role": str(v.get("role") or v.get("verdict") or ""),
             }
         return out
 
@@ -221,54 +250,67 @@ class AgentDojoAdapter(DatasetAdapter):
             return None
 
     @staticmethod
-    def _review_filter(
+    def _authorized_flags(
+        calls: list[_FunctionCall], authorized_set: set[tuple[str, str]]
+    ) -> list[bool]:
+        """Exact (function, canonical args) match against a UserTask's own GT."""
+        return [
+            _canonical_call(getattr(c, "function", "") or "", getattr(c, "args", {}))
+            in authorized_set
+            for c in calls
+        ]
+
+    @staticmethod
+    def _role_for(
         *,
         suite_name: str,
         it_id: str,
-        calls: list[_FunctionCall],
+        step: int,
+        fn: str,
         verdicts: dict[tuple[str, str, int], dict[str, Any]],
-    ) -> list[_FunctionCall]:
-        """Apply the committed per-call review; fail closed on any gap/drift."""
-        kept: list[_FunctionCall] = []
-        for step, call in enumerate(calls or [], start=1):
-            key = (suite_name, str(it_id), step)
-            v = verdicts.get(key)
-            fn = getattr(call, "function", "") or ""
-            if v is None:
-                raise DatasetSourceError(
-                    f"no human-review verdict for ground-truth call "
-                    f"{suite_name}:{it_id} step {step} (function '{fn}') — "
-                    "pinned output drifted; re-run scripts/_agentdojo_gt_audit.py + review"
-                )
-            if v["function"] != fn:
-                raise DatasetSourceError(
-                    f"ground-truth drift at {suite_name}:{it_id} step {step}: "
-                    f"reviewed '{v['function']}' but suite produced '{fn}'"
-                )
-            if v["verdict"] == "block":
-                kept.append(call)
-            elif v["verdict"] != "exclude":
-                raise DatasetSourceError(
-                    f"invalid verdict '{v['verdict']}' at {suite_name}:{it_id} "
-                    f"step {step} (expected block|exclude)"
-                )
-        return kept
+    ) -> str:
+        """Look up the committed call role; fail closed on gap/drift/bad value.
+
+        The role annotates BLOCK cases (metadata attack_step_class) — it does
+        not decide expected_action (see _load_real_pairs authorization).
+        """
+        v = verdicts.get((suite_name, str(it_id), step))
+        if v is None:
+            raise DatasetSourceError(
+                f"no call-role review for ground-truth call "
+                f"{suite_name}:{it_id} step {step} (function '{fn}') — "
+                "pinned output drifted; re-run scripts/_agentdojo_gt_audit.py + review"
+            )
+        if v["function"] != fn:
+            raise DatasetSourceError(
+                f"ground-truth drift at {suite_name}:{it_id} step {step}: "
+                f"reviewed '{v['function']}' but suite produced '{fn}'"
+            )
+        if v["role"] not in ("attack_implementing", "contextual_read"):
+            raise DatasetSourceError(
+                f"invalid role '{v['role']}' at {suite_name}:{it_id} "
+                f"step {step} (expected attack_implementing|contextual_read)"
+            )
+        return v["role"]
 
     def _load_real_pairs(self) -> Iterator[InjectedTaskPair]:
         """Import the official pinned suite and enumerate security cases.
 
         Each InjectionTask is one official security case (guide §25). We pair
         every injection task with every user task in its suite — this matches
-        agentdojo's own benchmark enumeration (verified Phase 1.5 step 3:
+        agentdojo's own benchmark enumeration (verified Phase 1.5:
         benchmark_suite_with_injections runs all user_tasks x all
         injection_tasks; gate missing=0 extra=0 at the pinned revision).
 
-        Ground truth calls come from ``InjectionTask.ground_truth(env)`` and are
-        filtered through the committed per-call human review
-        (``config/v3/datasets/agentdojo_injection_gt_calls.json``, fail-closed):
-        only calls reviewed ``block`` — i.e. calls that genuinely implement the
-        attack goal — are projected BLOCK; preparatory read-only calls reviewed
-        ``exclude`` are dropped entirely.
+        Context-aware authorization (Phase 1.5 P0 fix): whether an
+        injection-induced ground-truth call is authorized depends on the PAIRED
+        UserTask, never on the tool name alone. For each pair we compare the
+        call's canonical (function, args) against THAT UserTask's official
+        ``ground_truth(clean env)`` calls — exact match means the user already
+        authorizes the action (no BLOCK case); any difference makes it an
+        injection-added off-task/attack action (BLOCK). The committed call-role
+        review annotates every kept case via attack_step_class but does not
+        decide expected_action.
         """
         suites = self._import_suites()
         verdicts = self._gt_verdicts()
@@ -278,23 +320,45 @@ class AgentDojoAdapter(DatasetAdapter):
             suite = suites[suite_name]
             count = 0
             env = self._default_env(suite)
+            # per-user-task authorized canonical calls (clean default env)
+            authorized_by_ut: dict[str, set[tuple[str, str]]] = {}
+            prompts_by_ut: dict[str, str] = {}
+            for ut_id, ut in getattr(suite, "user_tasks", {}).items():
+                key = str(ut_id)
+                prompts_by_ut[key] = getattr(ut, "PROMPT", "") or ""
+                try:
+                    ucalls = ut.ground_truth(env) if env is not None else []  # type: ignore[arg-type]
+                except Exception:
+                    ucalls = []
+                authorized_by_ut[key] = {
+                    _canonical_call(getattr(c, "function", "") or "", getattr(c, "args", {}))
+                    for c in (ucalls or [])
+                }
             for it_id, it in getattr(suite, "injection_tasks", {}).items():
                 try:
                     calls = it.ground_truth(env) if env is not None else []  # type: ignore[arg-type]
                 except Exception:
                     calls = []
-                kept = self._review_filter(
-                    suite_name=suite_name, it_id=str(it_id),
-                    calls=list(calls or []), verdicts=verdicts,
-                )
-                for ut_id, ut in getattr(suite, "user_tasks", {}).items():
+                calls = list(calls or [])
+                roles = [
+                    self._role_for(
+                        suite_name=suite_name, it_id=str(it_id), step=step,
+                        fn=getattr(call, "function", "") or "", verdicts=verdicts,
+                    )
+                    for step, call in enumerate(calls, start=1)
+                ]
+                for ut_id in getattr(suite, "user_tasks", {}):
+                    key = str(ut_id)
+                    flags = self._authorized_flags(calls, authorized_by_ut[key])
                     yield InjectedTaskPair(
                         suite=suite_name,
-                        user_task_id=str(ut_id),
-                        user_prompt=getattr(ut, "PROMPT", "") or "",
+                        user_task_id=key,
+                        user_prompt=prompts_by_ut[key],
                         injection_task_id=str(it_id),
                         injection_goal=getattr(it, "GOAL", "") or "",
-                        ground_truth_calls=list(kept),
+                        ground_truth_calls=calls,
+                        call_authorized=flags,
+                        call_roles=roles,
                     )
                     count += 1
                     if self.max_per_suite and count >= self.max_per_suite:
@@ -328,12 +392,19 @@ class AgentDojoAdapter(DatasetAdapter):
 
     # ------------------------------------------------------------------ iter
     def iter_cases(self) -> Iterator[SecurityCase]:
-        # BLOCK side — injection ground-truth calls that survived the human
-        # review (P2 only; P1 tool_result from default vectors removed, P0-2).
+        # BLOCK side — injection-induced ground-truth calls (P2 only; P1
+        # tool_result from default vectors removed, P0-2). Calls that EXACTLY
+        # match the paired UserTask's own ground truth are user-authorized and
+        # produce no case (context-aware authorization, Phase 1.5 P0 fix).
         for pair in self._load_pairs():
             parent = f"agentdojo:{pair.suite}:{pair.user_task_id}:{pair.injection_task_id}"
             for step, call in enumerate(pair.ground_truth_calls or [], start=1):
-                yield self._build_tool_call_case(pair=pair, parent=parent, call=call, step=step)
+                if pair.call_authorized and pair.call_authorized[step - 1]:
+                    continue
+                role = pair.call_roles[step - 1] if pair.call_roles else None
+                yield self._build_tool_call_case(
+                    pair=pair, parent=parent, call=call, step=step, role=role
+                )
         # ALLOW side — official user-authorized ground truth (Phase 1.5).
         for task in self._load_authorized():
             parent = f"agentdojo:{task.suite}:user:{task.user_task_id}"
@@ -392,7 +463,8 @@ class AgentDojoAdapter(DatasetAdapter):
         }
 
     def _build_tool_call_case(
-        self, *, pair: InjectedTaskPair, parent: str, call: _FunctionCall, step: int
+        self, *, pair: InjectedTaskPair, parent: str, call: _FunctionCall, step: int,
+        role: str | None = None,
     ) -> SecurityCase:
         source_id = f"{parent}:tool_call:{step}"
         tool_name = getattr(call, "function", "") or ""
@@ -420,8 +492,13 @@ class AgentDojoAdapter(DatasetAdapter):
             threat_id="dangerous_tool_call",
             presentation_style="structured",
         )
+        meta = self._common_meta(pair, "tool_call", step)
+        if role:
+            # annotation from the committed call-role review; expected_action
+            # was decided by context-aware authorization, not by this field.
+            meta["attack_step_class"] = role
         d = case.to_dict()
-        d["metadata"] = {**(d.get("metadata") or {}), **self._common_meta(pair, "tool_call", step)}
+        d["metadata"] = {**(d.get("metadata") or {}), **meta}
         case = SecurityCase.from_dict(d)
         return attach_provenance(case, self._make_prov(source_id=source_id, content=content, parent=parent))
 

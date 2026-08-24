@@ -117,7 +117,7 @@ def test_legacy_suite_snapshots_still_bind_committed_manifests():
 
 @pytest.mark.parametrize("dataset,expected_n,blocks,allows", [
     ("llmail", 3860, 3700, 160),
-    ("agentdojo", 1005, 670, 335),
+    ("agentdojo", 1247, 912, 335),
 ])
 def test_normalized_snapshot_action_counts(dataset, expected_n, blocks, allows):
     norm = _ROOT / "cache" / "datasets_v3" / "normalized" / dataset / "cases.jsonl"

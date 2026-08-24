@@ -16,7 +16,7 @@
       "benchmark_track": "core",
       "headline_eligible": false,
       "manifest": "benchmarks/manifests/smoke-v3/p2.json",
-      "manifest_sha256": "sha256:06f921e521959017f24482cc2eca2980b4a6d1b8e3a90d3be8e2523719d780f0",
+      "manifest_sha256": "sha256:a6b53cc22558dfcc74b3b3205f3b788b55236a28fd4c78870530a116ede2fc9b",
       "n": 100,
       "split": [
         "dev"

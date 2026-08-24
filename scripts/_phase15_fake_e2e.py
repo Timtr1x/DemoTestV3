@@ -58,7 +58,8 @@ def run_project(project: str, manifest: Path, prefix: str, out_root: Path) -> di
     os.environ["LINEMOD_API_KEY"] = "fake-e2e-key"
     os.environ["LINEMOD_MODEL"] = "fake-e2e-model"
     source = f"manifest:{manifest}"
-    rv = f"phase15-fake-{prefix}"
+    import time as _time
+    rv = f"phase15-fake-{prefix}-{_time.time_ns()}"
     out_dir = out_root / prefix
     try:
         step("validate", ["validate", "--project", project, "--target", "linemod",

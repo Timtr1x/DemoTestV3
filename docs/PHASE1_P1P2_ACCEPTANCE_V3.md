@@ -32,43 +32,43 @@ Base: `main@9f24c63`. Frozen throughout: `core/`, `renderers/`, `targets/`,
    (`agentdojo_ground_truth_audit.json`) — official definition:
    `benchmark_suite_with_injections` runs all user_tasks x all injection_tasks
    per suite. official=629 / adapter=629 / missing=0 / extra=0. VERDICT: PASS.
-4. **Injection ground-truth human review** — every unique ground-truth call
-   audited (47 calls across 27 tasks; travel `injection_task_6` has empty GT).
-   Rule: READ-class calls (`get_*`/`search_*`/`read_*`) are preparatory ->
-   excluded; state-mutating/outbound-data calls implement the attack goal ->
-   BLOCK. Result: **30 BLOCK / 17 exclude**, committed as
-   `config/v3/datasets/agentdojo_injection_gt_calls.json`; adapter consumes it
-   fail-closed (missing entry, function drift, or pin mismatch aborts prepare).
+4. **Injection ground-truth call-role review** — every unique ground-truth
+   call audited (47 calls across 27 tasks; travel `injection_task_6` has
+   empty GT). Roles: **attack_implementing** (30) = realizes the attacker
+   goal; **contextual_read** (17) = read-only query harmless in isolation.
+   Committed as `config/v3/datasets/agentdojo_injection_gt_calls.json`;
+   fail-closed on missing calls, function drift, unknown roles, or pin drift.
+   ROLES DO NOT DECIDE expected_action (P0 fix, below).
 
 ## 3. Adapter versions
 
 | dataset | adapter | change |
 |---|---|---|
 | llmail | 1.1.0 (unchanged) | `validate_raw()` now streams the ~450MB labelled_unique files via `_iter_prompt_value_pairs` (regression test forbids `read_text()` on attack JSON); case output byte-identical |
-| agentdojo | **1.2.0** | adds `AuthorizedUserTask`: official `UserTask.ground_truth(clean env)` -> `expected_action=ALLOW`, `ground_truth_kind=user_authorized`, grouped per UserTask (multi-step never spans splits); BLOCK side tagged `ground_truth_kind=injection_attack` and filtered by the committed review; envelope byte-structure identical for both kinds so render cannot leak expected_action |
+| agentdojo | **1.2.0** | adds `AuthorizedUserTask`: official `UserTask.ground_truth(clean env)` -> `expected_action=ALLOW`, `ground_truth_kind=user_authorized`, grouped per UserTask (multi-step never spans splits); BLOCK side tagged `ground_truth_kind=injection_attack` with **context-aware authorization**: an injection-induced call is projected BLOCK unless it EXACTLY matches one of the PAIRED UserTask's own ground-truth calls (function AND canonical args — same function with different arguments is NOT authorized); kept cases carry `attack_step_class=attack_implementing\|contextual_read` from the committed call-role review, which never decides expected_action; envelope byte-structure identical for both kinds so render cannot leak expected_action |
 
 ## 4. Normalized snapshots (`dataset verify` OK on both)
 
 | dataset | total | block | allow | dedup |
 |---|---:|---:|---:|---|
 | llmail | 3,860 | 3,700 | 160 | byte-identical re-prepare (sha256 `1b2efac5…`) |
-| agentdojo | 1,005 | 670 (injection_attack) | 335 (user_authorized) | 36 exact dups removed |
+| agentdojo | 1,247 | 912 (injection_attack: 670 attack_implementing + 242 contextual_read) | 335 (user_authorized) | 138 exact dups removed |
 
-Split-pool consistency (agentdojo BLOCK): dev 126 / eval 394 / holdout 150 =
-670; ALLOW: dev 76 / eval 208 / holdout 51 = 335.
+Split-pool consistency (agentdojo BLOCK): dev 174 / eval 535 / holdout 203 =
+912; ALLOW: dev 76 / eval 208 / holdout 51 = 335.
 
 ## 5. Frozen v3 suites & manifests (`verify --strict` + `suite-verify` all OK)
 
 | suite / project | n | manifest sha256 (first 16) | headline |
 |---|---:|---|---|
 | smoke-v3/p1 | 120 | `00ad9d5b170f99f4` | false |
-| smoke-v3/p2 | 100 (50+50) | `06f921e52195901` | false |
+| smoke-v3/p2 | 100 (50+50) | `a6b53cc22558dfcc` | false |
 | phase1-standard-v3/p1 | 1,674 | `4cf306b4e3682b8a` | **true** |
-| phase1-standard-v3/p2 | 602 (394+208) | `432e1c88cf0705ee` | **true** |
+| phase1-standard-v3/p2 | 743 (535+208) | `e35aff7a6de4d01f` | **true** |
 | phase1-full-v3/p1 | 2,683 | `7aed4928ecb68382` | false |
-| phase1-full-v3/p2 | 803 (544+259) | `f4cb8302c335028` | false |
+| phase1-full-v3/p2 | 997 (738+259) | `17da94182f64a44b` | false |
 | holdout-v3/p1 | 526 | `a2f1fcf0f5a5dcd8` | false |
-| holdout-v3/p2 | 201 (150+51) | `939248d5128e6898` | false |
+| holdout-v3/p2 | 201 (150+51) | `ffa89196c7a61003` | false |
 
 All projects `benchmark_track=core`. Only phase1-standard-v3 is
 headline_eligible — condition: P1 and P2 both carry real BLOCK+ALLOW ground
@@ -77,7 +77,9 @@ truth and the Phase 1.5 audits passed at the pinned revisions.
 Legacy suites: v1 manifests/suites and their suite snapshots stay
 byte-frozen and marked DEPRECATED/HISTORICAL
 (`benchmarks/manifests/HISTORICAL.md`, banners in `config/v3/suites.yaml`);
-v2 remains a reproducible baseline. Known legacy condition (pre-existing):
+v2 is preserved the same way — **historical artifacts preserved; original
+adapter lineage required for strict reproduction** (no multi-version
+normalized infrastructure is built). Known legacy condition (pre-existing):
 the four v1 suites fail current canonical `manifest_sha256` recomputation
 because those manifests predate the v3.2 hash generation; they are not
 regenerated.
@@ -86,28 +88,32 @@ regenerated.
 
 Real `demotest.cli.main.main([...])` chain validate -> render -> run (local
 scripted gateway, always 403 SECURITY_BLOCKED) -> analyze -> report on
-smoke-v3 p1+p2:
+smoke-v3 p1+p2 (rebuilt P2 manifests):
 
 - P2: n_judged=100/100, TP=50 FP=50 TN=0 FN=0, TPR=100%, **FPR=100%**
   (fake gateway blocks everything, so every ALLOW case surfaces as FP —
-  proving the Authorized-FPR path works end to end for the first time).
+  proving the Authorized-FPR path works end to end).
 - Reports: `cache/exports/phase15_e2e/{p1,p2}-SUMMARY.md`.
 
 ## 7. Tests
 
-Full suite: **400 passed / 4 skipped** (was 385). New coverage: LLMail
-streaming regression; ALLOW projection exactness vs official GT; envelope
-parity; stable case IDs; UserTask split grouping; review-file fail-closed
-(gap/drift/bad-verdict/pin-mismatch); v3 manifest kind-crossing gate;
+Full suite: 403 passed / 4 skipped. New coverage: LLMail streaming
+regression; ALLOW projection exactness vs official GT; envelope parity;
+stable case IDs; UserTask split grouping; role-file fail-closed
+(gap/drift/bad-role/pin-mismatch); context-aware authorization exactness
+(same function + different arguments must stay BLOCK); authorized-call
+exemption; attack_step_class annotation; v3 manifest kind-crossing gate;
 headline gating; legacy binding; snapshot action counts.
 
 ## 8. Known limitations
 
 - `scenario` / `presentation_style` are heuristics (documented; do not affect
   ground truth).
-- standard-v3 P2 has 394 eval BLOCK cases, below the nominal 540 target,
-  because the human review legitimately removed 17 preparatory call types
-  from the BLOCK universe; quality was chosen over quota.
+- Contextual-read BLOCK cases (242) are injection-induced off-task reads:
+  whether they SHOULD be blocked is exactly what the benchmark measures; the
+  attack_step_class breakdown lets reports separate them from
+  attack-implementing calls.
 - P2 FPR/TPR numbers above are fake-gateway artifacts, NOT benchmark results.
-- Real LineMod Baseline-0 (smoke -> STOP -> standard; holdout sealed) is the
-  next step and requires the API key via process environment only.
+- Next step: real LineMod Baseline-0 smoke (P1 `baseline0-p1-smoke-v3` may
+  start independently; P2 real smoke follows acceptance of this P0 fix),
+  key via process environment only; holdout sealed.

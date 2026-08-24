@@ -16,8 +16,8 @@
       "benchmark_track": "core",
       "headline_eligible": true,
       "manifest": "benchmarks/manifests/phase1-standard-v3/p2.json",
-      "manifest_sha256": "sha256:432e1c88cf0705eeeeb4f36b90dd704e56aa967df893635d69accd2c90e86ed4",
-      "n": 602,
+      "manifest_sha256": "sha256:e35aff7a6de4d01f680e938945b2749b42c59afb92a006ee550fbba157d6f0a3",
+      "n": 743,
       "split": [
         "eval"
       ],
@@ -44,6 +44,6 @@
   ],
   "suite_config_hash": "sha256:0d83c5d265e98f2b605fb130f5b9ac7163cccb714aa1f98bb433ea1a5aea1737",
   "suite_id": "phase1-standard-v3",
-  "total_cases": 2276,
+  "total_cases": 2417,
   "track": "core"
 }
