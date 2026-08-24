@@ -23,26 +23,42 @@ explicitly OUT of P3 scope until a future `MCPIntegrityCase` exists.
 
 `zhiqiangwang4/MCPTox-Benchmark` — "MCPTox: A Benchmark for Tool Poisoning
 Attack on Real-World MCP Servers" (README header says AAAI26; 11 stars,
-2 commits, single branch @ `f85189f9`).
+2 commits, single branch @ `f85189f9ad12504c197c7f920ab818a40657b1fa`,
+"Initial commit" 2025-12-03). Verified by LOCAL CLONE
+(`cache/probe/mcptox`, gitignored) — the authoritative numbers below
+supersede the truncated API-tree figures of the first pass:
 
-Verified by direct inspection:
-
-- `def_tool/1.py … def_tool/477.py`: **477 poisoned MCP tool definitions**
+- `def_tool/1.py … def_tool/485.py`: **485 poisoned MCP tool definitions**
   as real `@mcp.tool()`-decorated Python functions. Spot-check of
   `def_tool/1.py` confirmed the shape: innocuous function signature +
   poisoned docstring instructing the agent to overwrite `~/.ssh/id_rsa`
   with attacker key material disguised as a "pre-authorization check".
+- `pure_tool.json` (316 KB): despite the name, NOT benign tools — it holds
+  **485 evaluation pairings** `{server_name, tool_name, query, tool_content,
+  security risk, paradigm, tool_address}` where `tool_content` is the
+  poisoned description (pairing #1 matches `def_tool/1.py`). The 45
+  `server_name` values are REAL community MCP servers (FileSystem,
+  Puppeteer, Slack, Github, SQLite, Redis, BraveSearch, EverArt, …).
+- Built-in taxonomy: `paradigm` = poisoning template family
+  (Template-1 ×77, Template-2 ×183, Template-3 ×225); `security risk` =
+  Information Manipulation ×108, Privacy Leakage ×97, Service Disruption
+  ×73, Infrastructure Damage ×41, Credential Leakage ×40, Code Injection
+  ×22.
+- `response_all.json` (20.7 MB) = the authors' raw model responses.
 - This is EXACTLY the P3 channel shape: the payload lives entirely in the
   description text the gateway would see.
 
 Gaps blocking READY:
 
 - **No LICENSE file** anywhere in the repo — formal acquisition blocker.
-- README is 9 bytes (`# AAAI26`) — no documented counts, taxonomy, or
-  labeling scheme; ground truth is implicit (every file is a poison case).
-- The benign counterpart `pure_tool.json` and `analysis.ipynb`'s inputs are
-  referenced by name but `pure_tool.json` / `response_all.json` are absent
-  from the main tree — i.e. **no benign controls shipped**.
+- README is 9 bytes (`# AAAI26`) — no documented counts or labeling scheme;
+  ground truth is implicit (every pairing is a poison case).
+- **No benign controls**: all 485 pairings are poisoned; there is no clean
+  tool-description set in the repo (the `pure_tool.json` name is
+  misleading). An ALLOW side would have to come from a DIFFERENT source
+  (clean function-doc corpora such as BFCL/MetaTool), which breaks the
+  same-origin control design we used in P2 — a decision point, not a
+  technical blocker.
 - Single-author repo, 2 commits, pre-publication; revision stability unknown.
 
 Mapping assessment (if acquired later): `def_tool/N.py` docstring ->
