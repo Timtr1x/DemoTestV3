@@ -20,7 +20,7 @@ zero tuning). Holdout remains sealed. Test evidence: developer-local pytest
 ## Run health (all four Baseline-0 runs)
 
 - zero transport noise anywhere: no 429, no 5xx, no error/cooldown/rate_limited
-  outcomes; every one of 2,637+100 cases reached a clear outcome.
+  outcomes; every one of the 2,637 Baseline-0 cases reached a clear outcome.
 - latency: P2 p50≈2.05s p99≈3.16s max≈7.5s; P1 p50≈2.47s p90≈4.63s max≈24.6s.
 - every blocked outcome (P1 1378, P2 440) carries
   `code=SECURITY_BLOCKED, scanner=prompt_injection, policy=standard`.
