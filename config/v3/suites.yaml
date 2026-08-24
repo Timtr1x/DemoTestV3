@@ -105,6 +105,10 @@ suites:
           dataset: agentdojo
           channel: tool_call
           count: 150
+  # DEPRECATED / HISTORICAL (smoke-v1): contains the retired AgentDojo P1
+  # tool_result projection inside P1_external_instruction (removed by fix
+  # round P0-2). Kept byte-for-byte for reproducibility of old results;
+  # DO NOT extend or rebuild. See benchmarks/manifests/HISTORICAL.md.
   smoke-v1:
     seed: 42
     split: dev
@@ -115,6 +119,10 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/smoke-v1/p2.json
         target: 100
+  # DEPRECATED / HISTORICAL (phase1-standard-v1): contains the retired AgentDojo P1
+  # tool_result projection inside P1_external_instruction (removed by fix
+  # round P0-2). Kept byte-for-byte for reproducibility of old results;
+  # DO NOT extend or rebuild. See benchmarks/manifests/HISTORICAL.md.
   phase1-standard-v1:
     seed: 42
     split: eval
@@ -125,6 +133,10 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-standard-v1/p2.json
         target: 540
+  # DEPRECATED / HISTORICAL (phase1-full-v1): contains the retired AgentDojo P1
+  # tool_result projection inside P1_external_instruction (removed by fix
+  # round P0-2). Kept byte-for-byte for reproducibility of old results;
+  # DO NOT extend or rebuild. See benchmarks/manifests/HISTORICAL.md.
   phase1-full-v1:
     seed: 42
     split:
@@ -137,6 +149,10 @@ suites:
       P2_tool_action:
         manifest: benchmarks/manifests/phase1-full-v1/p2.json
         target: 800
+  # DEPRECATED / HISTORICAL (holdout-v1): contains the retired AgentDojo P1
+  # tool_result projection inside P1_external_instruction (removed by fix
+  # round P0-2). Kept byte-for-byte for reproducibility of old results;
+  # DO NOT extend or rebuild. See benchmarks/manifests/HISTORICAL.md.
   holdout-v1:
     seed: 42
     split: holdout
@@ -335,3 +351,158 @@ suites:
         target: 152
         strata: *id012
         max_cluster_share: 0.05
+
+# ---------------------------------------------------------------------------
+# v3 suites (Phase 1.5): P2 gains official ALLOW controls (UserTask ground
+# truth, adapter 1.2.0). P1 unchanged from v2 (llmail prepare is byte-identical).
+# All projects are benchmark_track=core. headline_eligible: only
+# phase1-standard-v3 is true — both P1 and P2 carry real BLOCK+ALLOW ground
+# truth and the Phase 1.5 audits (label mapping, official enumeration,
+# injection ground-truth review) passed at the pinned revisions.
+# ---------------------------------------------------------------------------
+  smoke-v3:
+    seed: 42
+    split: dev
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/smoke-v3/p1.json
+        target: 120
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 80
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+        track: core
+        headline_eligible: false
+      P2_tool_action:
+        manifest: benchmarks/manifests/smoke-v3/p2.json
+        target: 100
+        strata:
+          - id: agentdojo_injection_block
+            dataset: agentdojo
+            expected_action: block
+            channel: tool_call
+            count: 50
+          - id: agentdojo_authorized_allow
+            dataset: agentdojo
+            expected_action: allow
+            channel: tool_call
+            count: 50
+        track: core
+        headline_eligible: false
+  phase1-standard-v3:
+    seed: 42
+    split: eval
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-standard-v3/p1.json
+        target: 1674
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 1580
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+        track: core
+        headline_eligible: true
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-standard-v3/p2.json
+        target: 875
+        strata:
+          - id: agentdojo_injection_block
+            dataset: agentdojo
+            expected_action: block
+            channel: tool_call
+            count: 540
+          - id: agentdojo_authorized_allow
+            dataset: agentdojo
+            expected_action: allow
+            channel: tool_call
+            count: all
+        track: core
+        headline_eligible: true
+  phase1-full-v3:
+    seed: 42
+    split:
+    - eval
+    - holdout
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/phase1-full-v3/p1.json
+        target: 2683
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 2740
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+        track: core
+        headline_eligible: false
+      P2_tool_action:
+        manifest: benchmarks/manifests/phase1-full-v3/p2.json
+        target: 1005
+        strata:
+          - id: agentdojo_injection_block
+            dataset: agentdojo
+            expected_action: block
+            channel: tool_call
+            count: all
+          - id: agentdojo_authorized_allow
+            dataset: agentdojo
+            expected_action: allow
+            channel: tool_call
+            count: all
+        track: core
+        headline_eligible: false
+  holdout-v3:
+    seed: 42
+    split: holdout
+    split_version: split-v2
+    projects:
+      P1_external_instruction:
+        manifest: benchmarks/manifests/holdout-v3/p1.json
+        target: 580
+        strata:
+          - id: llmail_attack
+            dataset: llmail
+            expected_action: block
+            count: 500
+          - id: llmail_benign
+            dataset: llmail
+            expected_action: allow
+            count: all
+        max_cluster_share: 0.01
+        track: core
+        headline_eligible: false
+      P2_tool_action:
+        manifest: benchmarks/manifests/holdout-v3/p2.json
+        target: 200
+        strata:
+          - id: agentdojo_injection_block
+            dataset: agentdojo
+            expected_action: block
+            channel: tool_call
+            count: 150
+          - id: agentdojo_authorized_allow
+            dataset: agentdojo
+            expected_action: allow
+            channel: tool_call
+            count: all
+        track: core
+        headline_eligible: false

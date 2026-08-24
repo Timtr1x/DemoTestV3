@@ -1,14 +1,14 @@
 {
-  "acquired_at": "2026-08-19T06:58:38Z",
-  "adapter_name": "agentdojo",
-  "adapter_version": "1.1.0",
-  "dataset_id": "agentdojo",
-  "extra": {
-    "benchmark_version": "v1"
-  },
-  "license": "MIT",
-  "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
-  "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
-  "source_type": "github",
-  "source_uri": "ethz-spylab/agentdojo"
+ "acquired_at": "2026-08-19T06:58:38Z",
+ "adapter_name": "agentdojo",
+ "adapter_version": "1.2.0",
+ "dataset_id": "agentdojo",
+ "extra": {
+  "benchmark_version": "v1"
+ },
+ "license": "MIT",
+ "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
+ "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+ "source_type": "github",
+ "source_uri": "ethz-spylab/agentdojo"
 }

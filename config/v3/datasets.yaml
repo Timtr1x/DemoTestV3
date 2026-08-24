@@ -22,7 +22,7 @@ datasets:
     normalized_dir: cache/datasets_v3/normalized/llmail
   agentdojo:
     adapter: agentdojo
-    adapter_version: 1.1.0
+    adapter_version: 1.2.0
     enabled: true
     quality_tier: B
     source:

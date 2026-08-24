@@ -1,0 +1,49 @@
+{
+  "headline_eligible": true,
+  "projects": {
+    "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/holdout-v3/p1.json",
+      "manifest_sha256": "sha256:a2f1fcf0f5a5dcd89c226985b04e8b3049915ad49365a27341b59cd1acba027e",
+      "n": 526,
+      "split": [
+        "holdout"
+      ],
+      "target": 580
+    },
+    "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/holdout-v3/p2.json",
+      "manifest_sha256": "sha256:939248d5128e6898ffbc5d1d5a04430c5738348d6823c8a59a40f02a23724750",
+      "n": 201,
+      "split": [
+        "holdout"
+      ],
+      "target": 200
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "agentdojo": {
+      "adapter": "agentdojo",
+      "adapter_version": "1.2.0",
+      "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
+      "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+    },
+    "llmail": {
+      "adapter": "llmail",
+      "adapter_version": "1.1.0",
+      "raw_sha256": "a223abaf159dfa6e688d4efe515c93d239cf658797e78c3b12ec5785c09fca92",
+      "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
+    }
+  },
+  "split": [
+    "holdout"
+  ],
+  "suite_config_hash": "sha256:d6a456143c5dac053f047225750151d6ebf05656b106a038776bdfae6f81c300",
+  "suite_id": "holdout-v3",
+  "total_cases": 727,
+  "track": "core"
+}

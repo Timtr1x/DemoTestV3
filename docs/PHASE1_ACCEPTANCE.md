@@ -1,3 +1,10 @@
+> **HISTORICAL — SUPERSEDED.** This document describes the Phase 1 state
+> (LLMail normalized=170, AgentDojo tool_result=629 + tool_call=952,
+> phase1-standard-v1=1018). The AgentDojo P1 tool_result projection has
+> since been removed (P0-2), P1 is LLMail-only, and the current acceptance
+> record is [PHASE1_P1P2_ACCEPTANCE_V3.md](PHASE1_P1P2_ACCEPTANCE_V3.md).
+> Kept for history; do not update.
+
 # Phase 1 Dataset Integration — Acceptance Summary
 
 This documents what Phase 1 delivered against the two guides (Development &

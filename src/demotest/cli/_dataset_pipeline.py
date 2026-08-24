@@ -382,6 +382,7 @@ def compute_stats(ds: DatasetSourceConfig) -> dict[str, Any]:
     by_channel: dict[str, int] = {}
     by_dataset: dict[str, int] = {}
     by_expected: dict[str, int] = {}
+    by_gt_kind: dict[str, int] = {}
     lengths: list[int] = []
     clusters: set[str] = set()
     for line in iter_normalized_lines(ds):
@@ -403,6 +404,8 @@ def compute_stats(ds: DatasetSourceConfig) -> dict[str, Any]:
         by_channel[ch] = by_channel.get(ch, 0) + 1
         by_dataset[c.dataset_id] = by_dataset.get(c.dataset_id, 0) + 1
         by_expected[c.expected_action.value] = by_expected.get(c.expected_action.value, 0) + 1
+        gk = m.get("ground_truth_kind", "") or "unspecified"
+        by_gt_kind[gk] = by_gt_kind.get(gk, 0) + 1
         lengths.append(len(c.content or ""))
         cid = m.get("near_dup_cluster_id")
         if cid:
@@ -411,6 +414,7 @@ def compute_stats(ds: DatasetSourceConfig) -> dict[str, Any]:
     s = {
         "total": n,
         "by_expected": by_expected,
+        "by_ground_truth_kind": by_gt_kind,
         "by_dataset": by_dataset,
         "by_channel": by_channel,
         "by_phase": by_phase,

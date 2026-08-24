@@ -287,12 +287,15 @@ class LLMailAdapter(DatasetAdapter):
         rep.add("attack_files_present", bool(af) and all(f.exists() for f in af), f"{[str(f) for f in af]}")
         bf = self._benign_files()
         rep.add("benign_files_present", bool(bf) and all(f.exists() for f in bf), f"{[str(f) for f in bf]}")
-        # counts (guide §10): smoke thresholds, not exact-equality contracts
+        # counts (guide §10): smoke thresholds, not exact-equality contracts.
+        # The labelled_unique attack files are ~450MB — they MUST be counted
+        # through the same bounded-memory stream used by iter_cases(); never
+        # read_text()+json.loads() them whole (regression-tested).
         n_attack = 0
         for f in af:
             if f.exists():
-                d = json.loads(f.read_text(encoding="utf-8"))
-                n_attack += len(d) if isinstance(d, Mapping) else len(d) if isinstance(d, list) else 0
+                for _prompt, _labels in _iter_prompt_value_pairs(f):
+                    n_attack += 1
         rep.add("attack_count_gt_150k", n_attack > 150_000, f"n_attack={n_attack}")
         n_benign = 0
         for f in bf:

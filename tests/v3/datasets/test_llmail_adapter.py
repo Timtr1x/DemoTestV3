@@ -126,6 +126,35 @@ def test_llmail_validate_raw(tmp_path: Path):
     assert checks["benign_files_present"] is True
 
 
+def test_llmail_validate_raw_streams_attack_file(tmp_path: Path, monkeypatch):
+    """Regression (Phase 1.5): validate_raw() must count attack rows through
+    the bounded-memory stream — NEVER read_text()+json.loads() on the ~450MB
+    labelled_unique files. The guard makes any such call fail loudly; with
+    ijson installed the streaming path keeps validate_raw working.
+    """
+    pytest.importorskip("ijson")  # decisive only when the stream backend exists
+    _write_llmail_raw(tmp_path)
+    ad = _adapter(tmp_path)
+
+    real_read_text = Path.read_text
+
+    def guarded_read_text(self, *a, **kw):
+        if self.name.startswith("labelled_unique_submissions"):
+            raise AssertionError(
+                f"attack JSON '{self.name}' must be streamed, not read_text()"
+            )
+        return real_read_text(self, *a, **kw)
+
+    monkeypatch.setattr(Path, "read_text", guarded_read_text)
+    rep = ad.validate_raw()
+    checks = {c["name"]: c["ok"] for c in rep.checks}
+    assert checks["attack_files_present"] is True
+    # the streamed count matches the real number of dict entries (4 rows in
+    # phase1 + 0 in phase2 of the fixture)
+    detail = next(c for c in rep.checks if c["name"] == "attack_count_gt_150k")
+    assert "n_attack=4" in str(detail.get("detail", ""))
+
+
 def test_adapter_no_network_or_llm_imports():
     """Guide §52: the adapter module must not import openai/anthropic/requests."""
     import demotest.datasets.adapters.llmail as mod

@@ -1,0 +1,49 @@
+{
+  "headline_eligible": true,
+  "projects": {
+    "P1_external_instruction": {
+      "benchmark_track": "core",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/smoke-v3/p1.json",
+      "manifest_sha256": "sha256:00ad9d5b170f99f403a14ff65fee9979eea393b73f13bf4cd5621ee24643be39",
+      "n": 120,
+      "split": [
+        "dev"
+      ],
+      "target": 120
+    },
+    "P2_tool_action": {
+      "benchmark_track": "core",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/smoke-v3/p2.json",
+      "manifest_sha256": "sha256:06f921e521959017f24482cc2eca2980b4a6d1b8e3a90d3be8e2523719d780f0",
+      "n": 100,
+      "split": [
+        "dev"
+      ],
+      "target": 100
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "agentdojo": {
+      "adapter": "agentdojo",
+      "adapter_version": "1.2.0",
+      "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
+      "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+    },
+    "llmail": {
+      "adapter": "llmail",
+      "adapter_version": "1.1.0",
+      "raw_sha256": "a223abaf159dfa6e688d4efe515c93d239cf658797e78c3b12ec5785c09fca92",
+      "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7"
+    }
+  },
+  "split": [
+    "dev"
+  ],
+  "suite_config_hash": "sha256:49b467b718a42bd0ac67ad6711ba7daf67bdcba5f2281ea25920f3f09ea6b25a",
+  "suite_id": "smoke-v3",
+  "total_cases": 220,
+  "track": "core"
+}

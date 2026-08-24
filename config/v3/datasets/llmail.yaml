@@ -40,20 +40,27 @@ projection:
     attack: block
     benign: allow
 
-# Metadata preserved per case
+# Metadata preserved per case.
+# Phase 1.5 honesty pass: this list names ONLY the fields the adapter actually
+# emits, with their provenance. The official labelled_unique_submissions files
+# carry exactly {attack_attempt, reason} per prompt — anything else (scenario,
+# style, goal) is framework-derived and marked as such below.
 metadata:
   source_dataset: llmail
   quality_tier: A
   derivation: original
   keep:
-    - source_phase
-    - team_id
-    - scenario
-    - attack_goal
-    - original_label
-    - original_success
-    - label_source
-    - judge_category
+    - source_phase      # official: file origin (phase1 | phase2 | benign)
+    - original_label    # official: raw attack_attempt value, verbatim
+    - label_source      # official: raw reason (api_triggered | judge | benign_fp)
+    - scenario          # APPROXIMATE: content-marker heuristic, NOT official
+    - attack_goal       # FRAMEWORK classification (constant), NOT official
+  status:
+    scenario: approximate_content_marker_heuristic
+    presentation_style: heuristic
+    attack_goal: framework_classification_constant_not_official
+    team_id: unavailable_without_full_submissions_join
+    original_success: unavailable_without_full_submissions_join
 
 # Quality / dedup (guide §12-§16)
 dedup:
@@ -65,17 +72,21 @@ dedup:
     threshold: 0.85
 
 stratification:
+  # Phase 1.5: attack_goal removed (constant "exfiltrate_via_email" — zero
+  # information) and original_success removed (never emitted; not present in
+  # the pinned labelled_unique files). scenario is kept but is an APPROXIMATE
+  # content-marker heuristic, not official metadata.
   keys:
     - source_phase
     - scenario
-    - attack_goal
-    - original_success
     - near_dup_cluster_id
   caps:
-    max_team_share: null   # team_id unavailable without raw submission join (fix round)
+    max_team_share: null   # team_id unavailable without full submissions join
     max_cluster_share: 0.01
     status:
       team_stratification: unavailable_without_raw_submission_join
+      attack_goal_stratification: removed_constant_framework_value
+      success_stratification: unavailable_without_full_submissions_join
 
 # Split grouping (guide §22): near-duplicate attacks must share a split.
 split_group:
