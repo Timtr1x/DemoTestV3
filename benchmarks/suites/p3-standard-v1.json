@@ -5,7 +5,7 @@
       "benchmark_track": "core",
       "headline_eligible": true,
       "manifest": "benchmarks/manifests/p3-standard-v1/p3.json",
-      "manifest_sha256": "sha256:557463d5475e8d172ecc19d5e38bbc4621886e1f7481e6ceeed535decd617525",
+      "manifest_sha256": "sha256:0c8a5e727e5d317af1e9d39f818a73e31463f767d0edc5e53787e81c4f1a5c25",
       "n": 464,
       "split": [
         "eval"
@@ -17,7 +17,7 @@
   "source_locks": {
     "p3_mcptox": {
       "adapter": "p3_mcptox",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.1.1",
       "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
       "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
     }

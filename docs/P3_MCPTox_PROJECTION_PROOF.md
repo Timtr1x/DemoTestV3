@@ -1,6 +1,6 @@
-# P3 MCPTox Projection Proof — 12-case gate (Phase 3B)
+# P3 MCPTox Projection/Renderer Proof — 12-case gate (Phase 3B)
 
-Date: 2026-08-25 · adapter `p3_mcptox 1.0.0` · revision `f85189f` · probe `cache/probe/mcptox`
+Date: 2026-08-25 · adapter `p3_mcptox 1.0.0` → 1.1.1 (Phase 3C proven) · revision `f85189f` · probe `cache/probe/mcptox`
 Script: `scripts/_p3_mcptox_projection_proof.py` — run with `python scripts/_p3_mcptox_projection_proof.py`
 
 ## What is being proven
@@ -10,7 +10,7 @@ One MCP poisoned tool definition is one `SecurityCase`. The Adapter is a determi
 - takes only `server_name + tool_name + tool_content` from `pure_tool.json` (485 deduped definitions)
 - puts them into `SecurityCase(channel=mcp_definition, operation=register_tool, expected_action=BLOCK)` as `mcp_server / mcp_tool / mcp_description` plus `content`
 - carries `query, security risk, paradigm, tool_address` only in `metadata` (never in the rendered payload)
-- leaves the description byte-identical to the raw `tool_content` stored in `pure_tool.json`
+- leaves the BLOCK description byte-identical to the raw `tool_content` stored in `pure_tool.json` (ALLOW provenance is exact source-span with strip_outer_whitespace since 1.1.1, see P3_MCPTox_CLEAN_AUDIT.md; true Fake E2E is `scripts/_p3_fake_e2e.py` post-freeze)
 
 No synthetic expansion, no LLM paraphrase, no MCP server, no tool execution, no DCI. The headline renderer is `mcp_definition/v1` **structured** (a plain `{server, tool, description, input_schema}` JSON), not the labeled `[MCP_TOOL_DEFINITION]` wrapper.
 
@@ -66,4 +66,4 @@ Fake E2E 12/12 clear  |  groups 45  |  envelope mcp_definition/v1 structured hea
 PROOF PASS — adapter 1.0.0 projection faithful (no synthetic, no query contamination, no DCI).
 ```
 
-The `pure_tool.json` → `SecurityCase` → `MCPDefinitionRenderer.render_structured` chain is faithful. The `mcp_definition` channel is ready for a full freeze without any further Adapter changes; the 1312 number from `response_all.json` remains recorded for traceability but does not feed the current Adapter iteration (485 deduplicated).
+The `pure_tool.json` → `SecurityCase` → `MCPDefinitionRenderer.render_structured` chain is faithful (Phase 3B Projection/Renderer Proof). The true Fake E2E gate is `scripts/_p3_fake_e2e.py` after the Core Freeze (p3-smoke/standard + 12+12 proof), not the inline 12-case check.

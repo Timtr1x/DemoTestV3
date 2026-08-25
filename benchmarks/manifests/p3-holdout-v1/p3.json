@@ -2,7 +2,7 @@
   "benchmark_track": "core",
   "cases": [
     {
-      "case_fingerprint": "fp-87f23862771a86d8",
+      "case_fingerprint": "fp-73174c1c694dfe4a",
       "case_id": "case-00bad85bd448bf89",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -10,7 +10,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d0e1cb1ba56272fd",
+      "case_fingerprint": "fp-1ef0008a0b314666",
       "case_id": "case-01360d1e0da06c53",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -18,7 +18,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-113ec5fc5ea048e9",
+      "case_fingerprint": "fp-dd7e8bbd9f2aecc7",
       "case_id": "case-0342b57896841fa0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -26,7 +26,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-32d8433d29d102e1",
+      "case_fingerprint": "fp-c17e11d548e26f6c",
       "case_id": "case-04e818c9af44ef48",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -34,7 +34,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f074f4fdef7dcf07",
+      "case_fingerprint": "fp-9d15eca45fcd0812",
       "case_id": "case-057d9c43b5ac7238",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -42,7 +42,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d75aa1bf8b31e5f8",
+      "case_fingerprint": "fp-ccf3cd2556c1d441",
       "case_id": "case-06dbdf59959291ad",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -50,7 +50,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-cf0a088b0f256bfd",
+      "case_fingerprint": "fp-f05086da058e1524",
       "case_id": "case-0996d827f1a697e0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -58,7 +58,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-461223ff4915ed3c",
+      "case_fingerprint": "fp-ea2d014f1e63b285",
       "case_id": "case-0fd63ae90f75b015",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -66,7 +66,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-14fa5caa9f54ead2",
+      "case_fingerprint": "fp-9a5e28f773c51dcd",
       "case_id": "case-100d3fb74daa522b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -74,7 +74,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-26f03efef3557a7e",
+      "case_fingerprint": "fp-4f6c49f1259e7b6b",
       "case_id": "case-1033b7a1530407d5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -82,7 +82,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-53baad76a37a051f",
+      "case_fingerprint": "fp-08a994a7efb5bcfd",
       "case_id": "case-107003abb58ebfe8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Fetch",
@@ -90,7 +90,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-fae14cae57ed0a1c",
+      "case_fingerprint": "fp-85028ff810b429ef",
       "case_id": "case-13b3cd34cc8f1add",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -98,7 +98,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-82c39ee784e2a800",
+      "case_fingerprint": "fp-51adce13a1f78437",
       "case_id": "case-152eaffdbee700e1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -106,7 +106,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-39d4bd85c2497805",
+      "case_fingerprint": "fp-fb95ddb367391bb4",
       "case_id": "case-1cce4612b1be2aa6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -114,7 +114,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-a11334842ab2c46e",
+      "case_fingerprint": "fp-96d38e30b7e975dc",
       "case_id": "case-1d0119febc24a422",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -122,7 +122,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e5756e9197e17fe3",
+      "case_fingerprint": "fp-a4fc56c88649b086",
       "case_id": "case-1db35b0042946a0c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -130,7 +130,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-fed1ea3cb5a08046",
+      "case_fingerprint": "fp-947452b5f2f33c95",
       "case_id": "case-1e4baf4e7c4ee92f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -138,7 +138,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-6eea93316eb0043c",
+      "case_fingerprint": "fp-6e1d1c525e71a976",
       "case_id": "case-21427cd700dcda6d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -146,7 +146,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-6133f616bfeeec2f",
+      "case_fingerprint": "fp-29519d49dafce446",
       "case_id": "case-267f82b33b540059",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -154,7 +154,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-57daf0cb3240ff9d",
+      "case_fingerprint": "fp-df35aa72137ffb1e",
       "case_id": "case-27a38defc4df1fb0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -162,7 +162,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-bcdc28ca2018e2b0",
+      "case_fingerprint": "fp-37d952555923a1cf",
       "case_id": "case-283398184ccb917e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -170,7 +170,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-3b86333995b12188",
+      "case_fingerprint": "fp-ee0afdaf43adf4bc",
       "case_id": "case-28569d0d08caf6f0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -178,7 +178,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-38d7356c9b2961cf",
+      "case_fingerprint": "fp-689eb5976d30ed8b",
       "case_id": "case-287f69fdf80ed305",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -186,7 +186,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-04a04896965a99bf",
+      "case_fingerprint": "fp-25783fd6055b7b49",
       "case_id": "case-2b06c7edde0423c1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -194,7 +194,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d481c7605a99466d",
+      "case_fingerprint": "fp-8b11ed488e8539bc",
       "case_id": "case-2c8aa8680f293974",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -202,7 +202,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-b59e59658157b4af",
+      "case_fingerprint": "fp-c496db6cecf4ae7a",
       "case_id": "case-2e9962bbca73066e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -210,7 +210,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-1983d0db59d69294",
+      "case_fingerprint": "fp-5f9f304166fe5c3f",
       "case_id": "case-2fcfcbc2ef161600",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:gNucleus Text to CAD",
@@ -218,7 +218,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-8c346d6eef52e276",
+      "case_fingerprint": "fp-0476ca0e703e04a6",
       "case_id": "case-30388af39a661665",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -226,7 +226,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-1d94f226a1dfb9da",
+      "case_fingerprint": "fp-638997728998c617",
       "case_id": "case-309afb6edd195a5f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -234,7 +234,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-069db95d8d3f9883",
+      "case_fingerprint": "fp-dc81c4bce73a3f8b",
       "case_id": "case-30b8c13ac528e0cf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -242,7 +242,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-1ea4af0cbf951b43",
+      "case_fingerprint": "fp-193abfab5bf2473c",
       "case_id": "case-30dbc9e1fb7431c9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -250,7 +250,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f8f78aed41acf616",
+      "case_fingerprint": "fp-8200eecfb3d18fa4",
       "case_id": "case-32c4b8d6d542b0d2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -258,7 +258,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e1b241277c05e245",
+      "case_fingerprint": "fp-74304b0a7cb9a829",
       "case_id": "case-336095228fe0092e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -266,7 +266,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-546e2a167acd140b",
+      "case_fingerprint": "fp-a7fb1bc46d4016df",
       "case_id": "case-3710cb5c21640e96",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -274,7 +274,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-3f1cf287c42d589f",
+      "case_fingerprint": "fp-bad280a70fab9ce7",
       "case_id": "case-39146c9ef48931da",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -282,7 +282,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-07040ad61bc21e64",
+      "case_fingerprint": "fp-5fdd7d113654e9fc",
       "case_id": "case-40c76890be7a119a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -290,7 +290,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5bdd27b1da4188af",
+      "case_fingerprint": "fp-a50a9c4ba88fc01d",
       "case_id": "case-42741e10f4ef0e20",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -298,7 +298,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-730987d9ef65bf44",
+      "case_fingerprint": "fp-96f1944ef605e3f9",
       "case_id": "case-42bc5e81a0deeb47",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -306,7 +306,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ee02a916456816d6",
+      "case_fingerprint": "fp-c7bffdaf2c50e36b",
       "case_id": "case-43e9c1248e334356",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -314,7 +314,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f2ce3957d598bea5",
+      "case_fingerprint": "fp-8b573a436dea35ac",
       "case_id": "case-450db4fb68051e5f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -322,7 +322,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-8ddc88382e699f10",
+      "case_fingerprint": "fp-a8075c65650428a6",
       "case_id": "case-462f0dee951c9afd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -330,7 +330,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-dda59cb88e55bf7c",
+      "case_fingerprint": "fp-7446cd2c996afc96",
       "case_id": "case-47042f71928ae9ee",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -338,7 +338,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e3d29a67d52ba555",
+      "case_fingerprint": "fp-39c87faa3dddfbbf",
       "case_id": "case-48af47ee67da5726",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -346,7 +346,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4b2e0dbae4a6dbdd",
+      "case_fingerprint": "fp-96f497a0806868c1",
       "case_id": "case-48e0408247f98686",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -354,7 +354,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-dee41736f1517ec2",
+      "case_fingerprint": "fp-c17ff46dba1b2527",
       "case_id": "case-498cd865b9be1d42",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -362,7 +362,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-52c23e0218fd1a4f",
+      "case_fingerprint": "fp-d461a154d67fc2fa",
       "case_id": "case-4991b2b7498b1718",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -370,7 +370,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-431c549fbe6a0374",
+      "case_fingerprint": "fp-881654c61b64e3b4",
       "case_id": "case-4b2694795ee0a55e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -378,7 +378,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-821c8b79cff27602",
+      "case_fingerprint": "fp-e295ae6eafd73bcf",
       "case_id": "case-4b8a6d537576b26f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -386,7 +386,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-9f1b37280214a048",
+      "case_fingerprint": "fp-a1e9bd8cb94cfad3",
       "case_id": "case-4cbc055c3f515fae",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -394,7 +394,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f65875ec5c817ce0",
+      "case_fingerprint": "fp-139552dd3a5aee2b",
       "case_id": "case-4cf43f92e02a6390",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -402,7 +402,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-8ed1b398981d7977",
+      "case_fingerprint": "fp-6370d2d6e251c53c",
       "case_id": "case-4d16a302e19689b0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -410,7 +410,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-45e2f1af2ba38f8a",
+      "case_fingerprint": "fp-7c318b8be2604512",
       "case_id": "case-4f40591013271b66",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -418,7 +418,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e678881b32cc7ef5",
+      "case_fingerprint": "fp-c3d5a9159b408d1e",
       "case_id": "case-518c4cebf3b81c31",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -426,7 +426,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-0c7ba2047fdef794",
+      "case_fingerprint": "fp-1409c20caa7bf306",
       "case_id": "case-523a381166c45470",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -434,7 +434,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-2bb98ee540f8911e",
+      "case_fingerprint": "fp-12a27d910b089278",
       "case_id": "case-5597e7ab112ae9cf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:QuickChart",
@@ -442,7 +442,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-c54018424c262415",
+      "case_fingerprint": "fp-7078431f5e53e654",
       "case_id": "case-57ad33a1ef461d5e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:QuickChart",
@@ -450,7 +450,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-b99fb7ee105aac4d",
+      "case_fingerprint": "fp-458889d2f177ddab",
       "case_id": "case-57d48513186b9f61",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -458,7 +458,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-9bd2d4103d3b1602",
+      "case_fingerprint": "fp-669d2985075f66da",
       "case_id": "case-5b284a948daf2ae9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -466,7 +466,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-bd9fc3d13072564d",
+      "case_fingerprint": "fp-8c073250e4e32be2",
       "case_id": "case-5c05e842b81d224f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -474,7 +474,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-bd6319ebac4c0a08",
+      "case_fingerprint": "fp-b999ebed91e16e8e",
       "case_id": "case-5c4c97827fcb98b7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -482,7 +482,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f73ca657cea80e3b",
+      "case_fingerprint": "fp-283776b050876b1a",
       "case_id": "case-5d1b333be93178b1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -490,7 +490,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4aa4a7e8d74be18d",
+      "case_fingerprint": "fp-3733a65ea0398ca3",
       "case_id": "case-5e30f3362d096250",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -498,7 +498,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-1c3d6ae63645165c",
+      "case_fingerprint": "fp-ebef7d80f67fdf78",
       "case_id": "case-5eed0cfb75a2e5be",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -506,7 +506,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ad398b20a627cd52",
+      "case_fingerprint": "fp-0618055477be6d4e",
       "case_id": "case-65b114e499db15ad",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -514,7 +514,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-98d833b7b3fbcdc7",
+      "case_fingerprint": "fp-8422d6bf594de473",
       "case_id": "case-66561c0d72a70147",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -522,7 +522,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-a5dbe6b313e7f543",
+      "case_fingerprint": "fp-832b027e9698ad1c",
       "case_id": "case-66a937333a5f66c3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -530,7 +530,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-c0ada4eccdfdc861",
+      "case_fingerprint": "fp-f4e4e5d5cb1710f9",
       "case_id": "case-68547ef4068ea160",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:12306-mcp",
@@ -538,7 +538,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ca9e39009a7d86c1",
+      "case_fingerprint": "fp-a7c26794b3bedcd0",
       "case_id": "case-6c2ba5639eba2e16",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -546,7 +546,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-91da56804e0259b6",
+      "case_fingerprint": "fp-0df77f7bf6de4dc4",
       "case_id": "case-6cff8e4fc07773ba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -554,7 +554,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-043a2858e9577522",
+      "case_fingerprint": "fp-85c84f84d4292f21",
       "case_id": "case-6ee81649b76743e1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -562,7 +562,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-a84e337dd0193f0a",
+      "case_fingerprint": "fp-7c7881ccfd1d9138",
       "case_id": "case-7087c2e818691631",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -570,7 +570,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-9d87a6d893b172ae",
+      "case_fingerprint": "fp-0e2ae039156197cf",
       "case_id": "case-7419ac7dada3d275",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -578,7 +578,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7e6f53946244968b",
+      "case_fingerprint": "fp-39e5a461889085e8",
       "case_id": "case-76e378a7cf5a1f5f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -586,7 +586,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f36e14a6d97572cc",
+      "case_fingerprint": "fp-51b82bb37a6a5995",
       "case_id": "case-79199f1293b6766a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -594,7 +594,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-781832ce58e7684f",
+      "case_fingerprint": "fp-905e627704a93e3e",
       "case_id": "case-7a2499e1752e749f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -602,7 +602,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ce7de073602fa888",
+      "case_fingerprint": "fp-8ec4e3213215c2e0",
       "case_id": "case-80864816dd054668",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -610,7 +610,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f796d5584130d4bf",
+      "case_fingerprint": "fp-670d99d91b4385b5",
       "case_id": "case-822106d5efdb2645",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -618,7 +618,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-2665ce9aeb7f086a",
+      "case_fingerprint": "fp-9e4202e233c633b6",
       "case_id": "case-8390d64a3b0ebeab",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:QuickChart",
@@ -626,7 +626,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-1a63d82ef15e4d48",
+      "case_fingerprint": "fp-9d750a03297593fc",
       "case_id": "case-87b320d78576f43d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -634,7 +634,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d3fa86062bfe6803",
+      "case_fingerprint": "fp-7b2f6dc83e6debe2",
       "case_id": "case-88de6f86fd93007b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -642,7 +642,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7350e50b81e33b76",
+      "case_fingerprint": "fp-73ea1c95c89ddedc",
       "case_id": "case-89afc21d89394f73",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -650,7 +650,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-6830cddf40ae0dbf",
+      "case_fingerprint": "fp-67d7ee1aa8e48d32",
       "case_id": "case-89f022849930a404",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -658,7 +658,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ef1075b97021b1ac",
+      "case_fingerprint": "fp-3ef947ae9a04ce1c",
       "case_id": "case-8a5dede4cf9de70d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -666,7 +666,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-6680938e17b6101a",
+      "case_fingerprint": "fp-8a4174a67018a02a",
       "case_id": "case-8cedbc4e9ec4a307",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -674,7 +674,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-88e66f05840f76ea",
+      "case_fingerprint": "fp-7d2babd37c9792f4",
       "case_id": "case-8fdf2a88b1906446",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -682,7 +682,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d4aa8b22d22d423d",
+      "case_fingerprint": "fp-d3561750b4819b34",
       "case_id": "case-9027cd2243778ae0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -690,7 +690,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ba042f890d25fe42",
+      "case_fingerprint": "fp-51ff1d651a39751a",
       "case_id": "case-908b68e69b9af6a7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -698,7 +698,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4da976e7ebbd5a92",
+      "case_fingerprint": "fp-d716bc9813f797b1",
       "case_id": "case-90c8299dff0d8989",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -706,7 +706,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-95cbd053106fa0e9",
+      "case_fingerprint": "fp-080df027912d25a4",
       "case_id": "case-958ce9f1de89f368",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -714,7 +714,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-8582f4688ddf395f",
+      "case_fingerprint": "fp-7dcc63f844a4e951",
       "case_id": "case-977b16eb68e823bf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -722,7 +722,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-920fc41c2d58ca45",
+      "case_fingerprint": "fp-26a6f7263ab3ec15",
       "case_id": "case-992cb75331b43580",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -730,7 +730,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7a632dd9d8fa6c16",
+      "case_fingerprint": "fp-7e25b0ad677d4d2e",
       "case_id": "case-99b928581cc3c601",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -738,7 +738,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e9deea54e1b51ce4",
+      "case_fingerprint": "fp-22f5eac4c7ed4a57",
       "case_id": "case-9e51820067e3c9fb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -746,7 +746,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5f70765c9c41c269",
+      "case_fingerprint": "fp-6791a0e2fe16f76d",
       "case_id": "case-9f0f383614e6cd8a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -754,7 +754,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-2756dd259d4c758e",
+      "case_fingerprint": "fp-2515a8b91e5bf296",
       "case_id": "case-a13005205a517e02",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -762,7 +762,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4968d765afab485a",
+      "case_fingerprint": "fp-46cc642f425ae2d3",
       "case_id": "case-a1ea4ae489c14231",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -770,7 +770,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-94a4bfc44174c3e2",
+      "case_fingerprint": "fp-ba42aa42b87497ca",
       "case_id": "case-a2ea7936734c2c18",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -778,7 +778,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-a46928bd6abac9a8",
+      "case_fingerprint": "fp-6399d63549c4a1e3",
       "case_id": "case-a33a21263dd75265",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Fetch",
@@ -786,7 +786,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-c8b0195006eb8cca",
+      "case_fingerprint": "fp-d426b2f8d082e2a0",
       "case_id": "case-a977b15795368cf1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -794,7 +794,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5dc0d41c20ecb628",
+      "case_fingerprint": "fp-9a743597101e95d0",
       "case_id": "case-a9e54cf223b0fd8b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -802,7 +802,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-bada84c651d0a50d",
+      "case_fingerprint": "fp-2bad3d4dd42d286b",
       "case_id": "case-aa552ff8ce855a27",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -810,7 +810,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-6e92edb46e2044a8",
+      "case_fingerprint": "fp-7293f39e504da254",
       "case_id": "case-ab33e29740bc7f6d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -818,7 +818,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-cc76b75abc67661d",
+      "case_fingerprint": "fp-c882da0ce8cd3da4",
       "case_id": "case-ab5a7db4a9936e7f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -826,7 +826,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-be26436111820088",
+      "case_fingerprint": "fp-fe53d9f9ec75881d",
       "case_id": "case-ac06552726f99943",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -834,7 +834,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ab4449f32172bb70",
+      "case_fingerprint": "fp-00ba562c96b0b4b8",
       "case_id": "case-ac48193706fbb4cd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -842,7 +842,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f6bda348315a5f94",
+      "case_fingerprint": "fp-2fe0b595644e4d25",
       "case_id": "case-ad39537c1f511216",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -850,7 +850,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e62706c9db83ad83",
+      "case_fingerprint": "fp-7c54f549d580c07d",
       "case_id": "case-ad7ae9fc8c46dc38",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -858,7 +858,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-633b4276a1ba1b0c",
+      "case_fingerprint": "fp-fbaad0f4d9695835",
       "case_id": "case-ad9fd0cfc9c9f768",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -866,7 +866,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d8e475e50b5a1575",
+      "case_fingerprint": "fp-68d62c541d6f651e",
       "case_id": "case-af6595e54c4dbae8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:12306-mcp",
@@ -874,7 +874,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4a2dd9372ca47949",
+      "case_fingerprint": "fp-0e3e8ef99eafdeea",
       "case_id": "case-af66d630e4d6c3fa",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -882,7 +882,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-dfcba65d9770b49b",
+      "case_fingerprint": "fp-e3b5485fdd4cec20",
       "case_id": "case-b07d9d317d38c4e3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -890,7 +890,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-801902f9e322b1a9",
+      "case_fingerprint": "fp-e017ede2a648237f",
       "case_id": "case-b172ae86e53315c6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -898,7 +898,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4c1e01a09ef5eac6",
+      "case_fingerprint": "fp-e9cf2b0bf300ffb1",
       "case_id": "case-b3b37193d2b8e0f9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -906,7 +906,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4f242df917949b9f",
+      "case_fingerprint": "fp-2647499d4ae13c3a",
       "case_id": "case-ba74ccc16d7ca61a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -914,7 +914,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-731e4f1521573055",
+      "case_fingerprint": "fp-7c1293b6643f03ee",
       "case_id": "case-bb8a235396de7960",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -922,7 +922,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-798588afe0cc823c",
+      "case_fingerprint": "fp-a08596da7f2b2159",
       "case_id": "case-c2e2b5edabbe1dbf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -930,7 +930,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ffc55cd7ca118704",
+      "case_fingerprint": "fp-0d2f653235b4d184",
       "case_id": "case-c3fa9e992f44e3fc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -938,7 +938,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-08896ad203a9272e",
+      "case_fingerprint": "fp-b23cfd947de68bf9",
       "case_id": "case-c62171706f5eb1e1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -946,7 +946,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-11f692e5f4182ff0",
+      "case_fingerprint": "fp-045b9471b40731c7",
       "case_id": "case-c896ae378a4add0f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -954,7 +954,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7999f30ef8a09ce1",
+      "case_fingerprint": "fp-1f21916618a125c3",
       "case_id": "case-c95fc5c904753ef7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -962,7 +962,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-9b82e515cea86a65",
+      "case_fingerprint": "fp-7d1cd5d7dc1817aa",
       "case_id": "case-c96fd0dc55d77785",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:KeywordsPeopleUse",
@@ -970,7 +970,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-19771acbf1b872d7",
+      "case_fingerprint": "fp-44e76fc6bdcaa85a",
       "case_id": "case-caaae05a5cd61dd7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -978,7 +978,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-da34ca200b0e2df6",
+      "case_fingerprint": "fp-a0231fb0a18a2bb2",
       "case_id": "case-cf226c6c7c2bc881",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -986,7 +986,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-41b7ffbd4fdc75d6",
+      "case_fingerprint": "fp-471fcb616b0181f4",
       "case_id": "case-cfc8c50f213272ac",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -994,7 +994,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-19437a7c72a93412",
+      "case_fingerprint": "fp-ba3c74ac8f661f48",
       "case_id": "case-d0027ec853cdb242",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1002,7 +1002,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-b8a004e161d375a8",
+      "case_fingerprint": "fp-415552834fc35025",
       "case_id": "case-d154df8c7c3319ca",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -1010,7 +1010,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-770f4e754f523822",
+      "case_fingerprint": "fp-4f3f795917437d23",
       "case_id": "case-d1d4acee12b443f5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -1018,7 +1018,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-15ad8323aad6ce87",
+      "case_fingerprint": "fp-debe141935fb974d",
       "case_id": "case-d2be74e86ef82b84",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -1026,7 +1026,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-21769eeb1df7a5d4",
+      "case_fingerprint": "fp-ce39e496306943bc",
       "case_id": "case-d3c3c0b29b3882bd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -1034,7 +1034,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5d95bc027a5669fc",
+      "case_fingerprint": "fp-903f40345c482830",
       "case_id": "case-d5a35a425fd5b925",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -1042,7 +1042,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-07059c0e27ccb5c2",
+      "case_fingerprint": "fp-5e94802aa372e6bd",
       "case_id": "case-d78d6b49a324ffda",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -1050,7 +1050,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-8d17a60ed3fec4ff",
+      "case_fingerprint": "fp-ee9723c73280c904",
       "case_id": "case-d965b0be66b2e697",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1058,7 +1058,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-873bfbc7230fea15",
+      "case_fingerprint": "fp-d32106def42ae4ee",
       "case_id": "case-da9423d72e647b2f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1066,7 +1066,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5513dd4880214aec",
+      "case_fingerprint": "fp-6bcf92cb014dafda",
       "case_id": "case-dddf23b02b2f6f8d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -1074,7 +1074,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-bff832151d26affa",
+      "case_fingerprint": "fp-9a1baf8ae4914637",
       "case_id": "case-e121a5674675eda7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:gNucleus Text to CAD",
@@ -1082,7 +1082,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-b4a203c25bd49c30",
+      "case_fingerprint": "fp-6f783347ebcc588a",
       "case_id": "case-e1275409ffa2a07a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -1090,7 +1090,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f1a9617cafd706a2",
+      "case_fingerprint": "fp-ec8dd032b3e5f324",
       "case_id": "case-e25f51297eafaedd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1098,7 +1098,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7372840eb0a1ed8e",
+      "case_fingerprint": "fp-8a3cce588fbb5964",
       "case_id": "case-e3ec7a5e27340086",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1106,7 +1106,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-93482bf5b64569cf",
+      "case_fingerprint": "fp-a7717119882055ba",
       "case_id": "case-e4eb4c821f9b0cdd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -1114,7 +1114,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-09a55594ebfec5e3",
+      "case_fingerprint": "fp-096af378cc8b626d",
       "case_id": "case-e56235aff39cc862",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -1122,7 +1122,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e2bbb13a67f51f30",
+      "case_fingerprint": "fp-d10181a9b8c5a3bd",
       "case_id": "case-e6cbd8d94a35e07e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1130,7 +1130,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5208e7c48b3f70dd",
+      "case_fingerprint": "fp-e5b7aebf26edc60d",
       "case_id": "case-eae59633acb48d17",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -1138,7 +1138,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e8e6c4dc58da9ea8",
+      "case_fingerprint": "fp-d1d7ed98f8d43568",
       "case_id": "case-eb5de4d168b20a3b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -1146,7 +1146,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-29212bb81acf1475",
+      "case_fingerprint": "fp-1da159f05193e027",
       "case_id": "case-ee368b586510d770",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -1154,7 +1154,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-8d816f5dba6632c2",
+      "case_fingerprint": "fp-8d569a953713f734",
       "case_id": "case-efff9611ced68c87",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1162,7 +1162,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-32daaa9c386dadb9",
+      "case_fingerprint": "fp-d868bd6f9d863c35",
       "case_id": "case-f05b62d93024ecb0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1170,7 +1170,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-58ad1a07d8eeee9a",
+      "case_fingerprint": "fp-6ee544964ad97161",
       "case_id": "case-f106ac0c66fb8e76",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1178,7 +1178,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-2737e544a15a72cc",
+      "case_fingerprint": "fp-4f73a56037cfaf59",
       "case_id": "case-f131c9ce16fa7c3f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:HyperBrowser",
@@ -1186,7 +1186,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-db8db1d224889a3b",
+      "case_fingerprint": "fp-ee586f32a4c19554",
       "case_id": "case-f13ca0ee84929061",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:wechat",
@@ -1194,7 +1194,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-924f856c2df9b1db",
+      "case_fingerprint": "fp-889755e0ee97e73c",
       "case_id": "case-f2cadf06c595bd0a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AgentQL",
@@ -1202,7 +1202,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4ca1dffb1f46ff09",
+      "case_fingerprint": "fp-a5cb6609ad8c0e4a",
       "case_id": "case-f3354236792dce63",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -1210,7 +1210,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5bb93193c3fe9d09",
+      "case_fingerprint": "fp-cf1c579120f669c9",
       "case_id": "case-f3a31c8c63573888",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1218,7 +1218,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-0e71ae4e81e23242",
+      "case_fingerprint": "fp-964b5de7eeb1ee01",
       "case_id": "case-f76bbfab69fce2b6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BraveSearch",
@@ -1226,7 +1226,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-09501e526d1c8190",
+      "case_fingerprint": "fp-35e885bce672897b",
       "case_id": "case-f97c6342db46a3fe",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Slack",
@@ -1234,7 +1234,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-2d8339f3510cf7ba",
+      "case_fingerprint": "fp-04d0dc79d53a751c",
       "case_id": "case-fa23c4bc81e3cb1c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Github",
@@ -1242,7 +1242,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-09dd141e5662ef37",
+      "case_fingerprint": "fp-9f22dc347edea863",
       "case_id": "case-fd2bbddcd4407b44",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Prisma",
@@ -1253,13 +1253,13 @@
   "created_from": {
     "p3_mcptox": {
       "adapter": "p3_mcptox",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.1.1",
       "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
       "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
     }
   },
   "headline_eligible": false,
-  "manifest_sha256": "sha256:65b8082926097ddcdf800f55cffad0f6d997fb8466085fde38dde1ac342088c7",
+  "manifest_sha256": "sha256:dfd322638a4b616f227125ae5e04810449bfa702a32bd62fce5d2dd0622d1534",
   "manifest_version": "v3.2",
   "n": 156,
   "project": "P3_mcp_definition",

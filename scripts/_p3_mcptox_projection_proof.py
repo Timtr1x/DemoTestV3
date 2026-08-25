@@ -1,4 +1,4 @@
-"""P3 MCPTox projection proof — 12-case golden gate (Phase 3B).
+"""P3 MCPTox Projection/Renderer Proof — 12-case golden gate (Phase 3B).
 
 Verifies the exact requirements from the guide:
   * Adapter 1.0.0 deterministic projection: server_name + tool_name + tool_content
@@ -8,11 +8,9 @@ Verifies the exact requirements from the guide:
   * Renderer structured fidelity (headline): envelope is {server, tool, description,
     input_schema}, no query/risk/paradigm leak.
   * Server-level group determinism: same server never crosses splits.
-  * Fake gateway end-to-end for all 12.
+  * (Layout note: true Fake E2E is scripts/_p3_fake_e2e.py after Core Freeze; this script is Projection/Renderer fidelity only.)
 
-This is not a benchmark run. It just proves the dataset path from raw files
-through Adapter -> Renderer -> GatewayRequest is faithful before any real LineMod
-traffic.
+This is not a benchmark run. It proves Adapter -> Renderer projection/Renderer fidelity before the Core Freeze; use scripts/_p3_fake_e2e.py for the canonical Fake E2E.
 
 Run:  python scripts/_p3_mcptox_projection_proof.py
 Exit: 0 on all gates passing, 1 on any failure.

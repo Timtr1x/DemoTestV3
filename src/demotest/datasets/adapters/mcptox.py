@@ -6,12 +6,17 @@ Primary source: pure_tool.json (485 poisoned definitions, deduped, one per def_t
   security risk, paradigm, tool_address}.  tool_content is the poisoned description
   the gateway would see.
 
-Projection (guide Phase 3A + requirement):
-  * gateway-visible: only server_name + tool_name + tool_content (byte-identical)
-    -> SecurityCase(mcp_server, mcp_tool, mcp_description)
-  * metadata-only: query, security risk, paradigm, tool_address, dataset,
-    source_case_id, derivation, quality_tier.  These must never be concatenated
-    into the rendered payload (content / mcp_description).
+Fidelity (guide Phase 3A-3C, closed by 1.1.1):
+  * BLOCK (pure_tool.json): gateway-visible triple is byte-identical to
+    pure_tool.json tool_content (preserves its single leading space, e.g.
+    " Initiates..."), -> SecurityCase(mcp_server, mcp_tool, mcp_description).
+  * ALLOW (response_all.json clean_system_promot): gateway-visible triple is
+    exact source-span extraction with outer-whitespace normalization:
+    raw span is m.group(2) (= clean_system_promot[start:end]), normalized is
+    m.group(2).strip(); provenance distinguishes raw_span_sha256 vs
+    normalized_sha256 and metadata records projection_transform=strip_outer_whitespace.
+  * metadata-only (never rendered): query, security risk, paradigm, tool_address,
+    plus source_span / clean_prompt_sha256 / source_span_sha256 for audit.
 
 The adapter does not synthesize, paraphrase, or expand benign data.  It also
 does not execute MCP servers or evaluate Agent susceptibility.  That belongs to
@@ -74,12 +79,16 @@ def _sha256_text(text: str) -> str:
 class P3MCPToxAdapter(DatasetAdapter):
     """Project pinned MCPTox definitions into MCP_DEFINITION (BLOCK+ALLOW core 794).
 
-    v1.1.0 adds the 309 high-confidence clean ALLOW branch (same server groups,
-    same renderer, byte-identical to response_all.json clean_system_promot spans).
+    1.1.0 added the 309 high-confidence clean ALLOW branch (same server groups,
+    same renderer, exact source-span extraction from clean_system_promot with
+    outer-whitespace normalization).
+    1.1.1 corrects clean provenance fidelity: raw = exact source span
+    (m.group(2)), normalized = stripped, with source_span_sha256 + projection_transform.
+    Gateway-visible 485 BLOCK + 309 ALLOW are byte-for-byte unchanged vs 1.1.0.
     """
 
     dataset_id = "p3_mcptox"
-    adapter_version = "1.1.0"
+    adapter_version = "1.1.1"
 
     def __init__(
         self,
@@ -165,7 +174,12 @@ class P3MCPToxAdapter(DatasetAdapter):
 
     # ------------------------------------------------------------------ rows (clean)
     def _load_clean(self) -> list[dict[str, Any]]:
-        """Load 309 high-confidence clean definitions from response_all.json."""
+        """Load 309 high-confidence clean definitions from response_all.json.
+
+        Fidelity: raw is the exact source span m.group(2) (= clean_system_promot[s:e]),
+        normalized is m.group(2).strip() (outer-whitespace normalization). Both SHAs
+        are retained so provenance can distinguish the two.
+        """
         if self._entries_provider is not None:
             return []  # injection is pure-only by contract (attack proof)
         fp = self.raw_dir / "response_all.json"
@@ -185,19 +199,26 @@ class P3MCPToxAdapter(DatasetAdapter):
             sha = hashlib.sha256(cp.encode("utf-8")).hexdigest()
             for m in pattern.finditer(cp):
                 tool = m.group(1).strip()
-                desc = m.group(2).strip()
+                raw_desc = m.group(2)  # exact source span, including any outer \n/space
+                desc = raw_desc.strip()  # gateway-visible normalized form
                 s, e = m.start(2), m.end(2)
                 # strict already audited — description must be usable as ALLOW
                 if not desc or desc.lower() == "none":
                     continue
+                raw_sha = hashlib.sha256(raw_desc.encode("utf-8")).hexdigest()
+                norm_sha = hashlib.sha256(desc.encode("utf-8")).hexdigest()
                 out.append(
                     {
                         "server_name": server,
                         "tool_name": tool,
                         "tool_content": desc,
+                        "tool_content_raw": raw_desc,
                         "source_span": [s, e],
+                        "source_span_sha256": raw_sha,
                         "clean_prompt_sha256": sha,
                         "source_case_id": f"clean:{server}:{tool}",
+                        "provenance_raw_sha256": raw_sha,
+                        "provenance_normalized_sha256": norm_sha,
                     }
                 )
         return out
@@ -300,8 +321,10 @@ class P3MCPToxAdapter(DatasetAdapter):
     def _build_clean_case(self, *, row: Mapping[str, Any]) -> SecurityCase:
         server_name = str(row.get("server_name") or "")
         tool_name = str(row.get("tool_name") or "")
-        # Gateway-visible: byte-identical clean description from clean_system_promot span
+        # Gateway-visible: exact source-span extraction with outer-whitespace normalization
+        # raw_desc = clean_system_promot[s:e], tool_content = raw_desc.strip()
         tool_content = str(row.get("tool_content") or "")
+        raw_desc = str(row.get("tool_content_raw") or tool_content)
         gid = mcptox_group_id(server_name)
         source_case_id = str(row.get("source_case_id") or f"clean:{server_name}:{tool_name}")
         source_id = f"mcptox:{server_name}:{source_case_id}"
@@ -323,6 +346,9 @@ class P3MCPToxAdapter(DatasetAdapter):
         d = case.to_dict()
         span = row.get("source_span") or []
         sha = str(row.get("clean_prompt_sha256") or "")
+        raw_sha = str(row.get("source_span_sha256") or row.get("provenance_raw_sha256") or _sha256_text(raw_desc))
+        norm_sha = str(row.get("provenance_normalized_sha256") or _sha256_text(tool_content))
+        # raw_sha == sha256(raw_span), norm_sha == sha256(stripped); differ on 22/309
         d["metadata"] = {
             **(d.get("metadata") or {}),
             "source_dataset": "mcptox",
@@ -338,6 +364,8 @@ class P3MCPToxAdapter(DatasetAdapter):
             "ground_truth_kind": "benign_mcp_definition",
             "clean_prompt_sha256": sha,
             "source_span": list(span) if isinstance(span, (list, tuple)) else span,
+            "source_span_sha256": raw_sha,
+            "projection_transform": "strip_outer_whitespace",
             "pure_sha256": MCPTOX_PURE_SHA256,
             "response_sha256": MCPTOX_RESPONSE_SHA256,
         }
@@ -347,8 +375,8 @@ class P3MCPToxAdapter(DatasetAdapter):
             source_revision=self._lock_revision(),
             source_id=source_id,
             group_id=gid,
-            raw_sha256=_sha256_text(tool_content),
-            normalized_sha256=_sha256_text(tool_content),
+            raw_sha256=raw_sha,
+            normalized_sha256=norm_sha,
             adapter_name="p3_mcptox",
             adapter_version=self.adapter_version,
             quality_tier="B",

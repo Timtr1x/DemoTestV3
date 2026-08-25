@@ -117,7 +117,7 @@ datasets:
 
   p3_mcptox:
     adapter: p3_mcptox
-    adapter_version: 1.1.0
+    adapter_version: 1.1.1
     enabled: true
     quality_tier: B
     source:

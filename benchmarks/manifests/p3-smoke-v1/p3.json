@@ -2,7 +2,7 @@
   "benchmark_track": "core",
   "cases": [
     {
-      "case_fingerprint": "fp-653f522aa32706a6",
+      "case_fingerprint": "fp-4c6e884859929fd9",
       "case_id": "case-01168d0a67121441",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -10,7 +10,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e02c530301acf221",
+      "case_fingerprint": "fp-c4bb4132f94594a9",
       "case_id": "case-022d612703a9adb4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -18,7 +18,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5e83fa87a5a04e48",
+      "case_fingerprint": "fp-9c9122f42ce4f544",
       "case_id": "case-074bc2a41949f8b7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:SQLite",
@@ -26,7 +26,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5d64e26d4a603754",
+      "case_fingerprint": "fp-dcc9b0f80f0880c1",
       "case_id": "case-08b10feff87674d8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -34,7 +34,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-56af2767e7e59c48",
+      "case_fingerprint": "fp-fec2492a0262a794",
       "case_id": "case-10796e8ad0196623",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -42,7 +42,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e326e81f22ef3e9e",
+      "case_fingerprint": "fp-b7b346d9e8b40624",
       "case_id": "case-109a8910b896e349",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -50,7 +50,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e3302eb1968da5df",
+      "case_fingerprint": "fp-91114ab80148a903",
       "case_id": "case-109cd911ff94b7aa",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:SQLite",
@@ -58,7 +58,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-f56507d92dd262c3",
+      "case_fingerprint": "fp-465638988b9b2d0c",
       "case_id": "case-11ad541f94cec002",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -66,7 +66,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-a76c143ced030136",
+      "case_fingerprint": "fp-0f518b751faa80dd",
       "case_id": "case-13187316f273f2c6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -74,7 +74,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-c56570de57e4cd7c",
+      "case_fingerprint": "fp-295f724f9b550724",
       "case_id": "case-131fe5a697eb2351",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -82,7 +82,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-0e13e4bd2a1875b3",
+      "case_fingerprint": "fp-a7154c8a6ad62a58",
       "case_id": "case-1539eac1c06faad9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -90,7 +90,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-79c877f4315f2123",
+      "case_fingerprint": "fp-26b05d5c83a9dc63",
       "case_id": "case-173644b48f8c86dc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -98,7 +98,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-1904d1efcd1dedf9",
+      "case_fingerprint": "fp-2540331516d34cac",
       "case_id": "case-1b19912993e26539",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:E2B",
@@ -106,7 +106,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-ec704000f0feec14",
+      "case_fingerprint": "fp-f576eea2d6b88d32",
       "case_id": "case-1c4522838a4bb0ae",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -114,7 +114,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-c2e153e42a0754ab",
+      "case_fingerprint": "fp-7b46c9e255f31231",
       "case_id": "case-1cf615fd7a822f04",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -122,7 +122,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b943144fb7fab609",
+      "case_fingerprint": "fp-f3820dfec8962c0f",
       "case_id": "case-1ffcf40e9c6979f3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -130,7 +130,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-12b86fa459f55c61",
+      "case_fingerprint": "fp-3561566a0956548b",
       "case_id": "case-202324eeea5d94b4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -138,7 +138,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-c0676a7e77d535af",
+      "case_fingerprint": "fp-90db9be11f0105ec",
       "case_id": "case-23f08587f745dbd8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -146,7 +146,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-1d4e095874a4a488",
+      "case_fingerprint": "fp-e192667b0bf3680a",
       "case_id": "case-256cd2fa7f403e79",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -154,7 +154,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-f1a43cc9f78bc613",
+      "case_fingerprint": "fp-e3c0f0ddec460b43",
       "case_id": "case-25bb03961d28ae67",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -162,7 +162,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-440620f2767b7cb1",
+      "case_fingerprint": "fp-f37d69f2d04284a0",
       "case_id": "case-25ea11e62ee02cb5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -170,7 +170,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-a516bf16198bc899",
+      "case_fingerprint": "fp-b3c9fc1309b8a4de",
       "case_id": "case-2a1da7a7152f62f5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -178,7 +178,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-f71a243328aa6782",
+      "case_fingerprint": "fp-a8aa14305b9faf5f",
       "case_id": "case-2e9f797ae562e85f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -186,7 +186,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-7da642af0d1be447",
+      "case_fingerprint": "fp-ca95c87de1be3566",
       "case_id": "case-30de4ced47d8c62a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -194,7 +194,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-a98a1bfd23d1221a",
+      "case_fingerprint": "fp-6e869ad137cc5032",
       "case_id": "case-335ab4ccf25cae6b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -202,7 +202,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-96115fcd5c971406",
+      "case_fingerprint": "fp-c65f7ce5e7871055",
       "case_id": "case-37b52327fee7b124",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -210,7 +210,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e68a51e6e188b660",
+      "case_fingerprint": "fp-8a8c4aeadeafe29f",
       "case_id": "case-37e51438c3d88bb4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:E2B",
@@ -218,7 +218,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-05b52e7c1d470625",
+      "case_fingerprint": "fp-9b767309eaaf6ddf",
       "case_id": "case-38375d3f523dbbe8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:SQLite",
@@ -226,7 +226,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2fe3d99b12d19b8c",
+      "case_fingerprint": "fp-975d9aa58f81d0fc",
       "case_id": "case-3989b7e6bd2f8846",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -234,7 +234,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5bbb1fbf40b69fac",
+      "case_fingerprint": "fp-2aded32adb91f625",
       "case_id": "case-4346aa3a5206d918",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -242,7 +242,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-415a1366378599e2",
+      "case_fingerprint": "fp-5d6e215366a4a348",
       "case_id": "case-436e8e568f9c1e77",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -250,7 +250,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-3061fe8a098799e1",
+      "case_fingerprint": "fp-6fa49abb2473da0f",
       "case_id": "case-4624d8c53e0ec7c2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -258,7 +258,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-376fe3e826bc9969",
+      "case_fingerprint": "fp-a0f67eff9409a51c",
       "case_id": "case-47976c14ce16f10a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -266,7 +266,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5ef5583def5c6e12",
+      "case_fingerprint": "fp-0e77bdedc97550df",
       "case_id": "case-47c6e981085eb617",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -274,7 +274,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-8c3219c3172db77f",
+      "case_fingerprint": "fp-8b93a13a6e7e3868",
       "case_id": "case-50a05d913273cc17",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -282,7 +282,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2669bf49dd98bc28",
+      "case_fingerprint": "fp-2172582d1c6670f3",
       "case_id": "case-524b36b2068e5cd2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -290,7 +290,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-47fd51d069787758",
+      "case_fingerprint": "fp-217c500c7cbbb783",
       "case_id": "case-55049379049fa9c3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -298,7 +298,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2426498b6523d359",
+      "case_fingerprint": "fp-fdb040e0109f7199",
       "case_id": "case-553c336431bebfea",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:SQLite",
@@ -306,7 +306,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-ae1d96d40fef9eef",
+      "case_fingerprint": "fp-9bc2f381995f5539",
       "case_id": "case-5557a6c4e9f55118",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -314,7 +314,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b63c8067a6c067c6",
+      "case_fingerprint": "fp-e097019aeb98ce57",
       "case_id": "case-555dac7154839530",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -322,7 +322,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2c756c4c55983643",
+      "case_fingerprint": "fp-aada0832350299a4",
       "case_id": "case-5880655025683038",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -330,7 +330,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-8231a3eac3faaf48",
+      "case_fingerprint": "fp-63522d7909f5870c",
       "case_id": "case-58968866015978c2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -338,7 +338,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-aede209c1ec3cc2d",
+      "case_fingerprint": "fp-b957d9e9630b925d",
       "case_id": "case-5e83abd1e1139ad4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -346,7 +346,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b58cf4e922c2b9a3",
+      "case_fingerprint": "fp-5ed2830bd4a9d93a",
       "case_id": "case-64d4a5724f82970d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -354,7 +354,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-50dbf6f18d6b9f58",
+      "case_fingerprint": "fp-2e5a2759d313b75a",
       "case_id": "case-66d3959eac7218bb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -362,7 +362,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-032cddc5ce7d20fb",
+      "case_fingerprint": "fp-112a5637a29ab04d",
       "case_id": "case-67937dd8fe5eadbc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -370,7 +370,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-f0079db7ea5d2df2",
+      "case_fingerprint": "fp-6cf7ad396148a589",
       "case_id": "case-7141b2286f8c38ce",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -378,7 +378,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-7fcac61e706642c7",
+      "case_fingerprint": "fp-dadd5aebc0109621",
       "case_id": "case-72287818088fca18",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -386,7 +386,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-27e6e7cd46e25b03",
+      "case_fingerprint": "fp-dd82a0fd3a7abdd1",
       "case_id": "case-7514f6df89a947af",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -394,7 +394,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-56b477e916ff6a6a",
+      "case_fingerprint": "fp-b88dbab25d95de25",
       "case_id": "case-764289590714ba02",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -402,7 +402,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-585121d3c6839375",
+      "case_fingerprint": "fp-df174dea5189ef64",
       "case_id": "case-772228af9ac693e6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -410,7 +410,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-7a9da8e5986c61f7",
+      "case_fingerprint": "fp-4e1becc6c9193687",
       "case_id": "case-7b9e6d6493fa688d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -418,7 +418,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e20a4ddc686a0743",
+      "case_fingerprint": "fp-726f1dceb1d9a397",
       "case_id": "case-7e8bb067d363de10",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -426,7 +426,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-d5f01adfb6fabe92",
+      "case_fingerprint": "fp-b9f6c1dcde5077bf",
       "case_id": "case-8261be43eb926548",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -434,7 +434,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e03181ca34108bb1",
+      "case_fingerprint": "fp-791371562018d9a0",
       "case_id": "case-827c0a386ca94011",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -442,7 +442,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-3abbb020ef3c1935",
+      "case_fingerprint": "fp-9226a82de68a14fa",
       "case_id": "case-864a8b89359da83e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -450,7 +450,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-a6dddcfdfa3fd413",
+      "case_fingerprint": "fp-b1c0cb26b87db23b",
       "case_id": "case-86fc4776a8981414",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -458,7 +458,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-ee27f1ac3e1fd101",
+      "case_fingerprint": "fp-e9c3e5518808fe95",
       "case_id": "case-888567daadd858aa",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -466,7 +466,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-30441f24be2bbcf7",
+      "case_fingerprint": "fp-b985675d5dc68c36",
       "case_id": "case-88b8d331e5de1ee1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -474,7 +474,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-e62cb9dc101b2d76",
+      "case_fingerprint": "fp-82ecec811ca8cfd2",
       "case_id": "case-89fa93508aaab08b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -482,7 +482,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-6445c8e3a911b8ce",
+      "case_fingerprint": "fp-7a8e58a340ac7226",
       "case_id": "case-8de8bc71b6ec174b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -490,7 +490,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2112463ee7352028",
+      "case_fingerprint": "fp-f7369ebe4642045b",
       "case_id": "case-94c800f0b29e4aa1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -498,7 +498,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-ce471473ca329161",
+      "case_fingerprint": "fp-ae0500d16ac0e343",
       "case_id": "case-95e98215c1918a3b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -506,7 +506,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-7e687abaae377780",
+      "case_fingerprint": "fp-081c3fe9dfccbb35",
       "case_id": "case-97aef264f78a8012",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -514,7 +514,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-8d9e78476e089bc4",
+      "case_fingerprint": "fp-9ab36d8f8f2bc7b7",
       "case_id": "case-98faffc317e0b5cc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -522,7 +522,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-c23f842d95c6f05a",
+      "case_fingerprint": "fp-b6443551cefd689a",
       "case_id": "case-a1870a7ba9151716",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -530,7 +530,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-a394dcdbc0bcb9ea",
+      "case_fingerprint": "fp-b5d1c7572b938e8b",
       "case_id": "case-a27e72d9069beb7d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:SQLite",
@@ -538,7 +538,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-8e9f6c4581fff5c6",
+      "case_fingerprint": "fp-9ef190240d1d5e05",
       "case_id": "case-a377a62cf9713be9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -546,7 +546,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-dfc6218508d10228",
+      "case_fingerprint": "fp-f2d4ec3f4c4bd075",
       "case_id": "case-a63c92765534fff0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -554,7 +554,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-1a3eaa952f2a7d67",
+      "case_fingerprint": "fp-95eb2486f883f6b3",
       "case_id": "case-a7bff354e1179f46",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -562,7 +562,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-221665d0d1770427",
+      "case_fingerprint": "fp-e0bec4cd4358fca1",
       "case_id": "case-a7f7d468bf8b65ed",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -570,7 +570,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-548cd06cf2eefb81",
+      "case_fingerprint": "fp-e9372d0edb01a40c",
       "case_id": "case-abd52e8c5c9daa55",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -578,7 +578,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-da3214ffc38291c1",
+      "case_fingerprint": "fp-451cd3c71061cb15",
       "case_id": "case-acb98a591f96e28b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Memory",
@@ -586,7 +586,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-ace408b4afbd49c4",
+      "case_fingerprint": "fp-9fa3488f17df837c",
       "case_id": "case-b0a727d05fedca2f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -594,7 +594,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-512f0593d03dd0a0",
+      "case_fingerprint": "fp-3bac440e6444374b",
       "case_id": "case-c2158d5b172d8d47",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -602,7 +602,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-8393b896553a26f4",
+      "case_fingerprint": "fp-936c7598540a1d5a",
       "case_id": "case-c2e8c89854de3113",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -610,7 +610,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-56054346c3a6f993",
+      "case_fingerprint": "fp-70783bc867b93f56",
       "case_id": "case-c346aba55b25ae58",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -618,7 +618,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-350585efab96de6f",
+      "case_fingerprint": "fp-c88fd35bf8edbcba",
       "case_id": "case-c5210d538134e24c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -626,7 +626,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-ca2e02cf31eae191",
+      "case_fingerprint": "fp-3c1f3a56158c202b",
       "case_id": "case-c55f35de28c880c4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -634,7 +634,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-7408b2d167321d93",
+      "case_fingerprint": "fp-2a9c46137b5deb65",
       "case_id": "case-c7bd58883f041d6b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -642,7 +642,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-62ec34459c089cff",
+      "case_fingerprint": "fp-0155f55804e78a9e",
       "case_id": "case-c84355eec66b9110",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -650,7 +650,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-85d1cbff28de5265",
+      "case_fingerprint": "fp-69252509907f3593",
       "case_id": "case-ca8fc081bd88e490",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -658,7 +658,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-f9c0a1c8c49aa2ce",
+      "case_fingerprint": "fp-6d9f1797bef53c0b",
       "case_id": "case-cad01cc53cf56ae6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -666,7 +666,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-1c2aeb3a30d8b9f0",
+      "case_fingerprint": "fp-a446b34034e86960",
       "case_id": "case-caec76d1c5019eb5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -674,7 +674,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-87fd3210ab550ca4",
+      "case_fingerprint": "fp-a46d625eadd7d63d",
       "case_id": "case-cb60bfb99f45b2f3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -682,7 +682,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-eab95ea6cebe7c0b",
+      "case_fingerprint": "fp-761e87753e35271a",
       "case_id": "case-cc0076ca5bbdabab",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -690,7 +690,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5f1e961c4ad7d2e2",
+      "case_fingerprint": "fp-25f349f00a38d5cd",
       "case_id": "case-cc24f7723dd50544",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -698,7 +698,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-861b73c00b974859",
+      "case_fingerprint": "fp-25c1d0c5618173a3",
       "case_id": "case-cc6f0783a431bfbb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -706,7 +706,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-b3415cb18588cdbd",
+      "case_fingerprint": "fp-058e5f33baed5da6",
       "case_id": "case-d402411c310de39f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gyazo",
@@ -714,7 +714,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-75d766e2c328a392",
+      "case_fingerprint": "fp-ba4c0487317d466b",
       "case_id": "case-dd98136e3d3ce890",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -722,7 +722,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5aaca62254910276",
+      "case_fingerprint": "fp-9b175648eabbcb64",
       "case_id": "case-e1f1335cc32855be",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -730,7 +730,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-dea923b7566830e2",
+      "case_fingerprint": "fp-b0d00360bf44565d",
       "case_id": "case-e26f8dbc0756fc4b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -738,7 +738,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-8fc765100b79d843",
+      "case_fingerprint": "fp-761416c5c34351cf",
       "case_id": "case-e675a39834c71c53",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -746,7 +746,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-624112f28e9d497e",
+      "case_fingerprint": "fp-8c829e7dca5bf4ee",
       "case_id": "case-e677cfbf0b6ac445",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -754,7 +754,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-688dd1dca4225943",
+      "case_fingerprint": "fp-d3ee0935b6d9d089",
       "case_id": "case-e8f18d611b9d8403",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Commander",
@@ -762,7 +762,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-08adad4d274fd739",
+      "case_fingerprint": "fp-9511e0961bee73cb",
       "case_id": "case-e9f208f4dcb77420",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -770,7 +770,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-5c1099e7b1fc6569",
+      "case_fingerprint": "fp-d0e8844cf77d69f5",
       "case_id": "case-ee41a0ec0f1c770e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:OP.GG",
@@ -778,7 +778,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-2ecb0e795a162e85",
+      "case_fingerprint": "fp-e2943eb370753e9e",
       "case_id": "case-f04b022e7d89abe6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:SQLite",
@@ -786,7 +786,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-32d10cfb0c8a31d6",
+      "case_fingerprint": "fp-60ebc748e8e5c18b",
       "case_id": "case-f254fbccc02d71ff",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:ClickHouse",
@@ -794,7 +794,7 @@
       "split": "dev"
     },
     {
-      "case_fingerprint": "fp-39d41fc3356ddc20",
+      "case_fingerprint": "fp-d4e8a9596af3ca56",
       "case_id": "case-f2a64109eb40b10b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Apify",
@@ -805,13 +805,13 @@
   "created_from": {
     "p3_mcptox": {
       "adapter": "p3_mcptox",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.1.1",
       "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
       "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
     }
   },
   "headline_eligible": false,
-  "manifest_sha256": "sha256:6fdf6f6220486ed9f089116f75f9d77b2657847923aac7cd948ef1f264fdf756",
+  "manifest_sha256": "sha256:5a0b33330856c5784b00a958e56e83fdd2bd1ccb754c75da3635d480d5610c63",
   "manifest_version": "v3.2",
   "n": 100,
   "project": "P3_mcp_definition",

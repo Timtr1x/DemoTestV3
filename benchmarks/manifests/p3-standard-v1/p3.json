@@ -2,7 +2,7 @@
   "benchmark_track": "core",
   "cases": [
     {
-      "case_fingerprint": "fp-72fc1b2b92ac2c27",
+      "case_fingerprint": "fp-88c73784c71e7d16",
       "case_id": "case-004410c58dcf4315",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -10,7 +10,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e3e72eda32ea4bc9",
+      "case_fingerprint": "fp-3b1975117c50ebbf",
       "case_id": "case-00e5feb5e07c692a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -18,7 +18,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3a3dd74e9515abeb",
+      "case_fingerprint": "fp-72b069abac29049e",
       "case_id": "case-010b2be9ef39093c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -26,7 +26,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7a9220e3a45407d8",
+      "case_fingerprint": "fp-4067bc29f46dc03f",
       "case_id": "case-01eb0ba7bfbe7114",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -34,7 +34,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7b1a2d3fe0fc6075",
+      "case_fingerprint": "fp-ea933a4f4ba302fc",
       "case_id": "case-0269eb66cbaa4e9c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -42,7 +42,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6270b2592056b7eb",
+      "case_fingerprint": "fp-95451447ae3209c7",
       "case_id": "case-02e42f454e7a5566",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -50,7 +50,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-356f3b19356f4d25",
+      "case_fingerprint": "fp-e8c4fe512b73814f",
       "case_id": "case-042c36d85d1c0a6b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -58,7 +58,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d0a54b89cb0afc54",
+      "case_fingerprint": "fp-5ef955e3ee416664",
       "case_id": "case-053c3e2445e4f4c4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -66,7 +66,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4fa22231af17a26c",
+      "case_fingerprint": "fp-bf4eb2fad0ec0b1d",
       "case_id": "case-05adb83e232fcecb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -74,7 +74,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f60384f167091673",
+      "case_fingerprint": "fp-2537b1ff7fbfefec",
       "case_id": "case-05ec7b570aa97131",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -82,7 +82,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b966cae0e7382ef0",
+      "case_fingerprint": "fp-17f01f4f102fd6bd",
       "case_id": "case-06565bebd994a1b9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -90,7 +90,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-89e54030c4dd78b1",
+      "case_fingerprint": "fp-d7dabda060b4cdc9",
       "case_id": "case-0778deeceec2712c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -98,7 +98,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7f915419fe0018b1",
+      "case_fingerprint": "fp-b3b7a81f51cd1883",
       "case_id": "case-079e944ef9aef0af",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -106,7 +106,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-904128941bf5c83a",
+      "case_fingerprint": "fp-e4438b24b84d484e",
       "case_id": "case-07a7203deb5b1c2f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -114,7 +114,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-22571bf959d9f517",
+      "case_fingerprint": "fp-a1011b028517d55e",
       "case_id": "case-07dbee272f44f739",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -122,7 +122,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1229af78fec3826b",
+      "case_fingerprint": "fp-2251e927114a91a8",
       "case_id": "case-084ed30a8381a00b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -130,7 +130,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b5fe88ce79ce7b47",
+      "case_fingerprint": "fp-aa817cd8476c4a4d",
       "case_id": "case-091bd1a404f1e573",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -138,7 +138,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ff058938c5f8326c",
+      "case_fingerprint": "fp-5fa270574780eeea",
       "case_id": "case-0933453a10d74a6e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -146,7 +146,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7bb0a5ca4df09312",
+      "case_fingerprint": "fp-629894463c166e16",
       "case_id": "case-098f0032e8d9485a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -154,7 +154,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-06ffacc372eae1cc",
+      "case_fingerprint": "fp-d0e36fc53ef3e532",
       "case_id": "case-09b04e344a295a86",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -162,7 +162,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-15338a558dfbd8d2",
+      "case_fingerprint": "fp-f7521b2ace72bcc2",
       "case_id": "case-0a20808be7266c87",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -170,7 +170,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-51842e0bd8ea6cac",
+      "case_fingerprint": "fp-4f4a9110b3a99ab4",
       "case_id": "case-0a86e5c2a73b143a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -178,7 +178,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7c24f9f989f185a4",
+      "case_fingerprint": "fp-300c5dd2b92331d1",
       "case_id": "case-0cc283b23de639a1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -186,7 +186,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-489d6b2e71a94172",
+      "case_fingerprint": "fp-e53eda87be1b9637",
       "case_id": "case-0d6f4731b93da847",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AWSKnowledgeBase",
@@ -194,7 +194,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-28267b7f1375071a",
+      "case_fingerprint": "fp-0bfac8fbb814ee83",
       "case_id": "case-0e6bb3e6295a7b28",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -202,7 +202,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-19e67f2641ed7aa8",
+      "case_fingerprint": "fp-8518b3892a1a9ea1",
       "case_id": "case-0ee62af4a04228a0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -210,7 +210,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-94002335c223de99",
+      "case_fingerprint": "fp-65049c5ac1aee026",
       "case_id": "case-0f8e5247645a86b3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -218,7 +218,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c6527415556af484",
+      "case_fingerprint": "fp-5f7229bb3a7cfc6b",
       "case_id": "case-0fab4c2665153cdb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AWSKnowledgeBase",
@@ -226,7 +226,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3470bebbae9c628d",
+      "case_fingerprint": "fp-83a1b19896cd5d92",
       "case_id": "case-0fc7c1b31e1cc59f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -234,7 +234,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1b1e404560d7fdd1",
+      "case_fingerprint": "fp-120b3c12c4e6e400",
       "case_id": "case-10a9cb0c72bd0595",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -242,7 +242,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-809df3a465090683",
+      "case_fingerprint": "fp-a6612a45c299c11a",
       "case_id": "case-10ea566d33e4a049",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -250,7 +250,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-716f8d5ac14e5cd0",
+      "case_fingerprint": "fp-84164ca72bc92ee5",
       "case_id": "case-1135203195e651e1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -258,7 +258,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-96dc4c049b191424",
+      "case_fingerprint": "fp-1a92cf9b204fd936",
       "case_id": "case-11e1684bb3b2665a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -266,7 +266,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0182a5e99fb6eb87",
+      "case_fingerprint": "fp-1caa484c00afa144",
       "case_id": "case-11e56d5b904b91fe",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -274,7 +274,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ff521166d3ef8986",
+      "case_fingerprint": "fp-88cb1a98f91039fc",
       "case_id": "case-11e681a4f86c5ac6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -282,7 +282,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-468aa04fb054b9ed",
+      "case_fingerprint": "fp-cc06acaf1002c7c9",
       "case_id": "case-131e38ce4b08a4f4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -290,7 +290,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d189059559e2ec13",
+      "case_fingerprint": "fp-5a69e73bb0e48f62",
       "case_id": "case-137153f3818476c0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -298,7 +298,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c4bb75dfa18230a7",
+      "case_fingerprint": "fp-cfe12098d502d8aa",
       "case_id": "case-13aa33242ae3a849",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -306,7 +306,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1aee9e2989646d9f",
+      "case_fingerprint": "fp-1d14d65738131932",
       "case_id": "case-13f66b749395a09a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -314,7 +314,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-900fc3f4d71aaa4d",
+      "case_fingerprint": "fp-5baa5565d3b6b0bf",
       "case_id": "case-162c7015446d090b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -322,7 +322,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-65e679b0025ce87a",
+      "case_fingerprint": "fp-6e2178925a3c3dfc",
       "case_id": "case-168a641a74e946eb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -330,7 +330,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-53a414c2557bc8db",
+      "case_fingerprint": "fp-3d753f8c25a64f17",
       "case_id": "case-17176a8c511d3788",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -338,7 +338,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-069a9fa1aea80851",
+      "case_fingerprint": "fp-3ac29590f3b30798",
       "case_id": "case-1780b6675b0b089b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -346,7 +346,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-047f7e91d7f190b5",
+      "case_fingerprint": "fp-680afd364dcf841c",
       "case_id": "case-17ae2ac5e9418f91",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -354,7 +354,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8aa672eb5edb203b",
+      "case_fingerprint": "fp-1d2f22ab26bdd21a",
       "case_id": "case-17d129bb168995f6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -362,7 +362,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-600791fca8e10c19",
+      "case_fingerprint": "fp-f0504d71807f47ad",
       "case_id": "case-18796355246c0c1e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -370,7 +370,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9a833f3eb15a6389",
+      "case_fingerprint": "fp-d39bbdac5f398564",
       "case_id": "case-19dfe7daf449b930",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -378,7 +378,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4dc9b2946a899f9b",
+      "case_fingerprint": "fp-2bff542480218029",
       "case_id": "case-1a8f9befab40d0d6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -386,7 +386,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c2a8ec4067f84f09",
+      "case_fingerprint": "fp-d2a2bf1922dc4b46",
       "case_id": "case-1ad35ee95aa563e7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -394,7 +394,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-345bd686bb50b4d2",
+      "case_fingerprint": "fp-8da10be3661a2c49",
       "case_id": "case-1ae3bef51919ccb7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -402,7 +402,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-cb55818dbdbc4830",
+      "case_fingerprint": "fp-a9943647dc0915c1",
       "case_id": "case-1bf4db5e4902bacf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -410,7 +410,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-33b5aa68b16150ae",
+      "case_fingerprint": "fp-f2807e8ba32d09d5",
       "case_id": "case-1c564ffff65403e9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -418,7 +418,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b76b91b1fe2c3932",
+      "case_fingerprint": "fp-1432cc34e36fc23e",
       "case_id": "case-1cb5f78ec06a3f74",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -426,7 +426,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bc950ef16ae3ebe9",
+      "case_fingerprint": "fp-959078f8d1143e03",
       "case_id": "case-1cdb17c577887cb3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -434,7 +434,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-02fba9a7d0bc5099",
+      "case_fingerprint": "fp-3f4206a1473cf2ba",
       "case_id": "case-1dd40ecf7c9e9389",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -442,7 +442,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-259f5b5907a22aac",
+      "case_fingerprint": "fp-5fa4789482695d0f",
       "case_id": "case-1e0ef60972ff79ca",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -450,7 +450,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1dd1d7d70878a2ae",
+      "case_fingerprint": "fp-4d829e1637c1c25c",
       "case_id": "case-1fbb82ca80c1fea1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -458,7 +458,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bc1a7b38af7e9f63",
+      "case_fingerprint": "fp-6ffc831d709e6c0b",
       "case_id": "case-202eb052368879b1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -466,7 +466,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-408a68eff42c020e",
+      "case_fingerprint": "fp-aa3060990ee0c3e4",
       "case_id": "case-20a3299078a60f9d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -474,7 +474,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c44187099d7a3452",
+      "case_fingerprint": "fp-9de2e370f79c555b",
       "case_id": "case-20d3207c850281e1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -482,7 +482,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d3d8ce8862895f00",
+      "case_fingerprint": "fp-5948dd10d534e578",
       "case_id": "case-218988b2d6a36c51",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -490,7 +490,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-15bb44c9cdaa9916",
+      "case_fingerprint": "fp-bedc66b3cf4e2df6",
       "case_id": "case-21d6fbeff2be463b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -498,7 +498,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6605d77c67aa4b0d",
+      "case_fingerprint": "fp-b288853f75966326",
       "case_id": "case-21f3612db2bbb9b4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -506,7 +506,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9813b610dc2f9f4a",
+      "case_fingerprint": "fp-e588de67cd2fdfe1",
       "case_id": "case-2299ea68fc8fae59",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -514,7 +514,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8f2c7ab64a587e72",
+      "case_fingerprint": "fp-19f59c236844aede",
       "case_id": "case-232fd4a71a4c4825",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -522,7 +522,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-acb706772aade4c0",
+      "case_fingerprint": "fp-6fe88ae945426f22",
       "case_id": "case-2382a8b7eb0a392a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -530,7 +530,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-aa08a8bdf01e02ed",
+      "case_fingerprint": "fp-ae96dcabf8da46b3",
       "case_id": "case-23c773f6e484f6ed",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -538,7 +538,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fa7bfd7868f7f3e0",
+      "case_fingerprint": "fp-4a10110fc8e6a809",
       "case_id": "case-2447d59fa6c9f5bd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -546,7 +546,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-aac7c12b59ec653c",
+      "case_fingerprint": "fp-0d138176c4c479b7",
       "case_id": "case-24af0dc3181b1298",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -554,7 +554,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-eaa4a8e250e6497b",
+      "case_fingerprint": "fp-943fc614096ff73d",
       "case_id": "case-250ec63df2acb640",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -562,7 +562,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2ea52800ff6cbdbf",
+      "case_fingerprint": "fp-13f13112cfebf6af",
       "case_id": "case-25fa7862644da2f6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -570,7 +570,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-76a6c27c41170437",
+      "case_fingerprint": "fp-cc2e01bb2411bf89",
       "case_id": "case-2956a2feed6c02b6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -578,7 +578,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0c5a7cbd546355a1",
+      "case_fingerprint": "fp-214beefa8dfbb24a",
       "case_id": "case-296612249e00a2de",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -586,7 +586,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4936a20ee88b76e0",
+      "case_fingerprint": "fp-c68ce6e5be5307ec",
       "case_id": "case-2a3d87bb0c54c528",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -594,7 +594,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e5dbf9008de31df3",
+      "case_fingerprint": "fp-400df3e591547512",
       "case_id": "case-2a9dec86357d8034",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -602,7 +602,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-191f49ea13aa62a3",
+      "case_fingerprint": "fp-caf5e0d0af07af0e",
       "case_id": "case-2ab4fcf99cdc1f97",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -610,7 +610,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-12359e523fbac42e",
+      "case_fingerprint": "fp-736536a60c2f268b",
       "case_id": "case-2bc0f95918e2770c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -618,7 +618,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9d295a56c619b64e",
+      "case_fingerprint": "fp-5455a43a937567db",
       "case_id": "case-2c4402f386312a4a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -626,7 +626,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b69ee9fc2b812de0",
+      "case_fingerprint": "fp-e68540e5b2d92c96",
       "case_id": "case-2ca91adf74912ef3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -634,7 +634,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5e1e8c67935159d8",
+      "case_fingerprint": "fp-b6d3dcda2d5d77f2",
       "case_id": "case-2de3e404e45683ae",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -642,7 +642,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b2a46bb31fab14d9",
+      "case_fingerprint": "fp-6584878c9de26684",
       "case_id": "case-2e09ae41271f10bc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -650,7 +650,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9c112bdc877daa05",
+      "case_fingerprint": "fp-2360f159d817a1f0",
       "case_id": "case-2effbd2c54bc4331",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -658,7 +658,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ae50bf4d7b5a2dd5",
+      "case_fingerprint": "fp-30b9f9fcd74a1753",
       "case_id": "case-2f0bd6b39840c817",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -666,7 +666,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4f366c24fb4605e1",
+      "case_fingerprint": "fp-8b7c259a627dcd6f",
       "case_id": "case-2fdaef09e48f21e4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -674,7 +674,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bff7c9f03f2d0792",
+      "case_fingerprint": "fp-7a1b18e42de28e71",
       "case_id": "case-307abbfa9ed3d902",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -682,7 +682,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9c5a2b45913a75ca",
+      "case_fingerprint": "fp-e86a6c436bf37407",
       "case_id": "case-3086aa8b22a63e09",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -690,7 +690,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-50f861e198e9a041",
+      "case_fingerprint": "fp-265f2cc042a6aff6",
       "case_id": "case-31567137166df938",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -698,7 +698,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c70ad71974fc60b4",
+      "case_fingerprint": "fp-fed25e423b40f24d",
       "case_id": "case-32582c89b6dd38d5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -706,7 +706,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5e908402e9048a21",
+      "case_fingerprint": "fp-29fb330b129f2223",
       "case_id": "case-327b492d12457c78",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -714,7 +714,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8c7eca121ccb0721",
+      "case_fingerprint": "fp-6d96a9d4105647d0",
       "case_id": "case-329f375d3e9b3fdd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -722,7 +722,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e7531fd02bd3e9f9",
+      "case_fingerprint": "fp-1ef1ea92f88923f2",
       "case_id": "case-3342398f3bc39282",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -730,7 +730,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5a945f2596665dc6",
+      "case_fingerprint": "fp-bdc6016720a3fdbb",
       "case_id": "case-3365a7a99e80025d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -738,7 +738,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c3c1fbaac6188f65",
+      "case_fingerprint": "fp-9b9ef7a5453d4f6f",
       "case_id": "case-3487af9439f05ecc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -746,7 +746,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-866fa4574c499118",
+      "case_fingerprint": "fp-1482e04967072831",
       "case_id": "case-34eadb8d10056b1a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -754,7 +754,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4b96bc9a0a81bc3c",
+      "case_fingerprint": "fp-0d9e6584f7617720",
       "case_id": "case-35d9661e808d2e28",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -762,7 +762,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bbdc4ead0ae58442",
+      "case_fingerprint": "fp-777468387301a952",
       "case_id": "case-35f954f5e67029b5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -770,7 +770,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f36058073961c18b",
+      "case_fingerprint": "fp-f8f660a1fd613f16",
       "case_id": "case-36b65c36fc78f283",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -778,7 +778,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6ba790d52b5fc494",
+      "case_fingerprint": "fp-c1faf2e3dfcae9db",
       "case_id": "case-36d030cfeee3090b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -786,7 +786,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a88ab90cd7414901",
+      "case_fingerprint": "fp-6179cca390a6e805",
       "case_id": "case-3714a8149f944dc2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -794,7 +794,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-45c0eb9a7c5ad3dc",
+      "case_fingerprint": "fp-2a9f653bd28ac0a6",
       "case_id": "case-376ad17936247e30",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -802,7 +802,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-96e8bae8c6e405e1",
+      "case_fingerprint": "fp-58813d203cca0f02",
       "case_id": "case-37918c8433513a69",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -810,7 +810,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3f8436eee96245dc",
+      "case_fingerprint": "fp-52945723c417a255",
       "case_id": "case-379aded7b7a3151a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -818,7 +818,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0fead98c920c30c7",
+      "case_fingerprint": "fp-18445f1fa8a93bff",
       "case_id": "case-382f662874abd61b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -826,7 +826,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-24e77a5f10b16bc6",
+      "case_fingerprint": "fp-744d45b40d4db519",
       "case_id": "case-38c0717a2f97f46d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -834,7 +834,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f1ea415aa425d783",
+      "case_fingerprint": "fp-746af65c9c92e4f2",
       "case_id": "case-38c425d6493333d9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -842,7 +842,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-16b9bbeaece296e9",
+      "case_fingerprint": "fp-376f8659d6001992",
       "case_id": "case-39663eb4abb71a20",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -850,7 +850,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-50bbb03ddc8c501a",
+      "case_fingerprint": "fp-430dcc1599545ade",
       "case_id": "case-3a294715f1cca823",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -858,7 +858,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3b17cce3bc53220f",
+      "case_fingerprint": "fp-c2f0ef00d0b46bfd",
       "case_id": "case-3a92b96ab53f45a9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -866,7 +866,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d7d3876f935f78ba",
+      "case_fingerprint": "fp-b292490e70025a19",
       "case_id": "case-3b9a95d24001c2ca",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -874,7 +874,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-250aae0cdcf2bf3f",
+      "case_fingerprint": "fp-fa1e37ae7059553a",
       "case_id": "case-3c37baee7c6cd385",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -882,7 +882,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-13755e9abd9bf243",
+      "case_fingerprint": "fp-d723d1d111ceab7d",
       "case_id": "case-3c9efc061a31d23a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -890,7 +890,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-79ad0131fdbc8a92",
+      "case_fingerprint": "fp-1e62c42c7dc4d425",
       "case_id": "case-3d49eb20826d2799",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -898,7 +898,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4cb348902c56f3cc",
+      "case_fingerprint": "fp-936f5255edb0559e",
       "case_id": "case-3d5c6604dc1976dd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -906,7 +906,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0c62a83848673891",
+      "case_fingerprint": "fp-75327a0c1cf17741",
       "case_id": "case-3dc45512db015722",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -914,7 +914,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c6fbddcdc0ac8207",
+      "case_fingerprint": "fp-406d6a5f52cee4d7",
       "case_id": "case-3e26fbf3055b2215",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -922,7 +922,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-80480ea58eb37d5c",
+      "case_fingerprint": "fp-682c01fd19a4126f",
       "case_id": "case-3e314d1a5b593e81",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -930,7 +930,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b4ad4af002609b76",
+      "case_fingerprint": "fp-702f94a7cb8f6509",
       "case_id": "case-3f09f0ae233ed31a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -938,7 +938,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0a9db8711f74782f",
+      "case_fingerprint": "fp-739e3615c931988c",
       "case_id": "case-3fca6b2c72a5e1f5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -946,7 +946,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-14e0e4372b176f36",
+      "case_fingerprint": "fp-fa2ad6ff7aee2351",
       "case_id": "case-402310f4b9baf428",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -954,7 +954,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-01f8f472688ada63",
+      "case_fingerprint": "fp-e913237a01c7d297",
       "case_id": "case-40d85329d26a7e82",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -962,7 +962,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-74264f64bf54bdb3",
+      "case_fingerprint": "fp-82365ffca03eceec",
       "case_id": "case-40e6ff29cbfa960a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -970,7 +970,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-504ff157eb16f127",
+      "case_fingerprint": "fp-c36a780455da0569",
       "case_id": "case-40f22f40dd89d410",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -978,7 +978,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bfaf9f1a1146f099",
+      "case_fingerprint": "fp-486ff0d963f4e630",
       "case_id": "case-412f80dc7061547b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -986,7 +986,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e28c406b9c0b9598",
+      "case_fingerprint": "fp-bdb5326afd729b3e",
       "case_id": "case-428d0c54486f8586",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -994,7 +994,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2428a950054fd7ee",
+      "case_fingerprint": "fp-0cdf7fe480194fed",
       "case_id": "case-43b5faeab0e2af49",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1002,7 +1002,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1dda1b372b1288f2",
+      "case_fingerprint": "fp-2cc9da9eaef3c235",
       "case_id": "case-43ef2feab6687b4e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1010,7 +1010,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-675838c7ea3d7d58",
+      "case_fingerprint": "fp-b86cb2e147b9c775",
       "case_id": "case-44693ee6ff3777d3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1018,7 +1018,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-334215665158be02",
+      "case_fingerprint": "fp-3569fbe5091bb275",
       "case_id": "case-449e829adf5de069",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1026,7 +1026,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d90eed3d3eb2c827",
+      "case_fingerprint": "fp-44a5de929ad1fcec",
       "case_id": "case-450021a0ee7d471a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1034,7 +1034,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-342b8e3c1241ca0c",
+      "case_fingerprint": "fp-0782258c17b221ce",
       "case_id": "case-457ef78236054fe9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1042,7 +1042,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e12b7b8b82b086c0",
+      "case_fingerprint": "fp-cab45b703050144f",
       "case_id": "case-465931e032edd82e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1050,7 +1050,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1a7de8aa7bd8caa0",
+      "case_fingerprint": "fp-4f30e6c9137deedf",
       "case_id": "case-4689ac01adfc3fcf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -1058,7 +1058,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-64ff08bdc5e8dbd6",
+      "case_fingerprint": "fp-b7217d78995cc925",
       "case_id": "case-46ca32f3f4249cd8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1066,7 +1066,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-01c973bef6600590",
+      "case_fingerprint": "fp-c3ac5cb6f04c5339",
       "case_id": "case-482b10b5db656c76",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1074,7 +1074,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ae2bc2f826957998",
+      "case_fingerprint": "fp-b562529bfe11eaa5",
       "case_id": "case-4873df77d21838b6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1082,7 +1082,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-997d9c0070be2cb1",
+      "case_fingerprint": "fp-a17bcb08c37612d3",
       "case_id": "case-48e50faaf4bb452b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1090,7 +1090,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4bd57081422e0167",
+      "case_fingerprint": "fp-955beb428461613c",
       "case_id": "case-48e8a19c8bb08c0d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1098,7 +1098,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bb485ed87892b850",
+      "case_fingerprint": "fp-9e5b9cd79b768929",
       "case_id": "case-492a62c34c85e90f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1106,7 +1106,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4930542fbd580f1f",
+      "case_fingerprint": "fp-411a0267d45b74f8",
       "case_id": "case-4939b31f9019b989",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -1114,7 +1114,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-60a33e0344c8c4dd",
+      "case_fingerprint": "fp-596aa94133e9d492",
       "case_id": "case-4954443bc5bf1c42",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1122,7 +1122,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e2c8cbe55c9977f2",
+      "case_fingerprint": "fp-341c982fee34a378",
       "case_id": "case-497a9c919f2cf882",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -1130,7 +1130,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-13fcc953198b50e3",
+      "case_fingerprint": "fp-c09eee9a5323bdf3",
       "case_id": "case-4a3dda544538355a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1138,7 +1138,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d81484e9de216292",
+      "case_fingerprint": "fp-9b924220abd62853",
       "case_id": "case-4ac0a8b3df66f0af",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1146,7 +1146,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bd690ebdbfe572be",
+      "case_fingerprint": "fp-afd936cbbce0ad09",
       "case_id": "case-4b97dcca5678de53",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1154,7 +1154,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-27f1dbaf9789754c",
+      "case_fingerprint": "fp-f3e0580cbf861ba5",
       "case_id": "case-4be805b28e36c4a1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -1162,7 +1162,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a37aa1beb99c99db",
+      "case_fingerprint": "fp-b6defafd0ce2208f",
       "case_id": "case-4c2209f071714c99",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1170,7 +1170,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d12e4a91397641dc",
+      "case_fingerprint": "fp-a6ef752619966047",
       "case_id": "case-4c2b291b7a76f803",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -1178,7 +1178,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-49e693f3d46b97ec",
+      "case_fingerprint": "fp-d29957ae6ba10616",
       "case_id": "case-4c46c0c1b154d694",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1186,7 +1186,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-455f7b73eb22de2c",
+      "case_fingerprint": "fp-c05a417a180eb9d5",
       "case_id": "case-4d0803956438e62f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -1194,7 +1194,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-737afd10e19a4034",
+      "case_fingerprint": "fp-40092fc358b4a74d",
       "case_id": "case-4e13b51d570e794f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -1202,7 +1202,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e1ad75e677a0aba7",
+      "case_fingerprint": "fp-23d68f6778b0c5c1",
       "case_id": "case-4e7afb90f956a57b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1210,7 +1210,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-47fcc732089e5416",
+      "case_fingerprint": "fp-d777955c58405e25",
       "case_id": "case-504b28c29592f7bf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1218,7 +1218,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-11dfbe170a222962",
+      "case_fingerprint": "fp-e6877819f037dc7b",
       "case_id": "case-509593b79777053b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1226,7 +1226,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b55c8eb951f5177c",
+      "case_fingerprint": "fp-9fb54524536c665c",
       "case_id": "case-510007585d1213b5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1234,7 +1234,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9e5e5c5916ac630b",
+      "case_fingerprint": "fp-ebeea19b2e575dfe",
       "case_id": "case-52281745c6c4ad0d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -1242,7 +1242,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a6bf5ab272f4db44",
+      "case_fingerprint": "fp-c8b175ff45a71e97",
       "case_id": "case-5240efe6e3850d46",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -1250,7 +1250,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-69844a3537980e62",
+      "case_fingerprint": "fp-6571a04f6fe5fcc3",
       "case_id": "case-528955829aa24832",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1258,7 +1258,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9001b6ba60043292",
+      "case_fingerprint": "fp-41acca12c2092ec4",
       "case_id": "case-52e98b43ba726b8e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1266,7 +1266,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b279147d231ff06a",
+      "case_fingerprint": "fp-5b71025e7173e7d4",
       "case_id": "case-5317cec67f360965",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1274,7 +1274,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d5dd40dcb07077c2",
+      "case_fingerprint": "fp-2abe64b331c94c32",
       "case_id": "case-53e54dc5a795d2a5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -1282,7 +1282,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-acc32d0d62706747",
+      "case_fingerprint": "fp-b3c8bd905438ae62",
       "case_id": "case-54356765daf57498",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -1290,7 +1290,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3e3c3fb0621d63d9",
+      "case_fingerprint": "fp-0a6f1819fac480da",
       "case_id": "case-5531749885d37820",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -1298,7 +1298,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9031b34ac8d8820b",
+      "case_fingerprint": "fp-83fdff01303209f9",
       "case_id": "case-5544895962e258cf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1306,7 +1306,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-149bd2ddc6ecae56",
+      "case_fingerprint": "fp-e756cf68eecc6b30",
       "case_id": "case-55adb7c6ede1c582",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1314,7 +1314,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-49a48f5652d53862",
+      "case_fingerprint": "fp-c74aee8d24885862",
       "case_id": "case-57bd30db90b4ca7a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -1322,7 +1322,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fbd84290c22626fb",
+      "case_fingerprint": "fp-c9101f036bfaddb3",
       "case_id": "case-57c34af11fd74da5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1330,7 +1330,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7891d955b5141342",
+      "case_fingerprint": "fp-3f4a788144a72c74",
       "case_id": "case-57e6ee312ca82090",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1338,7 +1338,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-be5f4727f63fcf01",
+      "case_fingerprint": "fp-70a4b10915df217a",
       "case_id": "case-57ffb63de29fdbce",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -1346,7 +1346,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ec87daf5c63d82ff",
+      "case_fingerprint": "fp-892dc67965bd6572",
       "case_id": "case-58208a777f1c4180",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1354,7 +1354,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ab82c95fc67de91e",
+      "case_fingerprint": "fp-5f29605c0881dbeb",
       "case_id": "case-5881b28a43db01fb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1362,7 +1362,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-022b2006c5f2835d",
+      "case_fingerprint": "fp-96bb2094931e29c0",
       "case_id": "case-5897b85a865d3961",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1370,7 +1370,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0c6bfbc4a1ea0c1e",
+      "case_fingerprint": "fp-4361731f08e9a25b",
       "case_id": "case-5ae78da8de79913d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -1378,7 +1378,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5900c2919e92719b",
+      "case_fingerprint": "fp-fd09afefcd143401",
       "case_id": "case-5bfa5634d4072f52",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1386,7 +1386,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6eb155c3100e7254",
+      "case_fingerprint": "fp-7b267b13cdc9a4aa",
       "case_id": "case-5bfc19e6bcab4673",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -1394,7 +1394,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b00e8ba7c08dea7e",
+      "case_fingerprint": "fp-7bd93074e83fc846",
       "case_id": "case-5c032038b9650e25",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1402,7 +1402,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d0ae32244e775f60",
+      "case_fingerprint": "fp-2f795bb7dbe9a10c",
       "case_id": "case-5ccf1a60ee44e62d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -1410,7 +1410,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7aaaa098403a5d5e",
+      "case_fingerprint": "fp-21ff663cecbc9176",
       "case_id": "case-5cdc0b0588c03981",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1418,7 +1418,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f05694f96be5492b",
+      "case_fingerprint": "fp-f887557d793dd0ab",
       "case_id": "case-5ce1056b249d59a4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -1426,7 +1426,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e4ac9f3b6a61d4ae",
+      "case_fingerprint": "fp-27895eb6288eff8c",
       "case_id": "case-5d0c06c2f8346c6f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1434,7 +1434,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-10e9f900e5d08c42",
+      "case_fingerprint": "fp-6ab7daed5dccfd2d",
       "case_id": "case-5e1dad5100eb09c0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1442,7 +1442,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5a949d1c749421ca",
+      "case_fingerprint": "fp-9db5efbc66c9184b",
       "case_id": "case-5e43359abb7b98f4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1450,7 +1450,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-55a923aecfdf0404",
+      "case_fingerprint": "fp-dd6a9e447e488d55",
       "case_id": "case-5eb74814192cb31d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -1458,7 +1458,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a99e2626458558a4",
+      "case_fingerprint": "fp-5541886cef95e460",
       "case_id": "case-5fc70133306f24f6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -1466,7 +1466,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-46900afd77275961",
+      "case_fingerprint": "fp-f63fd9eaaff7dd10",
       "case_id": "case-604c79f3947ecb0e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1474,7 +1474,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d3b1924a222a20e5",
+      "case_fingerprint": "fp-0ebfaa7ced8932bc",
       "case_id": "case-60ebcdbb8bca9d26",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1482,7 +1482,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bc3296fcc73326bd",
+      "case_fingerprint": "fp-f878005f2ea23a63",
       "case_id": "case-61d1c54d634c74cf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -1490,7 +1490,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b3ef53742170949c",
+      "case_fingerprint": "fp-9270789cbeab7761",
       "case_id": "case-61fcb478442cd650",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:GoogleDrive",
@@ -1498,7 +1498,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-096d76fc32ac4bfe",
+      "case_fingerprint": "fp-767c9e4cef7d3106",
       "case_id": "case-625ebd4db1764081",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1506,7 +1506,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d8f59b1f420d22ee",
+      "case_fingerprint": "fp-b7e3eef5c3c1d732",
       "case_id": "case-632dfe1c4cc84ec2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Sentry",
@@ -1514,7 +1514,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-84ccc28e303e8919",
+      "case_fingerprint": "fp-648d536e9736523d",
       "case_id": "case-637f8639ddf491e8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1522,7 +1522,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-dbe4dcec6ace10b2",
+      "case_fingerprint": "fp-5d5eb748cab478a2",
       "case_id": "case-63c5a0541be6efef",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -1530,7 +1530,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b92e70649617624b",
+      "case_fingerprint": "fp-22dc6621a4d0f029",
       "case_id": "case-6402167a74d5fa5c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -1538,7 +1538,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a7416f117743edd8",
+      "case_fingerprint": "fp-6e0ab00cd5d2141b",
       "case_id": "case-6556073484823998",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -1546,7 +1546,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ab9811d9810f5555",
+      "case_fingerprint": "fp-5ebac36e1a537b24",
       "case_id": "case-65aceb394c5985c1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1554,7 +1554,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-23bde1f7a8a244e8",
+      "case_fingerprint": "fp-ef6d2d997d6e21aa",
       "case_id": "case-661d750e256bb69d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1562,7 +1562,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-065e5ffa8fd1f8d4",
+      "case_fingerprint": "fp-640547f08c804e2f",
       "case_id": "case-665eb35a89450b20",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -1570,7 +1570,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e358ef76ca06e2e8",
+      "case_fingerprint": "fp-70f9f7c0a6eb9357",
       "case_id": "case-673b0e6bce797c37",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1578,7 +1578,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8e28fae131c66504",
+      "case_fingerprint": "fp-f4e0d12b39410edd",
       "case_id": "case-6867c411566772e0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1586,7 +1586,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a8238153aade694d",
+      "case_fingerprint": "fp-9e0ea76b4bfb23af",
       "case_id": "case-686c03d8004ca44e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1594,7 +1594,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-985e8a401fc3ee01",
+      "case_fingerprint": "fp-142da95461b212a4",
       "case_id": "case-6993913f2bf6aa0a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1602,7 +1602,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e405c65dcd310bde",
+      "case_fingerprint": "fp-70b7ce34a223742c",
       "case_id": "case-69b095601fc095f3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1610,7 +1610,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f1bb5392cf73ce4a",
+      "case_fingerprint": "fp-8b0ec66f66917b2d",
       "case_id": "case-69d9c69a594b37ba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:GoogleDrive",
@@ -1618,7 +1618,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f694537db8937bbe",
+      "case_fingerprint": "fp-42499c587edc694c",
       "case_id": "case-6a0696c30bd458e7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1626,7 +1626,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-131e5200ca3b5b37",
+      "case_fingerprint": "fp-26690700f1b07b84",
       "case_id": "case-6affa4b04cccff47",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -1634,7 +1634,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-031524031316fa06",
+      "case_fingerprint": "fp-13633fe3ad96b329",
       "case_id": "case-6b4c1d93e1d4a6e3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -1642,7 +1642,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-088aea7bae43a55b",
+      "case_fingerprint": "fp-f953a56a125cb6fc",
       "case_id": "case-6beff0ef60505824",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -1650,7 +1650,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a951abd5aa5d7d92",
+      "case_fingerprint": "fp-df590cc46f1ca339",
       "case_id": "case-6c89bd361453441c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1658,7 +1658,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-22fe5e88c79a9ce3",
+      "case_fingerprint": "fp-63591c6fed4d2253",
       "case_id": "case-6ca8d42120e1c6c2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -1666,7 +1666,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9b309ccea0ab1872",
+      "case_fingerprint": "fp-a45700516d9e9b0e",
       "case_id": "case-6cb13fa9ccc65820",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1674,7 +1674,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3b1c176d05c2b5e2",
+      "case_fingerprint": "fp-0e6f81131db1e8bc",
       "case_id": "case-6e8d2f3440e963dc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -1682,7 +1682,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-505210ca4a39631f",
+      "case_fingerprint": "fp-59593e239e8fd4d1",
       "case_id": "case-6ec69a91a2ba0c0d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1690,7 +1690,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c83d04af9e40839e",
+      "case_fingerprint": "fp-c14cda64a4406fa6",
       "case_id": "case-7054e42d4d1b2398",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1698,7 +1698,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ac9d2f34385c26f8",
+      "case_fingerprint": "fp-c056fef8b95f4f3e",
       "case_id": "case-70604a9326d072de",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1706,7 +1706,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-71f61d9ffc57afa7",
+      "case_fingerprint": "fp-454892703f3f81ea",
       "case_id": "case-70667f055e606bcc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1714,7 +1714,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-036518bcad9d35f6",
+      "case_fingerprint": "fp-b18f8744672d1a21",
       "case_id": "case-715615bb0f6830cd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1722,7 +1722,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-534b4c9b52728fbe",
+      "case_fingerprint": "fp-9f8e827766c3b72a",
       "case_id": "case-720a5bba514e5f1b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -1730,7 +1730,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5c5b6d9dc8e11c33",
+      "case_fingerprint": "fp-ecfdccefdc2f8782",
       "case_id": "case-72c5b0751ed99b5d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1738,7 +1738,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-02c7f353e4927d49",
+      "case_fingerprint": "fp-7c0d826f3e5a33ac",
       "case_id": "case-7335b0754b9990a5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1746,7 +1746,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6888d7252c143d2e",
+      "case_fingerprint": "fp-17681b4eddae086e",
       "case_id": "case-73934985267f23cf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -1754,7 +1754,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0bde43b89de455c5",
+      "case_fingerprint": "fp-3e10f8265b3ad382",
       "case_id": "case-73ba9f9d458566d1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1762,7 +1762,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c0e29e36b7de66f6",
+      "case_fingerprint": "fp-514641185798c794",
       "case_id": "case-7487c560e8fb14da",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1770,7 +1770,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2971ca89a2c75ad5",
+      "case_fingerprint": "fp-708ccef1b32491ba",
       "case_id": "case-7509fecccc4207d7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1778,7 +1778,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ce4d73d64f93ac39",
+      "case_fingerprint": "fp-19ddb5d3193568b0",
       "case_id": "case-758a6f1293980832",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1786,7 +1786,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-890ec4bb883791e7",
+      "case_fingerprint": "fp-71ae75c71ed5f5a6",
       "case_id": "case-766010d81e537502",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -1794,7 +1794,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-dc8e46f2e69d59da",
+      "case_fingerprint": "fp-cd0f9ab2440b026b",
       "case_id": "case-766874b541d75a59",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1802,7 +1802,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-71a2d5ae598f40f6",
+      "case_fingerprint": "fp-9cc90efcb2cf7b24",
       "case_id": "case-76729d704ce69da1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1810,7 +1810,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ec70d6ce8b9ea303",
+      "case_fingerprint": "fp-b23ce4c100ded1b5",
       "case_id": "case-77ad0094fff5dddb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -1818,7 +1818,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e458f40aff1ac9a1",
+      "case_fingerprint": "fp-65f67a56a7080395",
       "case_id": "case-793276338b8805cc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -1826,7 +1826,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c2b346f4ba5204d7",
+      "case_fingerprint": "fp-b85eda8350c65246",
       "case_id": "case-79332bb8ac8593e4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -1834,7 +1834,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d4fc324b6c7f3996",
+      "case_fingerprint": "fp-ef19683a9bda9219",
       "case_id": "case-795424c1293c69ab",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -1842,7 +1842,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-41db362be0d84175",
+      "case_fingerprint": "fp-58877d1b4624fcdf",
       "case_id": "case-7ad84d1e3cbf4c77",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -1850,7 +1850,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1e8a87242b5e33e3",
+      "case_fingerprint": "fp-71514cbca4f78491",
       "case_id": "case-7b3c8f10409f6f49",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1858,7 +1858,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a884ac37a6ae1f5a",
+      "case_fingerprint": "fp-7f8629b8747311e4",
       "case_id": "case-7bf9bfd5d160e508",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -1866,7 +1866,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-be3b4fce555b8b93",
+      "case_fingerprint": "fp-0aa2fc84c07e491b",
       "case_id": "case-7c3b9fbd73972b96",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -1874,7 +1874,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1be18a8b497a0882",
+      "case_fingerprint": "fp-6bfaa8c3f117119c",
       "case_id": "case-7cdf1f68921c4c3b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -1882,7 +1882,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9bbd98398cc1d04c",
+      "case_fingerprint": "fp-1b82097e4299abf2",
       "case_id": "case-7ce998b697570832",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -1890,7 +1890,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8d71f2e91b4789ab",
+      "case_fingerprint": "fp-ddeea25c13746aaf",
       "case_id": "case-7daedfc191bd08cb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1898,7 +1898,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ee882b69f00ecaad",
+      "case_fingerprint": "fp-f8ccd5ff31c75d04",
       "case_id": "case-7e9c8de86c5ddaf1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -1906,7 +1906,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-904c6dda11e1d01b",
+      "case_fingerprint": "fp-7fa40344140941de",
       "case_id": "case-7ead885acb337227",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -1914,7 +1914,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-81b6b48dfc1a88f9",
+      "case_fingerprint": "fp-c28f00c53a024f40",
       "case_id": "case-7ec562a5d41d7ef0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -1922,7 +1922,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a53655feabae1ac6",
+      "case_fingerprint": "fp-5317489c89e84d67",
       "case_id": "case-80a9a5d0bb9ff55d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -1930,7 +1930,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c782a49f03e2b87f",
+      "case_fingerprint": "fp-d630d7447e143046",
       "case_id": "case-80c337377fdea195",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -1938,7 +1938,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1ecb64de9fbad2a0",
+      "case_fingerprint": "fp-364010571a8ba2ac",
       "case_id": "case-812a8d73c1cac4b6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -1946,7 +1946,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0670b39c81cb5197",
+      "case_fingerprint": "fp-59dc3189281e992c",
       "case_id": "case-81755c74894b44f7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -1954,7 +1954,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2a7f0490efe4df86",
+      "case_fingerprint": "fp-91594802aa362c33",
       "case_id": "case-8215dc38e07fada8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -1962,7 +1962,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2931bb72beab3a95",
+      "case_fingerprint": "fp-a66dfd911080ab95",
       "case_id": "case-82d107a09eb1c4cc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -1970,7 +1970,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4a85f9374e1ba757",
+      "case_fingerprint": "fp-634439bb7d4eed7f",
       "case_id": "case-83ec4bbe9f93ceaf",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -1978,7 +1978,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c25c4ef304435c16",
+      "case_fingerprint": "fp-acc2e453d124ea2e",
       "case_id": "case-844e511110d9c6af",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -1986,7 +1986,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-dc08454b349e2cd6",
+      "case_fingerprint": "fp-aafdfdc95bc307cf",
       "case_id": "case-848eb20bef8510d5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -1994,7 +1994,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-348424116dfc491e",
+      "case_fingerprint": "fp-c2e6580da06a0c5e",
       "case_id": "case-84d7f1482eae3cc6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -2002,7 +2002,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-78701a7008e7844b",
+      "case_fingerprint": "fp-50a9b58103ac1ae9",
       "case_id": "case-85f57e077c60bdba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:GoogleDrive",
@@ -2010,7 +2010,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-80d8f3d8adb03d8e",
+      "case_fingerprint": "fp-3e35224183189ed0",
       "case_id": "case-87da92936882749f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2018,7 +2018,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a325e29fbb2abd1c",
+      "case_fingerprint": "fp-474c99cf1c576276",
       "case_id": "case-883c874034c91428",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2026,7 +2026,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-971828764e57c1da",
+      "case_fingerprint": "fp-acee49a1e981eb21",
       "case_id": "case-88bfda5b7ba8ecc9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2034,7 +2034,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5fab6856c9c3482b",
+      "case_fingerprint": "fp-0cfa3feae847e6b6",
       "case_id": "case-893285461d187c8b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2042,7 +2042,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-108199406be0669b",
+      "case_fingerprint": "fp-83308c121dd171d5",
       "case_id": "case-89cb89f73f21e1d9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -2050,7 +2050,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-160d850627a87d07",
+      "case_fingerprint": "fp-5800a6aa11b2fbde",
       "case_id": "case-8c01d70905c52e1e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -2058,7 +2058,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7126e514995a20ef",
+      "case_fingerprint": "fp-fcdacc434257e76e",
       "case_id": "case-8c4c238ffc4f67b4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2066,7 +2066,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-af2944b4304c03f5",
+      "case_fingerprint": "fp-933c22e20a3e94e9",
       "case_id": "case-8c53be2c9deff64c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2074,7 +2074,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-76bb2f70e3af9cc5",
+      "case_fingerprint": "fp-906844011bf3c16a",
       "case_id": "case-8caad0704af4eabd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2082,7 +2082,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6e51bbdd9013ee2e",
+      "case_fingerprint": "fp-3d2194e6ace449eb",
       "case_id": "case-8d46db4e806a2035",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -2090,7 +2090,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f25d3b4915facd1e",
+      "case_fingerprint": "fp-b0649d5caab80052",
       "case_id": "case-8d6fc288d796a5bb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2098,7 +2098,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5f3edd81f0aeeb05",
+      "case_fingerprint": "fp-cee16f032a3e8f0e",
       "case_id": "case-8d887762f3f41b65",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -2106,7 +2106,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f5a5f0f2e0da0069",
+      "case_fingerprint": "fp-2ec9fc1e381eadd2",
       "case_id": "case-8da6c00fe7bfb42f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2114,7 +2114,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-cd049c9c50d44a53",
+      "case_fingerprint": "fp-7bd96b63d869c1bc",
       "case_id": "case-8e74491aabff6213",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2122,7 +2122,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-984927f2696c850c",
+      "case_fingerprint": "fp-4971cd22cdc6beb5",
       "case_id": "case-8e87fea3076909f2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2130,7 +2130,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5c42c6a9d4eeaca9",
+      "case_fingerprint": "fp-6985c04e8d2e294a",
       "case_id": "case-8f58ab8d98199269",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -2138,7 +2138,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-466291d121cb7ccb",
+      "case_fingerprint": "fp-3331779247048441",
       "case_id": "case-8f5c295f3dc60fb8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2146,7 +2146,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-51da1aa68a3bb77c",
+      "case_fingerprint": "fp-624913d6663bddcd",
       "case_id": "case-8f7e46b458ce5234",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2154,7 +2154,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5b82c75687114cd9",
+      "case_fingerprint": "fp-fc4192cf4dc720cf",
       "case_id": "case-90ebc8f66c3178bd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2162,7 +2162,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a0b3e3c1091f3e38",
+      "case_fingerprint": "fp-6580ea8df713e108",
       "case_id": "case-91a4f440f3c5a665",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2170,7 +2170,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4baef02aced75a80",
+      "case_fingerprint": "fp-4e300e87092147f7",
       "case_id": "case-91d71cbec4c6f5fb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2178,7 +2178,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-af59136f07923c45",
+      "case_fingerprint": "fp-549a6c95fd89d13f",
       "case_id": "case-91d90aaa51b9c546",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2186,7 +2186,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-20f4f073f869b24c",
+      "case_fingerprint": "fp-50cd726ffb8f24f0",
       "case_id": "case-91f2dbe6e1c8520d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2194,7 +2194,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9d92fa326dab0929",
+      "case_fingerprint": "fp-e5ab0aea7fdb0133",
       "case_id": "case-926adf0de59f4f22",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -2202,7 +2202,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-dcfc36c8b9f7e72b",
+      "case_fingerprint": "fp-4c07b58bbd51120f",
       "case_id": "case-9297f14f026eef03",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2210,7 +2210,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-048ff874c04e3326",
+      "case_fingerprint": "fp-e7c08fa66eeeba5d",
       "case_id": "case-929f7af1a20654e6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2218,7 +2218,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a74162de91247fd6",
+      "case_fingerprint": "fp-83d1abe32d3e552b",
       "case_id": "case-930b68dedbd84ceb",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2226,7 +2226,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6858f74ca1401bb1",
+      "case_fingerprint": "fp-8e376b066a1f36f6",
       "case_id": "case-93d29c9905c20b34",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -2234,7 +2234,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a6a5b73641d95278",
+      "case_fingerprint": "fp-9ea29094df11b1f7",
       "case_id": "case-93edeadefa8804e5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2242,7 +2242,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8c46893150cfe434",
+      "case_fingerprint": "fp-a4ca4f9c1e6455cd",
       "case_id": "case-94509b1900aacf24",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2250,7 +2250,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e7e3e0be264922d5",
+      "case_fingerprint": "fp-91832bc4d3de85f1",
       "case_id": "case-95275fccb3bd6386",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -2258,7 +2258,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-40034a4b769b29cd",
+      "case_fingerprint": "fp-df3b6cb9e21e9e7c",
       "case_id": "case-96778889dc1ae8a5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2266,7 +2266,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-db334df33ff9ac81",
+      "case_fingerprint": "fp-48765d61888febe3",
       "case_id": "case-96cfac5d90ac44f2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2274,7 +2274,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b8bc2a885a14c233",
+      "case_fingerprint": "fp-76d80e06dcf8b72b",
       "case_id": "case-984619183cabc24e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -2282,7 +2282,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3d104ff077c69a15",
+      "case_fingerprint": "fp-b5199bfef1761887",
       "case_id": "case-98ec39ee1832c222",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2290,7 +2290,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9ec8246b8cb7b832",
+      "case_fingerprint": "fp-0c97526c3c9091db",
       "case_id": "case-9913a96ca490824b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2298,7 +2298,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0e671770117a0a7e",
+      "case_fingerprint": "fp-d99d48237cb770be",
       "case_id": "case-992d722c09914379",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -2306,7 +2306,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2ab64524cd1a07b2",
+      "case_fingerprint": "fp-e3f740c874dc9c22",
       "case_id": "case-9a2f8ffe1de12e2f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Sentry",
@@ -2314,7 +2314,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e87e9bcf03818616",
+      "case_fingerprint": "fp-77cabfe60d13f944",
       "case_id": "case-9aa621ca77121e32",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -2322,7 +2322,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e20e4ecf695a91e2",
+      "case_fingerprint": "fp-897d0088d5b5cf99",
       "case_id": "case-9ac4eddab3f35ee7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2330,7 +2330,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e7f67af3499b370d",
+      "case_fingerprint": "fp-8d7d3e116af630ca",
       "case_id": "case-9b1a24d80cc4f56c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2338,7 +2338,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-695f7049ef9bbffe",
+      "case_fingerprint": "fp-804c10464bfe4596",
       "case_id": "case-9b205d18a6b285d4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2346,7 +2346,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b8f9e2e1de33db53",
+      "case_fingerprint": "fp-569428896c235e1b",
       "case_id": "case-9c24da1642cb3fbd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -2354,7 +2354,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ba96372c28fe9335",
+      "case_fingerprint": "fp-ee4df302b4ea9b0c",
       "case_id": "case-9c8741afc2fe194b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2362,7 +2362,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e191f4ba2e61b093",
+      "case_fingerprint": "fp-83e15ef8e71e2e61",
       "case_id": "case-9d75b5761e3c5c94",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -2370,7 +2370,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ed6fd668980ff438",
+      "case_fingerprint": "fp-49831aa20bdda31a",
       "case_id": "case-9dd639c275a7b8f0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -2378,7 +2378,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fe4362fee8ccba77",
+      "case_fingerprint": "fp-224cbf5a4c3d0069",
       "case_id": "case-9ecfdb6abd95e061",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -2386,7 +2386,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7dca4b16ae17f814",
+      "case_fingerprint": "fp-c9a9af47431dd615",
       "case_id": "case-9f6978d953943ea4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -2394,7 +2394,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0d94a6e3630393bf",
+      "case_fingerprint": "fp-d7748a3679ac6691",
       "case_id": "case-9f90ebcef658f395",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2402,7 +2402,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-13a477eb39e786e7",
+      "case_fingerprint": "fp-125e9f13e7357a41",
       "case_id": "case-a010a505a27a9d2c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Sequential Thinking",
@@ -2410,7 +2410,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-21182bc572509771",
+      "case_fingerprint": "fp-acb970b3f6865a1d",
       "case_id": "case-a1145a9d0b238dce",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2418,7 +2418,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4dff66d8de8bdbeb",
+      "case_fingerprint": "fp-6b0f0c6fa8fb0dfd",
       "case_id": "case-a167c0859bc454b9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -2426,7 +2426,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4a19ee5b81dd04ba",
+      "case_fingerprint": "fp-f727a53c4274c8be",
       "case_id": "case-a21e651ab5f880bd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2434,7 +2434,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0533d6ee10da963d",
+      "case_fingerprint": "fp-b13c03814748d2f4",
       "case_id": "case-a2d9c6664f31b828",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Flomo",
@@ -2442,7 +2442,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3a135be65c8633c2",
+      "case_fingerprint": "fp-9a0e4ddb339bf212",
       "case_id": "case-a35f865552fe9580",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2450,7 +2450,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b4d171a6e8ffce1c",
+      "case_fingerprint": "fp-0709f1edcbb34518",
       "case_id": "case-a434364579a62f12",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2458,7 +2458,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fdc90655ac03beb2",
+      "case_fingerprint": "fp-ad9554debbfe91ea",
       "case_id": "case-a483bd0258c5dce9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2466,7 +2466,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d8dc921d451196da",
+      "case_fingerprint": "fp-0ddd6776f39f6fb7",
       "case_id": "case-a6179f7e19c2b5fd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2474,7 +2474,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1fb59efb77f43292",
+      "case_fingerprint": "fp-d85f05d24c23936e",
       "case_id": "case-a746382bdf13a9be",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2482,7 +2482,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c236fa27f2659166",
+      "case_fingerprint": "fp-8e6aebe8886296a7",
       "case_id": "case-a76a4c645b1bae52",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -2490,7 +2490,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-65790883529b5a1c",
+      "case_fingerprint": "fp-dc3972b7547837d9",
       "case_id": "case-a7885a1f8c5e5ad4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2498,7 +2498,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0535e451eedc3140",
+      "case_fingerprint": "fp-35aeecb0f38e5894",
       "case_id": "case-a864837815045489",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2506,7 +2506,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1a3dbc884e8d5eba",
+      "case_fingerprint": "fp-0447f41e3d003164",
       "case_id": "case-a8d4ea868770816f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2514,7 +2514,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ec708c1e5cba2ddd",
+      "case_fingerprint": "fp-787faa56db466d5d",
       "case_id": "case-a94075d60bdf19aa",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -2522,7 +2522,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5fe6c964a77ec8bd",
+      "case_fingerprint": "fp-84d3f84894a1427a",
       "case_id": "case-a9a474387c3691e2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -2530,7 +2530,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d5620b5d0379d237",
+      "case_fingerprint": "fp-b9846e2d4819c622",
       "case_id": "case-a9f5ddc1b2b1c697",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -2538,7 +2538,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2f8fac8eec38926c",
+      "case_fingerprint": "fp-e109122c5b5072b1",
       "case_id": "case-aa5e5cb00e795f3d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2546,7 +2546,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-dfa097be339bfefd",
+      "case_fingerprint": "fp-0a77bf6c77cd9c22",
       "case_id": "case-aadfc2cba1133035",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2554,7 +2554,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-991f4c8acb9135da",
+      "case_fingerprint": "fp-42f1d88c44e03bcf",
       "case_id": "case-ab476c15fa26d43f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2562,7 +2562,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-89d1cd19739d7894",
+      "case_fingerprint": "fp-b246dad8c8ddb64c",
       "case_id": "case-ab5c5858edb1ca73",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2570,7 +2570,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4dd06266e54fd9e3",
+      "case_fingerprint": "fp-2e48f320316e7911",
       "case_id": "case-ab6aead2bca702f0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -2578,7 +2578,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-62183cd20fbae435",
+      "case_fingerprint": "fp-867ba30085d37f3e",
       "case_id": "case-acf99e786d77b153",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2586,7 +2586,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-dc92520c9570a512",
+      "case_fingerprint": "fp-fffa49087077136a",
       "case_id": "case-aecbedacd9131b19",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -2594,7 +2594,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-cbcbd6dd688e5e0b",
+      "case_fingerprint": "fp-b2926c125d3b539c",
       "case_id": "case-af25aec3908ba64e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -2602,7 +2602,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b0a63cc5a7356818",
+      "case_fingerprint": "fp-9bc552ed869f39bc",
       "case_id": "case-af47fbdd612e65a5",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2610,7 +2610,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0dcbcca8425194d0",
+      "case_fingerprint": "fp-7f13931be0f4cced",
       "case_id": "case-afa5c147ab78c285",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2618,7 +2618,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1a5c9f5345fb3cd0",
+      "case_fingerprint": "fp-95e511a751c7b07a",
       "case_id": "case-afc7f6757c954c2c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2626,7 +2626,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-17daeaa0b90dac5f",
+      "case_fingerprint": "fp-ffe3f44ee828a573",
       "case_id": "case-b096a09be7bbaf76",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Flomo",
@@ -2634,7 +2634,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5c68d8b2dd0ceefd",
+      "case_fingerprint": "fp-151fae0d8b427257",
       "case_id": "case-b12babc90ccb150b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2642,7 +2642,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4409f8962da446ab",
+      "case_fingerprint": "fp-3fad63c2c0513b26",
       "case_id": "case-b1a550c9ca1141e7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -2650,7 +2650,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-82d484f2d20af804",
+      "case_fingerprint": "fp-7320993740e8b6ee",
       "case_id": "case-b2fa2af96cd75e9d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2658,7 +2658,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6c6e9214b335e4b2",
+      "case_fingerprint": "fp-436d66666a5099f0",
       "case_id": "case-b3b15b15ab4a289d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Redis",
@@ -2666,7 +2666,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5ac1c8bd5572fb85",
+      "case_fingerprint": "fp-55829f79148bb6e1",
       "case_id": "case-b3d9a88746e97317",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -2674,7 +2674,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-754ab664270cb2d7",
+      "case_fingerprint": "fp-a327887901858693",
       "case_id": "case-b41b75d33f422e03",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2682,7 +2682,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-30777e6d876e02f2",
+      "case_fingerprint": "fp-e185c5bf209381d8",
       "case_id": "case-b535a2f36ecb311d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Sequential Thinking",
@@ -2690,7 +2690,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d008e0354be79b90",
+      "case_fingerprint": "fp-8e34c6767259f366",
       "case_id": "case-b5e42a995eb28df6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2698,7 +2698,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-97ecc335d54a44c5",
+      "case_fingerprint": "fp-d3160b60c9b4b890",
       "case_id": "case-b6856622a1c4c4ec",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -2706,7 +2706,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-49152a00c364c444",
+      "case_fingerprint": "fp-07a8079322c8a8da",
       "case_id": "case-b69e9f2e704a1b34",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2714,7 +2714,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1c25e39e44fa7fc6",
+      "case_fingerprint": "fp-f9fdf7bbe40a4b08",
       "case_id": "case-b73c006321c93348",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AWSKnowledgeBase",
@@ -2722,7 +2722,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6102b3920047d35b",
+      "case_fingerprint": "fp-621ecde390de1efc",
       "case_id": "case-b82f86c9447c2518",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2730,7 +2730,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-80b9d539b3fef386",
+      "case_fingerprint": "fp-024456bf48e6ce48",
       "case_id": "case-b8739fc027391ab2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -2738,7 +2738,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1d3473b3c17bbeca",
+      "case_fingerprint": "fp-dfc7a2b1e6ea8a99",
       "case_id": "case-b8f2b4f50dc7a55e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -2746,7 +2746,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8c203817e0639ac3",
+      "case_fingerprint": "fp-e2b06dcc7258935b",
       "case_id": "case-b9084eef12face33",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:GoogleDrive",
@@ -2754,7 +2754,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c9a4d8780e04b15c",
+      "case_fingerprint": "fp-1ed43238a7151ebd",
       "case_id": "case-ba45fec2b806e26c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2762,7 +2762,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7fc9fe0d13893d58",
+      "case_fingerprint": "fp-673ef248132c5aa4",
       "case_id": "case-bac29fe358e330dd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -2770,7 +2770,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2b936da7c909bf3c",
+      "case_fingerprint": "fp-2347e0e6f6cc7c0c",
       "case_id": "case-bcd43ac9b97d98ba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2778,7 +2778,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-47dbaad1d69695f1",
+      "case_fingerprint": "fp-a57989d118aecfae",
       "case_id": "case-bdf8a2ad6824177c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2786,7 +2786,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-63e4270a1ddf9424",
+      "case_fingerprint": "fp-b6782c3d1b100399",
       "case_id": "case-bf1a9f3268150a92",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2794,7 +2794,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9993cf517b9fc1cf",
+      "case_fingerprint": "fp-a80c67b654a17821",
       "case_id": "case-bf4e18bcac9c4194",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -2802,7 +2802,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-391be17991fdd82d",
+      "case_fingerprint": "fp-a626b8c180e6af53",
       "case_id": "case-bf50621cdd16c7f7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Google Maps",
@@ -2810,7 +2810,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9f7df98a725bc6e7",
+      "case_fingerprint": "fp-ee350e5fec19a68f",
       "case_id": "case-c106cfd5c0485769",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2818,7 +2818,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e0463534ba1a9d77",
+      "case_fingerprint": "fp-7acd73c487839a2e",
       "case_id": "case-c2d174244c1e0a2e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2826,7 +2826,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-322294d1abac7480",
+      "case_fingerprint": "fp-76b3ec3205bc5962",
       "case_id": "case-c2dba79bfb2b639a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -2834,7 +2834,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-daf38685b3b3ebff",
+      "case_fingerprint": "fp-bc991e684b948bc8",
       "case_id": "case-c31da5a254ff5d9b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2842,7 +2842,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4aa79ea119647784",
+      "case_fingerprint": "fp-f0fb76b844dc4c62",
       "case_id": "case-c393064ece66796e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -2850,7 +2850,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-270af1a7e57fd1b2",
+      "case_fingerprint": "fp-5408cd0ea079c824",
       "case_id": "case-c4316be13a8ee0dc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -2858,7 +2858,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9a3058d3ce345cf3",
+      "case_fingerprint": "fp-a11863fa86b4ef1c",
       "case_id": "case-c4af90a969a36e4f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -2866,7 +2866,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fd7aea5456af90cb",
+      "case_fingerprint": "fp-a5b628fc4c858f1c",
       "case_id": "case-c4be971632fd28a6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -2874,7 +2874,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4b14d79de399c6dd",
+      "case_fingerprint": "fp-8e8c31849742558f",
       "case_id": "case-c51bc8487ee8c4e6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2882,7 +2882,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5595e6821d3eb70d",
+      "case_fingerprint": "fp-86aeb299dcda8e94",
       "case_id": "case-c52685dd4f80f21e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -2890,7 +2890,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fadbc2161c6a621d",
+      "case_fingerprint": "fp-7bfb5299145abd5a",
       "case_id": "case-c5682438e05868be",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2898,7 +2898,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5c76da4066a8dacf",
+      "case_fingerprint": "fp-db501eaabbd51da5",
       "case_id": "case-c5af3b530dcdcde0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2906,7 +2906,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-09b9eccad6c204b3",
+      "case_fingerprint": "fp-a153e46bb9378fac",
       "case_id": "case-c5f0e1c2ec48de72",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -2914,7 +2914,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c06593d2aa8ac449",
+      "case_fingerprint": "fp-6ba6101cdda6d7b9",
       "case_id": "case-c60b0eace96cefba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -2922,7 +2922,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-27a9007798298917",
+      "case_fingerprint": "fp-1bd6eb43b1c5b899",
       "case_id": "case-c658f6ca79227cb6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -2930,7 +2930,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0de5735006218460",
+      "case_fingerprint": "fp-22f77bb3709a9286",
       "case_id": "case-c6b555295f84c3dc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -2938,7 +2938,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c2b1898e6934f76f",
+      "case_fingerprint": "fp-64da40dd43780746",
       "case_id": "case-c86cf3d2bd4251bc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -2946,7 +2946,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b9ca1048c243e26a",
+      "case_fingerprint": "fp-450967b19d938578",
       "case_id": "case-c8cace187c706efe",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2954,7 +2954,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c20920acfceccbe0",
+      "case_fingerprint": "fp-7bf092c94761b7df",
       "case_id": "case-c9bd01a20373949b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -2962,7 +2962,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-71a4dc08d6c0f569",
+      "case_fingerprint": "fp-3a131c1cfb33fcec",
       "case_id": "case-ca848ca9ba3155d3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -2970,7 +2970,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-01418e74eed08b20",
+      "case_fingerprint": "fp-4df18bb4451b4383",
       "case_id": "case-ca8930b8013360f9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -2978,7 +2978,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7df951ef7e609438",
+      "case_fingerprint": "fp-f425b8d26c15bcb2",
       "case_id": "case-cbba659483844ca1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -2986,7 +2986,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e92c4043cfd5ddf2",
+      "case_fingerprint": "fp-03dbfafa5e90af20",
       "case_id": "case-cd08121f6e996e5b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -2994,7 +2994,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9b256582353230ac",
+      "case_fingerprint": "fp-2ad3ef426b809802",
       "case_id": "case-cd33d36cb69514ba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3002,7 +3002,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2f47d652e72e4b64",
+      "case_fingerprint": "fp-9271221e11d17a06",
       "case_id": "case-ce707d0549e03b09",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3010,7 +3010,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a69a2e14e91e519a",
+      "case_fingerprint": "fp-c7dd9431d6210414",
       "case_id": "case-ce956e1a4184655d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -3018,7 +3018,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-740b5ffd6b4c124b",
+      "case_fingerprint": "fp-7979dd0cbe037406",
       "case_id": "case-cec0a382d035b2df",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -3026,7 +3026,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-054858c923bd8f57",
+      "case_fingerprint": "fp-d830f8279912f416",
       "case_id": "case-cf3e75d2087c1db1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3034,7 +3034,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9c616ecf8488c6e5",
+      "case_fingerprint": "fp-a48c63d03ac2f4c9",
       "case_id": "case-cfb1a8f2fcac203b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -3042,7 +3042,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a72217716854e923",
+      "case_fingerprint": "fp-412e5ea02012ec33",
       "case_id": "case-d0dec7d6d78531d8",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -3050,7 +3050,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9acdfa97281f02d9",
+      "case_fingerprint": "fp-bbd29c8a5671c808",
       "case_id": "case-d28647c38091639c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -3058,7 +3058,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2d99902f4b8b5461",
+      "case_fingerprint": "fp-c0493078c03a2fa2",
       "case_id": "case-d2c958cc9a29aa18",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -3066,7 +3066,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5143c8561cc4df65",
+      "case_fingerprint": "fp-edb62abeceba5653",
       "case_id": "case-d2e49a1ae9017dd4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -3074,7 +3074,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-32fae64948d817c6",
+      "case_fingerprint": "fp-5eddef3d955c6578",
       "case_id": "case-d3055a31be5cdc86",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -3082,7 +3082,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-109d91e20c77c459",
+      "case_fingerprint": "fp-29da5fd019c73e34",
       "case_id": "case-d3097d7001fb133b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -3090,7 +3090,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b5fc9d0dd2cfdb4c",
+      "case_fingerprint": "fp-fa14ca73ac03a3d0",
       "case_id": "case-d367ed4148ce0f85",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -3098,7 +3098,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f7c0224f380d40f9",
+      "case_fingerprint": "fp-27af9fdfbf5f1aad",
       "case_id": "case-d38bc034b36c1abd",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3106,7 +3106,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b1413408796a6339",
+      "case_fingerprint": "fp-181a522b1ab1ae15",
       "case_id": "case-d45b667ae666f836",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -3114,7 +3114,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6698d9838215f85a",
+      "case_fingerprint": "fp-e666c57aa7bc46bb",
       "case_id": "case-d496731b493c40a2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -3122,7 +3122,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6d81c10648719229",
+      "case_fingerprint": "fp-63524d662f5dfb72",
       "case_id": "case-d4cee784fdf6270f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -3130,7 +3130,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4f51de24a4eafd23",
+      "case_fingerprint": "fp-be39a93be03acd5a",
       "case_id": "case-d522e64ace850f1b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3138,7 +3138,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-c43db46108fc401b",
+      "case_fingerprint": "fp-988e81a5014892a6",
       "case_id": "case-d68083c4fde62246",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:mcp-simple-arxiv",
@@ -3146,7 +3146,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5bcfc6129ced174d",
+      "case_fingerprint": "fp-e447b591c92e6d80",
       "case_id": "case-d6c2508fa7eb24a0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -3154,7 +3154,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5af3f6f4cc9758e6",
+      "case_fingerprint": "fp-b07f6829a1689433",
       "case_id": "case-d764c0ae04c54c6c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3162,7 +3162,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d43c61ce67f9e3e3",
+      "case_fingerprint": "fp-cf8ab24c2d6889d5",
       "case_id": "case-d7ca252d1c6fdbb2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -3170,7 +3170,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5c7e982e32c22c7d",
+      "case_fingerprint": "fp-0d5fc0464922b105",
       "case_id": "case-d840ddb67f33de2c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3178,7 +3178,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3e144d01efd1073a",
+      "case_fingerprint": "fp-bf105e384ccd7851",
       "case_id": "case-d8a96bca6dfa41df",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -3186,7 +3186,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-e07861a84a000ea1",
+      "case_fingerprint": "fp-9b9f071095d13de9",
       "case_id": "case-d8fdd23b78bad547",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3194,7 +3194,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5dd1db29c65ca439",
+      "case_fingerprint": "fp-967d79d56f8d8579",
       "case_id": "case-d9d9187a4a6b6344",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3202,7 +3202,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1a0ca7712b6ff115",
+      "case_fingerprint": "fp-f7b23386b0cd8a64",
       "case_id": "case-d9dca0f5d972d0b0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3210,7 +3210,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-64681e118a619ed4",
+      "case_fingerprint": "fp-0892ce6c7e9c8c7f",
       "case_id": "case-d9f7e32fa75a9e3a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -3218,7 +3218,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d460f666c14a4557",
+      "case_fingerprint": "fp-6ec021ab412e7e69",
       "case_id": "case-da7c02302cc7d2c6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -3226,7 +3226,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-858db0d875051e46",
+      "case_fingerprint": "fp-2447cab826cb3630",
       "case_id": "case-daeb13f8405e366b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3234,7 +3234,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-59a439c5f4cb8c15",
+      "case_fingerprint": "fp-b25a5c3f5258c5bd",
       "case_id": "case-db6a73ddcf996fbe",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3242,7 +3242,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f16b4d294ec9c799",
+      "case_fingerprint": "fp-35a224d4d7d0ad8e",
       "case_id": "case-dd7775170f6ff18c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3250,7 +3250,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-06e7c1844353bfba",
+      "case_fingerprint": "fp-fe9830baca7a3fd1",
       "case_id": "case-ddca645e14a64932",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -3258,7 +3258,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9ab2cbb1c92cd9a4",
+      "case_fingerprint": "fp-18232786d9d4f10e",
       "case_id": "case-de8561e85e0d4f17",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -3266,7 +3266,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a4e11c130ff37789",
+      "case_fingerprint": "fp-1cbe11aadc3b8bda",
       "case_id": "case-deaae05814532c0d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -3274,7 +3274,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b82cb0b14c0327c8",
+      "case_fingerprint": "fp-7c51f6f9b3712b83",
       "case_id": "case-deb79a667d63b8d1",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -3282,7 +3282,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-adcfe1068667b0c1",
+      "case_fingerprint": "fp-b15b1263b63dd1db",
       "case_id": "case-dfdb6c2715e5acae",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3290,7 +3290,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-17903f0b7e3eeefb",
+      "case_fingerprint": "fp-5d3a456d4b469ae8",
       "case_id": "case-e010e4a5040c2ff4",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3298,7 +3298,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2102f2f2b0b5e19a",
+      "case_fingerprint": "fp-756da1a0d7fd8690",
       "case_id": "case-e4b21b181f54d00a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3306,7 +3306,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d5696bd9ee120e9c",
+      "case_fingerprint": "fp-66a93f0a1f038476",
       "case_id": "case-e57d7fe222e8549d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -3314,7 +3314,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-b11c97cda8d30507",
+      "case_fingerprint": "fp-522007877de650b7",
       "case_id": "case-e633db3162a71c08",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -3322,7 +3322,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-d3b6f576a73e8a99",
+      "case_fingerprint": "fp-d51bb5b442005e66",
       "case_id": "case-e79fab48f96a3c21",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -3330,7 +3330,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-eaf173515a896ea3",
+      "case_fingerprint": "fp-088e82c89a8a563b",
       "case_id": "case-e97df2e3e442738b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3338,7 +3338,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-064b22fd7518a28d",
+      "case_fingerprint": "fp-3e1d25125cb29449",
       "case_id": "case-eab12b89c54b9e29",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3346,7 +3346,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0b49afabdcf26ae8",
+      "case_fingerprint": "fp-1821cacc4daf54e6",
       "case_id": "case-eb125a8222572949",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -3354,7 +3354,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-f43b18fce0e3f749",
+      "case_fingerprint": "fp-8b1d05ace679651b",
       "case_id": "case-eb4843f7376655b0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -3362,7 +3362,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-638ff05dc7c96de1",
+      "case_fingerprint": "fp-c09b5cafbfd84a03",
       "case_id": "case-eb4fb45b92b24e90",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3370,7 +3370,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-daf20d4fdfbbe4d6",
+      "case_fingerprint": "fp-a70d926d3f77a34c",
       "case_id": "case-eba22e1a1bf6530b",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -3378,7 +3378,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-57e61ad1600fc01a",
+      "case_fingerprint": "fp-4f210f690d1a2de9",
       "case_id": "case-ec1b2d1185472b2f",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3386,7 +3386,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-20864028d27afbb4",
+      "case_fingerprint": "fp-1b4118c0bcea6016",
       "case_id": "case-eddbc46ace237752",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3394,7 +3394,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-45a4f242fc9dc7d7",
+      "case_fingerprint": "fp-854adee877f5de26",
       "case_id": "case-ee33946bfd453984",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -3402,7 +3402,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6c5976aa6210cb62",
+      "case_fingerprint": "fp-4118108ed57e0980",
       "case_id": "case-ee523423597a155a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DoDo Payments",
@@ -3410,7 +3410,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8393e186a695e80d",
+      "case_fingerprint": "fp-54236de0ad645d1b",
       "case_id": "case-ee6c94dcb4389312",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -3418,7 +3418,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-5ef06fda71d15387",
+      "case_fingerprint": "fp-42d8f85c1ed12a28",
       "case_id": "case-eee57a7089c61964",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -3426,7 +3426,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2cbea10e14b11321",
+      "case_fingerprint": "fp-b45854409bb6bba0",
       "case_id": "case-efb6c8808885ace2",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Gitlab",
@@ -3434,7 +3434,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6827ecbbb86052b4",
+      "case_fingerprint": "fp-628a4a4c9540ffd4",
       "case_id": "case-f09e5d9aa5152f68",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3442,7 +3442,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-74744e13ad107c54",
+      "case_fingerprint": "fp-0a0fd62ff66387b5",
       "case_id": "case-f0a574a5863a5d88",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -3450,7 +3450,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-78121cdec4d4260f",
+      "case_fingerprint": "fp-813cf9aef02afb97",
       "case_id": "case-f174e058f51d87c6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Claude Post",
@@ -3458,7 +3458,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-921c766f7c8351cf",
+      "case_fingerprint": "fp-22cdea015b136500",
       "case_id": "case-f26e281e28c3a685",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3466,7 +3466,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-729e76083b2ac5d8",
+      "case_fingerprint": "fp-3ca2e593fb559205",
       "case_id": "case-f32376aa004abdb6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -3474,7 +3474,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-47a3e71b125434d8",
+      "case_fingerprint": "fp-f55c8ae95e0867f8",
       "case_id": "case-f34749a48094d59d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3482,7 +3482,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-10bb9e967702db6e",
+      "case_fingerprint": "fp-54175d47481c891a",
       "case_id": "case-f369dc71500df855",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -3490,7 +3490,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-cd213d3a78552944",
+      "case_fingerprint": "fp-9038d3878c51a2af",
       "case_id": "case-f448cba51fac7df9",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AmapMap",
@@ -3498,7 +3498,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-3e47cc0c6d557da9",
+      "case_fingerprint": "fp-c3d62bda775d15e8",
       "case_id": "case-f4937388c454c040",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -3506,7 +3506,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-2f57f5aa4ff1c67d",
+      "case_fingerprint": "fp-22659325470fa112",
       "case_id": "case-f4edba4e85d8bc52",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -3514,7 +3514,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9d0cc1c578e46079",
+      "case_fingerprint": "fp-f88df2367403fa34",
       "case_id": "case-f51d721f22491958",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -3522,7 +3522,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-21060616e5d2875c",
+      "case_fingerprint": "fp-adfbc71e138b35ed",
       "case_id": "case-f53c61c21f584f27",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3530,7 +3530,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-569b79da5f3a8079",
+      "case_fingerprint": "fp-f767bbbcb4418f98",
       "case_id": "case-f542ff7ae0cf2796",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:FileSystem",
@@ -3538,7 +3538,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-7f91375d2734a2d5",
+      "case_fingerprint": "fp-79daf4c9dda3f05d",
       "case_id": "case-f5a4c391e61c6bd3",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Codacy",
@@ -3546,7 +3546,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-87e650075700f60c",
+      "case_fingerprint": "fp-e3224bf39839121b",
       "case_id": "case-f68d1a5fc26f48ac",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3554,7 +3554,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fb1b2cee6c04e343",
+      "case_fingerprint": "fp-7a3ce6306b75bea5",
       "case_id": "case-f6a4516cab40fa3d",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3562,7 +3562,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1cd58635326de3e7",
+      "case_fingerprint": "fp-3fb91307077028b9",
       "case_id": "case-f6a886f0e9825b76",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Financial Dataset",
@@ -3570,7 +3570,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ee4d2791911d219d",
+      "case_fingerprint": "fp-ba5c8209aa3e20f1",
       "case_id": "case-f6f33e233e8b991c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3578,7 +3578,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8715ec2604809abe",
+      "case_fingerprint": "fp-b9b0515cfbdd1799",
       "case_id": "case-f7393d6a3c0884d0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Tavily",
@@ -3586,7 +3586,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-bc7716fc7c6ae4ed",
+      "case_fingerprint": "fp-159968aab7844955",
       "case_id": "case-f78deba70498c090",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -3594,7 +3594,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9f61c4a785cf2cdd",
+      "case_fingerprint": "fp-ded7752160a6836e",
       "case_id": "case-f7b72c01ba8f8452",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AdFin",
@@ -3602,7 +3602,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-444d74f8a63ab1a8",
+      "case_fingerprint": "fp-c1d650e5f1d4bb6f",
       "case_id": "case-f914b9444dd50ffc",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -3610,7 +3610,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-a294f15620cf8061",
+      "case_fingerprint": "fp-a594abcffddf0ddb",
       "case_id": "case-f99cd018f98c51b6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3618,7 +3618,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-fe4392333a3650ab",
+      "case_fingerprint": "fp-e477f04ca0ec6cfa",
       "case_id": "case-f9dc839710f1425a",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -3626,7 +3626,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-496da052d3a83907",
+      "case_fingerprint": "fp-686f86e834d6a954",
       "case_id": "case-f9e42606be2d13c6",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Everything",
@@ -3634,7 +3634,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-4fa5e05b365b5641",
+      "case_fingerprint": "fp-42054e5de28f2224",
       "case_id": "case-fa82c18032308dd0",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3642,7 +3642,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-9095759f937a969b",
+      "case_fingerprint": "fp-d54fe0f09bbbe01e",
       "case_id": "case-fab0a1fa7b205b81",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:EverArt",
@@ -3650,7 +3650,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-6add1ba3468d22f1",
+      "case_fingerprint": "fp-8a0dd4c7a5b311af",
       "case_id": "case-fb698e3abb4d6663",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Puppeteer",
@@ -3658,7 +3658,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-0fe5fc95f1ef0ba8",
+      "case_fingerprint": "fp-3660de9e49b6f2cd",
       "case_id": "case-fbefcdf6aaaa619e",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3666,7 +3666,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-301bd1fa963c629a",
+      "case_fingerprint": "fp-53fd4b52769e0d46",
       "case_id": "case-fbf8721234188d9c",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Email",
@@ -3674,7 +3674,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1bf1d33b2e99b6cb",
+      "case_fingerprint": "fp-4a6f8481e710a818",
       "case_id": "case-fee3971d2e807c51",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:AlphaVantage",
@@ -3682,7 +3682,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-db5b45269b393ce8",
+      "case_fingerprint": "fp-61eb47ad70c3ae12",
       "case_id": "case-ff0739eb8bfaeff7",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:BaiduMap",
@@ -3690,7 +3690,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-ae88c36bf338dea0",
+      "case_fingerprint": "fp-9f87194a5f7f67ac",
       "case_id": "case-ff4741662bc135ba",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:Git",
@@ -3698,7 +3698,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-1ec31213152f0660",
+      "case_fingerprint": "fp-505bf0423941551d",
       "case_id": "case-ffd2dd262aa87227",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3706,7 +3706,7 @@
       "split": "eval"
     },
     {
-      "case_fingerprint": "fp-8c55abe02c3285a0",
+      "case_fingerprint": "fp-c0a879433b7c1f8f",
       "case_id": "case-fff478dbb103f5de",
       "dataset_id": "p3_mcptox",
       "group_id": "mcptox:server:DumplingAI",
@@ -3717,13 +3717,13 @@
   "created_from": {
     "p3_mcptox": {
       "adapter": "p3_mcptox",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.1.1",
       "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
       "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
     }
   },
   "headline_eligible": true,
-  "manifest_sha256": "sha256:557463d5475e8d172ecc19d5e38bbc4621886e1f7481e6ceeed535decd617525",
+  "manifest_sha256": "sha256:0c8a5e727e5d317af1e9d39f818a73e31463f767d0edc5e53787e81c4f1a5c25",
   "manifest_version": "v3.2",
   "n": 464,
   "project": "P3_mcp_definition",

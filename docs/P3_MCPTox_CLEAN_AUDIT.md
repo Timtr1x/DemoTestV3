@@ -36,7 +36,8 @@ Per-block acceptance requires:
 
 - `name` and `description` both non-empty; `description` not the literal `None`
 - block boundary unique (no duplicate `name` within the same server's prompt)
-- span `clean_system_promot[start:end]` equals the captured description bytes; `strip()` of that span equals the projected `mcp_description`
+- span `clean_system_promot[start:end]` equals the captured raw description bytes `m.group(2)`; the Gateway-visible `mcp_description` is `raw.strip()` (exact source-span extraction with outer-whitespace normalization). Of the 309 accepted, 22 have `raw != stripped` (delta 1-5), all outer `
+`/space only; provenance distinguishes `source_span_sha256=sha256(raw)` vs `normalized_sha256=sha256(stripped)` and records `projection_transform=strip_outer_whitespace`
 - description not equal to any poisoned description from `pure_tool.json` or `response_all.json` valid set
 - the server as a whole has no mismatch between `tool_names` and parsed blocks and no duplicate collapsed descriptions (unless the duplication itself is meaningful — see audit below)
 
@@ -45,8 +46,9 @@ If any per-server check fails, the **entire server's clean side is excluded** as
 Each accepted clean case is recorded with:
 
 ```
-source_server, tool_name, description, source_span_start, source_span_end, clean_prompt_sha256
+source_server, tool_name, description (normalized = raw.strip()), source_span_start, source_span_end, clean_prompt_sha256, source_span_sha256, projection_transform=strip_outer_whitespace
 ```
+Gateway-visible is `mcp_description = stripped`; provenance `raw_sha256=sha256(raw_span)`, `normalized_sha256=sha256(stripped)`.
 
 ## Server-level audit (45 servers, 352 parsed blocks)
 
@@ -146,7 +148,7 @@ All 12 share their server's BLOCK group (`mcptox:server:<server>`), so a server-
 
 ## Next gates
 
-1. Implement a `p3_mcptox` adapter extension (or second adapter id) that projects the 309 clean blocks as `ALLOW` with the same `mcptox:server` grouping, byte-identical to the spans above.
+1. Implement a `p3_mcptox` adapter extension (or second adapter id) that projects the 309 clean blocks as `ALLOW` with the same `mcptox:server` grouping, exact source-span extraction with `strip_outer_whitespace` normalization (Gateway-visible = normalized, provenance raw=span / normalized=stripped).
 2. Freeze `p3_mcptox_core` normalized dataset (485 + 309 + shared SHAs) without any further data edits.
 3. Hash-bucket the 45 servers deterministically (seed 42) into `20/60/20` and emit manifests for `p3-*-v1` suites.
 4. Full fake-gateway integration test (render → TargetAdapter → fake 403/observation → oracle → report) before any real LineMod traffic.

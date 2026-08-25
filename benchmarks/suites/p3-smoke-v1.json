@@ -5,7 +5,7 @@
       "benchmark_track": "core",
       "headline_eligible": false,
       "manifest": "benchmarks/manifests/p3-smoke-v1/p3.json",
-      "manifest_sha256": "sha256:6fdf6f6220486ed9f089116f75f9d77b2657847923aac7cd948ef1f264fdf756",
+      "manifest_sha256": "sha256:5a0b33330856c5784b00a958e56e83fdd2bd1ccb754c75da3635d480d5610c63",
       "n": 100,
       "split": [
         "dev"
@@ -17,7 +17,7 @@
   "source_locks": {
     "p3_mcptox": {
       "adapter": "p3_mcptox",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.1.1",
       "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
       "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
     }
