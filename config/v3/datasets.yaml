@@ -117,7 +117,7 @@ datasets:
 
   p5_asb_memory:
     adapter: p5_asb_memory
-    adapter_version: 1.0.0
+    adapter_version: 1.1.0
     enabled: true
     quality_tier: B
     source:

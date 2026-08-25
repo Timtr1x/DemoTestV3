@@ -5,7 +5,7 @@
       "benchmark_track": "core",
       "headline_eligible": false,
       "manifest": "benchmarks/manifests/p5-smoke-v1/p5.json",
-      "manifest_sha256": "sha256:054a1ffac5371d06a6bd429c99f70864ef11eac8cc712ccd4bd8bd856fe9b3f8",
+      "manifest_sha256": "sha256:8f62760f9d6a005b1a125ba4269326c5bed9e5c4319dca1cb4370026ce76e0df",
       "n": 64,
       "split": [
         "dev"
@@ -17,7 +17,7 @@
   "source_locks": {
     "p5_asb_memory": {
       "adapter": "p5_asb_memory",
-      "adapter_version": "1.0.0",
+      "adapter_version": "1.1.0",
       "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
       "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
     }

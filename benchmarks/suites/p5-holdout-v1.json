@@ -5,7 +5,7 @@
       "benchmark_track": "core",
       "headline_eligible": false,
       "manifest": "benchmarks/manifests/p5-holdout-v1/p5.json",
-      "manifest_sha256": "sha256:1f0cbb1531d51d776df6b6e2606328981c3a680941779a40ea5af7f21f441e5a",
+      "manifest_sha256": "sha256:bb8c7433fc4b801851fcd16de65c7f6dd52836f93c31c0a3648a6bae8f954441",
       "n": 84,
       "split": [
         "holdout"
@@ -17,7 +17,7 @@
   "source_locks": {
     "p5_asb_memory": {
       "adapter": "p5_asb_memory",
-      "adapter_version": "1.0.0",
+      "adapter_version": "1.1.0",
       "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
       "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
     }

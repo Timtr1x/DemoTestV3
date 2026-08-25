@@ -2021,13 +2021,13 @@
   "created_from": {
     "p5_asb_memory": {
       "adapter": "p5_asb_memory",
-      "adapter_version": "1.0.0",
+      "adapter_version": "1.1.0",
       "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
       "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
     }
   },
   "headline_eligible": true,
-  "manifest_sha256": "sha256:4d0e7fea37c568104c5e12185d2fc7188b2af897b5dfeb83301fcb5d9e195c9e",
+  "manifest_sha256": "sha256:3f194d16c44c3f6bdc7f09a06e2d65486eaa390b82a98eab3f2f61181e078d92",
   "manifest_version": "v3.2",
   "n": 252,
   "project": "P5_memory_write",
@@ -2054,9 +2054,9 @@
     "asb_memory_poison_block": {
       "actual": 240,
       "filtered": 240,
-      "target": 260
+      "target": 240
     }
   },
   "suite": "p5-standard-v1",
-  "target": 300
+  "target": 252
 }

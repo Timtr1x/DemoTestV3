@@ -224,6 +224,46 @@ def cmd_suite_verify(args) -> int:
             problems.append(f"suite_config_hash drift: snapshot {snap['suite_config_hash'][:16]} != suites.yaml { _exp2[:16]} (re-run build_suite_summaries)")
     except Exception:
         pass
+    # Hard gate: snapshot source_locks must match current dataset locks
+    # FROZEN_PROOF suites are intentionally pinned at older adapter versions
+    # and must not trip the current-lock gate (handled via LEGACY_FROZEN in
+    # build_suite_summaries.py — same pattern as smoke-v1 etc.).
+    FROZEN_PROOF_SUITES = {"p5-asb-proof-v0"}
+    if args.suite not in FROZEN_PROOF_SUITES:
+        try:
+            from ..datasets.source_lock import load_source_lock as _ld_lock
+            from ..config import load_datasets as _ld2
+            _all_ds = _ld2()
+            for pid, ptarget in suite.projects.items():
+                # only check datasets that are actually referenced by strata
+                strata_ds = {str(s.get("dataset") or "") for s in (ptarget.strata or []) if s.get("dataset")}
+                for ds_id in _DATASETS_BY_PROJECT.get(pid, []):
+                    if strata_ds and ds_id not in strata_ds:
+                        continue
+                    ds_cfg = _all_ds.get(ds_id)
+                    if ds_cfg is not None and not ds_cfg.enabled:
+                        continue
+                    try:
+                        cur_lock = _ld_lock(ds_id)
+                    except Exception:
+                        continue
+                    snap_locks = snap.get("source_locks") or {}
+                    snap_lock = snap_locks.get(ds_id)
+                    if not snap_lock:
+                        problems.append(f"{pid}: snapshot missing source_locks[{ds_id!r}] (re-run build_suite_summaries)")
+                        continue
+                    # adapter_version / raw_sha256 / revision must match current lock
+                    for k in ("adapter_version", "raw_sha256", "revision"):
+                        cur_v = getattr(cur_lock, k, None)
+                        snap_v = snap_lock.get(k)
+                        if cur_v and snap_v != cur_v:
+                            problems.append(
+                                f"{pid}: snapshot source_locks[{ds_id}].{k} {snap_v!r} != current lock {cur_v!r} "
+                                f"(re-run build_suite_summaries after lock bump)"
+                            )
+        except Exception as _e:
+            # don't swallow hard — surface but don't crash the whole verify
+            problems.append(f"source_locks gate error: {_e}")
     for pid, ptarget in suite.projects.items():
         mpath = _P(ptarget.manifest)
         if not mpath.exists():
@@ -240,8 +280,70 @@ def cmd_suite_verify(args) -> int:
             problems.append(f"{pid}: suite manifest_sha256 {snap_sha} != manifest {manifest.get('manifest_sha256')}")
         if snap_entry.get("n") and snap_entry["n"] != manifest.get("n"):
             problems.append(f"{pid}: suite n {snap_entry['n']} != manifest n {manifest.get('n')}")
+        # Hard gate: manifest target must match suite project target
+        if manifest.get("target") != ptarget.target:
+            problems.append(
+                f"{pid}: manifest target {manifest.get('target')!r} != suite project target {ptarget.target!r} "
+                f"(re-run manifest build after suites.yaml edit)"
+            )
+        # Hard gate: manifest strata count must match suite strata count
+        if ptarget.strata:
+            m_strata = manifest.get("strata") or {}
+            for s in ptarget.strata:
+                sid = str(s.get("id") or s.get("name") or "")
+                if not sid:
+                    continue
+                exp_count = s.get("count")
+                m_entry = m_strata.get(sid)
+                if m_entry is None:
+                    problems.append(f"{pid}: manifest missing strata {sid!r} (re-run manifest build)")
+                    continue
+                # for count=='all', manifest stores target=='all' — only check numerics
+                if isinstance(exp_count, str) and exp_count.lower() == "all":
+                    if str(m_entry.get("target", "")).lower() != "all":
+                        problems.append(f"{pid}: strata {sid!r} target expected 'all', got {m_entry.get('target')!r}")
+                elif exp_count is not None:
+                    try:
+                        if int(m_entry.get("target", -1)) != int(exp_count):
+                            problems.append(
+                                f"{pid}: strata {sid!r} target {m_entry.get('target')!r} != suite count {exp_count!r}"
+                            )
+                    except (TypeError, ValueError):
+                        pass
+        # Hard gate: manifest created_from must match current source lock
+        # FROZEN proof suites keep their original 1.0.0 provenance — skip gate for them
+        if args.suite not in FROZEN_PROOF_SUITES:
+            try:
+                from ..datasets.source_lock import load_source_lock as _ld3
+                from ..config import load_datasets as _ld4
+                _all_ds2 = _ld4()
+                strata_ds2 = {str(s.get("dataset") or "") for s in (ptarget.strata or []) if s.get("dataset")}
+                for ds_id in _DATASETS_BY_PROJECT.get(pid, []):
+                    if strata_ds2 and ds_id not in strata_ds2:
+                        continue
+                    ds_cfg = _all_ds2.get(ds_id)
+                    if ds_cfg is not None and not ds_cfg.enabled:
+                        continue
+                    try:
+                        cur_lock2 = _ld3(ds_id)
+                    except Exception:
+                        continue
+                    cf = (manifest.get("created_from") or {}).get(ds_id)
+                    if not cf:
+                        problems.append(f"{pid}: manifest missing created_from[{ds_id!r}] (re-run manifest build)")
+                        continue
+                    for k, attr in (("adapter_version", "adapter_version"), ("raw_sha256", "raw_sha256"), ("revision", "revision")):
+                        cur_v = getattr(cur_lock2, attr, None)
+                        cf_v = cf.get(k)
+                        if cur_v and cf_v != cur_v:
+                            problems.append(
+                                f"{pid}: manifest created_from[{ds_id}].{k} {cf_v!r} != current lock {cur_v!r} "
+                                f"(re-run manifest build after lock bump)"
+                            )
+            except Exception as _e2:
+                problems.append(f"created_from gate error for {pid}: {_e2}")
         problems.extend(verify_manifest(manifest))
-        # Phase 2.1: suite ↔ manifest track consistency (review)
+        # Phase 2.1: suite <-> manifest track consistency (review)
         m_track = str(manifest.get("benchmark_track") or "core").strip().lower() or "core"
         m_hl = bool(manifest.get("headline_eligible", m_track == "core"))
         # missing in old manifests => legacy core (backward-compat), but if present enforce
