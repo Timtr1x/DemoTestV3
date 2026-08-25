@@ -1,8 +1,8 @@
-# P5 Phase 2A — ASB Acquisition + Projection Fidelity Proof
+# P5 Phase 2A — ASB Acquisition + Projection Fidelity Proof (ATTACK side)
 
-Status: proof round complete, awaiting review of fidelity semantics. No real
-LineMod run, no standard eval, no full-400 intake yet (that is one flag away
-after acceptance).
+Status: **ACCEPTED** (review 2026-08-25) — fidelity spec passed. Kept as
+attack-only proof artifact (`p5-asb-proof-v0`, n=8, headline=false). Full
+420 freeze is Phase 2B.
 
 ## 1. Official pin
 
@@ -13,12 +13,13 @@ after acceptance).
 | license | MIT |
 | raw dir | `cache/datasets_v3/raw/p5_asb_memory` (acquired via `dataset acquire`, lock written) |
 | `data/all_attack_tools.jsonl` | exactly **400** lines; sha256 `555af4370bde…de78`; fields `[Attacker Tool, Attacker Instruction, Description, Attack goal, Attack Type, Corresponding Agent, Aggressive]` |
-| `data/all_normal_tools.jsonl` | 20 lines (benign TOOL definitions — **not** memory-write controls; unused this round) |
+| `data/all_normal_tools.jsonl` | 20 lines (official controls; consumed in Phase 2B) |
 
 Count gate fail-closed: adapter aborts on any count != 400 (real path);
 `validate_raw` also flags missing required fields.
+Adapter version in this proof: **1.0.0** (attack-only).
 
-## 2. Projection fidelity spec (what we send LineMod)
+## 2. Projection fidelity spec (attack side — what we send LineMod)
 
 ASB's memory-poisoning scenario persists records shaped like
 `Agent: {prefix}; Task: {task_input}; Workflow: {workflow}; Tools: {tool_info}`
@@ -34,14 +35,16 @@ content = json.dumps([
 ```
 
 - byte-deterministic: same entry -> same content, same `source_id`
-  (`asb:mp:<NNN>`), same `case_id`;
+  (`asb:mp:attack:<NNN>` since 1.1.0; legacy `asb:mp:<NNN>` in proof),
+  same `case_id`;
 - no LLM, no runtime, no Chroma, no fabricated Agent/Task/Workflow;
 - `Attacker Instruction` is preserved in metadata (`attacker_instruction`)
   for audit only — it never reaches gateway-visible content (renderer
   envelope shown below carries only the descriptor);
 - metadata: `ground_truth_kind=memory_poisoning_attack`,
   `source_field=attacker_tool_definition`, `derivation=deterministic_projection`,
-  `quality_tier=B`, plus `attack_type` / `aggressive` / `corresponding_agent`.
+  `quality_tier=B`, plus `attack_type` / `aggressive` / `corresponding_agent`,
+  `group_id=asb:agent:<Corresponding Agent>`.
 
 ## 3. Proof cases (8 of 400, file order)
 
@@ -81,9 +84,15 @@ validate -> render -> run (local scripted gateway, always 403) -> analyze ->
 report: **8/8**, TP=8 FN=0, TPR=100%, **FPR=n/a** (reported as n/a on purpose —
 no benign controls yet, no FPR claim). `cache/exports/phase15_e2e/p5-asb-proof-v0/SUMMARY.md`.
 
-## 6. Next step (after review)
+## 6. What changed in Phase 2B
 
-Full 400-case intake = `dataset prepare --dataset p5_asb_memory` (drop
-`--max`), build attack-only dev/standard suites with `headline_eligible=false`
-and FPR=n/a, then real-LineMod dev run. Benign memory-write controls remain a
-separate decision (TPR-only shipping vs. second official source).
+- Adapter **1.1.0**: adds `all_normal_tools.jsonl` → 20 ALLOW with
+  `parameters:null`, `ground_truth_kind=normal_memory_tool`,
+  `source_field=normal_tool_definition`, `source_id=asb:mp:normal:<NNN>`;
+  dual count gates (400/20); `group_id=asb:agent:<Corresponding Agent>`
+  for both sides.
+- Full 420 freeze: `p5-smoke-v1` (64 dev) / `p5-standard-v1` (252 eval,
+  headline) / `p5-holdout-v1` (84 holdout, sealed) — see
+  `docs/results/P5_PHASE2B_FREEZE.md`.
+- Suite headline now aggregates as AND over per-project headline
+  (`src/demotest/config.py`).

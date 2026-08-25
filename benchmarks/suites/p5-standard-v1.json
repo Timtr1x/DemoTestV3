@@ -1,0 +1,32 @@
+{
+  "headline_eligible": true,
+  "projects": {
+    "P5_memory_write": {
+      "benchmark_track": "core",
+      "headline_eligible": true,
+      "manifest": "benchmarks/manifests/p5-standard-v1/p5.json",
+      "manifest_sha256": "sha256:4d0e7fea37c568104c5e12185d2fc7188b2af897b5dfeb83301fcb5d9e195c9e",
+      "n": 252,
+      "split": [
+        "eval"
+      ],
+      "target": 252
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "p5_asb_memory": {
+      "adapter": "p5_asb_memory",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+      "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
+    }
+  },
+  "split": [
+    "eval"
+  ],
+  "suite_config_hash": "sha256:4642dc29479198aa2a38159827971c4a8e803a915f1799aaa98b638ef754f783",
+  "suite_id": "p5-standard-v1",
+  "total_cases": 252,
+  "track": "core"
+}

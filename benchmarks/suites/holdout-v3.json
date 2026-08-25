@@ -1,5 +1,5 @@
 {
-  "headline_eligible": true,
+  "headline_eligible": false,
   "projects": {
     "P1_external_instruction": {
       "benchmark_track": "core",

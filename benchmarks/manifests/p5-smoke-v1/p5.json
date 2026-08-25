@@ -1,0 +1,558 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-042e2b40fe2c336e",
+      "case_id": "case-0471635bf3ab7aef",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:143",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3c9b4ceebddd158b",
+      "case_id": "case-09ee86d9dc9c0030",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:397",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-59895d66583d11b1",
+      "case_id": "case-13abecef01adc672",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:399",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-cc885575e480dbdf",
+      "case_id": "case-151f15fc6928874c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:159",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b459fda19d74ee23",
+      "case_id": "case-19dc7a93e8621624",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:400",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c254c836a10a2b45",
+      "case_id": "case-1a925d1c4f6edaa1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:302",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a8e2d47499873711",
+      "case_id": "case-1d7f77b9d76460d3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:normal:012",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-fc2b24ef5ad702c8",
+      "case_id": "case-1e0a9174c66ee0f1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:390",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ffecb468733f7c03",
+      "case_id": "case-1f2a1912b0d2f37c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:157",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8820f47ed35dd85e",
+      "case_id": "case-2318d347f0df5ed0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:312",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d557b20a42a2cf88",
+      "case_id": "case-233621514b8d9c67",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:384",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0a4307a80705c0ce",
+      "case_id": "case-25b7e61a7d01a1b8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:117",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c4f510c10141447e",
+      "case_id": "case-2af967c9bae11189",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:154",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-9378134841dadaca",
+      "case_id": "case-2b0e3311c84836da",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:306",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-acfd2e83bf66ed68",
+      "case_id": "case-2c12752ad3b6b57f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:391",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6fc3f8dd77d0e02f",
+      "case_id": "case-2d4ee46d278be267",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:102",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-9af00133df1995a2",
+      "case_id": "case-2ddf22b01541f456",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:118",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ab8ceff57f9aea84",
+      "case_id": "case-3202a68d024b0111",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:394",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-506540d5c5abbe53",
+      "case_id": "case-3366795ce5acc0dd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:115",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e1b2859fa8326a4d",
+      "case_id": "case-3454a24ac3f5326a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:313",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2742017a10c1341a",
+      "case_id": "case-36ddef94382fbfaa",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:148",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-4d503a97b50b6fcc",
+      "case_id": "case-40f4c7b5eb746a73",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:160",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1fb5b2ff77fc0605",
+      "case_id": "case-430306fcff0353fd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:319",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d304b52d79825442",
+      "case_id": "case-4acc664f434ad51d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:316",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d52a7073961ce2aa",
+      "case_id": "case-4af2871ce7e9a5f9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:normal:015",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0dace745366de885",
+      "case_id": "case-4dc15d478b6f0f5e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:307",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-cdcdb27113a90116",
+      "case_id": "case-502baad3c78b5622",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:116",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-aabf3f0b63f58cf3",
+      "case_id": "case-53b0128c32ee631f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:111",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1ed3318817accc0f",
+      "case_id": "case-60657136163792d1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:308",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-78b038e7e2dd5b3f",
+      "case_id": "case-60eae5cb439d7550",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:158",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8395701f21020f11",
+      "case_id": "case-6348ecf8a000b410",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:141",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-49e3868ea86a26a8",
+      "case_id": "case-67a7a034af89772c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:149",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-824d9e461e819f16",
+      "case_id": "case-69ccf51c9733dc6f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:normal:016",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-970fe081839d8aa0",
+      "case_id": "case-6b638b965de3849f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:107",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a0cc1c35c2504d01",
+      "case_id": "case-6bf163eb328e9d8e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:142",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-31d665be04b78cc9",
+      "case_id": "case-70b2cf0b0c298e45",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:310",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-dd98cc978f0c863c",
+      "case_id": "case-73ea0016685c5026",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:120",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-37baba2cd069ec65",
+      "case_id": "case-740fc7d3e017dc13",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:101",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ead1deafd80f40e2",
+      "case_id": "case-74715b51f2f5aa01",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:392",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3ac8220680feeb39",
+      "case_id": "case-7f4da39836ace85b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:320",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-55ff819d3f4c3aaa",
+      "case_id": "case-829d5be399b50104",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:152",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-08fcfc2802698369",
+      "case_id": "case-84dbdec04d9777cc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:388",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a5a552d29ecff0fe",
+      "case_id": "case-8c5430d6322e75ff",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:109",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-02dca207a9018fa1",
+      "case_id": "case-964c915804892b51",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:108",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c20a3378f9b8c2d7",
+      "case_id": "case-9b67715e518a496c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:305",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-762aa7401d3261e9",
+      "case_id": "case-a665010d24e97d30",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:104",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-356f9e53e082cc8d",
+      "case_id": "case-b6336bc886b5de43",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:396",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7798fd5c0d6a5155",
+      "case_id": "case-bd53a3e70853700e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:155",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d4b289a72b042db6",
+      "case_id": "case-bd839cbafd92a57b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:303",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-efe1385d73a047df",
+      "case_id": "case-c5fa72c65f688d3b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:318",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d24428e9677b7f01",
+      "case_id": "case-c8f3b3b9aa8edb0c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:393",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-84f6eb4c6f721521",
+      "case_id": "case-c932ed3da250f739",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:106",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-93742521dea04cc0",
+      "case_id": "case-c935bd54e527799a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:381",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5217f49fe8ea4ef8",
+      "case_id": "case-cb10ba726743175f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:395",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-61dcf34b2c99eb0a",
+      "case_id": "case-cdd8ecffd2cf2c1a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:110",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-477272c47af8db00",
+      "case_id": "case-d27055fc25808cff",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:386",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b913291efe2c28a3",
+      "case_id": "case-d3ca816078910368",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:309",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7e23b4479149a56f",
+      "case_id": "case-d6f68b6d8f3146c4",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:114",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b3b384501a5d5f95",
+      "case_id": "case-dcc78ed6b1067b7c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:normal:011",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0b30598d2fc57051",
+      "case_id": "case-df06a7aaee7ab2e2",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:151",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-bbf5062e92c1d5e9",
+      "case_id": "case-e3ab73749ac2d428",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:315",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ace528ede92d774a",
+      "case_id": "case-ed1824bc8f43dc09",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:105",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d045152c34700c36",
+      "case_id": "case-f84fd79a12f48aec",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:psychological_counselor_agent",
+      "source_id": "asb:mp:attack:304",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6228da1a4ca78c97",
+      "case_id": "case-fd87577d5cfe9a8f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:aerospace_engineer_agent",
+      "source_id": "asb:mp:attack:387",
+      "split": "dev"
+    }
+  ],
+  "created_from": {
+    "p5_asb_memory": {
+      "adapter": "p5_asb_memory",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+      "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
+    }
+  },
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:054a1ffac5371d06a6bd429c99f70864ef11eac8cc712ccd4bd8bd856fe9b3f8",
+  "manifest_version": "v3.2",
+  "n": 64,
+  "project": "P5_memory_write",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "dev"
+  ],
+  "strata": {
+    "asb_memory_normal_allow": {
+      "actual": 4,
+      "filtered": 4,
+      "target": "all"
+    },
+    "asb_memory_poison_block": {
+      "actual": 60,
+      "filtered": 80,
+      "target": 60
+    }
+  },
+  "suite": "p5-smoke-v1",
+  "target": 80
+}

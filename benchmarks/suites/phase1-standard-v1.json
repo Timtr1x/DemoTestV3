@@ -23,7 +23,7 @@
   "source_locks": {
     "agentdojo": {
       "adapter": "agentdojo",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.2.0",
       "raw_sha256": "57726b746c7df67cab9611e48d844e84e8a3e0191530bd2fdd7e5162fe71ad4d",
       "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
     },

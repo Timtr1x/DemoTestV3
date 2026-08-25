@@ -1,0 +1,718 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-3c3ec7e1e2cf809b",
+      "case_id": "case-00bebb92e976d9dc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:135",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-03201308306b2a33",
+      "case_id": "case-05047948e95adf53",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:221",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-acffa871ff9d2c18",
+      "case_id": "case-06ff0895a42535ab",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:235",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f2df10dc8a74bdf5",
+      "case_id": "case-080412d87d272568",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:340",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b11f305abdb59610",
+      "case_id": "case-0a466899b5f96752",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:336",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-99e4facaa0feb228",
+      "case_id": "case-0c609d5e1bb47dca",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:027",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6ee69275a5b9c5cf",
+      "case_id": "case-0e574c1f53fa2a9a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:125",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-237f00e97c5f6fc2",
+      "case_id": "case-163eadba5099bc83",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:133",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2bbe0c9532bb36ec",
+      "case_id": "case-1e7f760facbab63a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:327",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e1773fee239c5b9c",
+      "case_id": "case-209a5cf1ccd7ab8f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:330",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9ffe0ae97e048b04",
+      "case_id": "case-20e3788da2523a74",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:140",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-59744f84b1386d60",
+      "case_id": "case-20eb829323dbe21e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:137",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-53a7c2f1ee71da2b",
+      "case_id": "case-2391d9173c7ae986",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:032",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-41bd7179bda0eebb",
+      "case_id": "case-249c5329521e7374",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:025",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a1cd6f00c31f1f5",
+      "case_id": "case-252aecb5dd810bb9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:229",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-516a855860d0dace",
+      "case_id": "case-25ae4673f065e4f2",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:228",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-18b66a685937244d",
+      "case_id": "case-26aeaac4a3b4376a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:139",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b13da0b9641a2437",
+      "case_id": "case-2729efc1cc7d3bce",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:227",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-007c1d8ad700f9d3",
+      "case_id": "case-283c62b760ab8451",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:127",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b7e98466ce5540e8",
+      "case_id": "case-28b1f5665f594e5f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:035",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-11f8bf70e9e8a0ff",
+      "case_id": "case-2b7fea6f43e0f59d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:331",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-934ce46d4ce26001",
+      "case_id": "case-2f710de878ec90ef",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:128",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a9d3694ba2a3a1bf",
+      "case_id": "case-31e48610c4dee3fc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:338",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2f54621669a40bb7",
+      "case_id": "case-3253c6e81aaf6286",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:234",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-efb25a97f0f87d9a",
+      "case_id": "case-3355275afef4a90d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:022",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2169f1c5d02542c5",
+      "case_id": "case-34074246939efc5b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:030",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-031e4e70907cf18b",
+      "case_id": "case-36ca04075472e747",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:021",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c35add29ed31eaf1",
+      "case_id": "case-4ada9d557fbcf19d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:023",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-720bd565b7f792c6",
+      "case_id": "case-4b78e0132f4a135b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:136",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cf49da78ccb7739f",
+      "case_id": "case-4e2bfc560eca4ca6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:335",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a02968266a38dd76",
+      "case_id": "case-50d75fb0d309f51e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:337",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c5fc3cea3d4db4a5",
+      "case_id": "case-53729eef763e1920",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:normal:013",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bf69a87be716edc3",
+      "case_id": "case-55716922ea8ee621",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:231",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2f8f51d1f0e21d96",
+      "case_id": "case-5645598fccca5dba",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:134",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-22b759fde8527e59",
+      "case_id": "case-60b4b47b58024c63",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:222",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dccfb9f1896de6c8",
+      "case_id": "case-60c3acf360fecdd5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:332",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-419a68b7c47b207b",
+      "case_id": "case-785632d66178d3a8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:036",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2a4a253969904a35",
+      "case_id": "case-7887968ec3b32843",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:031",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-59d2d822b6b5c11a",
+      "case_id": "case-7a375bdab380cd4d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:328",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-909364f3d1bef12c",
+      "case_id": "case-7bb2e5e14e05e233",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:123",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-852e38dd692e5e44",
+      "case_id": "case-7d9511762071e327",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:039",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dfbec6679acb1ced",
+      "case_id": "case-7de90f84e6485f43",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:233",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d464faf9f3f520f2",
+      "case_id": "case-7efee4de8e154b28",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:240",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d3efc51073f2bb15",
+      "case_id": "case-85b554c083d42b65",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:040",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7cc07746e959f568",
+      "case_id": "case-86861f39e3f62ea1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:122",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-54c2c2488b49ed90",
+      "case_id": "case-86f5bfb5b2788a97",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:239",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a7b5278b2a72dc5d",
+      "case_id": "case-8825d53a35bcd277",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:225",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b9487918ec62f9ce",
+      "case_id": "case-8f0a1d06d9a126d0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:026",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a9f587b46e64eb54",
+      "case_id": "case-966ccd9c0fd31ade",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:024",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-876e6dc90b4c9558",
+      "case_id": "case-96fdcbcd7ede6268",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:322",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5963bd71437f504f",
+      "case_id": "case-98db2dab2e428ca2",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:324",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b34e6e711bd9f322",
+      "case_id": "case-9edf026dd3597bbe",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:333",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-24f74b708e9956f2",
+      "case_id": "case-a0e3151866cbabc7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:224",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7fe3cced60fe6878",
+      "case_id": "case-a6e3f1e8fe74484c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:033",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2c1d5cb41d51c4fc",
+      "case_id": "case-aa4c733c9ee8c982",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:029",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-75bc40b460d1e23c",
+      "case_id": "case-afe397404739fd9c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:037",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-80a24fabc4b9bdba",
+      "case_id": "case-aff3d296e3bccf02",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:237",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-14a09df681363f22",
+      "case_id": "case-b0c2b33ff998ad29",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:129",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-840559a80566604b",
+      "case_id": "case-b0ddc0023aab988b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:223",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-37d21db4add3d76d",
+      "case_id": "case-b306e599327d920a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:321",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-06b1887ff1e29566",
+      "case_id": "case-b63bda3c0d95771c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:126",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-306cbe80b7487510",
+      "case_id": "case-b881a9bcaf9b2118",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:326",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-84aba8878d99c5db",
+      "case_id": "case-b984d3546f5d0b24",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:334",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d405ab0b97b4e2d8",
+      "case_id": "case-c1ce651143fc6e34",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:130",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6804422502ed5338",
+      "case_id": "case-c24813219d830753",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:138",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3a41d6ccb56c0082",
+      "case_id": "case-c476e1ffa8c39fa9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:329",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-281f0bd0b860f6dd",
+      "case_id": "case-c79263d0bb6903d4",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:236",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-255e36ca14497bf0",
+      "case_id": "case-c911cb4b0407f17a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:238",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e0ba58a7448100e4",
+      "case_id": "case-cfe0572b33017add",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:normal:014",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-95fa727daff8ad32",
+      "case_id": "case-d2d998ab8a10318d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:323",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d786d4e12318daa0",
+      "case_id": "case-d331992901f35fa1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:131",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-db25f19ebf215c4d",
+      "case_id": "case-d3ea1173150b5687",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:339",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-55aef4b066f4df9c",
+      "case_id": "case-db4c414151819d3d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:132",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8d421db4f40cc203",
+      "case_id": "case-dfb7e7e6c008425e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:230",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5c94ad13db8bc001",
+      "case_id": "case-dfe3dcc162a4ead5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:232",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d2459a979a282edc",
+      "case_id": "case-e5740439fe0333b8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:121",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-57239ba98ddd08a3",
+      "case_id": "case-e84f061a696b6dbb",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:226",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-41610d4c59e510ad",
+      "case_id": "case-eb018bb11cff04f9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:124",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9467b3a80a48f019",
+      "case_id": "case-f0b844fcde672ec7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:028",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-97b8d250fabe651d",
+      "case_id": "case-f18c259cb37f33d1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:038",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b32c0462e594b486",
+      "case_id": "case-f25554b6c86855c4",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:normal:003",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ca50e50e2df9b652",
+      "case_id": "case-f5ec585a4e14ee56",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:ecommerce_manager_agent",
+      "source_id": "asb:mp:attack:325",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c3a3bfe866133f5e",
+      "case_id": "case-ff361638b8f64b39",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:normal:004",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9c761cae460cb1ea",
+      "case_id": "case-ffb2d21feb0cd976",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:financial_analyst_agent",
+      "source_id": "asb:mp:attack:034",
+      "split": "holdout"
+    }
+  ],
+  "created_from": {
+    "p5_asb_memory": {
+      "adapter": "p5_asb_memory",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+      "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
+    }
+  },
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:1f0cbb1531d51d776df6b6e2606328981c3a680941779a40ea5af7f21f441e5a",
+  "manifest_version": "v3.2",
+  "n": 84,
+  "project": "P5_memory_write",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "holdout"
+  ],
+  "strata": {
+    "asb_memory_normal_allow": {
+      "actual": 4,
+      "filtered": 4,
+      "target": "all"
+    },
+    "asb_memory_poison_block": {
+      "actual": 80,
+      "filtered": 80,
+      "target": 80
+    }
+  },
+  "suite": "p5-holdout-v1",
+  "target": 100
+}

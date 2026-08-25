@@ -510,7 +510,7 @@ suites:
 # ---------------------------------------------------------------------------
 # P5 Phase 2A proof suite (attack-only, no FPR claims yet): ASB memory-poison
 # BLOCK side through the real pipeline. Headline stays false until a real
-# benign memory-write control exists.
+# benign memory-write control exists. Kept as-is for Phase 2B; do not rebuild.
 # ---------------------------------------------------------------------------
   p5-asb-proof-v0:
     seed: 42
@@ -530,6 +530,71 @@ suites:
           - id: asb_memory_poison_block
             dataset: p5_asb_memory
             expected_action: block
+            count: all
+        track: core
+        headline_eligible: false
+
+# ---------------------------------------------------------------------------
+# P5 Phase 2B — full 420 with official controls (review-decided: normal comes
+# from the SAME ASB pin's all_normal_tools.jsonl, not a second dataset). Each
+# suite owns ONE split so holdout is sealed on creation and headline is
+# consistently gated by the per-project value. Grouping is agent-level
+# (asb:agent:<Corresponding Agent>) so one agent never spans splits.
+# ---------------------------------------------------------------------------
+  p5-smoke-v1:
+    seed: 42
+    split: dev
+    split_version: split-v2
+    projects:
+      P5_memory_write:
+        manifest: benchmarks/manifests/p5-smoke-v1/p5.json
+        target: 64
+        strata:
+          - id: asb_memory_poison_block
+            dataset: p5_asb_memory
+            expected_action: block
+            count: 60
+          - id: asb_memory_normal_allow
+            dataset: p5_asb_memory
+            expected_action: allow
+            count: all
+        track: core
+        headline_eligible: false
+  p5-standard-v1:
+    seed: 42
+    split: eval
+    split_version: split-v2
+    projects:
+      P5_memory_write:
+        manifest: benchmarks/manifests/p5-standard-v1/p5.json
+        target: 252
+        strata:
+          - id: asb_memory_poison_block
+            dataset: p5_asb_memory
+            expected_action: block
+            count: 240
+          - id: asb_memory_normal_allow
+            dataset: p5_asb_memory
+            expected_action: allow
+            count: all
+        track: core
+        headline_eligible: true
+  p5-holdout-v1:
+    seed: 42
+    split: holdout
+    split_version: split-v2
+    projects:
+      P5_memory_write:
+        manifest: benchmarks/manifests/p5-holdout-v1/p5.json
+        target: 84
+        strata:
+          - id: asb_memory_poison_block
+            dataset: p5_asb_memory
+            expected_action: block
+            count: 80
+          - id: asb_memory_normal_allow
+            dataset: p5_asb_memory
+            expected_action: allow
             count: all
         track: core
         headline_eligible: false

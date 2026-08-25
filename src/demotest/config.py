@@ -332,9 +332,24 @@ def load_suites(path: Path | None = None) -> dict[str, SuiteConfig]:
                 raw_suite_track = "core"
         raw_suite_hl = cfg.get("headline_eligible")
         if raw_suite_hl is None:
-            raw_suite_hl = (raw_suite_track == "core")
+            # default headline follows both suite track AND the strict AND over
+            # per-project headline: a single non-headline project forces the
+            # whole suite non-headline (ring-fences proof/attack-only suites).
+            if projects:
+                _any_false = any(not bool(v.headline_eligible) for v in projects.values())
+                raw_suite_hl = (raw_suite_track == "core") and (not _any_false)
+            else:
+                raw_suite_hl = (raw_suite_track == "core")
         else:
             raw_suite_hl = bool(raw_suite_hl)
+            # explicit suite true must not override a per-project false — fail-closed
+            if raw_suite_hl and projects:
+                _any_false = any(not bool(v.headline_eligible) for v in projects.values())
+                if _any_false:
+                    raise ConfigError(
+                        f"suite {sid!r}: headline_eligible=true conflicts with "
+                        f"a per-project headline_eligible=false (suite must aggregate false)"
+                    )
         if raw_suite_track == "extended" and raw_suite_hl:
             raise ConfigError(f"suite {sid!r}: extended suite cannot be headline_eligible=true")
         if raw_suite_track == "mixed" and raw_suite_hl:

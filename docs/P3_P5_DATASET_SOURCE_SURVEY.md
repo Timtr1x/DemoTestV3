@@ -1,6 +1,6 @@
-# P3 / P5 Dataset Source Survey (investigation-only round)
+# P3 / P5 Dataset Source Survey
 
-Date: 2026-08-24 · Baseline: `main@1e70bea` (Phase 1.5 ACCEPTED)
+Date: 2026-08-25 · Baseline: `main@1d09403` + Phase 2A ACCEPTED (2026-08-25) + Phase 2B frozen (420)
 Method: repository-level verification only — fetched actual GitHub trees,
 raw files and APIs; counted records by reading them. No adapter/renderer/
 target/runner/oracle code was touched; no MCP server or memory DB was
@@ -19,14 +19,16 @@ Scope reminder (F10): P3 tests dangerous/deceptive tool *definitions* — the
 gateway sees description text only. Description-Code Inconsistency (DCI) is
 explicitly OUT of P3 scope until a future `MCPIntegrityCase` exists.
 
-### Candidate 1: MCPTox — verdict **PARTIAL**
+### Candidate 1: MCPTox — verdict **PARTIAL** (`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`)
 
 `zhiqiangwang4/MCPTox-Benchmark` — "MCPTox: A Benchmark for Tool Poisoning
-Attack on Real-World MCP Servers" (README header says AAAI26; 11 stars,
-2 commits, single branch @ `f85189f9ad12504c197c7f920ab818a40657b1fa`,
-"Initial commit" 2025-12-03). Verified by LOCAL CLONE
-(`cache/probe/mcptox`, gitignored) — the authoritative numbers below
-supersede the truncated API-tree figures of the first pass:
+Attack on Real-World MCP Servers" — formally **published in AAAI-26
+proceedings** (paper points to the same `zhiqiangwang4/MCPTox-Benchmark`
+repo as the official artifact). Repo remains 2 commits, single branch @
+`f85189f9ad12504c197c7f920ab818a40657b1fa`, "Initial commit" 2025-12-03.
+Verified by LOCAL CLONE (`cache/probe/mcptox`, gitignored) — the
+authoritative numbers below supersede the truncated API-tree figures of
+the first pass:
 
 - `def_tool/1.py … def_tool/485.py`: **485 poisoned MCP tool definitions**
   as real `@mcp.tool()`-decorated Python functions. Spot-check of
@@ -50,7 +52,9 @@ supersede the truncated API-tree figures of the first pass:
 
 Gaps blocking READY:
 
-- **No LICENSE file** anywhere in the repo — formal acquisition blocker.
+- **No LICENSE file** anywhere in the repo — formal acquisition blocker
+  (proceedings publication alone does not imply a dataset license; no
+  copyright->license inference).
 - README is 9 bytes (`# AAAI26`) — no documented counts or labeling scheme;
   ground truth is implicit (every pairing is a poison case).
 - **No benign controls**: all 485 pairings are poisoned; there is no clean
@@ -90,8 +94,9 @@ benchmark found. Re-check if an artifact appears.
 
 ### P3 next actions
 
-1. Watch MCPTox through AAAI26 camera-ready: if a LICENSE + complete data
-   (including benign set) land, re-audit and pin a commit.
+1. **Do not wait for camera-ready** — the paper is already proceedings-
+   published. Re-audit MCPTox for a LICENSE + completeness signal; if they
+   land, pin a commit.
 2. Decide the benign-control policy BEFORE acquiring (same-origin requirement
    vs. mixed-origin clean-doc corpus). Without benign controls P3 can only
    ever measure TPR, repeating the gap Phase 1.5 just closed for P2.
@@ -108,49 +113,55 @@ ASB file below (first record identical: `ResourceAllocationHijack` /
 `crypto_miner_01`). They were never a committed official artifact themselves —
 this survey replaces that lineage.
 
-### Candidate 1: Agent Security Bench — verdict **PARTIAL** (closest to READY)
+### Candidate 1: Agent Security Bench — verdict **READY (frozen 420)**
 
 `agiresearch/ASB` — official, ICLR 2025 (arXiv 2410.02644), **MIT**, 289
-stars, 20 commits. **PINNED @ `1f561dccf92d55302368fa67679b4ba9d9c8fdc4`** (acquired; Phase 2A fidelity proof in docs/results/P5_PHASE2A_PROJECTION_FIDELITY.md).
+stars, 20 commits. **PINNED @ `1f561dccf92d55302368fa67679b4ba9d9c8fdc4`**,
+**frozen as 420** (400 attacks + 20 normals) — see
+`docs/results/P5_PHASE2B_FREEZE.md` for the full freeze evidence and
+`docs/results/P5_PHASE2A_PROJECTION_FIDELITY.md` for the attack-side
+fidelity spec.
 
-Verified by direct download and inspection:
+Verified by direct download, inspection and frozen pipeline:
 
 - `data/all_attack_tools.jsonl` — **400 attack-tool entries**, fields
   `[Attacker Tool, Attacker Instruction, Description, Attack goal,
-  Attack Type, Corresponding Agent, Aggressive]`; ~200 aggressive /
-  ~200 non-aggressive (per sibling file sizes 105,518 / 104,118 B).
-  These are the plans ASB's Memory-Poisoning scenario injects into the
-  agent's memory DB at runtime.
-- `data/all_normal_tools.jsonl` — **20 benign tool entries** (`[Tool Name,
-  Description, Expected Achievements, Corresponding Agent]`).
+  Attack Type, Corresponding Agent, Aggressive]`; adapter
+  `AttackerTool.get_tool_call_format()` projects to
+  `[{"type":"function","function":{"name":<Attacker Tool>,
+  "description":<Description>}}]` (`expected_action=block`,
+  `ground_truth_kind=memory_poisoning_attack`).
+- `data/all_normal_tools.jsonl` — **20 benign tool entries**
+  (`[Tool Name, Description, Expected Achievements, Corresponding
+  Agent]`); adapter `SimulatedTool.get_tool_call_format()` projects to
+  `[{"type":"function","function":{"name":<Tool Name>,
+  "description":<Description>,"parameters":null}}]`
+  (`expected_action=allow`, `ground_truth_kind=normal_memory_tool`;
+  `parameters:null` is authoritative upstream, not synthetic).
+- Both files share the same memory `Tools` field, same commit, same
+  deterministic projection family, same grouping
+  (`asb:agent:<Corresponding Agent>`), same split discipline
+  (`group_aware_case_count_v2`, agent never spans splits).
 - `memory_db/*` directories are runtime experiment OUTPUTS (Chroma DBs per
-  gpt-4o-mini run), not source data; the poison text originates from the
-  JSONL above (confirmed via `scripts/agent_attack.py` ->
+  gpt-4o-mini run), not source data; the poison/normal text originates from
+  the JSONLs above (confirmed via `scripts/agent_attack.py` ->
   `--attacker_tools_path data/all_attack_tools.jsonl`).
 
 Mapping assessment:
 
-- BLOCK side source material is official and sufficient: the 400 attack
-  entries carry the malicious content ASB embeds into its persisted memory
-  records. CAUTION (review-corrected): ASB's actual memory write serializes
-  `Agent + Task + Workflow(runtime-generated) + Tools`, where the static
-  attacker contribution inside `Tools` is ONLY the tool descriptor
-  `{name: <Attacker Tool>, description: <Description>}` — `Attacker
-  Instruction` is NOT part of that persisted structure, and `Workflow`
-  must never be fabricated. The exact P5 memory-write representation
-  therefore requires a deterministic projection fidelity specification
-  based on the static attacker-tool descriptor (Phase 2A deliverable),
-  metadata `derivation=deterministic_projection, quality=B,
-  source_field=attacker_tool_definition`; no LLM, no runtime.
+- **BLOCK + ALLOW ground truth are now both official and same-origin.**
+  The review-decided option (d) is implemented: the 20 normal tools are the
+  benign control — no second dataset, no synthetic controls. Metrics are
+  `TP/FN/TN/FP`, `TPR` and `FPR` (holdout sealed: `p5-holdout-v1`).
+- Agent grouping (`asb:agent:<Corresponding Agent>`) is load-bearing for
+  holdout isolation (10 agents x 42 cases; 84 dev / 252 eval / 84 holdout).
+  A regression hard gate forbids any agent spanning splits.
 - Fictional scenarios (`crypto_miner_01` etc.) are the benchmark's own
   official content — acceptable on the same grounds as AgentDojo's fictional
   environments (and unlike copying a PDF).
-- GAP (why not READY): **benign memory-write controls do not exist in ASB.**
-  The 20 normal tools are tool definitions, not memories; projecting them as
-  ALLOW memory-writes would fabricate a semantic. Options: (a) ship P5 with
-  TPR-only and a documented no-FPR caveat (repeating the old P2 gap),
-  (b) derive benign memory-writes deterministically from another official
-  source (decision point), or (c) wait/ask upstream.
+- No further P5 dataset linkage gap — next gate is a **real LineMod smoke**
+  (Phase 2B freeze -> real smoke -> health check -> real standard, holdout
+  sealed).
 
 ### Candidate 2: AgentPoison — verdict **not suitable as primary**
 
@@ -164,14 +175,16 @@ our no-synthesis constraints. Keep as Extended/research reference only.
 GitHub search for dedicated "agent memory poisoning dataset" repos otherwise
 returned nothing relevant.
 
-### P5 next actions
+### P5 next actions (post-freeze)
 
-1. Acquire `agiresearch/ASB` at a pinned commit (MIT allows it), write the
-   lock, project the 400 BLOCK cases — this alone unblocks E9->P5 attack
-   coverage with a real official lineage.
-2. Decide the benign-control option (a)/(b)/(c) above before any manifest
-   claims FPR capability for P5.
-3. Do not build the memory DB / runtime; the projection is offline text only.
+1. Real LineMod **smoke** on `p5-smoke-v1` (dev, 64: 60 BLOCK + 4 ALLOW),
+   health check (TPR/FPR + transport), then real standard on
+   `p5-standard-v1` (eval, 252: 240+12). STOP after standard; holdout
+   (`p5-holdout-v1`, 84) stays sealed.
+2. No further dataset work for P5 — the 420 freeze is the lineage. Do not
+   rebuild the memory DB / runtime; the projection is offline text only.
+3. Error analysis note: ASB's `SystemMonitor`-style benign-looking attacks
+   stay BLOCK per GT and are singled out in the analysis, not "fixed".
 
 ---
 
@@ -179,10 +192,11 @@ returned nothing relevant.
 
 | project | candidate | artifact | license | GT | benign | verdict |
 |---|---|---|---|---|---|---|
-| P3 | MCPTox | 485 poisoned MCP tool defs + 485 eval pairings @ f85189f9 (cloned & counted) | **missing** | implicit all-block | **absent in repo** | PARTIAL |
+| P3 | MCPTox | 485 poisoned MCP tool defs + 485 eval pairings @ f85189f9 (cloned & counted) | **missing** | implicit all-block | **absent in repo** | PARTIAL (`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`) |
 | P3 | DCI D_real (arXiv 2606.04769) | none published | n/a | n/a | n/a | NOT FOUND |
-| P5 | ASB (agiresearch/ASB) | 400 attack entries + 20 normal tools (downloaded & counted) | MIT | label=attack (all 400) | **no memory-write-shaped controls** | PARTIAL |
+| P5 | ASB (agiresearch/ASB) | 400 attack + 20 normal (same pin `1f561dc`, frozen pipeline) | MIT | BLOCK+ALLOW (same-origin) | **same-origin ALLOW (20 normals)** | **READY (frozen 420)** |
 | P5 | AgentPoison | triggers generated, data off-repo | MIT | backdoor ASR | n/a | not suitable |
 
-Recommended priority: **P5 first** (one commit-pin away from a real BLOCK
-side; benign decision pending), P3 waits on MCPTox licensing/completeness.
+Recommended priority: **P5 frozen (420)** — next is real LineMod smoke on
+`p5-smoke-v1` (then standard). P3 waits on MCPTox LICENSE/completeness
+(`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`).

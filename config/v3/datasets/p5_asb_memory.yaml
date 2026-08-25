@@ -1,24 +1,30 @@
-# ASB memory-poisoning adapter config (Phase 2A — projection fidelity).
+# ASB memory-poisoning adapter config (Phase 2B — 420 with official controls).
 #
 # Source: agiresearch/ASB @ 1f561dcc… (ICLR 2025, arXiv 2410.02644, MIT).
-# The adapter projects the STATIC attacker tool descriptor (the OpenAI
-# function descriptor ASB embeds inside its persisted memory `Tools` field)
-# as SecurityCase(channel=MEMORY_WRITE, expected_action=block). `Attacker
-# Instruction` and `Workflow` are excluded from content by the fidelity spec —
-# see src/demotest/datasets/adapters/asb_memory.py for the full rationale.
+# Attack projection (400 BLOCK): AttackerTool.get_tool_call_format() ->
+#   [{"type":"function","function":{"name": <Attacker Tool>,
+#                                   "description": <Description>}}]
+# Normal projection (20 ALLOW): SimulatedTool.get_tool_call_format() ->
+#   [{"type":"function","function":{"name": <Tool Name>,
+#                                   "description": <Description>,
+#                                   "parameters": null}}]   ← pinned null
+# Attacker Instruction / Expected Achievements -> metadata only, never content.
+# See src/demotest/datasets/adapters/asb_memory.py for the fidelity spec.
 
 dataset_id: p5_asb_memory
 
 files:
   attack_tools:
     - data/all_attack_tools.jsonl
+  normal_tools:
+    - data/all_normal_tools.jsonl
 
 projection:
   channel: memory_write
   operation: write_memory
   direction: outbound
   project: P5_memory_write
-  expected_action: block
+  expected_action: block   # attack side; normal side flips to allow per-row
   content_source: attacker_tool_definition
 
 metadata:
@@ -32,9 +38,15 @@ metadata:
     - corresponding_agent
     - attacker_instruction
     - attack_goal
+    - expected_achievements
     - source_field
     - ground_truth_kind
+    - group_id
 
-# Each entry is one case; group_id = source_id so splits never separate it.
+# Leak-proofing: one Corresponding Agent never spans splits. Both attack and
+# normal tools for the same agent share the same group_id (asb:agent:<agent>),
+# so group_aware_case_count_v2 keeps them together (DEV/EVAL/HOLDOUT intact).
 split_group:
-  group_id: parent_source_id
+  group_id: corresponding_agent
+  format: "asb:agent:{corresponding_agent}"
+  unknown: "asb:agent:unknown"

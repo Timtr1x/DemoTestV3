@@ -1,0 +1,2062 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-575f6ccb9d542326",
+      "case_id": "case-003a63ceff79343a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:020",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-12d6880483118dac",
+      "case_id": "case-011993e3b44d978a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:356",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-80a68bf20bc4231e",
+      "case_id": "case-017f69d1d19c83be",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:099",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-922f3c850312cf7f",
+      "case_id": "case-0180d7956fe7c11d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:072",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-718db4869a31aa8c",
+      "case_id": "case-0192d615ad68eefe",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:218",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-587a90bc76200169",
+      "case_id": "case-0282a0aa3b4ffd6b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:280",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-99b9760446d7bb1c",
+      "case_id": "case-03a115e32c2025c6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:342",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-cc459fee5c4e4186",
+      "case_id": "case-041465e4415d081b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:080",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-642cde05ff88bb2e",
+      "case_id": "case-04902fd577de7650",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:255",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-58d0bbbccd737620",
+      "case_id": "case-07a4601a2a84d6db",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:197",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-090aaef892728152",
+      "case_id": "case-07cbf1dcc6379809",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:202",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-20de68ffd269ad0c",
+      "case_id": "case-07f6d48c1173e359",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:212",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7baf40c774fd70f8",
+      "case_id": "case-07fea7753e75c144",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:178",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-667a439fc22c888e",
+      "case_id": "case-09fb5fcf85d9da5e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:296",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-27476908f0b5fc2d",
+      "case_id": "case-0befdb94dc443ef3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:371",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9c59981563398103",
+      "case_id": "case-0cd01e7e4beb5932",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:091",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-86b2c7d04198da74",
+      "case_id": "case-0e4604aa7169234e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:017",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8f555dec412c3400",
+      "case_id": "case-0f442feefdf3433a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:215",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b8c8725142f0558b",
+      "case_id": "case-0ffb7789028576b2",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:213",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-478f9bd53b686779",
+      "case_id": "case-11590ade7c2e72e1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:070",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-577a4400c62f57ff",
+      "case_id": "case-12383dc910768b43",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:046",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ed2e9d03da02f585",
+      "case_id": "case-123b073b7a65b138",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:090",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8808a1ab98a53653",
+      "case_id": "case-128109686808c8fc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:260",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-28b3364dc6d9d526",
+      "case_id": "case-148a21f1c3ed7c91",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:067",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d46e7785cbe1284d",
+      "case_id": "case-14b895d5f58a2cb4",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:084",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-33b2c50cc7e9e02c",
+      "case_id": "case-14ebae717bea357e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:370",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-477647a48c0c55ff",
+      "case_id": "case-14eefadc5ba756a6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:245",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-495565484a61e248",
+      "case_id": "case-15a197adcee9de2c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:375",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d60265fda0685ce1",
+      "case_id": "case-178af2f51664d425",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:203",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ad27d81a9a6a3fb1",
+      "case_id": "case-18195379d542276a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:206",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-366aa94d3be52781",
+      "case_id": "case-1b967f77ee822bb0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:089",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-24fd8a50c9e08849",
+      "case_id": "case-1dfa7acff8361074",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:176",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b796e3e36a6a7055",
+      "case_id": "case-1e67fb07a0bba218",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:289",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ce5bc7c41692b040",
+      "case_id": "case-1ee07ac0a4f19dc3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:060",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-add394ba61e8333d",
+      "case_id": "case-210be637afeb0ca9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:normal:019",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9273d5e0837045f4",
+      "case_id": "case-2279e51ca85ce308",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:normal:010",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-abfbb6d9cdee5685",
+      "case_id": "case-22f314b9ef947fc9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:043",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-df5f369cd4baacfe",
+      "case_id": "case-234576e8a9acad57",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:282",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-1cfd10cc298c9c63",
+      "case_id": "case-24e949b856494067",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:380",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d4d8f67990801d78",
+      "case_id": "case-251161ed126ca58b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:196",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-99644f3773cdc4de",
+      "case_id": "case-257893f917a8858c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:258",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-06e1f485a8f312f9",
+      "case_id": "case-26606be27f0262ea",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:186",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6d003efdc5a0aa6b",
+      "case_id": "case-275d51ea9c76ffc1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:241",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2925c06dc6c91080",
+      "case_id": "case-282dea4de7df26b8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:278",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-99b1a357b6d5f0e8",
+      "case_id": "case-28dfbd07968877b0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:199",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-3b274e18c61b2b80",
+      "case_id": "case-29544078d24bf922",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:295",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e77163a18dd8bc54",
+      "case_id": "case-29d4daea137e8f47",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:088",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-4c0d60a91485cae3",
+      "case_id": "case-2b0a82c8c41f03f8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:357",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-33872d18d0bd3b88",
+      "case_id": "case-2b84596f404f1842",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:042",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ea9d7267e33bd5fe",
+      "case_id": "case-2f0c7815e7055a27",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:200",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d7a9e46a7d580eae",
+      "case_id": "case-327189dc8cf4e497",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:207",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7feb3c6d6068ffda",
+      "case_id": "case-33d9d407ccf8b05a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:287",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8acc7e078a35bd81",
+      "case_id": "case-3603ba1be56e8862",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:096",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-644af0fb2afae1c3",
+      "case_id": "case-3654087d29cbaf9b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:271",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a7a9a103ca4c686f",
+      "case_id": "case-36b6ab4856ebf6cc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:291",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-48cbbc84a636b6ff",
+      "case_id": "case-3775c9febe06316d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:048",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c9ddd4712581d1c9",
+      "case_id": "case-38809369bc7b2bce",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:272",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b144190a426012d0",
+      "case_id": "case-388b9cb0a98b46a5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:276",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-44e47830dd569160",
+      "case_id": "case-3902ee6d48298d49",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:367",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-618ae68929953904",
+      "case_id": "case-3af19894a36ccef3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:057",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-1e5c491c32ec83b6",
+      "case_id": "case-3b6461386301b585",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:081",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-23d8b9c6336839d2",
+      "case_id": "case-3b8d6ea6403b1ce6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:269",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-352d2f39d52021c9",
+      "case_id": "case-3cddbeb78daf9b9f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:normal:018",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-266e3bc3d8c40ee7",
+      "case_id": "case-3f5acb3d59be7d7e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:175",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a9c33f7ddef4a790",
+      "case_id": "case-3f64497038f18c8a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:285",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7e85b5cc271333f1",
+      "case_id": "case-40d1bc51be3a2079",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:076",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-687f8a2549ca84de",
+      "case_id": "case-42cb539bc88d5000",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:092",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-3b550e8f4d042125",
+      "case_id": "case-44f3e3e46904179d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:373",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-4729795355e80534",
+      "case_id": "case-451b61f673a69d80",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:369",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-598e99864007dd4a",
+      "case_id": "case-468fff0c453aa2aa",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:195",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-909cbd9caa4db119",
+      "case_id": "case-474c477a11fa6f01",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:379",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7f7007cda4be1429",
+      "case_id": "case-488d4b27819439d7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:050",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6f2084450a63315c",
+      "case_id": "case-48a44f3aadb62537",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:008",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9ca10f88e602f3c4",
+      "case_id": "case-48f9e8b5dcea8c49",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:279",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a016d3fc0af465b9",
+      "case_id": "case-4c71169c0c66dabd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:253",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e2455cea98b511cc",
+      "case_id": "case-4cbdd05362890ec1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:056",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-0fafb830b36ad6e8",
+      "case_id": "case-4cf43aca8f883075",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:251",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-23a314f3ef8739d3",
+      "case_id": "case-4d56274bbb6de3ca",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:209",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5b947b2a0a1fb448",
+      "case_id": "case-5049c39b40adc9f7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:078",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-3323b752eb8bbac2",
+      "case_id": "case-50b9d3ad3e3d5542",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:208",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-0a04156d0a7dc9bd",
+      "case_id": "case-5101e7dc3d9bfd5b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:361",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-f05022380f030d2d",
+      "case_id": "case-514454554448198a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:256",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2e708d630746601d",
+      "case_id": "case-5150f3df3b75647c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:193",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-94d568a4b31fff89",
+      "case_id": "case-517797582d38baf6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:180",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e8204dc96a37901a",
+      "case_id": "case-5266be883013f93b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:298",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-cc71de7b20af82bb",
+      "case_id": "case-5311ca5147612cb0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:082",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-280c26b651ffb541",
+      "case_id": "case-53f2188ea8407293",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:053",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-836ff1935639a41c",
+      "case_id": "case-55873f73eda1e4ce",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:246",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6426b0e51a58c563",
+      "case_id": "case-573a0e35a8dec292",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:355",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-71d347e2115a9079",
+      "case_id": "case-58285f743fd10c22",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:247",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2008c9897526209d",
+      "case_id": "case-5a3f0837a199f740",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:041",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-50d65d85644240d0",
+      "case_id": "case-5b228999f9509495",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:190",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d6b99c6812ff504f",
+      "case_id": "case-5bc2947910487171",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:169",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8cfa5d57ddf144d3",
+      "case_id": "case-5d4c99bba66535db",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:268",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ca9fc631b099d152",
+      "case_id": "case-60554cdb3808e441",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:354",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-48e2b230ca206edb",
+      "case_id": "case-62f29552b1a7cb9e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:274",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-1ef837c36817533a",
+      "case_id": "case-631937ec74cfe388",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:019",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9f27678a21201f67",
+      "case_id": "case-648077de9d648aee",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:059",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-4ab9c7e74d8b125f",
+      "case_id": "case-692d23718c532eec",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:376",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-75bd2f33821fef29",
+      "case_id": "case-6c7f80801d097acd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:064",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9555fcf95eabd30b",
+      "case_id": "case-6fa3bfdb41c3fc25",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:052",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c723becfbf11351a",
+      "case_id": "case-7163ea27e25a18bc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:292",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-333b5f066046963a",
+      "case_id": "case-718ffeb870839a0d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:005",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-991ee70a5a66aa29",
+      "case_id": "case-72218f2c44d482e7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:086",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-38423b934688263c",
+      "case_id": "case-72271cd943a4caec",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:352",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2bf4b7a6bf9f8974",
+      "case_id": "case-72afe2422b23cb94",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:normal:020",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8e8809ae4b943280",
+      "case_id": "case-73eaf4ec81b19535",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:257",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6c3fab163fe1e8ae",
+      "case_id": "case-758555d3601c4579",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:347",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-61e5de45578d87f9",
+      "case_id": "case-762035e65c1cc96e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:210",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b7c4d66c9d269718",
+      "case_id": "case-777b0238f88fd08d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:204",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6576f256736972a0",
+      "case_id": "case-77d6c5eb3da1865e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:188",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7bb32dc91204de0f",
+      "case_id": "case-7832062a319f5f1c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:181",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-3f25be14a58bb22c",
+      "case_id": "case-7ab701e40f87bcbd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:341",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9f66d3f3a12c3ff3",
+      "case_id": "case-7e6783a3e6040c9d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:281",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ea2742f420ed2dfe",
+      "case_id": "case-7f8f5dd50dfb5170",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:077",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a8e2456f7f46c5bd",
+      "case_id": "case-7ff77281d7211b26",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:010",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-67d865a2d55a50d6",
+      "case_id": "case-809bcf73a186bc32",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:093",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7388957cf8fdbf18",
+      "case_id": "case-809f523131b5d2eb",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:015",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ee6e89d50bafd63f",
+      "case_id": "case-8150563a029823be",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:171",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-eb2dee1789c3704a",
+      "case_id": "case-81c783dbd2b550e5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:299",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d6b3a0ee7cf8a1a9",
+      "case_id": "case-84a3dd5030af51b0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:177",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-def07aeaa79a48d9",
+      "case_id": "case-855105618a58cf76",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:164",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-bc11e529fe08321f",
+      "case_id": "case-8721d92d1da11e24",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:049",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7d8b5b48137176a7",
+      "case_id": "case-87b777a60420c168",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:297",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-f10e3cd8f4c4a603",
+      "case_id": "case-880b468173727c33",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:098",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-366117cc2fce35fe",
+      "case_id": "case-884034e8a0df7fd6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:167",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-38c02bf221420b5f",
+      "case_id": "case-891ce80b12a3b857",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:348",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9add5fb634260970",
+      "case_id": "case-895c5d66fff38092",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:259",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-935c55033dd4d537",
+      "case_id": "case-8b080e6d91f0bb3f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:165",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5f09aef05597f57a",
+      "case_id": "case-8bd17e0dd45da094",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:242",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-70cbe9ee95d1a2ef",
+      "case_id": "case-8d2abb12c0df6410",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:018",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-66f75ae17d121245",
+      "case_id": "case-8f02a974e0a785c8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:045",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-fc7fc33f84b23bea",
+      "case_id": "case-8f37ed4780969930",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:378",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-577b63d33032a671",
+      "case_id": "case-8f45cfb02b8e3df7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:055",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c1030936e28e1144",
+      "case_id": "case-9204e9c459feba4c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:265",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-55da90602e84d8d9",
+      "case_id": "case-927af7c497bf2287",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:372",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6f3602846cbaa23b",
+      "case_id": "case-92b5ec6c3780f1d6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:248",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-40e403fd39051841",
+      "case_id": "case-93f7ba7ff237249d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:182",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-46b559326616797b",
+      "case_id": "case-9447b14bc83edb55",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:083",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2b43e81ba6552541",
+      "case_id": "case-94d5095b0a6813b8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:001",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-4fb358f846ad8161",
+      "case_id": "case-9614fe3747325d6e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:360",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c628a6f82fc482ea",
+      "case_id": "case-966803c3b8f4637d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:071",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-4266fba7a6481c75",
+      "case_id": "case-9669828aef9161c9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:166",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-dac6aa6dbff8d225",
+      "case_id": "case-96cb88f54d1cdfc8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:277",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a676516d1a93dac2",
+      "case_id": "case-9751b0f3ebbb37d6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:243",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-f384b53b53399323",
+      "case_id": "case-976dceb66ff2d9e1",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:100",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b344c9e3383f6cc8",
+      "case_id": "case-9880570fc33c2a87",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:normal:001",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6464dee6c6a8da54",
+      "case_id": "case-98c535a6fe672cdf",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:346",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c1f7b38206f09635",
+      "case_id": "case-9acfc88d1fcd4afc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:174",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-71113750e285444e",
+      "case_id": "case-9b8412cb51863bd8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:179",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-cc4657c20fbb8804",
+      "case_id": "case-9b8f378350d1755b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:249",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-01eb6ef307af4f8f",
+      "case_id": "case-9ecc80132462be40",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:286",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2b7e5bda063c84fa",
+      "case_id": "case-9ef1f072250198b8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:187",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b082c8a442af8ba7",
+      "case_id": "case-a046ecfcb2f2e8dc",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:358",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5ef2d4ce3fcfdc65",
+      "case_id": "case-a3701366fbe44f5a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:252",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d8c325f8a7b7e819",
+      "case_id": "case-a7402a2084f33af0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:353",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-fb05de59b5e92aa2",
+      "case_id": "case-a93b3dc5da01facf",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:350",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-95d48d567185825a",
+      "case_id": "case-ab40f8ec9ae2322b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:250",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-fc87d4905a6ee922",
+      "case_id": "case-ade190d932b01b36",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:085",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5499acc2087b1a60",
+      "case_id": "case-af41674205f09c18",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:198",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7fbe48fe26b3286a",
+      "case_id": "case-afa8322e8a79d40d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:068",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2f52f8b4e709b876",
+      "case_id": "case-b01aedae393361dd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:016",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-120f89fb187ade90",
+      "case_id": "case-b14b4d83eb96115f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:349",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-891d6f4a65377a50",
+      "case_id": "case-b157cd01dc28447f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:270",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-461c60b26eda95c0",
+      "case_id": "case-b1babac3fe9d07d5",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:294",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-42a849b6608bab6c",
+      "case_id": "case-b1f8708e8b02298f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:362",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ec9d5dac1a3c5a9b",
+      "case_id": "case-b29df36a8fe4fb08",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:300",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d1c65dafb134a9a0",
+      "case_id": "case-b2d8ab1e49d8704f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:161",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-73d44b1849695301",
+      "case_id": "case-b3c5fef52131c425",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:170",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a9b6a9d66a872037",
+      "case_id": "case-b46bfb0282a52197",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:013",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c47f799e4ae72616",
+      "case_id": "case-b480a8ef79325ce8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:normal:002",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2857d0f71f513fe7",
+      "case_id": "case-b58835d88199c845",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:345",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-51f553ba0fdf6374",
+      "case_id": "case-b62b5ef5c7e77be2",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:343",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-809f93b9e9828371",
+      "case_id": "case-b68336e4329b4ed9",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:263",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-281d496836d60ccd",
+      "case_id": "case-b6ccc9d1801c2659",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:201",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-159cf0bf77dc8991",
+      "case_id": "case-b729e88f3d177c05",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:219",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b829989a0eab8b90",
+      "case_id": "case-b8d9bdff6a405a0b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:079",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-4d070dfca5a76616",
+      "case_id": "case-b90b5420b6f1ac09",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:094",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e4fdf55650e4cf9b",
+      "case_id": "case-b9c8e9a507b96ec6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:293",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e75d5424affa893a",
+      "case_id": "case-ba1cda7304937367",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:163",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7d525c712f688f1d",
+      "case_id": "case-baca1eb4628b5972",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:185",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-196ac0f8f5a20ed1",
+      "case_id": "case-bb99bfe54ee5b78c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:244",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a4389c0a640455b2",
+      "case_id": "case-bde522d46ef8110d",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:normal:006",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-69b0f505a6019edd",
+      "case_id": "case-be3ba7360f45c58c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:216",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8cf8851374a2c748",
+      "case_id": "case-bf858de826a1ac86",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:095",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-586dd8355d75135a",
+      "case_id": "case-c0d13ac8e06d904a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:283",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c97385da9a14a0e4",
+      "case_id": "case-c19776f25974565e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:172",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d3305a4bbf8e5e21",
+      "case_id": "case-c22bf4cc5d36e6d3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:normal:007",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b0e08c90994a2a7f",
+      "case_id": "case-c287bc594422e796",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:194",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e10a70e8ec3e47f8",
+      "case_id": "case-c2b999488606e310",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:063",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6999dd5e8a2a7369",
+      "case_id": "case-c4061a64b1e74f49",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:191",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6a5699a9f5fe7103",
+      "case_id": "case-c479fedd6de3886c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:069",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-dbc1d3a162003524",
+      "case_id": "case-c57a3869abe8182e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:007",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a4aa3ad38f50ce17",
+      "case_id": "case-c5d9bf0c08e577a6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:217",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-506bb79c8e157a7d",
+      "case_id": "case-c60801564c48e2db",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:058",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-dcac81939ffb81f8",
+      "case_id": "case-c68e698e6fbf6c6e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:002",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-12b42262e6538268",
+      "case_id": "case-c6d94dc6a004d444",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:073",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-f193a76a64240298",
+      "case_id": "case-c7e22daa6c4196af",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:363",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7c3f8c0178e7251f",
+      "case_id": "case-c8919d8524680ce6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:266",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-af2d1fafc1a72ec9",
+      "case_id": "case-c893a05790e8ba5f",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:267",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5a84ce7728d07591",
+      "case_id": "case-c8e71f69bad6adda",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:074",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-0e9826f4cdb8404f",
+      "case_id": "case-ca82496d0081fecb",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:344",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ff2b1863c11c5d2f",
+      "case_id": "case-cbd09077bc117237",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:365",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ec7ee83669c5585b",
+      "case_id": "case-cd2edd1211a73ef6",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:368",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-0eb6d232ef45d2b6",
+      "case_id": "case-d258e10cbfdda3fd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:264",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-01e322997ba32631",
+      "case_id": "case-d322afb2bd24f9f8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:normal:017",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-85a48c0fc739de8e",
+      "case_id": "case-d36c7cc3b5df1d93",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:012",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b7b365b81ff3d62c",
+      "case_id": "case-d5067f2946ac30c4",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:047",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-3d78492adc83b594",
+      "case_id": "case-d680d01aeb13f791",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:275",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ed2d25ee67bee2b2",
+      "case_id": "case-d93989de5df33e10",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:284",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ab682e3ad278ed00",
+      "case_id": "case-d9bca4c3b6362597",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:288",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8935675108bffbb1",
+      "case_id": "case-ddd87fae3e7e2b3c",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:051",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5297a48259f18a10",
+      "case_id": "case-df4fc5fd63702a12",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:205",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a3bd549459d52ae5",
+      "case_id": "case-e19731a0fa593c95",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:214",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-93dd151376221336",
+      "case_id": "case-e1a6c8bb0605c5b8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:097",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-107562b31faf8b93",
+      "case_id": "case-e1b49d822ace9595",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:364",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5ccc5a78f4d269d8",
+      "case_id": "case-e27bc6892bbcd278",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:192",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-81f2cc5146cf4bc4",
+      "case_id": "case-e2da0e587baefeee",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:004",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e3728114311ec797",
+      "case_id": "case-e3f7cd5a032cd37b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:normal:005",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-9f8a8d036d2343f2",
+      "case_id": "case-e3fe870a329905fb",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:006",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a2b137235de16043",
+      "case_id": "case-e4d6f17a3dcc03a8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:014",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-49c74825908744ea",
+      "case_id": "case-e6a08e47fd8408bd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:262",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-5bf9f880f123db57",
+      "case_id": "case-e708c561f1c618fd",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:087",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ee5c3c9f5f50fa52",
+      "case_id": "case-e881015b15d384d3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:273",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7321ce5019424e18",
+      "case_id": "case-e9c4be33a4afa57b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:normal:009",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-74cbaaefa0d4a47a",
+      "case_id": "case-ec2acae38fada464",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:education_consultant_agent",
+      "source_id": "asb:mp:attack:290",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c7556536cfede512",
+      "case_id": "case-eea681fffb562f91",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:211",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-80bf0edc3e4a01aa",
+      "case_id": "case-eeb7f90540435680",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:359",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-60bc31b271e161e2",
+      "case_id": "case-eed52dc20d03f9bf",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:351",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-adf8dd5a5a5b78ef",
+      "case_id": "case-efa63e9b5cfbc3ad",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:162",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-8a59f7bbbfbfd2c6",
+      "case_id": "case-effafd5771ca876b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:003",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-a04c4159b8e7cc95",
+      "case_id": "case-f0d010b1b9a63f17",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:054",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-ec7001862df5d984",
+      "case_id": "case-f1419f1d080aae74",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:066",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-0921f3095f898174",
+      "case_id": "case-f164f82092bf5b58",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:173",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6b2608cd824327f9",
+      "case_id": "case-f2363a767ec04c9e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:011",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-2d5d24f4fdca7e1d",
+      "case_id": "case-f26800f073bf6327",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:377",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-d3f5aea558eca834",
+      "case_id": "case-f2b69dff30292e47",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:065",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-6ce9f40d2336275a",
+      "case_id": "case-f3c349d9897f8e63",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:061",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-7047b3708ccf4671",
+      "case_id": "case-f44ccf65f91188fb",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:254",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-da7dad17608667f4",
+      "case_id": "case-f4d222a2fe638ee4",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:183",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-c85cca58b0ae9d7f",
+      "case_id": "case-f567bc156f81d3e8",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:009",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-67b6a728c432b33c",
+      "case_id": "case-f5e24ea95fb6a5a3",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:366",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-0d3ea9fca01b4436",
+      "case_id": "case-f7280513f8433d0b",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:normal:008",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-b73e08295c14718b",
+      "case_id": "case-f72d2a32eeaa453a",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:academic_search_agent",
+      "source_id": "asb:mp:attack:168",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-36e9a52228a41d78",
+      "case_id": "case-f97d84bf7950aa07",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:184",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-079a4448a0ade3f0",
+      "case_id": "case-fb004685fe157004",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:374",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-019c2e2d67d6aa0f",
+      "case_id": "case-fb3a1118a55cff24",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:261",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-713d8b9e1b4ca7a3",
+      "case_id": "case-fbb946e8cc2d679e",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:075",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-e478c9d5a89f5176",
+      "case_id": "case-fda9a8404ddeacf0",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:autonomous_driving_agent",
+      "source_id": "asb:mp:attack:189",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-801510f00063c743",
+      "case_id": "case-fde9790e9e782fcb",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:medical_advisor_agent",
+      "source_id": "asb:mp:attack:062",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-62920364c0b76ee7",
+      "case_id": "case-ff09ee67ca2366ec",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:legal_consultant_agent",
+      "source_id": "asb:mp:attack:044",
+      "split": "eval"
+    },
+    {
+      "case_fingerprint": "fp-69065ff8bf4428e6",
+      "case_id": "case-fff8144d8caedfa7",
+      "dataset_id": "p5_asb_memory",
+      "group_id": "asb:agent:system_admin_agent",
+      "source_id": "asb:mp:attack:220",
+      "split": "eval"
+    }
+  ],
+  "created_from": {
+    "p5_asb_memory": {
+      "adapter": "p5_asb_memory",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
+      "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
+    }
+  },
+  "headline_eligible": true,
+  "manifest_sha256": "sha256:4d0e7fea37c568104c5e12185d2fc7188b2af897b5dfeb83301fcb5d9e195c9e",
+  "manifest_version": "v3.2",
+  "n": 252,
+  "project": "P5_memory_write",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "eval"
+  ],
+  "strata": {
+    "asb_memory_normal_allow": {
+      "actual": 12,
+      "filtered": 12,
+      "target": "all"
+    },
+    "asb_memory_poison_block": {
+      "actual": 240,
+      "filtered": 240,
+      "target": 260
+    }
+  },
+  "suite": "p5-standard-v1",
+  "target": 300
+}

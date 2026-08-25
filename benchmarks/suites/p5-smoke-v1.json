@@ -4,15 +4,13 @@
     "P5_memory_write": {
       "benchmark_track": "core",
       "headline_eligible": false,
-      "manifest": "benchmarks/manifests/p5-asb-proof-v0/p5.json",
-      "manifest_sha256": "sha256:665d59c6ab6359708ec9a74f156e56cfd25fb5c8e18e142bf43185a1a33c18df",
-      "n": 8,
+      "manifest": "benchmarks/manifests/p5-smoke-v1/p5.json",
+      "manifest_sha256": "sha256:054a1ffac5371d06a6bd429c99f70864ef11eac8cc712ccd4bd8bd856fe9b3f8",
+      "n": 64,
       "split": [
-        "dev",
-        "eval",
-        "holdout"
+        "dev"
       ],
-      "target": 8
+      "target": 64
     }
   },
   "seed": 42,
@@ -25,12 +23,10 @@
     }
   },
   "split": [
-    "dev",
-    "eval",
-    "holdout"
+    "dev"
   ],
-  "suite_config_hash": "sha256:f010d238c438289f3c5aadbac380b8e95127e585870cc954ee8903837eb32063",
-  "suite_id": "p5-asb-proof-v0",
-  "total_cases": 8,
+  "suite_config_hash": "sha256:ed7f5d276b03a4115d99314a8664092974d77788fb045eaa71f5c60675904f6e",
+  "suite_id": "p5-smoke-v1",
+  "total_cases": 64,
   "track": "core"
 }

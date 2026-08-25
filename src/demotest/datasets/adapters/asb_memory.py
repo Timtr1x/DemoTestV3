@@ -1,30 +1,33 @@
 """ASB Memory-Poisoning adapter — official Agent Security Bench -> MEMORY_WRITE.
 
-Phase 2A projection fidelity spec (accepted review, 2026-08-24):
+Phase 2B (real-controls extension): same pinned revision, two official files
 
-ASB's memory-poisoning scenario persists records shaped like
-``Agent: {prefix}; Task: {task_input}; Workflow: {workflow}; Tools: {tool_info}``
-where ``Workflow`` is RUNTIME-generated (never fabricated here) and the
-attacker's static contribution inside the persisted ``Tools`` field is ONLY
-the OpenAI function descriptor ``{"type": "function", "function": {name,
-description}}`` — the ``Attacker Instruction`` is NOT part of that structure.
+  * data/all_attack_tools.jsonl  -> 400 BLOCK (attacker tool descriptor)
+  * data/all_normal_tools.jsonl  ->  20 ALLOW (normal  tool descriptor)
 
-Therefore each projected SecurityCase carries, as ``content``, the EXACT
-deterministic JSON serialization of that single attacker tool descriptor
-(the shape ASB would persist for it, minus every runtime/fabricated field):
+Both are ASB-official OpenAI function descriptors that ASB embeds inside the
+persisted memory ``Tools`` field (``Agent+Task+Workflow+Tools``). ``Workflow``
+is runtime-generated and never fabricated; ``Attacker Instruction`` /
+``Expected Achievements`` stay metadata-only, never gateway-visible.
 
-    [{"type": "function", "function": {"name": <Attacker Tool>,
-                                        "description": <Description>}}]
+Attack descriptor (AttackerTool.get_tool_call_format):
+  [{"type":"function","function":{"name": <Attacker Tool>,
+                                  "description": <Description>}}]
 
-``Attacker Instruction`` is preserved in metadata for audit traceability only
-(it must never reach the gateway-visible content). Metadata is explicit:
-``derivation=deterministic_projection``, ``quality_tier=B``,
-``source_field=attacker_tool_definition``,
-``ground_truth_kind=memory_poisoning_attack``. No LLM, no runtime, no Chroma.
+Normal descriptor (SimulatedTool.get_tool_call_format) — the authoritative
+shape includes ``parameters: null`` (must be preserved):
+  [{"type":"function","function":{"name": <Tool Name>,
+                                  "description": <Description>,
+                                  "parameters": null}}]
+
+Split leak-proofing: every case's grouping key is
+``asb:agent:<Corresponding Agent>`` so one agent's attack+normal tools never
+span splits (DEV/EVAL/HOLDOUT isolation). See split_group in
+config/v3/datasets/p5_asb_memory.yaml.
 
 Source: agiresearch/ASB, pinned 1f561dccf92d55302368fa67679b4ba9d9c8fdc4
-(ICLR 2025, arXiv 2410.02644, MIT). File: data/all_attack_tools.jsonl (400
-entries; fail-closed on count).
+(ICLR 2025, arXiv 2410.02644, MIT). fail-closed on both counts (400/20)
+outside entries_provider injection.
 """
 from __future__ import annotations
 
@@ -42,7 +45,9 @@ from ..registry import register_adapter
 from ..source_lock import load_source_lock
 
 EXPECTED_ATTACK_ENTRIES = 400
+EXPECTED_NORMAL_ENTRIES = 20
 ATTACK_TOOLS_REL = "data/all_attack_tools.jsonl"
+NORMAL_TOOLS_REL = "data/all_normal_tools.jsonl"
 ASB_ARXIV = "2410.02644"
 
 
@@ -63,12 +68,38 @@ def attacker_tool_descriptor(row: Mapping[str, Any]) -> str:
     return json.dumps([descriptor], ensure_ascii=False)
 
 
+def normal_tool_descriptor(row: Mapping[str, Any]) -> str:
+    """Deterministic serialization of the official normal tool descriptor.
+
+    The real upstream shape is SimulatedTool.get_tool_call_format() which emits
+    ``parameters: null`` alongside name/description. That null is AUTH-pinned
+    behavior and must not be dropped or rewritten.
+    """
+    descriptor = {
+        "type": "function",
+        "function": {
+            "name": str(row.get("Tool Name") or ""),
+            "description": str(row.get("Description") or ""),
+            "parameters": None,
+        },
+    }
+    return json.dumps([descriptor], ensure_ascii=False)
+
+
+def agent_group_id(corresponding_agent: str) -> str:
+    """Canonical split group so one agent never spans splits."""
+    ag = (corresponding_agent or "").strip()
+    if not ag:
+        return "asb:agent:unknown"
+    return f"asb:agent:{ag}"
+
+
 @register_adapter
 class AsbMemoryAdapter(DatasetAdapter):
-    """Project pinned ASB memory-poisoning attack tools into MEMORY_WRITE."""
+    """Project pinned ASB attack+normal tools into MEMORY_WRITE (420)."""
 
     dataset_id = "p5_asb_memory"
-    adapter_version = "1.0.0"
+    adapter_version = "1.1.0"
 
     def __init__(
         self,
@@ -96,43 +127,78 @@ class AsbMemoryAdapter(DatasetAdapter):
             return self.source_config.revision
 
     # ------------------------------------------------------------------ rows
-    def _load_rows(self) -> Iterator[Mapping[str, Any]]:
+    def _load_attack_rows(self) -> list[Mapping[str, Any]]:
         if self._entries_provider is not None:
-            yield from self._entries_provider
-            return
+            return list(self._entries_provider)
         fp = self.raw_dir / ATTACK_TOOLS_REL
         if not fp.exists():
             raise DatasetSourceError(
                 f"missing ASB attack-tools file: {fp}. "
                 f"Run: python -m demotest.cli.main dataset acquire --dataset {self.dataset_id}"
             )
+        rows: list[Mapping[str, Any]] = []
         for line in fp.read_text(encoding="utf-8").splitlines():
             line = line.strip()
             if not line:
                 continue
-            yield json.loads(line)
+            rows.append(json.loads(line))
+        return rows
+
+    def _load_normal_rows(self) -> list[Mapping[str, Any]]:
+        # entries_provider is attack-only by contract (Phase 2A tests). Real
+        # path reads the pinned file directly; provider injection never fakes
+        # normal tools.
+        if self._entries_provider is not None:
+            return []
+        fp = self.raw_dir / NORMAL_TOOLS_REL
+        if not fp.exists():
+            raise DatasetSourceError(
+                f"missing ASB normal-tools file: {fp}. "
+                f"Run: python -m demotest.cli.main dataset acquire --dataset {self.dataset_id}"
+            )
+        rows: list[Mapping[str, Any]] = []
+        for line in fp.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+        return rows
 
     # ------------------------------------------------------------------ iter
     def iter_cases(self) -> Iterator[SecurityCase]:
-        rows = list(self._load_rows())
-        actual = len(rows)
-        # fail-closed only on the REAL acquisition path; entries_provider
-        # (unit-test injection) skips the gate like agentdojo's task_provider.
-        if self._entries_provider is None and actual != EXPECTED_ATTACK_ENTRIES:
-            raise DatasetSourceError(
-                f"ASB attack-tools count drift: expected {EXPECTED_ATTACK_ENTRIES} "
-                f"entries, found {actual} — pinned artifact changed; re-run "
-                "scripts/_p5_asb_projection_proof.py and re-review"
-            )
-        for i, row in enumerate(rows, start=1):
-            if self.max_entries and i > self.max_entries:
+        attack_rows = self._load_attack_rows()
+        normal_rows = self._load_normal_rows()
+        # fail-closed only on the REAL path; provider injection skips it
+        if self._entries_provider is None:
+            if len(attack_rows) != EXPECTED_ATTACK_ENTRIES:
+                raise DatasetSourceError(
+                    f"ASB attack-tools count drift: expected {EXPECTED_ATTACK_ENTRIES} "
+                    f"entries, found {len(attack_rows)} — pinned artifact changed; re-run "
+                    "scripts/_p5_asb_projection_proof.py and re-review"
+                )
+            if len(normal_rows) != EXPECTED_NORMAL_ENTRIES:
+                raise DatasetSourceError(
+                    f"ASB normal-tools count drift: expected {EXPECTED_NORMAL_ENTRIES} "
+                    f"entries, found {len(normal_rows)} — pinned artifact changed; re-review"
+                )
+        yielded = 0
+        for idx, row in enumerate(attack_rows, start=1):
+            if self.max_entries and yielded >= self.max_entries:
                 break
-            yield self._build_case(i=i, row=row)
+            yield self._build_attack_case(seq=idx, row=row)
+            yielded += 1
+        for jdx, row in enumerate(normal_rows, start=1):
+            if self.max_entries and yielded >= self.max_entries:
+                break
+            yield self._build_normal_case(seq=jdx, row=row)
+            yielded += 1
 
-    def _build_case(self, *, i: int, row: Mapping[str, Any]) -> SecurityCase:
-        source_id = f"asb:mp:{i:03d}"
+    def _build_attack_case(self, *, seq: int, row: Mapping[str, Any]) -> SecurityCase:
+        source_id = f"asb:mp:attack:{seq:03d}"
         content = attacker_tool_descriptor(row)
         tool = str(row.get("Attacker Tool") or "")
+        corresponding_agent = str(row.get("Corresponding Agent") or "")
+        gid = agent_group_id(corresponding_agent)
         case = SecurityCase.build(
             dataset_id=self.dataset_id,
             source_id=source_id,
@@ -157,7 +223,8 @@ class AsbMemoryAdapter(DatasetAdapter):
             "attacker_tool": tool,
             "attack_type": str(row.get("Attack Type") or ""),
             "aggressive": str(row.get("Aggressive") or ""),
-            "corresponding_agent": str(row.get("Corresponding Agent") or ""),
+            "corresponding_agent": corresponding_agent,
+            "group_id": gid,
             # traceability only — deliberately NOT part of gateway-visible content
             "attacker_instruction": str(row.get("Attacker Instruction") or ""),
             "attack_goal": str(row.get("Attack goal") or ""),
@@ -166,12 +233,63 @@ class AsbMemoryAdapter(DatasetAdapter):
             "derivation": "deterministic_projection",
         }
         case = SecurityCase.from_dict(d)
-        nsha = content.encode("utf-8", errors="replace")
         prov = SourceProvenance(
             source_dataset="asb",
             source_revision=self._lock_revision(),
             source_id=source_id,
-            group_id=source_id,
+            group_id=gid,
+            raw_sha256=_sha256(content),
+            normalized_sha256=_sha256(content),
+            adapter_name="p5_asb_memory",
+            adapter_version=self.adapter_version,
+            quality_tier="B",
+            derivation="deterministic_projection",
+            parent_source_id=source_id,
+        )
+        return attach_provenance(case, prov)
+
+    def _build_normal_case(self, *, seq: int, row: Mapping[str, Any]) -> SecurityCase:
+        source_id = f"asb:mp:normal:{seq:03d}"
+        content = normal_tool_descriptor(row)
+        tool = str(row.get("Tool Name") or "")
+        corresponding_agent = str(row.get("Corresponding Agent") or "")
+        gid = agent_group_id(corresponding_agent)
+        case = SecurityCase.build(
+            dataset_id=self.dataset_id,
+            source_id=source_id,
+            channel=Channel.MEMORY_WRITE,
+            operation=Operation.WRITE_MEMORY,
+            direction=Direction.OUTBOUND,
+            content=content,
+            memory_operation="write",
+            memory_target="agent_long_term_memory",
+            expected_action=ExpectedAction.ALLOW,
+            project_id="P5_memory_write",
+            threat_id="memory_poisoning",
+            presentation_style="structured",
+        )
+        d = case.to_dict()
+        d["metadata"] = {
+            **(d.get("metadata") or {}),
+            "source_dataset": "asb",
+            "source_revision": self._lock_revision(),
+            "source_field": "normal_tool_definition",
+            "ground_truth_kind": "normal_memory_tool",
+            "attacker_tool": tool,
+            "corresponding_agent": corresponding_agent,
+            "group_id": gid,
+            # provenance only — not gateway-visible
+            "expected_achievements": str(row.get("Expected Achievements") or ""),
+            "arxiv": f"arXiv:{ASB_ARXIV}",
+            "quality_tier": "B",
+            "derivation": "deterministic_projection",
+        }
+        case = SecurityCase.from_dict(d)
+        prov = SourceProvenance(
+            source_dataset="asb",
+            source_revision=self._lock_revision(),
+            source_id=source_id,
+            group_id=gid,
             raw_sha256=_sha256(content),
             normalized_sha256=_sha256(content),
             adapter_name="p5_asb_memory",
@@ -186,22 +304,36 @@ class AsbMemoryAdapter(DatasetAdapter):
     def validate_raw(self) -> ValidationReport:
         rep = ValidationReport(ok=True)
         rep.add("clone_present", self.raw_dir.exists(), str(self.raw_dir))
-        fp = self.raw_dir / ATTACK_TOOLS_REL
-        rep.add("attack_tools_present", fp.exists(), str(fp))
-        n = 0
-        required = {"Attacker Tool", "Description", "Attack Type",
-                    "Corresponding Agent", "Aggressive"}
-        missing_fields: set[str] = set()
-        if fp.exists():
-            for line in fp.read_text(encoding="utf-8").splitlines():
+        fp_a = self.raw_dir / ATTACK_TOOLS_REL
+        fp_n = self.raw_dir / NORMAL_TOOLS_REL
+        rep.add("attack_tools_present", fp_a.exists(), str(fp_a))
+        rep.add("normal_tools_present", fp_n.exists(), str(fp_n))
+        n_a = n_n = 0
+        required_a = {"Attacker Tool", "Description", "Attack Type",
+                      "Corresponding Agent", "Aggressive"}
+        required_n = {"Tool Name", "Description", "Corresponding Agent"}
+        missing_a: set[str] = set()
+        missing_n: set[str] = set()
+        if fp_a.exists():
+            for line in fp_a.read_text(encoding="utf-8").splitlines():
                 line = line.strip()
                 if not line:
                     continue
-                n += 1
-                missing_fields |= required - set(json.loads(line).keys())
-        rep.add("attack_entries_exact_400", n == EXPECTED_ATTACK_ENTRIES, f"n={n}")
-        rep.add("required_fields_present", not missing_fields,
-                f"missing={sorted(missing_fields)}")
+                n_a += 1
+                missing_a |= required_a - set(json.loads(line).keys())
+        if fp_n.exists():
+            for line in fp_n.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                n_n += 1
+                missing_n |= required_n - set(json.loads(line).keys())
+        rep.add("attack_entries_exact_400", n_a == EXPECTED_ATTACK_ENTRIES, f"n={n_a}")
+        rep.add("normal_entries_exact_20", n_n == EXPECTED_NORMAL_ENTRIES, f"n={n_n}")
+        rep.add("required_fields_present_attack", not missing_a,
+                f"missing={sorted(missing_a)}")
+        rep.add("required_fields_present_normal", not missing_n,
+                f"missing={sorted(missing_n)}")
         return rep
 
     def source_metadata(self) -> dict[str, Any]:

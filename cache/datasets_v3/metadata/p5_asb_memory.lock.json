@@ -1,7 +1,7 @@
 {
-  "acquired_at": "2026-08-24T09:36:16Z",
+  "acquired_at": "2026-08-25T01:49:59Z",
   "adapter_name": "p5_asb_memory",
-  "adapter_version": "1.0.0",
+  "adapter_version": "1.1.0",
   "dataset_id": "p5_asb_memory",
   "extra": {},
   "license": "MIT",
