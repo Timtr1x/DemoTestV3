@@ -19,7 +19,7 @@
   "source_locks": {
     "p5_asb_memory": {
       "adapter": "p5_asb_memory",
-      "adapter_version": "1.1.0",
+      "adapter_version": "1.0.0",
       "raw_sha256": "193290039b99e81e641bce72f1014911b94b31bfeb7ebd006d85c20e146382aa",
       "revision": "1f561dccf92d55302368fa67679b4ba9d9c8fdc4"
     }

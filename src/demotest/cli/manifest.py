@@ -224,18 +224,43 @@ def cmd_suite_verify(args) -> int:
             problems.append(f"suite_config_hash drift: snapshot {snap['suite_config_hash'][:16]} != suites.yaml { _exp2[:16]} (re-run build_suite_summaries)")
     except Exception:
         pass
-    # Hard gate: snapshot source_locks must match current dataset locks
-    # FROZEN_PROOF suites are intentionally pinned at older adapter versions
-    # and must not trip the current-lock gate (handled via LEGACY_FROZEN in
-    # build_suite_summaries.py — same pattern as smoke-v1 etc.).
     FROZEN_PROOF_SUITES = {"p5-asb-proof-v0"}
-    if args.suite not in FROZEN_PROOF_SUITES:
+    is_frozen_proof = args.suite in FROZEN_PROOF_SUITES
+    if is_frozen_proof:
+        # Historical proof: snapshot source_locks must equal manifest created_from (1.0.0),
+        # not current lock. Ensures bookkeeping consistency without demanding current version.
+        for pid, ptarget in suite.projects.items():
+            mpath_tmp = _P(ptarget.manifest)
+            if not mpath_tmp.exists():
+                continue
+            try:
+                m_tmp = load_manifest(str(mpath_tmp))
+            except Exception:
+                continue
+            strata_ds_tmp = {str(s.get("dataset") or "") for s in (ptarget.strata or []) if s.get("dataset")}
+            for ds_id in _DATASETS_BY_PROJECT.get(pid, []):
+                if strata_ds_tmp and ds_id not in strata_ds_tmp:
+                    continue
+                cf_tmp = (m_tmp.get("created_from") or {}).get(ds_id)
+                if not cf_tmp:
+                    continue
+                snap_locks_tmp = snap.get("source_locks") or {}
+                snap_lock_tmp = snap_locks_tmp.get(ds_id)
+                if not snap_lock_tmp:
+                    problems.append(f"{pid}: frozen proof snapshot missing source_locks[{ds_id!r}]")
+                    continue
+                for k in ("adapter_version", "raw_sha256", "revision"):
+                    if snap_lock_tmp.get(k) != cf_tmp.get(k):
+                        problems.append(
+                            f"{pid}: frozen proof snapshot source_locks[{ds_id}].{k} {snap_lock_tmp.get(k)!r} "
+                            f"!= manifest created_from[{ds_id}].{k} {cf_tmp.get(k)!r}"
+                        )
+    else:
         try:
             from ..datasets.source_lock import load_source_lock as _ld_lock
             from ..config import load_datasets as _ld2
             _all_ds = _ld2()
             for pid, ptarget in suite.projects.items():
-                # only check datasets that are actually referenced by strata
                 strata_ds = {str(s.get("dataset") or "") for s in (ptarget.strata or []) if s.get("dataset")}
                 for ds_id in _DATASETS_BY_PROJECT.get(pid, []):
                     if strata_ds and ds_id not in strata_ds:
@@ -252,7 +277,6 @@ def cmd_suite_verify(args) -> int:
                     if not snap_lock:
                         problems.append(f"{pid}: snapshot missing source_locks[{ds_id!r}] (re-run build_suite_summaries)")
                         continue
-                    # adapter_version / raw_sha256 / revision must match current lock
                     for k in ("adapter_version", "raw_sha256", "revision"):
                         cur_v = getattr(cur_lock, k, None)
                         snap_v = snap_lock.get(k)
@@ -262,7 +286,6 @@ def cmd_suite_verify(args) -> int:
                                 f"(re-run build_suite_summaries after lock bump)"
                             )
         except Exception as _e:
-            # don't swallow hard — surface but don't crash the whole verify
             problems.append(f"source_locks gate error: {_e}")
     for pid, ptarget in suite.projects.items():
         mpath = _P(ptarget.manifest)
