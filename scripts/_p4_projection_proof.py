@@ -1,19 +1,25 @@
-"""P4 Projection Proof — Phase 4D (12-20 case gate).
+"""P4 Phase 4D Synthetic Projection Gate — production-schema compatibility proof.
 
-Proves, without Docker / LineMod / real secrets:
-  * reviewed_traces.jsonl -> CredentialTrace -> SecurityCase projection
-    preserves Gateway-visible content byte-for-byte (span replacement only,
-    no query/risk/paradigm/sink leakage into envelope)
+Proves, without Docker / LineMod / real secrets, that IF a future
+CredentialTrace satisfies the real provenance contract
+  (DYNAMIC_TRACE + dynamic_confirmed + trace_hash + quality A/B),
+THEN the current Adapter/Renderer handles it correctly:
+  * CredentialTrace -> SecurityCase projection preserves Gateway-visible
+    content byte-for-byte (span replacement only, no query/risk/paradigm/sink
+    leakage into envelope)
   * Renderer/Channel fidelity: tool_result -> tool_result RAW/STRUCTURED,
     tool_call -> tool_call RAW/STRUCTURED, via credential_flow/v1
-  * Gate policy: only DIRECT/PROJECTED with DYNAMIC_TRACE + dynamic_confirmed
-    + trace_hash + quality A/B pass; NOT_VISIBLE/AMBIGUOUS never projects
+  * Gate policy: only DIRECT/PROJECTED with the above provenance passes;
+    NOT_VISIBLE/AMBIGUOUS never projects
 
-Coverage: 12-20 synthetic P4CANARY traces spanning stdout/Tool Result,
-Tool Call x multiple skills x multiple patterns. Synthetic-only gate
-because SkillLeakBench public CSV is sanitized (no sink/snippet/span).
-Real DIRECT SkillLeakBench cases enter in Phase 4D Full Core after
-private-master span recovery, not in this gate.
+Fixture: synthetic P4CANARY traces only (fabricated DYNAMIC_TRACE markers for
+schema compatibility). Does NOT prove possession of real SkillLeakBench
+DIRECT evidence — that is Phase 4E Real Evidence Recovery.
+
+Coverage: 13 synthetic P4CANARY traces (12 BLOCK + 1 ALLOW) spanning
+stdout/Tool Result, Tool Call x multiple skills x multiple patterns.
+Real DIRECT SkillLeakBench cases enter Full Core only after private-master
+span recovery (Phase 4E), not in this gate.
 
 Exit 0 on all gates passing, 1 on any failure.
 """
@@ -101,7 +107,7 @@ def make_trace(
 
 
 def build_proof_traces() -> list[CredentialTrace]:
-    # 14 traces: 7 STDOUT/TOOL_RESULT DIRECT + 5 TOOL_CALL (incl PROJECTED)
+    # 13 positives: 8 STDOUT/TOOL_RESULT DIRECT + 5 TOOL_CALL (incl PROJECTED/ALLOW) + 2 negatives
     # + 2 negative controls (one HARDCODE_ONLY, one insufficient evidence)
     # Negative controls are NOT part of the 12-projected set; they test rejection.
     pcs: list[CredentialTrace] = []

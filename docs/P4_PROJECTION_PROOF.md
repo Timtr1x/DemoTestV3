@@ -1,8 +1,9 @@
-# P4 投影证明 — Projection / Renderer Proof（Phase 4D）
+# P4 投影证明 — Production-Schema Compatibility Proof（Phase 4D Synthetic Gate）
 
-> **日期**：2026-08-25 · **状态**：证明通过（`scripts/_p4_projection_proof.py` 本地 13 例通过，无 Docker、无 LineMod、无真实 secret）
-> **前置**：`docs/P4_VISIBILITY_CONTRACT.md`（映射与三桶）· `docs/P4_SANITIZATION_CONTRACT.md`（`P4CANARY_<sha256(issue_id)[:16]>` 一对一替换）
-> **范围**：验证 `reviewed_traces-like CredentialTrace → SecurityCase → credential_flow/v1` 的**投影保真**与**渲染隔离**，以及 `DIRECT/PROJECTED` 门控；SkillLeakBench 公开 `1,708 issues` 为 `sanitized 7 列`（无 `sink/snippet/span`），本证明以 **合成 `P4CANARY` 样本** 完成 12+1 门控，真实 `DIRECT` SkillLeakBench 样本并入后续 Full Core（私库 `span` 恢复后）。
+> **日期**：2026-08-25 · **状态**：`P4 Phase 4D Synthetic Projection Gate — COMPLETE`（`scripts/_p4_projection_proof.py` 本地 13 例通过，无 Docker、无 LineMod、无真实 secret）
+> **验收定性**：Production-schema compatibility proof — 证明“若未来得到满足真实 `provenance contract` 的 `CredentialTrace`，现有 `Adapter/Renderer` 能正确处理”；**不证明**已拥有 SkillLeakBench 真实 `DIRECT` trace
+> **前置**：`docs/P4_VISIBILITY_CONTRACT.md`（映射与三桶）· `docs/P4_SANITIZATION_CONTRACT.md`（`P4CANARY_<sha256(issue_id)[:16]>` 一对一替换）· `docs/P4_FROZEN_BOUNDARY.md`（冻结边界）
+> **范围**：`reviewed_traces-like CredentialTrace → SecurityCase → credential_flow/v1` 的**投影保真**与**渲染隔离**，以及 `DIRECT/PROJECTED` 门控；SkillLeakBench 公开 `1,708 issues` 为 `sanitized 7 列`（无 `sink/snippet/span`），本证明的 `13` 例均为**合成 `P4CANARY` 样本**（`DYNAMIC_TRACE / dynamic_confirmed / trace_hash` 为 `fabricated placeholder`），不得解释为真实 `A 级 provenance`；真实 `DIRECT` 样本待 `Phase 4E Real Evidence Recovery` 后进入 Full Core
 
 ---
 
@@ -69,9 +70,17 @@ PROOF PASS — projection faithful, renderer envelope clean, gates enforced (12+
 
 ---
 
-## 5. 与契约的衔接
+## 5. 定性收紧（本次评审）
+
+- 本证明为 **production-schema compatibility proof**，不是 `Evidence / provenance proof`；
+- 仅证明：`满足真实 provenance contract 的 CredentialTrace → 现有 Adapter/Renderer 能正确处理`；
+- 不证明：`已拥有满足该 contract 的 SkillLeakBench trace`；
+- 合成 `ALLOW` 仅验证 `Oracle` 分支可达，不作为真实 `FPR` 数据，不得计入后续 Core 的 `ALLOW` 计数。
+
+## 6. 与契约的衔接
 
 - 满足 `P4_VISIBILITY_CONTRACT` 的 `DIRECT/PROJECTED → Core` 与 `NOT_VISIBLE/AMBIGUOUS → 排除`；
 - 满足 `P4_SANITIZATION_CONTRACT` 的 `P4CANARY` 一对一替换与“不改上下文、不扩写、真实 secret 零落地”；
-- 下一步：以私库 `File:Line/Snippet` 为 `span` 证据，对真实 `DIRECT` SkillLeakBench `issues` 按本契约批量脱敏后进入 **Full Core Freeze**（`benchmarks/frozen/datasets/credential_dynamic_traces/` 的 `reviewed_traces-like` → `dataset prepare` → `manifest`），再走 `validate → render → run → analyze → report`，不新增执行管线。
+- **冻结**：见 `docs/P4_FROZEN_BOUNDARY.md` — Visibility / P4CANARY / Renderer / Target / Oracle / synthetic fixture 本轮后不再改；
+- 下一步唯一合法任务：`Phase 4E Real Evidence Recovery`（路径 A `private master File:Line/Snippet/span` 或路径 B 官方 `pinned pipeline` 以 `fake credential` 小范围复现“能跑且能产生 Gateway-visible marker”的 case；`≥50 real DIRECT` 可先真实 Smoke/Dev，`150–300` 足够第一版 Standard；无真实 `safe credential flow` 则保持 `TPR-only / headline_eligible=false`），不按 `issues.csv pattern` 批量生成合成 `DIRECT` 充数。
 
