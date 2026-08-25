@@ -1,0 +1,846 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-653f522aa32706a6",
+      "case_id": "case-01168d0a67121441",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:execute_command",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e02c530301acf221",
+      "case_id": "case-022d612703a9adb4",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:read_file",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5e83fa87a5a04e48",
+      "case_id": "case-074bc2a41949f8b7",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:SQLite",
+      "source_id": "mcptox:SQLite:SQLite_8",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5d64e26d4a603754",
+      "case_id": "case-08b10feff87674d8",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:search_code",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-56af2767e7e59c48",
+      "case_id": "case-10796e8ad0196623",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_11",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e326e81f22ef3e9e",
+      "case_id": "case-109a8910b896e349",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_26",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e3302eb1968da5df",
+      "case_id": "case-109cd911ff94b7aa",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:SQLite",
+      "source_id": "mcptox:SQLite:clean:SQLite:create_table",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f56507d92dd262c3",
+      "case_id": "case-11ad541f94cec002",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:valorant-leaderboard",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a76c143ced030136",
+      "case_id": "case-13187316f273f2c6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:lol-champion-meta-data",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c56570de57e4cd7c",
+      "case_id": "case-131fe5a697eb2351",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:tft-recommend-champion-for-item",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-0e13e4bd2a1875b3",
+      "case_id": "case-1539eac1c06faad9",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_10",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-79c877f4315f2123",
+      "case_id": "case-173644b48f8c86dc",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_12",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1904d1efcd1dedf9",
+      "case_id": "case-1b19912993e26539",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:E2B",
+      "source_id": "mcptox:E2B:E2B_1",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ec704000f0feec14",
+      "case_id": "case-1c4522838a4bb0ae",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:create_relations",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c2e153e42a0754ab",
+      "case_id": "case-1cf615fd7a822f04",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:clean:Gyazo:gyazo_image",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b943144fb7fab609",
+      "case_id": "case-1ffcf40e9c6979f3",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-12b86fa459f55c61",
+      "case_id": "case-202324eeea5d94b4",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_17",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c0676a7e77d535af",
+      "case_id": "case-23f08587f745dbd8",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1d4e095874a4a488",
+      "case_id": "case-256cd2fa7f403e79",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f1a43cc9f78bc613",
+      "case_id": "case-25bb03961d28ae67",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:move_file",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-440620f2767b7cb1",
+      "case_id": "case-25ea11e62ee02cb5",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_23",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a516bf16198bc899",
+      "case_id": "case-2a1da7a7152f62f5",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_17",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f71a243328aa6782",
+      "case_id": "case-2e9f797ae562e85f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:valorant-characters-statistics",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7da642af0d1be447",
+      "case_id": "case-30de4ced47d8c62a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a98a1bfd23d1221a",
+      "case_id": "case-335ab4ccf25cae6b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_9",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-96115fcd5c971406",
+      "case_id": "case-37b52327fee7b124",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:Gyazo_2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e68a51e6e188b660",
+      "case_id": "case-37e51438c3d88bb4",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:E2B",
+      "source_id": "mcptox:E2B:clean:E2B:run_code",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-05b52e7c1d470625",
+      "case_id": "case-38375d3f523dbbe8",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:SQLite",
+      "source_id": "mcptox:SQLite:clean:SQLite:describe_table",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2fe3d99b12d19b8c",
+      "case_id": "case-3989b7e6bd2f8846",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:delete_relations",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5bbb1fbf40b69fac",
+      "case_id": "case-4346aa3a5206d918",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:write_file",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-415a1366378599e2",
+      "case_id": "case-436e8e568f9c1e77",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3061fe8a098799e1",
+      "case_id": "case-4624d8c53e0ec7c2",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_20",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-376fe3e826bc9969",
+      "case_id": "case-47976c14ce16f10a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:Gyazo_4",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5ef5583def5c6e12",
+      "case_id": "case-47c6e981085eb617",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8c3219c3172db77f",
+      "case_id": "case-50a05d913273cc17",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_14",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2669bf49dd98bc28",
+      "case_id": "case-524b36b2068e5cd2",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-47fd51d069787758",
+      "case_id": "case-55049379049fa9c3",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:get_config",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2426498b6523d359",
+      "case_id": "case-553c336431bebfea",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:SQLite",
+      "source_id": "mcptox:SQLite:clean:SQLite:list_tables",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ae1d96d40fef9eef",
+      "case_id": "case-5557a6c4e9f55118",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_14",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b63c8067a6c067c6",
+      "case_id": "case-555dac7154839530",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:valorant-meta-characters",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2c756c4c55983643",
+      "case_id": "case-5880655025683038",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:set_config_value",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8231a3eac3faaf48",
+      "case_id": "case-58968866015978c2",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_3",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-aede209c1ec3cc2d",
+      "case_id": "case-5e83abd1e1139ad4",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_22",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b58cf4e922c2b9a3",
+      "case_id": "case-64d4a5724f82970d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_8",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-50dbf6f18d6b9f58",
+      "case_id": "case-66d3959eac7218bb",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_12",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-032cddc5ce7d20fb",
+      "case_id": "case-67937dd8fe5eadbc",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:clean:ClickHouse:list_tables",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f0079db7ea5d2df2",
+      "case_id": "case-7141b2286f8c38ce",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_15",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7fcac61e706642c7",
+      "case_id": "case-72287818088fca18",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_13",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-27e6e7cd46e25b03",
+      "case_id": "case-7514f6df89a947af",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:Gyazo_3",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-56b477e916ff6a6a",
+      "case_id": "case-764289590714ba02",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:create_directory",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-585121d3c6839375",
+      "case_id": "case-772228af9ac693e6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_6",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7a9da8e5986c61f7",
+      "case_id": "case-7b9e6d6493fa688d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_21",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e20a4ddc686a0743",
+      "case_id": "case-7e8bb067d363de10",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_19",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-d5f01adfb6fabe92",
+      "case_id": "case-8261be43eb926548",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_3",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e03181ca34108bb1",
+      "case_id": "case-827c0a386ca94011",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_24",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-3abbb020ef3c1935",
+      "case_id": "case-864a8b89359da83e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_15",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a6dddcfdfa3fd413",
+      "case_id": "case-86fc4776a8981414",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:list_processes",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ee27f1ac3e1fd101",
+      "case_id": "case-888567daadd858aa",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:delete_entities",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-30441f24be2bbcf7",
+      "case_id": "case-88b8d331e5de1ee1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:add_observations",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-e62cb9dc101b2d76",
+      "case_id": "case-89fa93508aaab08b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_4",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-6445c8e3a911b8ce",
+      "case_id": "case-8de8bc71b6ec174b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_9",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2112463ee7352028",
+      "case_id": "case-94c800f0b29e4aa1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_11",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ce471473ca329161",
+      "case_id": "case-95e98215c1918a3b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:read_graph",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7e687abaae377780",
+      "case_id": "case-97aef264f78a8012",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:lol-champion-positions-data",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8d9e78476e089bc4",
+      "case_id": "case-98faffc317e0b5cc",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:lol-champion-leader-board",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-c23f842d95c6f05a",
+      "case_id": "case-a1870a7ba9151716",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:create_entities",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-a394dcdbc0bcb9ea",
+      "case_id": "case-a27e72d9069beb7d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:SQLite",
+      "source_id": "mcptox:SQLite:SQLite_2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8e9f6c4581fff5c6",
+      "case_id": "case-a377a62cf9713be9",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_14",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-dfc6218508d10228",
+      "case_id": "case-a63c92765534fff0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1a3eaa952f2a7d67",
+      "case_id": "case-a7bff354e1179f46",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:delete_observations",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-221665d0d1770427",
+      "case_id": "case-a7f7d468bf8b65ed",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:Memory_9",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-548cd06cf2eefb81",
+      "case_id": "case-abd52e8c5c9daa55",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:lol-summoner-search",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-da3214ffc38291c1",
+      "case_id": "case-acb98a591f96e28b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Memory",
+      "source_id": "mcptox:Memory:clean:Memory:open_nodes",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ace408b4afbd49c4",
+      "case_id": "case-b0a727d05fedca2f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_18",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-512f0593d03dd0a0",
+      "case_id": "case-c2158d5b172d8d47",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:clean:ClickHouse:run_select_query",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8393b896553a26f4",
+      "case_id": "case-c2e8c89854de3113",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:clean:ClickHouse:list_databases",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-56054346c3a6f993",
+      "case_id": "case-c346aba55b25ae58",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_10",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-350585efab96de6f",
+      "case_id": "case-c5210d538134e24c",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_21",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-ca2e02cf31eae191",
+      "case_id": "case-c55f35de28c880c4",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_10",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-7408b2d167321d93",
+      "case_id": "case-c7bd58883f041d6b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:OP.GG_6",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-62ec34459c089cff",
+      "case_id": "case-c84355eec66b9110",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_5",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-85d1cbff28de5265",
+      "case_id": "case-ca8fc081bd88e490",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:tft-meta-trend-deck-list",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-f9c0a1c8c49aa2ce",
+      "case_id": "case-cad01cc53cf56ae6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_8",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-1c2aeb3a30d8b9f0",
+      "case_id": "case-caec76d1c5019eb5",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-87fd3210ab550ca4",
+      "case_id": "case-cb60bfb99f45b2f3",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_11",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-eab95ea6cebe7c0b",
+      "case_id": "case-cc0076ca5bbdabab",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:clean:Gyazo:gyazo_search",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5f1e961c4ad7d2e2",
+      "case_id": "case-cc24f7723dd50544",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:clean:Gyazo:gyazo_upload",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-861b73c00b974859",
+      "case_id": "case-cc6f0783a431bfbb",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_15",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-b3415cb18588cdbd",
+      "case_id": "case-d402411c310de39f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Gyazo",
+      "source_id": "mcptox:Gyazo:Gyazo_1",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-75d766e2c328a392",
+      "case_id": "case-dd98136e3d3ce890",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5aaca62254910276",
+      "case_id": "case-e1f1335cc32855be",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:search_files",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-dea923b7566830e2",
+      "case_id": "case-e26f8dbc0756fc4b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_4",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-8fc765100b79d843",
+      "case_id": "case-e675a39834c71c53",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_2",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-624112f28e9d497e",
+      "case_id": "case-e677cfbf0b6ac445",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:clean:Commander:force_terminate",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-688dd1dca4225943",
+      "case_id": "case-e8f18d611b9d8403",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Commander",
+      "source_id": "mcptox:Commander:Commander_17",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-08adad4d274fd739",
+      "case_id": "case-e9f208f4dcb77420",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_7",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-5c1099e7b1fc6569",
+      "case_id": "case-ee41a0ec0f1c770e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:OP.GG",
+      "source_id": "mcptox:OP.GG:clean:OP.GG:lol-champion-analysis",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-2ecb0e795a162e85",
+      "case_id": "case-f04b022e7d89abe6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:SQLite",
+      "source_id": "mcptox:SQLite:clean:SQLite:append_insight",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-32d10cfb0c8a31d6",
+      "case_id": "case-f254fbccc02d71ff",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:ClickHouse",
+      "source_id": "mcptox:ClickHouse:ClickHouse_1",
+      "split": "dev"
+    },
+    {
+      "case_fingerprint": "fp-39d41fc3356ddc20",
+      "case_id": "case-f2a64109eb40b10b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Apify",
+      "source_id": "mcptox:Apify:Apify_1",
+      "split": "dev"
+    }
+  ],
+  "created_from": {
+    "p3_mcptox": {
+      "adapter": "p3_mcptox",
+      "adapter_version": "1.1.0",
+      "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
+      "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
+    }
+  },
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:6fdf6f6220486ed9f089116f75f9d77b2657847923aac7cd948ef1f264fdf756",
+  "manifest_version": "v3.2",
+  "n": 100,
+  "project": "P3_mcp_definition",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "dev"
+  ],
+  "strata": {
+    "mcptox_clean_allow": {
+      "actual": 40,
+      "filtered": 61,
+      "target": 40
+    },
+    "mcptox_poison_block": {
+      "actual": 60,
+      "filtered": 113,
+      "target": 60
+    }
+  },
+  "suite": "p3-smoke-v1",
+  "target": 100
+}

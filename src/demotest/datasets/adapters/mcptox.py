@@ -51,6 +51,12 @@ MCPTOX_REVISION = "f85189f9ad12504c197c7f920ab818a40657b1fa"
 MCPTOX_PURE_SHA256 = "9a321dc4ecf4869883cf2a29ea8189e1f7663720a9c41a3e5ce2323d580e31c1"
 MCPTOX_RESPONSE_SHA256 = "4f8177dcbe3718ce3d6ea6a0eec8fa27813158179bd30afe340fe854e886fdf5"
 
+# Phase 3C0: high-confidence clean derived from response_all.json
+# 42 servers OK, 3 excluded (Apify/DoDo Payments/Email). See docs/P3_MCPTox_CLEAN_AUDIT.md.
+EXPECTED_CLEAN_ENTRIES = 309
+EXCLUDED_CLEAN_SERVERS = frozenset({"Apify", "DoDo Payments", "Email"})
+EXPECTED_TOTAL_CORE = 794  # 485 BLOCK + 309 ALLOW
+
 
 def mcptox_group_id(server_name: str) -> str:
     """Canonical split group so one server never spans splits."""
@@ -66,10 +72,14 @@ def _sha256_text(text: str) -> str:
 
 @register_adapter
 class P3MCPToxAdapter(DatasetAdapter):
-    """Project pinned MCPTox poisoned definitions into MCP_DEFINITION (BLOCK)."""
+    """Project pinned MCPTox definitions into MCP_DEFINITION (BLOCK+ALLOW core 794).
+
+    v1.1.0 adds the 309 high-confidence clean ALLOW branch (same server groups,
+    same renderer, byte-identical to response_all.json clean_system_promot spans).
+    """
 
     dataset_id = "p3_mcptox"
-    adapter_version = "1.0.0"
+    adapter_version = "1.1.0"
 
     def __init__(
         self,
@@ -153,22 +163,72 @@ class P3MCPToxAdapter(DatasetAdapter):
                     flat.update(group)
         return flat
 
+    # ------------------------------------------------------------------ rows (clean)
+    def _load_clean(self) -> list[dict[str, Any]]:
+        """Load 309 high-confidence clean definitions from response_all.json."""
+        if self._entries_provider is not None:
+            return []  # injection is pure-only by contract (attack proof)
+        fp = self.raw_dir / "response_all.json"
+        if not fp.exists():
+            raise DatasetSourceError(f"missing MCPTox response_all.json: {fp}")
+        data = json.loads(fp.read_text(encoding="utf-8"))
+        import re
+
+        pattern = re.compile(r"Tool:\s*([^\n]+?)\s*\nDescription:\s*(.*?)\nArguments:", flags=re.DOTALL)
+        out: list[dict[str, Any]] = []
+        for server, obj in sorted(data.get("servers", {}).items()):
+            if server in EXCLUDED_CLEAN_SERVERS:
+                continue
+            cp: str = obj.get("clean_system_promot") or ""
+            import hashlib
+
+            sha = hashlib.sha256(cp.encode("utf-8")).hexdigest()
+            for m in pattern.finditer(cp):
+                tool = m.group(1).strip()
+                desc = m.group(2).strip()
+                s, e = m.start(2), m.end(2)
+                # strict already audited — description must be usable as ALLOW
+                if not desc or desc.lower() == "none":
+                    continue
+                out.append(
+                    {
+                        "server_name": server,
+                        "tool_name": tool,
+                        "tool_content": desc,
+                        "source_span": [s, e],
+                        "clean_prompt_sha256": sha,
+                        "source_case_id": f"clean:{server}:{tool}",
+                    }
+                )
+        return out
+
     # ------------------------------------------------------------------ iter
     def iter_cases(self) -> Iterator[SecurityCase]:
         flat = self._load_flat()
+        clean = self._load_clean()
         if self._entries_provider is None:
             if len(flat) != EXPECTED_PURE_ENTRIES:
                 raise DatasetSourceError(
                     f"MCPTox pure_tool count drift: expected {EXPECTED_PURE_ENTRIES}, "
                     f"found {len(flat)} — pinned artifact changed; re-run Phase 3A audit"
                 )
-        # Deterministic order by source key so case_id ordering is stable pre-split
+            if len(clean) != EXPECTED_CLEAN_ENTRIES:
+                raise DatasetSourceError(
+                    f"MCPTox clean count drift: expected {EXPECTED_CLEAN_ENTRIES}, "
+                    f"found {len(clean)} — pinned clean audit changed; re-run Phase 3C0"
+                )
+        # Deterministic order: BLOCK (pure) sorted by source key, then ALLOW sorted by server/tool
         yielded = 0
         for key in sorted(flat.keys()):
             if self.max_entries and yielded >= self.max_entries:
                 break
             row = flat[key]
             yield self._build_case(source_case_id=key, row=row)
+            yielded += 1
+        for row in sorted(clean, key=lambda r: (r["server_name"], r["tool_name"])):
+            if self.max_entries and yielded >= self.max_entries:
+                break
+            yield self._build_clean_case(row=row)
             yielded += 1
 
     def _build_case(self, *, source_case_id: str, row: Mapping[str, Any]) -> SecurityCase:
@@ -222,6 +282,66 @@ class P3MCPToxAdapter(DatasetAdapter):
         }
         case = SecurityCase.from_dict(d)
         # Provenance: raw is the exact description text hence content-addressable
+        prov = SourceProvenance(
+            source_dataset="mcptox",
+            source_revision=self._lock_revision(),
+            source_id=source_id,
+            group_id=gid,
+            raw_sha256=_sha256_text(tool_content),
+            normalized_sha256=_sha256_text(tool_content),
+            adapter_name="p3_mcptox",
+            adapter_version=self.adapter_version,
+            quality_tier="B",
+            derivation="deterministic_projection",
+            parent_source_id=source_id,
+        )
+        return attach_provenance(case, prov)
+
+    def _build_clean_case(self, *, row: Mapping[str, Any]) -> SecurityCase:
+        server_name = str(row.get("server_name") or "")
+        tool_name = str(row.get("tool_name") or "")
+        # Gateway-visible: byte-identical clean description from clean_system_promot span
+        tool_content = str(row.get("tool_content") or "")
+        gid = mcptox_group_id(server_name)
+        source_case_id = str(row.get("source_case_id") or f"clean:{server_name}:{tool_name}")
+        source_id = f"mcptox:{server_name}:{source_case_id}"
+        case = SecurityCase.build(
+            dataset_id=self.dataset_id,
+            source_id=source_id,
+            channel=Channel.MCP_DEFINITION,
+            operation=Operation.REGISTER_TOOL,
+            content=tool_content,
+            expected_action=ExpectedAction.ALLOW,
+            project_id="P3_mcp_definition",
+            threat_id="mcp_definition_poisoning",
+            presentation_style="structured",
+            mcp_server=server_name,
+            mcp_tool=tool_name,
+            mcp_description=tool_content,
+            mcp_schema={},
+        )
+        d = case.to_dict()
+        span = row.get("source_span") or []
+        sha = str(row.get("clean_prompt_sha256") or "")
+        d["metadata"] = {
+            **(d.get("metadata") or {}),
+            "source_dataset": "mcptox",
+            "source_revision": self._lock_revision(),
+            "source_case_id": source_case_id,
+            "server_name": server_name,
+            "tool_name": tool_name,
+            "security_risk": "",
+            "paradigm": "",
+            "quality_tier": "B",
+            "derivation": "deterministic_projection",
+            "group_id": gid,
+            "ground_truth_kind": "benign_mcp_definition",
+            "clean_prompt_sha256": sha,
+            "source_span": list(span) if isinstance(span, (list, tuple)) else span,
+            "pure_sha256": MCPTOX_PURE_SHA256,
+            "response_sha256": MCPTOX_RESPONSE_SHA256,
+        }
+        case = SecurityCase.from_dict(d)
         prov = SourceProvenance(
             source_dataset="mcptox",
             source_revision=self._lock_revision(),

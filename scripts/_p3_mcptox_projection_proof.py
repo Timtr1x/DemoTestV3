@@ -76,7 +76,15 @@ def main() -> int:
         print(f"FAIL: cannot load probe pure_tool.json: {e}")
         return 1
 
-    # Gate: raw counts (from adapter validate)
+    # Gate: raw counts (from adapter validate) — note adapter is now 794 (485+309) core
+    # Proof asserts the BLOCK branch is 485, not the full core
+    cases_list = list(cases.values())
+    n_block = sum(1 for c in cases_list if c.expected_action.value == "block")
+    n_allow = sum(1 for c in cases_list if c.expected_action.value == "allow")
+    if n_block != 485:
+        errors.append(f"block count {n_block} != 485")
+    if n_allow != 309:
+        errors.append(f"allow count {n_allow} != 309")
     rep = adapter.validate_raw()
     for chk in rep.checks:
         if not chk["ok"]:
@@ -86,9 +94,9 @@ def main() -> int:
         return 1
     print(f"validate_raw: {len(rep.checks)} checks PASS (485/45/1348/36/1312)")
 
-    # Gate: 485 total, 45 servers
-    if len(cases) != 485:
-        errors.append(f"case count {len(cases)} != 485")
+    # Gate: 794 total, 45 servers (485 BLOCK + 309 ALLOW, FAIL-CLOSED)
+    if len(cases) != 794:
+        errors.append(f"case count {len(cases)} != 794")
     servers = {c.metadata["group_id"] for c in cases.values()}
     if len(servers) != 45:
         errors.append(f"server groups {len(servers)} != 45")

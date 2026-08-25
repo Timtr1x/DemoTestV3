@@ -115,6 +115,24 @@ datasets:
     raw_dir: benchmarks/frozen/datasets/credential_dynamic_traces/raw
     normalized_dir: benchmarks/frozen/datasets/credential_dynamic_traces/normalized
 
+  p3_mcptox:
+    adapter: p3_mcptox
+    adapter_version: 1.1.0
+    enabled: true
+    quality_tier: B
+    source:
+      type: github
+      repository: zhiqiangwang4/MCPTox-Benchmark
+      revision: f85189f9ad12504c197c7f920ab818a40657b1fa
+      license: UNRESOLVED
+      hash_globs:
+      - pure_tool.json
+      - def_tool/*.py
+      - response_all.json
+    raw_dir: cache/probe/mcptox
+    normalized_dir: cache/datasets_v3/normalized/p3_mcptox
+    # Phase 3C0: 309 high-confidence clean, 3 ambiguous excluded
+
   p5_asb_memory:
     adapter: p5_asb_memory
     adapter_version: 1.1.0

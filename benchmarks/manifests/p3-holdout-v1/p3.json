@@ -1,0 +1,1294 @@
+{
+  "benchmark_track": "core",
+  "cases": [
+    {
+      "case_fingerprint": "fp-87f23862771a86d8",
+      "case_id": "case-00bad85bd448bf89",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_12",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d0e1cb1ba56272fd",
+      "case_id": "case-01360d1e0da06c53",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_18",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-113ec5fc5ea048e9",
+      "case_id": "case-0342b57896841fa0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-32d8433d29d102e1",
+      "case_id": "case-04e818c9af44ef48",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_17",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f074f4fdef7dcf07",
+      "case_id": "case-057d9c43b5ac7238",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d75aa1bf8b31e5f8",
+      "case_id": "case-06dbdf59959291ad",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cf0a088b0f256bfd",
+      "case_id": "case-0996d827f1a697e0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:clean:BraveSearch:brave_web_search",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-461223ff4915ed3c",
+      "case_id": "case-0fd63ae90f75b015",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:create_branch",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-14fa5caa9f54ead2",
+      "case_id": "case-100d3fb74daa522b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:clean:KeywordsPeopleUse:people-also-ask",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-26f03efef3557a7e",
+      "case_id": "case-1033b7a1530407d5",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-53baad76a37a051f",
+      "case_id": "case-107003abb58ebfe8",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Fetch",
+      "source_id": "mcptox:Fetch:Fetch_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fae14cae57ed0a1c",
+      "case_id": "case-13b3cd34cc8f1add",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_15",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-82c39ee784e2a800",
+      "case_id": "case-152eaffdbee700e1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:clean:AgentQL:extract-web-data",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-39d4bd85c2497805",
+      "case_id": "case-1cce4612b1be2aa6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a11334842ab2c46e",
+      "case_id": "case-1d0119febc24a422",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e5756e9197e17fe3",
+      "case_id": "case-1db35b0042946a0c",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fed1ea3cb5a08046",
+      "case_id": "case-1e4baf4e7c4ee92f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6eea93316eb0043c",
+      "case_id": "case-21427cd700dcda6d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6133f616bfeeec2f",
+      "case_id": "case-267f82b33b540059",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-57daf0cb3240ff9d",
+      "case_id": "case-27a38defc4df1fb0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:get_issue",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bcdc28ca2018e2b0",
+      "case_id": "case-283398184ccb917e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3b86333995b12188",
+      "case_id": "case-28569d0d08caf6f0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:wechat_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-38d7356c9b2961cf",
+      "case_id": "case-287f69fdf80ed305",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_get_users",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-04a04896965a99bf",
+      "case_id": "case-2b06c7edde0423c1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d481c7605a99466d",
+      "case_id": "case-2c8aa8680f293974",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:KeywordsPeopleUse_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b59e59658157b4af",
+      "case_id": "case-2e9962bbca73066e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:create_pull_request_review",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1983d0db59d69294",
+      "case_id": "case-2fcfcbc2ef161600",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:gNucleus Text to CAD",
+      "source_id": "mcptox:gNucleus Text to CAD:gNucleus Text to CAD_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8c346d6eef52e276",
+      "case_id": "case-30388af39a661665",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:fork_repository",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1d94f226a1dfb9da",
+      "case_id": "case-309afb6edd195a5f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_get_channel_history",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-069db95d8d3f9883",
+      "case_id": "case-30b8c13ac528e0cf",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:delete_profile",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ea4af0cbf951b43",
+      "case_id": "case-30dbc9e1fb7431c9",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f8f78aed41acf616",
+      "case_id": "case-32c4b8d6d542b0d2",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_21",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e1b241277c05e245",
+      "case_id": "case-336095228fe0092e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_11",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-546e2a167acd140b",
+      "case_id": "case-3710cb5c21640e96",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:push_files",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3f1cf287c42d589f",
+      "case_id": "case-39146c9ef48931da",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-07040ad61bc21e64",
+      "case_id": "case-40c76890be7a119a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:update_issue",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5bdd27b1da4188af",
+      "case_id": "case-42741e10f4ef0e20",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_17",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-730987d9ef65bf44",
+      "case_id": "case-42bc5e81a0deeb47",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:KeywordsPeopleUse_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ee02a916456816d6",
+      "case_id": "case-43e9c1248e334356",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f2ce3957d598bea5",
+      "case_id": "case-450db4fb68051e5f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8ddc88382e699f10",
+      "case_id": "case-462f0dee951c9afd",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dda59cb88e55bf7c",
+      "case_id": "case-47042f71928ae9ee",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e3d29a67d52ba555",
+      "case_id": "case-48af47ee67da5726",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_list_channels",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4b2e0dbae4a6dbdd",
+      "case_id": "case-48e0408247f98686",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:clean:KeywordsPeopleUse:google-autocomplete",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dee41736f1517ec2",
+      "case_id": "case-498cd865b9be1d42",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:add_issue_comment",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-52c23e0218fd1a4f",
+      "case_id": "case-4991b2b7498b1718",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-431c549fbe6a0374",
+      "case_id": "case-4b2694795ee0a55e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:wechat_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-821c8b79cff27602",
+      "case_id": "case-4b8a6d537576b26f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:AgentQL_6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9f1b37280214a048",
+      "case_id": "case-4cbc055c3f515fae",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:search_repositories",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f65875ec5c817ce0",
+      "case_id": "case-4cf43f92e02a6390",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:create_pull_request",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8ed1b398981d7977",
+      "case_id": "case-4d16a302e19689b0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_19",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-45e2f1af2ba38f8a",
+      "case_id": "case-4f40591013271b66",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:AgentQL_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e678881b32cc7ef5",
+      "case_id": "case-518c4cebf3b81c31",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:Prisma-Login",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0c7ba2047fdef794",
+      "case_id": "case-523a381166c45470",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2bb98ee540f8911e",
+      "case_id": "case-5597e7ab112ae9cf",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:QuickChart",
+      "source_id": "mcptox:QuickChart:QuickChart_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c54018424c262415",
+      "case_id": "case-57ad33a1ef461d5e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:QuickChart",
+      "source_id": "mcptox:QuickChart:clean:QuickChart:generate_chart",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b99fb7ee105aac4d",
+      "case_id": "case-57d48513186b9f61",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_11",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9bd2d4103d3b1602",
+      "case_id": "case-5b284a948daf2ae9",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:migrate-status",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bd9fc3d13072564d",
+      "case_id": "case-5c05e842b81d224f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:Prisma-Studio",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bd6319ebac4c0a08",
+      "case_id": "case-5c4c97827fcb98b7",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_22",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f73ca657cea80e3b",
+      "case_id": "case-5d1b333be93178b1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:claude_computer_use_agent",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4aa4a7e8d74be18d",
+      "case_id": "case-5e30f3362d096250",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1c3d6ae63645165c",
+      "case_id": "case-5eed0cfb75a2e5be",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:create_or_update_file",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ad398b20a627cd52",
+      "case_id": "case-65b114e499db15ad",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:wechat_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-98d833b7b3fbcdc7",
+      "case_id": "case-66561c0d72a70147",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:AgentQL_5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a5dbe6b313e7f543",
+      "case_id": "case-66a937333a5f66c3",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:clean:KeywordsPeopleUse:semantic-keywords",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c0ada4eccdfdc861",
+      "case_id": "case-68547ef4068ea160",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:12306-mcp",
+      "source_id": "mcptox:12306-mcp:clean:12306-mcp:search",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ca9e39009a7d86c1",
+      "case_id": "case-6c2ba5639eba2e16",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-91da56804e0259b6",
+      "case_id": "case-6cff8e4fc07773ba",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:search_users",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-043a2858e9577522",
+      "case_id": "case-6ee81649b76743e1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_13",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a84e337dd0193f0a",
+      "case_id": "case-7087c2e818691631",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:clean:wechat:send-whatsapp-message",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9d87a6d893b172ae",
+      "case_id": "case-7419ac7dada3d275",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:get_file_contents",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7e6f53946244968b",
+      "case_id": "case-76e378a7cf5a1f5f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:browser_use_agent",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f36e14a6d97572cc",
+      "case_id": "case-79199f1293b6766a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:list_issues",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-781832ce58e7684f",
+      "case_id": "case-7a2499e1752e749f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:get_pull_request",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ce7de073602fa888",
+      "case_id": "case-80864816dd054668",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_12",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f796d5584130d4bf",
+      "case_id": "case-822106d5efdb2645",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2665ce9aeb7f086a",
+      "case_id": "case-8390d64a3b0ebeab",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:QuickChart",
+      "source_id": "mcptox:QuickChart:clean:QuickChart:download_chart",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1a63d82ef15e4d48",
+      "case_id": "case-87b320d78576f43d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d3fa86062bfe6803",
+      "case_id": "case-88de6f86fd93007b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:search_with_bing",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7350e50b81e33b76",
+      "case_id": "case-89afc21d89394f73",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6830cddf40ae0dbf",
+      "case_id": "case-89f022849930a404",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:list_profiles",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ef1075b97021b1ac",
+      "case_id": "case-8a5dede4cf9de70d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_10",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6680938e17b6101a",
+      "case_id": "case-8cedbc4e9ec4a307",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_10",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-88e66f05840f76ea",
+      "case_id": "case-8fdf2a88b1906446",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d4aa8b22d22d423d",
+      "case_id": "case-9027cd2243778ae0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_get_thread_replies",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ba042f890d25fe42",
+      "case_id": "case-908b68e69b9af6a7",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4da976e7ebbd5a92",
+      "case_id": "case-90c8299dff0d8989",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:wechat_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-95cbd053106fa0e9",
+      "case_id": "case-958ce9f1de89f368",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8582f4688ddf395f",
+      "case_id": "case-977b16eb68e823bf",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-920fc41c2d58ca45",
+      "case_id": "case-992cb75331b43580",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:openai_computer_use_agent",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7a632dd9d8fa6c16",
+      "case_id": "case-99b928581cc3c601",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:clean:BraveSearch:brave_local_search",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e9deea54e1b51ce4",
+      "case_id": "case-9e51820067e3c9fb",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5f70765c9c41c269",
+      "case_id": "case-9f0f383614e6cd8a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:clean:wechat:check-whatsapp-status",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2756dd259d4c758e",
+      "case_id": "case-a13005205a517e02",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4968d765afab485a",
+      "case_id": "case-a1ea4ae489c14231",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:extract_structured_data",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-94a4bfc44174c3e2",
+      "case_id": "case-a2ea7936734c2c18",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-a46928bd6abac9a8",
+      "case_id": "case-a33a21263dd75265",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Fetch",
+      "source_id": "mcptox:Fetch:clean:Fetch:fetch",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c8b0195006eb8cca",
+      "case_id": "case-a977b15795368cf1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5dc0d41c20ecb628",
+      "case_id": "case-a9e54cf223b0fd8b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_10",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bada84c651d0a50d",
+      "case_id": "case-aa552ff8ce855a27",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_2",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-6e92edb46e2044a8",
+      "case_id": "case-ab33e29740bc7f6d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_16",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cc76b75abc67661d",
+      "case_id": "case-ab5a7db4a9936e7f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_10",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-be26436111820088",
+      "case_id": "case-ac06552726f99943",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_12",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ab4449f32172bb70",
+      "case_id": "case-ac48193706fbb4cd",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_11",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f6bda348315a5f94",
+      "case_id": "case-ad39537c1f511216",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:Prisma-Postgres-account-status",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e62706c9db83ad83",
+      "case_id": "case-ad7ae9fc8c46dc38",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:crawl_webpages",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-633b4276a1ba1b0c",
+      "case_id": "case-ad9fd0cfc9c9f768",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:create_repository",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d8e475e50b5a1575",
+      "case_id": "case-af6595e54c4dbae8",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:12306-mcp",
+      "source_id": "mcptox:12306-mcp:12306-mcp_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4a2dd9372ca47949",
+      "case_id": "case-af66d630e4d6c3fa",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_11",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-dfcba65d9770b49b",
+      "case_id": "case-b07d9d317d38c4e3",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_7",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-801902f9e322b1a9",
+      "case_id": "case-b172ae86e53315c6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4c1e01a09ef5eac6",
+      "case_id": "case-b3b37193d2b8e0f9",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_20",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4f242df917949b9f",
+      "case_id": "case-ba74ccc16d7ca61a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_14",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-731e4f1521573055",
+      "case_id": "case-bb8a235396de7960",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:migrate-reset",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-798588afe0cc823c",
+      "case_id": "case-c2e2b5edabbe1dbf",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:search_issues",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ffc55cd7ca118704",
+      "case_id": "case-c3fa9e992f44e3fc",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:scrape_webpage",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-08896ad203a9272e",
+      "case_id": "case-c62171706f5eb1e1",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:KeywordsPeopleUse_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-11f692e5f4182ff0",
+      "case_id": "case-c896ae378a4add0f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:HyperBrowser_5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7999f30ef8a09ce1",
+      "case_id": "case-c95fc5c904753ef7",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-9b82e515cea86a65",
+      "case_id": "case-c96fd0dc55d77785",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:KeywordsPeopleUse",
+      "source_id": "mcptox:KeywordsPeopleUse:clean:KeywordsPeopleUse:forums",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-19771acbf1b872d7",
+      "case_id": "case-caaae05a5cd61dd7",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_13",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-da34ca200b0e2df6",
+      "case_id": "case-cf226c6c7c2bc881",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:search_code",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-41b7ffbd4fdc75d6",
+      "case_id": "case-cfc8c50f213272ac",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_14",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-19437a7c72a93412",
+      "case_id": "case-d0027ec853cdb242",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:Create-Prisma-Postgres-Database",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b8a004e161d375a8",
+      "case_id": "case-d154df8c7c3319ca",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_18",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-770f4e754f523822",
+      "case_id": "case-d1d4acee12b443f5",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_get_user_profile",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-15ad8323aad6ce87",
+      "case_id": "case-d2be74e86ef82b84",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:AgentQL_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-21769eeb1df7a5d4",
+      "case_id": "case-d3c3c0b29b3882bd",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5d95bc027a5669fc",
+      "case_id": "case-d5a35a425fd5b925",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_add_reaction",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-07059c0e27ccb5c2",
+      "case_id": "case-d78d6b49a324ffda",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:list_commits",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8d17a60ed3fec4ff",
+      "case_id": "case-d965b0be66b2e697",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_10",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-873bfbc7230fea15",
+      "case_id": "case-da9423d72e647b2f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_23",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5513dd4880214aec",
+      "case_id": "case-dddf23b02b2f6f8d",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bff832151d26affa",
+      "case_id": "case-e121a5674675eda7",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:gNucleus Text to CAD",
+      "source_id": "mcptox:gNucleus Text to CAD:clean:gNucleus Text to CAD:text_to_cad",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b4a203c25bd49c30",
+      "case_id": "case-e1275409ffa2a07a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_6",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-f1a9617cafd706a2",
+      "case_id": "case-e25f51297eafaedd",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_14",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7372840eb0a1ed8e",
+      "case_id": "case-e3ec7a5e27340086",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_8",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-93482bf5b64569cf",
+      "case_id": "case-e4eb4c821f9b0cdd",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:AgentQL_3",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-09a55594ebfec5e3",
+      "case_id": "case-e56235aff39cc862",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:create_issue",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e2bbb13a67f51f30",
+      "case_id": "case-e6cbd8d94a35e07e",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_9",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5208e7c48b3f70dd",
+      "case_id": "case-eae59633acb48d17",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_11",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-e8e6c4dc58da9ea8",
+      "case_id": "case-eb5de4d168b20a3b",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:Slack_13",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-29212bb81acf1475",
+      "case_id": "case-ee368b586510d770",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_reply_to_thread",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8d816f5dba6632c2",
+      "case_id": "case-efff9611ced68c87",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:clean:Prisma:migrate-dev",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-32daaa9c386dadb9",
+      "case_id": "case-f05b62d93024ecb0",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_19",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-58ad1a07d8eeee9a",
+      "case_id": "case-f106ac0c66fb8e76",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_15",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2737e544a15a72cc",
+      "case_id": "case-f131c9ce16fa7c3f",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:HyperBrowser",
+      "source_id": "mcptox:HyperBrowser:clean:HyperBrowser:create_profile",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-db8db1d224889a3b",
+      "case_id": "case-f13ca0ee84929061",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:wechat",
+      "source_id": "mcptox:wechat:clean:wechat:list-recent-contacts",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-924f856c2df9b1db",
+      "case_id": "case-f2cadf06c595bd0a",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:AgentQL",
+      "source_id": "mcptox:AgentQL:AgentQL_1",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4ca1dffb1f46ff09",
+      "case_id": "case-f3354236792dce63",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:clean:Github:list_pull_requests",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5bb93193c3fe9d09",
+      "case_id": "case-f3a31c8c63573888",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_16",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0e71ae4e81e23242",
+      "case_id": "case-f76bbfab69fce2b6",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:BraveSearch",
+      "source_id": "mcptox:BraveSearch:BraveSearch_4",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-09501e526d1c8190",
+      "case_id": "case-f97c6342db46a3fe",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Slack",
+      "source_id": "mcptox:Slack:clean:Slack:slack_post_message",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2d8339f3510cf7ba",
+      "case_id": "case-fa23c4bc81e3cb1c",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Github",
+      "source_id": "mcptox:Github:Github_5",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-09dd141e5662ef37",
+      "case_id": "case-fd2bbddcd4407b44",
+      "dataset_id": "p3_mcptox",
+      "group_id": "mcptox:server:Prisma",
+      "source_id": "mcptox:Prisma:Prisma_24",
+      "split": "holdout"
+    }
+  ],
+  "created_from": {
+    "p3_mcptox": {
+      "adapter": "p3_mcptox",
+      "adapter_version": "1.1.0",
+      "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
+      "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
+    }
+  },
+  "headline_eligible": false,
+  "manifest_sha256": "sha256:65b8082926097ddcdf800f55cffad0f6d997fb8466085fde38dde1ac342088c7",
+  "manifest_version": "v3.2",
+  "n": 156,
+  "project": "P3_mcp_definition",
+  "seed": 42,
+  "selection_policy": {
+    "algorithm": "hash_rank_v1",
+    "split_algorithm": "group_aware_case_count_v2",
+    "split_ratios": {
+      "dev": 0.2,
+      "eval": 0.6,
+      "holdout": 0.2
+    },
+    "split_version": "split-v2"
+  },
+  "split": [
+    "holdout"
+  ],
+  "strata": {
+    "mcptox_clean_allow": {
+      "actual": 60,
+      "filtered": 60,
+      "target": "all"
+    },
+    "mcptox_poison_block": {
+      "actual": 96,
+      "filtered": 96,
+      "target": 96
+    }
+  },
+  "suite": "p3-holdout-v1",
+  "target": 156
+}

@@ -1,0 +1,12 @@
+{
+  "acquired_at": "2026-08-25T09:49:00Z",
+  "adapter_name": "p3_mcptox",
+  "adapter_version": "1.1.0",
+  "dataset_id": "p3_mcptox",
+  "extra": {},
+  "license": "UNRESOLVED",
+  "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
+  "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa",
+  "source_type": "github",
+  "source_uri": "zhiqiangwang4/MCPTox-Benchmark"
+}

@@ -33,6 +33,7 @@ _DATASETS_BY_PROJECT = {
     ],
     # P5 (Phase 2A): official ASB memory-poisoning source (attack-only proof).
     "P5_memory_write": ["p5_asb_memory"],
+    "P3_mcp_definition": ["p3_mcptox"],
 }
 
 

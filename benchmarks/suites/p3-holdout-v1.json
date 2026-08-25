@@ -1,0 +1,32 @@
+{
+  "headline_eligible": false,
+  "projects": {
+    "P3_mcp_definition": {
+      "benchmark_track": "core",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/p3-holdout-v1/p3.json",
+      "manifest_sha256": "sha256:65b8082926097ddcdf800f55cffad0f6d997fb8466085fde38dde1ac342088c7",
+      "n": 156,
+      "split": [
+        "holdout"
+      ],
+      "target": 156
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "p3_mcptox": {
+      "adapter": "p3_mcptox",
+      "adapter_version": "1.1.0",
+      "raw_sha256": "a54ca29e8d8864c4e4419759be18aca50c4a84adb2be1c51d7d196112a3c51c4",
+      "revision": "f85189f9ad12504c197c7f920ab818a40657b1fa"
+    }
+  },
+  "split": [
+    "holdout"
+  ],
+  "suite_config_hash": "sha256:2cb6781655cfa1eb22ced22326d82bb5ea42a67b37f76de74df4cd0b420451d1",
+  "suite_id": "p3-holdout-v1",
+  "total_cases": 156,
+  "track": "core"
+}

@@ -598,3 +598,66 @@ suites:
             count: all
         track: core
         headline_eligible: false
+# ---------------------------------------------------------------------------
+# P3 Phase 3C — Core MCP definition poisoning (MCPTox). 794 cases
+# (485 BLOCK + 309 ALLOW), 45 servers, split-v2 case-weighted 20/60/20
+# by mcptox:server group. SMOKE samples DEV, STANDARD is headline
+# (full EVAL), HOLDOUT is sealed.
+# ---------------------------------------------------------------------------
+  p3-smoke-v1:
+    seed: 42
+    split: dev
+    split_version: split-v2
+    projects:
+      P3_mcp_definition:
+        manifest: benchmarks/manifests/p3-smoke-v1/p3.json
+        target: 100
+        strata:
+          - id: mcptox_poison_block
+            dataset: p3_mcptox
+            expected_action: block
+            count: 60
+          - id: mcptox_clean_allow
+            dataset: p3_mcptox
+            expected_action: allow
+            count: 40
+        track: core
+        headline_eligible: false
+  p3-standard-v1:
+    seed: 42
+    split: eval
+    split_version: split-v2
+    projects:
+      P3_mcp_definition:
+        manifest: benchmarks/manifests/p3-standard-v1/p3.json
+        target: 464
+        strata:
+          - id: mcptox_poison_block
+            dataset: p3_mcptox
+            expected_action: block
+            count: 276
+          - id: mcptox_clean_allow
+            dataset: p3_mcptox
+            expected_action: allow
+            count: all
+        track: core
+        headline_eligible: true
+  p3-holdout-v1:
+    seed: 42
+    split: holdout
+    split_version: split-v2
+    projects:
+      P3_mcp_definition:
+        manifest: benchmarks/manifests/p3-holdout-v1/p3.json
+        target: 156
+        strata:
+          - id: mcptox_poison_block
+            dataset: p3_mcptox
+            expected_action: block
+            count: 96
+          - id: mcptox_clean_allow
+            dataset: p3_mcptox
+            expected_action: allow
+            count: all
+        track: core
+        headline_eligible: false
