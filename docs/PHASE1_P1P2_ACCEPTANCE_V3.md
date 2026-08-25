@@ -1,65 +1,42 @@
-# Phase 1.5 — P1/P2 Dataset Integration Finalization (v3) — Acceptance Record
+# Phase 1.5 — P1/P2 数据集集成收尾（v3）— 验收记录
 
-Status: **offline phases COMPLETE** (audits + adapter v1.2.0 + frozen v3
-suites/manifests + fake-target E2E). Real LineMod runs (Baseline-0 smoke /
-standard) intentionally NOT started; holdout remains sealed.
+状态：**离线阶段已完成**（审计 + adapter v1.2.0 + 已冻结 v3 套件/manifest + fake-target 端到端）。真实 LineMod 运行（Baseline-0 smoke / standard）有意未启动；holdout 保持封存。
 
-Base: `main@9f24c63`. Frozen throughout: `core/`, `renderers/`, `targets/`,
-`oracles/`, `runners/`, `datasets/dynamic/`, P4 artifacts.
+基线：`main@9f24c63`。全程冻结：`core/`、`renderers/`、`targets/`、`oracles/`、`runners/`、`datasets/dynamic/`、P4 产物。
 
-## 1. Source pins (unchanged, re-verified)
+## 1. 源锁定（未变更，已重新校验）
 
 | dataset | source | revision | verify-source |
 |---|---|---|---|
 | llmail | HF `microsoft/llmail-inject-challenge` | `1063bdf01ec8762b812d5e06ee768a06faa5a6f7` | OK |
 | agentdojo | GH `ethz-spylab/agentdojo` (benchmark v1) | `089ed468cf3ed0322acc66b0211f26d9d90dbf60` | OK |
 
-## 2. Audits (evidence in `cache/exports/`, review file committed)
+## 2. 审计（证据位于 `cache/exports/`，已提交审查文件）
 
-1. **LLMail label mapping** (`llmail_label_audit.json`) — streamed the full
-   raw pool through the production code path: 148,385 unique attack ids,
-   only 6 distinct label values, all mapped by the documented rule
-   (`True`-family -> BLOCK; `False`/`Unclear` -> skipped). All 3,700 BLOCK +
-   160 ALLOW snapshot cases resolve back to raw rows with identical actions;
-   zero mismatches. VERDICT: PASS.
-2. **LLMail metadata honesty** (`config/v3/datasets/llmail.yaml`) — declared
-   fields now match reality: `scenario` = approximate content-marker
-   heuristic, `presentation_style` = heuristic, `attack_goal` = framework
-   classification (constant), `team_id`/`original_success` = unavailable
-   without full-submissions join. Dead stratification keys removed.
-   Declarative-only change: re-prepare is byte-identical.
-3. **AgentDojo official enumeration gate**
-   (`agentdojo_ground_truth_audit.json`) — official definition:
-   `benchmark_suite_with_injections` runs all user_tasks x all injection_tasks
-   per suite. official=629 / adapter=629 / missing=0 / extra=0. VERDICT: PASS.
-4. **Injection ground-truth call-role review** — every unique ground-truth
-   call audited (47 calls across 27 tasks; travel `injection_task_6` has
-   empty GT). Roles: **attack_implementing** (30) = realizes the attacker
-   goal; **contextual_read** (17) = read-only query harmless in isolation.
-   Committed as `config/v3/datasets/agentdojo_injection_gt_calls.json`;
-   fail-closed on missing calls, function drift, unknown roles, or pin drift.
-   ROLES DO NOT DECIDE expected_action (P0 fix, below).
+1. **LLMail 标签映射**（`llmail_label_audit.json`）— 通过生产代码路径流式扫描完整原始池：148,385 个唯一 attack id，仅出现 6 种不同标签值，全部按既定规则映射（`True` 家族 -> BLOCK；`False`/`Unclear` -> 跳过）。全部 3,700 条 BLOCK + 160 条 ALLOW 快照用例均可回溯到原始行且 actions 完全一致；零不匹配。结论：PASS。
+2. **LLMail 元数据诚实性**（`config/v3/datasets/llmail.yaml`）— 声明字段现与实际一致：`scenario` = 近似内容标记启发式、`presentation_style` = 启发式、`attack_goal` = 框架分类（常量）、`team_id`/`original_success` = 无需全量 submissions 关联则不可得。已移除无效的分层键。仅声明式变更：重新 prepare 结果字节一致。
+3. **AgentDojo 官方枚举门禁**（`agentdojo_ground_truth_audit.json`）— 官方定义：`benchmark_suite_with_injections` 对每个 suite 执行所有 user_tasks × 所有 injection_tasks。official=629 / adapter=629 / missing=0 / extra=0。结论：PASS。
+4. **注入 ground-truth 调用角色审查** — 审计每一个唯一的 ground-truth 调用（27 个任务共 47 个调用；travel 的 `injection_task_6` 无 GT）。角色：**attack_implementing**（30）= 实现攻击者目标；**contextual_read**（17）= 只读查询，单独看无害。已提交为 `config/v3/datasets/agentdojo_injection_gt_calls.json`；对缺失调用、函数漂移、未知角色或 pin 漂移均 fail-closed。角色不决定 expected_action（见下方 P0 修复）。
 
-## 3. Adapter versions
+## 3. Adapter 版本
 
-| dataset | adapter | change |
+| dataset | adapter | 变更 |
 |---|---|---|
-| llmail | 1.1.0 (unchanged) | `validate_raw()` now streams the ~450MB labelled_unique files via `_iter_prompt_value_pairs` (regression test forbids `read_text()` on attack JSON); case output byte-identical |
-| agentdojo | **1.2.0** | adds `AuthorizedUserTask`: official `UserTask.ground_truth(clean env)` -> `expected_action=ALLOW`, `ground_truth_kind=user_authorized`, grouped per UserTask (multi-step never spans splits); BLOCK side tagged `ground_truth_kind=injection_attack` with **context-aware authorization**: an injection-induced call is projected BLOCK unless it EXACTLY matches one of the PAIRED UserTask's own ground-truth calls (function AND canonical args — same function with different arguments is NOT authorized); kept cases carry `attack_step_class=attack_implementing\|contextual_read` from the committed call-role review, which never decides expected_action; envelope byte-structure identical for both kinds so render cannot leak expected_action |
+| llmail | 1.1.0（未变更） | `validate_raw()` 现通过 `_iter_prompt_value_pairs` 流式处理约 450MB 的 labelled_unique 文件（回归测试禁止对 attack JSON 使用 `read_text()`）；用例输出字节一致 |
+| agentdojo | **1.2.0** | 新增 `AuthorizedUserTask`：官方 `UserTask.ground_truth(clean env)` -> `expected_action=ALLOW`、`ground_truth_kind=user_authorized`，按 UserTask 分组（多步用例绝不跨切分）；BLOCK 侧标记 `ground_truth_kind=injection_attack` 并采用**上下文感知的授权判断**：注入诱导的调用除非与配对 UserTask 自身 ground-truth 调用**完全匹配**（function 与规范化参数均一致——同函数不同参数不视为已授权），否则一律投影为 BLOCK；保留用例携带 `attack_step_class=attack_implementing\|contextual_read`（来自已提交的调用角色审查），该字段永不决定 expected_action；两类用例的信封字节结构完全一致，render 无法泄露 expected_action |
 
-## 4. Normalized snapshots (`dataset verify` OK on both)
+## 4. 归一化快照（两者 `dataset verify` 均 OK）
 
 | dataset | total | block | allow | dedup |
 |---|---:|---:|---:|---|
-| llmail | 3,860 | 3,700 | 160 | byte-identical re-prepare (sha256 `1b2efac5…`) |
-| agentdojo | 1,247 | 912 (injection_attack: 670 attack_implementing + 242 contextual_read) | 335 (user_authorized) | 138 exact dups removed |
+| llmail | 3,860 | 3,700 | 160 | 字节一致的重新 prepare（sha256 `1b2efac5…`） |
+| agentdojo | 1,247 | 912 (injection_attack: 670 attack_implementing + 242 contextual_read) | 335 (user_authorized) | 移除 138 条完全重复 |
 
-Split-pool consistency (agentdojo BLOCK): dev 174 / eval 535 / holdout 203 =
-912; ALLOW: dev 76 / eval 208 / holdout 51 = 335.
+切分池一致性（agentdojo BLOCK）：dev 174 / eval 535 / holdout 203 = 912；ALLOW：dev 76 / eval 208 / holdout 51 = 335。
 
-## 5. Frozen v3 suites & manifests (`verify --strict` + `suite-verify` all OK)
+## 5. 已冻结 v3 套件与清单（`verify --strict` + `suite-verify` 全部通过）
 
-| suite / project | n | manifest sha256 (first 16) | headline |
+| suite / project | n | manifest sha256（前 16 位） | headline |
 |---|---:|---|---|
 | smoke-v3/p1 | 120 | `00ad9d5b170f99f4` | false |
 | smoke-v3/p2 | 100 (50+50) | `a6b53cc22558dfcc` | false |
@@ -70,50 +47,24 @@ Split-pool consistency (agentdojo BLOCK): dev 174 / eval 535 / holdout 203 =
 | holdout-v3/p1 | 526 | `a2f1fcf0f5a5dcd8` | false |
 | holdout-v3/p2 | 201 (150+51) | `ffa89196c7a61003` | false |
 
-All projects `benchmark_track=core`. Only phase1-standard-v3 is
-headline_eligible — condition: P1 and P2 both carry real BLOCK+ALLOW ground
-truth and the Phase 1.5 audits passed at the pinned revisions.
+所有项目 `benchmark_track=core`。仅 phase1-standard-v3 具备 headline 资格——条件：P1 与 P2 均携带真实的 BLOCK+ALLOW ground truth，且 Phase 1.5 审计在锁定的 revision 上通过。
 
-Legacy suites: v1 manifests/suites and their suite snapshots stay
-byte-frozen and marked DEPRECATED/HISTORICAL
-(`benchmarks/manifests/HISTORICAL.md`, banners in `config/v3/suites.yaml`);
-v2 is preserved the same way — **historical artifacts preserved; original
-adapter lineage required for strict reproduction** (no multi-version
-normalized infrastructure is built). Known legacy condition (pre-existing):
-the four v1 suites fail current canonical `manifest_sha256` recomputation
-because those manifests predate the v3.2 hash generation; they are not
-regenerated.
+历史套件：v1 的 manifest/套件及其套件快照保持字节级冻结并标记为 DEPRECATED/HISTORICAL（`benchmarks/manifests/HISTORICAL.md`、`config/v3/suites.yaml` 中的横幅）；v2 同理保留——**历史产物予以保留；严格复现需沿用原始 adapter 谱系**（不构建多版本归一化基础设施）。已知历史遗留情况（已存在）：四个 v1 套件因 manifest 早于 v3.2 哈希生成逻辑，无法通过当前规范的 `manifest_sha256` 重算；不重新生成。
 
-## 6. Fake Target E2E (`scripts/_phase15_fake_e2e.py`) — PASS
+## 6. Fake Target 端到端（`scripts/_phase15_fake_e2e.py`）— PASS
 
-Real `demotest.cli.main.main([...])` chain validate -> render -> run (local
-scripted gateway, always 403 SECURITY_BLOCKED) -> analyze -> report on
-smoke-v3 p1+p2 (rebuilt P2 manifests):
+通过真实 `demotest.cli.main.main([...])` 链路执行 validate -> render -> run（本地脚本化网关，始终返回 403 SECURITY_BLOCKED）-> analyze -> report，针对 smoke-v3 p1+p2（重建的 P2 manifest）：
 
-- P2: n_judged=100/100, TP=50 FP=50 TN=0 FN=0, TPR=100%, **FPR=100%**
-  (fake gateway blocks everything, so every ALLOW case surfaces as FP —
-  proving the Authorized-FPR path works end to end).
-- Reports: `cache/exports/phase15_e2e/{p1,p2}-SUMMARY.md`.
+- P2：n_judged=100/100，TP=50 FP=50 TN=0 FN=0，TPR=100%，**FPR=100%**（fake 网关拦截一切，因此每个 ALLOW 用例都表现为 FP——证明 Authorized-FPR 链路端到端可用）。
+- 报告：`cache/exports/phase15_e2e/{p1,p2}-SUMMARY.md`。
 
-## 7. Tests
+## 7. 测试
 
-Full suite: 403 passed / 4 skipped. New coverage: LLMail streaming
-regression; ALLOW projection exactness vs official GT; envelope parity;
-stable case IDs; UserTask split grouping; role-file fail-closed
-(gap/drift/bad-role/pin-mismatch); context-aware authorization exactness
-(same function + different arguments must stay BLOCK); authorized-call
-exemption; attack_step_class annotation; v3 manifest kind-crossing gate;
-headline gating; legacy binding; snapshot action counts.
+全量套件：403 passed / 4 skipped。新增覆盖：LLMail 流式回归；ALLOW 投影与官方 GT 的精确性；信封一致性；稳定用例 ID；UserTask 切分分组；角色文件 fail-closed（缺口/漂移/非法角色/pin 不匹配）；上下文感知授权的精确性（同函数 + 不同参数必须保持 BLOCK）；已授权调用豁免；attack_step_class 标注；v3 manifest 跨 kind 门禁；headline 门禁；历史绑定；快照 action 计数。
 
-## 8. Known limitations
+## 8. 已知限制
 
-- `scenario` / `presentation_style` are heuristics (documented; do not affect
-  ground truth).
-- Contextual-read BLOCK cases (242) are injection-induced off-task reads:
-  whether they SHOULD be blocked is exactly what the benchmark measures; the
-  attack_step_class breakdown lets reports separate them from
-  attack-implementing calls.
-- P2 FPR/TPR numbers above are fake-gateway artifacts, NOT benchmark results.
-- Next step: real LineMod Baseline-0 smoke (P1 `baseline0-p1-smoke-v3` may
-  start independently; P2 real smoke follows acceptance of this P0 fix),
-  key via process environment only; holdout sealed.
+- `scenario` / `presentation_style` 为启发式（已文档化；不影响 ground truth）。
+- 上下文读取类 BLOCK 用例（242 条）为注入诱导的离题读取：是否应当被拦截正是 benchmark 所要度量的；attack_step_class 分解可让报告将此类与 attack-implementing 调用区分开。
+- 上述 P2 的 FPR/TPR 数值为 fake 网关产物，并非 benchmark 结果。
+- 下一步：真实 LineMod Baseline-0 smoke（P1 `baseline0-p1-smoke-v3` 可独立启动；P2 真实 smoke 待本 P0 修复验收后进行），密钥仅通过进程环境变量传入；holdout 保持封存。

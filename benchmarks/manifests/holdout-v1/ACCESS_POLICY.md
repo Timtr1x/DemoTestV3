@@ -1,37 +1,24 @@
-# Benchmark splits: DEV / EVAL / HOLDOUT access policy (guide §61-§62)
+# 基准切分：DEV / EVAL / HOLDOUT 访问策略（指南 §61-§62）
 
-Phase 1 produces three tiers of frozen manifests. Access to case bodies is
-governed by split, not by manifest file. This document is the standing policy
-referenced by `benchmarks/manifests/`.
+Phase 1 产出三级已冻结清单。对用例正文的访问权限由切分决定，而非由清单文件决定。本文档为 `benchmarks/manifests/` 所引用的现行策略。
 
-## Splits
+## 切分
 
-| Split | Manifest | Purpose | Body access |
+| 切分 | 清单 | 用途 | 正文访问 |
 |-------|----------|---------|-------------|
-| DEV | `smoke-v1/` (all cases are `dev`) | CI, adapter / renderer debugging | full — developers may read content, inspect failures, tune the gateway |
-| EVAL | `phase1-standard-v1/` | the first reportable, comparable number | aggregate metrics + a controlled diagnostic sample; avoid bulk case reading |
-| HOLDOUT | `holdout-v1/` | version-release / phase acceptance | **no routine case-body access**; never tune the gateway against it |
+| DEV | `smoke-v1/`（所有用例均为 `dev`） | CI、adapter / renderer 调试 | 完全开放 —— 开发者可读取正文、检查失败、调优网关 |
+| EVAL | `phase1-standard-v1/` | 首个可报告、可对比的分数 | 仅聚合指标 + 受控的诊断抽样；避免批量读取用例正文 |
+| HOLDOUT | `holdout-v1/` | 版本发布 / 阶段验收 | **常规情况下不得访问用例正文**；绝不得针对其调优网关 |
 
-## HOLDOUT isolation (guide §62)
+## HOLDOUT 隔离（指南 §62）
 
-* `benchmarks/manifests/holdout-v1/` is a committed, separate directory holding
-  **only** the `holdout`-split cases (the manifest stores identity; case bodies
-  resolve from the raw dataset at run time — they are never copied into the
-  manifest).
-* HOLDOUT manifests are referenced by `phase1-full-v1` (which spans
-  `eval + holdout`) and by this standalone `holdout-v1/`.
-* Recommended team control: gate the `holdout-v1/` path behind a separate
-  reviewer approval (or a separate git branch / access group). The manifests
-  themselves carry no payload, but a run that resolves them exposes bodies.
-* HOLDOUT is used for: version-release validation, phase acceptance, and
-  detecting overfitting to EVAL. It is **not** used for day-to-day tuning.
+* `benchmarks/manifests/holdout-v1/` 为已提交的独立目录，仅存放 `holdout` 切分的用例（清单仅存储身份；用例正文在运行时从原始数据集解析 —— 从不拷贝进清单）。
+* HOLDOUT 清单同时被 `phase1-full-v1`（覆盖 `eval + holdout`）和本独立的 `holdout-v1/` 引用。
+* 推荐的团队管控：在 `holdout-v1/` 路径上设置独立的评审审批（或独立 git 分支 / 访问组）。清单本身不含载荷，但解析并运行后会暴露正文。
+* HOLDOUT 用于：版本发布校验、阶段验收、检测对 EVAL 的过拟合。**不**用于日常调优。
 
-## What may NOT be done
+## 禁止事项
 
-* Tune the gateway by reading HOLDOUT case bodies, then report an EVAL/HOLDOUT
-  number as an unaltered baseline (guide §60). First run Baseline-0 on the
-  unmodified gateway; only then iterate and compare.
-* Move a case between splits to improve a metric — splits are frozen per
-  `group_id` and reproducible (guide §37, §64).
-* Overwrite a frozen manifest. A new selection or new data is a new version
-  (`standard-v1` → `standard-v2`), never an in-place edit.
+* 通过读取 HOLDOUT 用例正文来调优网关，再将 EVAL / HOLDOUT 分数作为未改动的基线对外报告（指南 §60）。应先在未改动的网关上运行 Baseline-0；之后再迭代并对比。
+* 为提升指标而在切分之间移动用例 —— 切分按 `group_id` 冻结且可复现（指南 §37、§64）。
+* 覆写已冻结的清单。新的筛选或新增数据应产生新版本（`standard-v1` → `standard-v2`），而非原地编辑。

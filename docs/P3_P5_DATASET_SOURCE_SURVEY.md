@@ -1,202 +1,97 @@
-# P3 / P5 Dataset Source Survey
+# P3 / P5 数据集来源调研
 
-Date: 2026-08-25 · Baseline: `main@1d09403` + Phase 2A ACCEPTED (2026-08-25) + Phase 2B frozen (420)
-Method: repository-level verification only — fetched actual GitHub trees,
-raw files and APIs; counted records by reading them. No adapter/renderer/
-target/runner/oracle code was touched; no MCP server or memory DB was
-stood up; nothing copied from paper PDFs.
+日期：2026-08-25 · 基线：`main@1d09403` + Phase 2A ACCEPTED（2026-08-25）+ Phase 2B 已冻结（420）
+方法：仅仓库级别校验——拉取真实 GitHub 树、原始文件与 API；通过读取文件统计记录数。未触及任何 adapter/renderer/target/runner/oracle 代码；未启动 MCP server 或 memory DB；未从论文 PDF 拷贝内容。
 
-Verdict scale: **READY** (official artifact verified end-to-end, mappable
-to the project's SecurityCase channel now) / **PARTIAL** (real official
-artifact exists but has gaps that need decisions or upstream fixes) /
-**NOT FOUND** (no usable official artifact).
+判定等级：**READY**（官方产物已端到端验证，现可映射至项目的 SecurityCase 通道）/ **PARTIAL**（存在真实官方产物但有缺口，需决策或上游修复）/ **NOT FOUND**（无可用官方产物）。
 
 ---
 
-## P3 — MCP Definition Content Guard (`channel=mcp_definition`, threat A-03)
+## P3 — MCP 定义内容防护（`channel=mcp_definition`，威胁 A-03）
 
-Scope reminder (F10): P3 tests dangerous/deceptive tool *definitions* — the
-gateway sees description text only. Description-Code Inconsistency (DCI) is
-explicitly OUT of P3 scope until a future `MCPIntegrityCase` exists.
+范围提醒（F10）：P3 测试危险/欺骗性工具*定义*——gateway 仅看到描述文本。Description-Code Inconsistency（DCI）在未来 `MCPIntegrityCase` 出现前，明确不在 P3 范围内。
 
-### Candidate 1: MCPTox — verdict **PARTIAL** (`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`)
+### 候选 1：MCPTox — 判定 **PARTIAL**（`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`）
 
-`zhiqiangwang4/MCPTox-Benchmark` — "MCPTox: A Benchmark for Tool Poisoning
-Attack on Real-World MCP Servers" — formally **published in AAAI-26
-proceedings** (paper points to the same `zhiqiangwang4/MCPTox-Benchmark`
-repo as the official artifact). Repo remains 2 commits, single branch @
-`f85189f9ad12504c197c7f920ab818a40657b1fa`, "Initial commit" 2025-12-03.
-Verified by LOCAL CLONE (`cache/probe/mcptox`, gitignored) — the
-authoritative numbers below supersede the truncated API-tree figures of
-the first pass:
+`zhiqiangwang4/MCPTox-Benchmark` — “MCPTox: A Benchmark for Tool Poisoning Attack on Real-World MCP Servers”——已**正式发表于 AAAI-26 会议论文集**（论文指向同一 `zhiqiangwang4/MCPTox-Benchmark` 仓库作为官方产物）。仓库仍为 2 个 commits、单一分支 @ `f85189f9ad12504c197c7f920ab818a40657b1fa`，“Initial commit” 2025-12-03。已通过本地克隆（`cache/probe/mcptox`，gitignored）验证——以下权威数值取代首轮基于 API-tree 截断数据的统计：
 
-- `def_tool/1.py … def_tool/485.py`: **485 poisoned MCP tool definitions**
-  as real `@mcp.tool()`-decorated Python functions. Spot-check of
-  `def_tool/1.py` confirmed the shape: innocuous function signature +
-  poisoned docstring instructing the agent to overwrite `~/.ssh/id_rsa`
-  with attacker key material disguised as a "pre-authorization check".
-- `pure_tool.json` (316 KB): despite the name, NOT benign tools — it holds
-  **485 evaluation pairings** `{server_name, tool_name, query, tool_content,
-  security risk, paradigm, tool_address}` where `tool_content` is the
-  poisoned description (pairing #1 matches `def_tool/1.py`). The 45
-  `server_name` values are REAL community MCP servers (FileSystem,
-  Puppeteer, Slack, Github, SQLite, Redis, BraveSearch, EverArt, …).
-- Built-in taxonomy: `paradigm` = poisoning template family
-  (Template-1 ×77, Template-2 ×183, Template-3 ×225); `security risk` =
-  Information Manipulation ×108, Privacy Leakage ×97, Service Disruption
-  ×73, Infrastructure Damage ×41, Credential Leakage ×40, Code Injection
-  ×22.
-- `response_all.json` (20.7 MB) = the authors' raw model responses.
-- This is EXACTLY the P3 channel shape: the payload lives entirely in the
-  description text the gateway would see.
+- `def_tool/1.py … def_tool/485.py`：**485 个投毒 MCP 工具定义**，为真实的 `@mcp.tool()` 装饰 Python 函数。对 `def_tool/1.py` 的抽检确认了形态：无害的函数签名 + 指示 agent 将 `~/.ssh/id_rsa` 覆盖为攻击者密钥材料的投毒 docstring，伪装为“pre-authorization check”。
+- `pure_tool.json`（316 KB）：尽管名称如此，并非 benign 工具——其中包含 **485 个评估配对** `{server_name, tool_name, query, tool_content, security risk, paradigm, tool_address}`，其中 `tool_content` 为投毒描述（配对 #1 与 `def_tool/1.py` 对应）。45 个 `server_name` 值为真实社区 MCP server（FileSystem、Puppeteer、Slack、Github、SQLite、Redis、BraveSearch、EverArt 等）。
+- 内置分类：`paradigm` = 投毒模板族（Template-1 ×77、Template-2 ×183、Template-3 ×225）；`security risk` = Information Manipulation ×108、Privacy Leakage ×97、Service Disruption ×73、Infrastructure Damage ×41、Credential Leakage ×40、Code Injection ×22。
+- `response_all.json`（20.7 MB）= 作者的原始模型响应。
+- 这恰好是 P3 通道形态：载荷完全位于 gateway 将看到的描述文本中。
 
-Gaps blocking READY:
+阻碍 READY 的缺口：
 
-- **No LICENSE file** anywhere in the repo — formal acquisition blocker
-  (proceedings publication alone does not imply a dataset license; no
-  copyright->license inference).
-- README is 9 bytes (`# AAAI26`) — no documented counts or labeling scheme;
-  ground truth is implicit (every pairing is a poison case).
-- **No benign controls**: all 485 pairings are poisoned; there is no clean
-  tool-description set in the repo (the `pure_tool.json` name is
-  misleading). An ALLOW side would have to come from a DIFFERENT source
-  (clean function-doc corpora such as BFCL/MetaTool), which breaks the
-  same-origin control design we used in P2 — a decision point, not a
-  technical blocker.
-- Single-author repo, 2 commits, pre-publication; revision stability unknown.
+- **无 LICENSE 文件**——正式采纳的阻碍项（仅会议论文集发表不意味着数据集许可；不得从版权推断许可）。
+- README 仅 9 字节（`# AAAI26`）——无已记录的计数或标注方案；ground truth 为隐式（每个配对均为投毒用例）。
+- **无 benign 对照**：全部 485 个配对均为投毒；仓库中无 clean 工具描述集合（`pure_tool.json` 名称具误导性）。ALLOW 侧必须来自**不同来源**（如 BFCL/MetaTool 等 clean 函数文档语料），这将打破我们在 P2 中使用的同源对照设计——属于决策点，而非技术阻碍。
+- 单作者仓库，2 个 commits，发表前状态；revision 稳定性未知。
 
-Mapping assessment (if acquired later): `def_tool/N.py` docstring ->
-`SecurityCase(content=<description>, channel=MCP_DEFINITION,
-expected_action=block)`; `source_id=mcptox:<N>`; deterministic, no LLM.
-Benign/ALLOW side would have to come from a DIFFERENT source (clean
-function-doc corpora such as BFCL/MetaTool), which breaks the same-origin
-control design we used in P2 — a decision point, not a technical blocker.
+映射评估（若后续采纳）：`def_tool/N.py` docstring -> `SecurityCase(content=<description>, channel=MCP_DEFINITION, expected_action=block)`；`source_id=mcptox:<N>`；确定性，无 LLM。Benign/ALLOW 侧必须来自不同来源（BFCL/MetaTool 等 clean 函数文档语料），这将打破我们在 P2 中使用的同源对照设计——属于决策点，而非技术阻碍。
 
-### Candidate 2: DCI `D_real` — verdict **NOT FOUND**
+### 候选 2：DCI `D_real` — 判定 **NOT FOUND**
 
-Source identified: arXiv 2606.04769 "Description-Code Inconsistency in
-Real-world MCP Servers: Measurement, Detection, and Security Implications"
-(DCIChecker): 19,200 description-code pairs from 2,214 real MCP servers,
-9.93% inconsistent.
+来源识别：arXiv 2606.04769 “Description-Code Inconsistency in Real-world MCP Servers: Measurement, Detection, and Security Implications”（DCIChecker）：来自 2,214 个真实 MCP server 的 19,200 个 description-code 对，9.93% 不一致。
 
-- GitHub searches (`DCIChecker`, `"description-code inconsistency" MCP`,
-  `MCP inconsistency dataset`) return **no released artifact** — the pairs
-  dataset is not published.
-- Independent of availability, F10 applies: inconsistent-pair labels are
-  not content-guard ground truth; the gateway never sees the code side.
-  DCI stays blocked behind a future `MCPIntegrityCase` regardless.
+- GitHub 搜索（`DCIChecker`、`"description-code inconsistency" MCP`、`MCP inconsistency dataset`）**未返回已发布的产物**——该 pairs 数据集未发布。
+- 无论是否可用，F10 适用：不一致对的标签并非内容防护的 ground truth；gateway 永远看不到 code 侧。DCI 仍被阻挡在未来的 `MCPIntegrityCase` 之后。
 
-### Candidate 3 (monitor only): arXiv 2602.03580
+### 候选 3（仅观测）：arXiv 2602.03580
 
-"Don't believe everything you read…" — measurement over 10,240 real servers
-(~13% substantial mismatches). Measurement study; no labeled attack/benign
-benchmark found. Re-check if an artifact appears.
+“Don't believe everything you read…”——对 10,240 个真实 server 的测量（约 13% 存在显著不匹配）。为测量性研究；未发现已标注的攻击/良性 benchmark。若出现产物再复核。
 
-### P3 next actions
+### P3 后续动作
 
-1. **Do not wait for camera-ready** — the paper is already proceedings-
-   published. Re-audit MCPTox for a LICENSE + completeness signal; if they
-   land, pin a commit.
-2. Decide the benign-control policy BEFORE acquiring (same-origin requirement
-   vs. mixed-origin clean-doc corpus). Without benign controls P3 can only
-   ever measure TPR, repeating the gap Phase 1.5 just closed for P2.
-3. Do NOT synthesize P3 data. If MCPTox stalls, P3 stays data-PENDING with
-   the interface ready (as documented in V3_ACCEPTANCE_REPORT F10).
+1. **不要等待 camera-ready**——论文已在会议论文集正式发表。重新审计 MCPTox 的 LICENSE + 完整性信号；若具备则锁定一个 commit。
+2. 在采纳前决定 benign 对照策略（同源要求 vs. 混合来源 clean-doc 语料）。没有 benign 对照，P3 永远只能度量 TPR，将重复 Phase 1.5 刚为 P2 填补的缺口。
+3. 不要合成 P3 数据。若 MCPTox 停滞，P3 保持 data-PENDING，接口就绪（如 V3_ACCEPTANCE_REPORT F10 所述）。
 
 ---
 
-## P5 — Memory Write Guard (`channel=memory_write`, threat A-02, legacy E9)
+## P5 — Memory Write 防护（`channel=memory_write`，威胁 A-02，legacy E9）
 
-Provenance note first: the legacy V2 manifests (`asb_memory_poison_400` etc.)
-are template-rendered wrappers whose underlying text traces to the official
-ASB file below (first record identical: `ResourceAllocationHijack` /
-`crypto_miner_01`). They were never a committed official artifact themselves —
-this survey replaces that lineage.
+先说明来源：legacy V2 manifests（`asb_memory_poison_400` 等）为模板渲染的包装，其底层文本可追溯至下述官方 ASB 文件（首条记录完全一致：`ResourceAllocationHijack` / `crypto_miner_01`）。它们本身从未是已提交的官方产物——本次调研取代该 lineage。
 
-### Candidate 1: Agent Security Bench — verdict **READY (frozen 420)**
+### 候选 1：Agent Security Bench — 判定 **READY（已冻结 420）**
 
-`agiresearch/ASB` — official, ICLR 2025 (arXiv 2410.02644), **MIT**, 289
-stars, 20 commits. **PINNED @ `1f561dccf92d55302368fa67679b4ba9d9c8fdc4`**,
-**frozen as 420** (400 attacks + 20 normals) — see
-`docs/results/P5_PHASE2B_FREEZE.md` for the full freeze evidence and
-`docs/results/P5_PHASE2A_PROJECTION_FIDELITY.md` for the attack-side
-fidelity spec.
+`agiresearch/ASB` —— 官方，ICLR 2025（arXiv 2410.02644），**MIT**，289 stars，20 commits。**锁定于 `1f561dccf92d55302368fa67679b4ba9d9c8fdc4`**，**已冻结为 420**（400 攻击 + 20 正常）——完整冻结证据见 `docs/results/P5_PHASE2B_FREEZE.md`，攻击侧保真度规格见 `docs/results/P5_PHASE2A_PROJECTION_FIDELITY.md`。
 
-Verified by direct download, inspection and frozen pipeline:
+通过直接下载、检查与已冻结管线验证：
 
-- `data/all_attack_tools.jsonl` — **400 attack-tool entries**, fields
-  `[Attacker Tool, Attacker Instruction, Description, Attack goal,
-  Attack Type, Corresponding Agent, Aggressive]`; adapter
-  `AttackerTool.get_tool_call_format()` projects to
-  `[{"type":"function","function":{"name":<Attacker Tool>,
-  "description":<Description>}}]` (`expected_action=block`,
-  `ground_truth_kind=memory_poisoning_attack`).
-- `data/all_normal_tools.jsonl` — **20 benign tool entries**
-  (`[Tool Name, Description, Expected Achievements, Corresponding
-  Agent]`); adapter `SimulatedTool.get_tool_call_format()` projects to
-  `[{"type":"function","function":{"name":<Tool Name>,
-  "description":<Description>,"parameters":null}}]`
-  (`expected_action=allow`, `ground_truth_kind=normal_memory_tool`;
-  `parameters:null` is authoritative upstream, not synthetic).
-- Both files share the same memory `Tools` field, same commit, same
-  deterministic projection family, same grouping
-  (`asb:agent:<Corresponding Agent>`), same split discipline
-  (`group_aware_case_count_v2`, agent never spans splits).
-- `memory_db/*` directories are runtime experiment OUTPUTS (Chroma DBs per
-  gpt-4o-mini run), not source data; the poison/normal text originates from
-  the JSONLs above (confirmed via `scripts/agent_attack.py` ->
-  `--attacker_tools_path data/all_attack_tools.jsonl`).
+- `data/all_attack_tools.jsonl` —— **400 条攻击工具条目**，字段 `[Attacker Tool, Attacker Instruction, Description, Attack goal, Attack Type, Corresponding Agent, Aggressive]`；adapter `AttackerTool.get_tool_call_format()` 投影为 `[{"type":"function","function":{"name":<Attacker Tool>, "description":<Description>}}]`（`expected_action=block`，`ground_truth_kind=memory_poisoning_attack`）。
+- `data/all_normal_tools.jsonl` —— **20 条良性工具条目**（`[Tool Name, Description, Expected Achievements, Corresponding Agent]`）；adapter `SimulatedTool.get_tool_call_format()` 投影为 `[{"type":"function","function":{"name":<Tool Name>, "description":<Description>,"parameters":null}}]`（`expected_action=allow`，`ground_truth_kind=normal_memory_tool`；`parameters:null` 为上游权威值，非合成）。
+- 两个文件共享同一 memory `Tools` 字段、同一 commit、同一确定性投影族、同一分组（`asb:agent:<Corresponding Agent>`）、同一切分约束（`group_aware_case_count_v2`，agent 永不跨切分）。
+- `memory_db/*` 目录为运行时实验**输出**（按 gpt-4o-mini 运行的 Chroma DB），非源数据；poison/normal 文本源自上述 JSONL（经 `scripts/agent_attack.py` -> `--attacker_tools_path data/all_attack_tools.jsonl` 确认）。
 
-Mapping assessment:
+映射评估：
 
-- **BLOCK + ALLOW ground truth are now both official and same-origin.**
-  The review-decided option (d) is implemented: the 20 normal tools are the
-  benign control — no second dataset, no synthetic controls. Metrics are
-  `TP/FN/TN/FP`, `TPR` and `FPR` (holdout sealed: `p5-holdout-v1`).
-- Agent grouping (`asb:agent:<Corresponding Agent>`) is load-bearing for
-  holdout isolation (10 agents x 42 cases; 84 dev / 252 eval / 84 holdout).
-  A regression hard gate forbids any agent spanning splits.
-- Fictional scenarios (`crypto_miner_01` etc.) are the benchmark's own
-  official content — acceptable on the same grounds as AgentDojo's fictional
-  environments (and unlike copying a PDF).
-- No further P5 dataset linkage gap — next gate is a **real LineMod smoke**
-  (Phase 2B freeze -> real smoke -> health check -> real standard, holdout
-  sealed).
+- **BLOCK + ALLOW ground truth 现已均为官方且同源。** 评审决定的选项 (d) 已实现：20 个 normal 工具即为良性对照——无需第二数据集，无需合成对照。指标为 `TP/FN/TN/FP`、`TPR` 与 `FPR`（holdout 已封存：`p5-holdout-v1`）。
+- Agent 分组（`asb:agent:<Corresponding Agent>`）对 holdout 隔离至关重要（10 个 agent × 42 用例；84 dev / 252 eval / 84 holdout）。回归硬关卡禁止任何 agent 跨切分。
+- 虚构场景（`crypto_miner_01` 等）为 benchmark 自身的官方内容——与 AgentDojo 的虚构环境同理可接受（不同于拷贝 PDF）。
+- P5 已无数据集关联缺口——下一关为**真实 LineMod smoke**（Phase 2B freeze -> 真实 smoke -> 健康检查 -> 真实 standard，holdout 封存）。
 
-### Candidate 2: AgentPoison — verdict **not suitable as primary**
+### 候选 2：AgentPoison — 判定 **不适合作主数据集**
 
-`AI-secure/AgentPoison` (NeurIPS 2024, MIT, 238 stars). Poisoned triggers are
-GENERATED (gradient-based trigger optimization) and poisoning instances are
-not shipped in-repo; base datasets come via external Google Drive. Its
-paradigm is a backdoor trigger embedded in retrieved passages — orthogonal to
-a memory_write content guard, and the trigger-optimization pipeline violates
-our no-synthesis constraints. Keep as Extended/research reference only.
+`AI-secure/AgentPoison`（NeurIPS 2024，MIT，238 stars）。Poisoned triggers 为**生成式**（基于梯度的 trigger 优化），且 poisoning 实例未随仓库发布；基础数据集通过外部 Google Drive 获取。其范式为嵌入在检索段落中的后门 trigger——与 memory_write 内容防护正交，且 trigger 优化管线违反我们的无合成约束。仅作为 Extended/研究参考保留。
 
-GitHub search for dedicated "agent memory poisoning dataset" repos otherwise
-returned nothing relevant.
+除此之外，GitHub 上针对专用“agent memory poisoning dataset”仓库的搜索未返回相关结果。
 
-### P5 next actions (post-freeze)
+### P5 后续动作（冻结后）
 
-1. Real LineMod **smoke** on `p5-smoke-v1` (dev, 64: 60 BLOCK + 4 ALLOW),
-   health check (TPR/FPR + transport), then real standard on
-   `p5-standard-v1` (eval, 252: 240+12). STOP after standard; holdout
-   (`p5-holdout-v1`, 84) stays sealed.
-2. No further dataset work for P5 — the 420 freeze is the lineage. Do not
-   rebuild the memory DB / runtime; the projection is offline text only.
-3. Error analysis note: ASB's `SystemMonitor`-style benign-looking attacks
-   stay BLOCK per GT and are singled out in the analysis, not "fixed".
+1. 在 `p5-smoke-v1`（dev，64：60 BLOCK + 4 ALLOW）上进行真实 LineMod **smoke**，健康检查（TPR/FPR + 传输），随后在 `p5-standard-v1`（eval，252：240+12）上进行真实 standard。standard 后 STOP；holdout（`p5-holdout-v1`，84）保持封存。
+2. P5 无需进一步数据集工作——420 冻结即为 lineage。不要重建 memory DB / 运行时；投影仅为离线文本。
+3. 误差分析说明：ASB 中 `SystemMonitor` 风格的良性外观攻击仍按 GT 保持 BLOCK，并在分析中单列，不做“修复”。
 
 ---
 
-## Summary table
+## 汇总表
 
 | project | candidate | artifact | license | GT | benign | verdict |
 |---|---|---|---|---|---|---|
-| P3 | MCPTox | 485 poisoned MCP tool defs + 485 eval pairings @ f85189f9 (cloned & counted) | **missing** | implicit all-block | **absent in repo** | PARTIAL (`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`) |
-| P3 | DCI D_real (arXiv 2606.04769) | none published | n/a | n/a | n/a | NOT FOUND |
-| P5 | ASB (agiresearch/ASB) | 400 attack + 20 normal (same pin `1f561dc`, frozen pipeline) | MIT | BLOCK+ALLOW (same-origin) | **same-origin ALLOW (20 normals)** | **READY (frozen 420)** |
-| P5 | AgentPoison | triggers generated, data off-repo | MIT | backdoor ASR | n/a | not suitable |
+| P3 | MCPTox | 485 个投毒 MCP 工具定义 + 485 个评估配对 @ f85189f（已克隆并计数） | **缺失** | 隐式 all-block | **仓库内缺失** | PARTIAL（`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`） |
+| P3 | DCI D_real（arXiv 2606.04769） | 无发布 | n/a | n/a | n/a | NOT FOUND |
+| P5 | ASB（agiresearch/ASB） | 400 攻击 + 20 正常（同一锁定 `1f561dc`，已冻结管线） | MIT | BLOCK+ALLOW（同源） | **同源 ALLOW（20 个正常）** | **READY（已冻结 420）** |
+| P5 | AgentPoison | triggers 为生成式，数据在仓库外 | MIT | backdoor ASR | n/a | 不适合 |
 
-Recommended priority: **P5 frozen (420)** — next is real LineMod smoke on
-`p5-smoke-v1` (then standard). P3 waits on MCPTox LICENSE/completeness
-(`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`).
+推荐优先级：**P5 已冻结（420）**——下一步是在 `p5-smoke-v1`（随后 standard）上进行真实 LineMod smoke。P3 等待 MCPTox 的 LICENSE/完整性（`PUBLISHED / ARTIFACT AVAILABLE / LICENSE UNRESOLVED`）。

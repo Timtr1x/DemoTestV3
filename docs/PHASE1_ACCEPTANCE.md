@@ -1,110 +1,78 @@
-> **HISTORICAL — SUPERSEDED.** This document describes the Phase 1 state
-> (LLMail normalized=170, AgentDojo tool_result=629 + tool_call=952,
-> phase1-standard-v1=1018). The AgentDojo P1 tool_result projection has
-> since been removed (P0-2), P1 is LLMail-only, and the current acceptance
-> record is [PHASE1_P1P2_ACCEPTANCE_V3.md](PHASE1_P1P2_ACCEPTANCE_V3.md).
-> Kept for history; do not update.
+> **历史归档 — 已废弃。** 本文档描述 Phase 1 阶段的状态
+> （LLMail normalized=170、AgentDojo tool_result=629 + tool_call=952、
+> phase1-standard-v1=1018）。AgentDojo P1 tool_result 投影已在之后被移除（P0-2），P1 现仅包含 LLMail，当前验收记录请见 [PHASE1_P1P2_ACCEPTANCE_V3.md](PHASE1_P1P2_ACCEPTANCE_V3.md)。
+> 仅作历史保留，请勿更新。
 
-# Phase 1 Dataset Integration — Acceptance Summary
+# Phase 1 数据集集成 — 验收总结
 
-This documents what Phase 1 delivered against the two guides (Development &
-Execution §0-§70, Data-Source Acquisition §1-§38), the controlled changes to the
-frozen core, and the current scale vs. the guide targets.
+本文档说明 Phase 1 相对于两份指南（开发与执行 §0-§70、数据源获取 §1-§38）的交付情况、对冻结核心的受控变更，以及当前规模与指南目标的对比。
 
-## Controlled changes to the frozen boundary (guide §2)
+## 对冻结边界的受控变更（指南 §2）
 
-Phase 1 froze `core/`, `renderers/`, `targets/`, `oracles/`, `runners/`. The only
-changes were additive and backward-compatible:
+Phase 1 冻结了 `core/`、`renderers/`、`targets/`、`oracles/`、`runners/`。仅有的变更均为增量式且向后兼容：
 
-* `src/demotest/core/models.py` — `SecurityCase.build()` now `pop`s `direction`
-  from kwargs before forwarding (prevents a double-pass TypeError when an
-  adapter passes `direction` explicitly). No field or semantics change.
-* `src/demotest/core/exceptions.py` — added `DatasetSourceError` /
-  `DatasetSourceDirtyError` (new dataset layer only; core untouched).
-* `src/demotest/config.py`, `cases.py`, `paths.py`, `cli/main.py` — additive:
-  new dataset/suite config loaders, the `manifest:<path>` case source, and the
-  `dataset`/`manifest` CLI subcommands. Existing `validate`/`render`/`run`/
-  `analyze` paths unchanged.
+* `src/demotest/core/models.py` — `SecurityCase.build()` 现会在转发前从 kwargs 中 `pop` 掉 `direction`（避免 adapter 显式传入 `direction` 时出现重复传参的 TypeError）。无字段或语义变更。
+* `src/demotest/core/exceptions.py` — 新增 `DatasetSourceError` / `DatasetSourceDirtyError`（仅新增的数据集层使用；core 未动）。
+* `src/demotest/config.py`、`cases.py`、`paths.py`、`cli/main.py` — 增量新增：数据集/套件配置加载器、`manifest:<path>` 用例来源，以及 `dataset`/`manifest` CLI 子命令。既有的 `validate`/`render`/`run`/`analyze` 路径保持不变。
 
-No existing run semantics were altered. V2 regression contract test still
-passes byte-identical.
+未改变任何既有运行语义。V2 回归契约测试仍以字节一致（byte-identical）通过。
 
-## What was delivered
+## 已交付内容
 
-**Pipeline (committed code):** source_lock → adapters (llmail, agentdojo) →
-quality/dedup (3-level) → sampler (hash + group-aware split) → manifest_builder
-→ CLI (acquire/verify-source/prepare/verify/stats/hash, manifest build/verify)
-→ 47 offline tests.
+**流水线（已提交代码）：** source_lock → adapters（llmail、agentdojo）→ quality/dedup（三级）→ sampler（hash + 组感知切分）→ manifest_builder → CLI（acquire/verify-source/prepare/verify/stats/hash、manifest build/verify）→ 47 项离线测试。
 
-**Frozen artifacts (committed):**
-* Source locks: `cache/datasets_v3/metadata/{llmail,agentdojo}.lock.json`
-  (revision + raw_sha256 + license MIT + adapter version).
-* Manifests: `benchmarks/manifests/{smoke-v1,phase1-standard-v1,phase1-full-v1,holdout-v1}/{p1,p2}.json`
-  with self-stable `manifest_sha256`.
-* Suite summaries: `benchmarks/suites/{smoke-v1,phase1-standard-v1,phase1-full-v1}.json`.
-* HOLDOUT access policy: `benchmarks/manifests/holdout-v1/ACCESS_POLICY.md`.
+**已冻结产物（已提交）：**
+* Source locks：`cache/datasets_v3/metadata/{llmail,agentdojo}.lock.json`（revision + raw_sha256 + license MIT + adapter version）。
+* Manifests：`benchmarks/manifests/{smoke-v1,phase1-standard-v1,phase1-full-v1,holdout-v1}/{p1,p2}.json`，带有自稳定的 `manifest_sha256`。
+* 套件摘要：`benchmarks/suites/{smoke-v1,phase1-standard-v1,phase1-full-v1}.json`。
+* HOLDOUT 访问策略：`benchmarks/manifests/holdout-v1/ACCESS_POLICY.md`。
 
-**Raw data (gitignored, reproducible from locks):** LLMail (8 pinned files,
-448 MB phase1) and AgentDojo (pinned clone, clean tree).
+**原始数据（已 gitignore，通过 locks 可复现）：** LLMail（8 个固定文件，phase1 共 448 MB）与 AgentDojo（固定 clone，干净工作树）。
 
-## Source provenance
+## 来源溯源
 
-| Dataset   | Provider   | Revision                  | raw_sha256 (prefix) | License |
+| 数据集 | 提供方 | Revision | raw_sha256（前缀） | License |
 |-----------|-----------|---------------------------|---------------------|---------|
-| llmail    | Microsoft | `1063bdf01ec8…` (HF SHA)  | a223abaf159dfa6e…   | MIT     |
-| agentdojo | ETH Zürich| `089ed468cf3e…` (git SHA) | 57726b746c7df67c…   | MIT     |
+| llmail | Microsoft | `1063bdf01ec8…` (HF SHA) | a223abaf159dfa6e… | MIT |
+| agentdojo | ETH Zürich | `089ed468cf3e…` (git SHA) | 57726b746c7df67c… | MIT |
 
-Both are full commit SHAs, never `main`/`latest`. AgentDojo `benchmark_version: v1`.
+两者均为完整 commit SHA，绝不使用 `main`/`latest`。AgentDojo `benchmark_version: v1`。
 
-## Real-data scale (after dedup)
+## 真实数据规模（去重后）
 
-| Dataset   | Normalized | By channel                          |
+| 数据集 | 归一化后 | 按通道 |
 |-----------|-----------|-------------------------------------|
-| llmail    | 170       | email 170 (10 attack + 160 benign)  |
-| agentdojo | 1581      | tool_result 629 (P1) + tool_call 952 (P2) |
+| llmail | 170 | email 170（10 attack + 160 benign） |
+| agentdojo | 1581 | tool_result 629（P1）+ tool_call 952（P2） |
 
-LLMail is bounded by `max_attack_per_phase` in this Phase 1 dev build; the full
-labelled_unique pool (160k+) is available for a larger standard run. AgentDojo
-is the complete v1 projection (97 user tasks × 27 injection tasks, deduped).
+LLMail 在此 Phase 1 开发构建中受 `max_attack_per_phase` 限制；完整 labelled_unique 池（16 万+）可用于更大规模的 standard 运行。AgentDojo 为 v1 的完整投影（97 个 user tasks × 27 个 injection tasks，去重后）。
 
-## Frozen manifests
+## 已冻结清单（Manifests）
 
-| Suite                | Split       | P1   | P2   | Total |
+| 套件 | 切分 | P1 | P2 | 总计 |
 |----------------------|-------------|------|------|-------|
-| smoke-v1             | dev         | 100  | 100  | 200   |
-| phase1-standard-v1   | eval        | 478  | 540  | 1018  |
-| phase1-full-v1       | eval+holdout| 641  | 773  | 1414  |
-| holdout-v1           | holdout     | 163  | 187  | 350   |
+| smoke-v1 | dev | 100 | 100 | 200 |
+| phase1-standard-v1 | eval | 478 | 540 | 1018 |
+| phase1-full-v1 | eval+holdout | 641 | 773 | 1414 |
+| holdout-v1 | holdout | 163 | 187 | 350 |
 
-Phase 1 standard is 1018 cases (below the guide's ~2200-2350). Per guide §70
-("宁可少，不要凑" — better fewer than padded), this is the honest real-data
-count; P2 is full coverage of AgentDojo v1. The gap to ~11,600 closes in
-Phase 2/3 (Credential / AuthBench / MCP / Memory).
+Phase 1 standard 共 1018 条用例（低于指南约 2200-2350 的目标）。根据指南 §70（“宁可少，不要凑”），这是真实数据的诚实统计；P2 已覆盖 AgentDojo v1 的全部。与约 11,600 的差距将在 Phase 2/3（Credential / AuthBench / MCP / Memory）中补齐。
 
-## Four-gate runtime verification (guide §55)
+## 四道关卡运行时验证（指南 §55）
 
-Ran against the smoke suite via the real CLI + a fake LineMod target:
+通过真实 CLI + 仿真 LineMod 目标对 smoke 套件执行验证：
 
-1. **validate** — P1 (100) + P2 (100) pass project↔channel↔case consistency.
-2. **render** — email/RAW, tool_result/STRUCTURED, tool_call/STRUCTURED all
-   render with correct fidelity and no payload loss.
-3. **run --dry-run** — P1 (18 email + 82 tool_result) + P2 (100 tool_call)
-   render + serialize without API calls.
-4. **fake-target run** — P1 100/100 oracle-correct (18 TN + 82 TP), P2 100/100
-   (100 TP), No-Failover header sent, response_text stored, SecretRedactor wired.
+1. **validate** — P1（100）+ P2（100）通过 project↔channel↔case 一致性校验。
+2. **render** — email/RAW、tool_result/STRUCTURED、tool_call/STRUCTURED 均按正确保真度渲染，且无 payload 丢失。
+3. **run --dry-run** — P1（18 email + 82 tool_result）+ P2（100 tool_call）完成渲染与序列化，未发起 API 调用。
+4. **fake-target run** — P1 100/100 oracle 判定正确（18 TN + 82 TP），P2 100/100（100 TP），已发送 No-Failover 头，response_text 已存储，SecretRedactor 已接入。
 
-## P2 Phase 1 coverage statement (guide §59)
+## P2 Phase 1 覆盖度声明（指南 §59）
 
-P2 Phase 1 is **AgentDojo-only** and must be labeled "P2 Phase 1 Partial
-Coverage" — it is not the full Tool Authorization Benchmark. AuthBench
-(Phase 3) is required to upgrade P2 to full coverage.
+P2 Phase 1 **仅包含 AgentDojo**，必须标注为“P2 Phase 1 部分覆盖”——并非完整的 Tool Authorization Benchmark。需接入 AuthBench（Phase 3）后，P2 才能升级为完整覆盖。
 
-## Known limitations
+## 已知限制
 
-* `_scenario_of` (LLMail) and `presentation_style` are heuristic, not exact
-  `scenarios.json` mappings — acceptable for Phase 1 stratification; documented
-  as approximate.
-* LLMail standard run is bounded (`max_attack_per_phase`); a full-pool run is a
-  config change, not a code change.
-* A real LineMod `Baseline-0` run (guide §60) is not included here — it requires
-  live API credentials and is the next operational step after this acceptance.
+* `_scenario_of`（LLMail）与 `presentation_style` 为启发式推断，并非对 `scenarios.json` 的精确映射——作为 Phase 1 的分层依据可接受，已文档化为近似值。
+* LLMail standard 运行受限（`max_attack_per_phase`）；全量池运行仅需改配置，无需改代码。
+* 真实 LineMod `Baseline-0` 运行（指南 §60）未包含在此——需要在线 API 凭证，是本次验收后的下一步操作。

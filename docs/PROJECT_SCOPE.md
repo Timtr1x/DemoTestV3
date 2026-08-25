@@ -1,20 +1,20 @@
-# DemoTest V3 — Project Scope Boundary
+# DemoTest V3 — 项目范围边界
 
-> **DemoTest V3 is a gateway security benchmark.**
+> **DemoTest V3 是一个网关安全基准（gateway security benchmark）。**
 >
-> **Dynamic Agent / Skill execution is optional dataset-acquisition tooling, not part of the benchmark runtime.**
+> **动态 Agent / Skill 执行是可选的数据集采集合规工具，不属于基准运行时的一部分。**
 >
-> **Benchmark datasets must be frozen into SecurityCase-compatible artifacts before LineMod evaluation.**
+> **基准数据集必须在 LineMod 评估前冻结为 SecurityCase 兼容产物。**
 
-This document is the single source of truth for the scope re-baseline decided on 2026-08-21. It restores the V3 acceptance report (§52 Dataset Integration) as the only roadmap and downgrades all dynamic execution infrastructure to auxiliary status.
+本文档是 2026-08-21 决议的范围重基线（scope re-baseline）的唯一可信来源（single source of truth）。它将 V3 验收报告（§52 Dataset Integration）恢复为唯一路线图，并将所有动态执行基础设施降级为辅助地位。
 
-## 1. What DemoTest measures
+## 1. DemoTest 度量什么
 
-A single question:
+单一问题：
 
-> Given a real or credibly-sourced security event placed on its corresponding LLM / Agent interaction boundary, does the LineMod Gateway make the correct security decision?
+> 给定一个真实或可信来源的安全事件，并将其置于对应的 LLM / Agent 交互边界上，LineMod Gateway 是否做出了正确的安全决策？
 
-The only benchmark pipeline is:
+唯一的基准管线为：
 
 ```
 Dataset / Real Security Evidence
@@ -38,104 +38,103 @@ CaseResult
 ResultStore / Analyzer / Report
 ```
 
-No benchmark command may require Docker, SkillsMP, SkillLeakBench, candidate intake, snapshot, or credential binding.
+任何 benchmark 命令均不得要求 Docker、SkillsMP、SkillLeakBench、candidate intake、snapshot 或 credential binding。
 
-## 2. Repository layout
+## 2. 仓库布局
 
 ```
 src/demotest/
-  core/              # SecurityCase, enums, ids, contracts, SecretRedactor — Core
+  core/              # SecurityCase、枚举、ID、契约、SecretRedactor — Core
   datasets/
     base.py, registry.py, source_lock.py, quality.py, dedup.py, manifest_builder.py — Core
-    adapters/        # llmail, agentdojo, credential_catalog_synthetic, credential_dynamic_traces, legacy_v2, skillleakbench — Core (adapters)
-    traces/          # CredentialTrace model + projection SecurityCase — Core
-    dynamic/         # ← Optional acquisition tooling (see §3)
-  renderers/         # 7 renderers + registry — Core
+    adapters/        # llmail、agentdojo、credential_catalog_synthetic、credential_dynamic_traces、legacy_v2、skillleakbench — Core（adapters）
+    traces/          # CredentialTrace 模型 + 投影至 SecurityCase — Core
+    dynamic/         # ← 可选采集合规工具（见 §3）
+  renderers/         # 7 个 renderers + registry — Core
   targets/           # LineMod / QwenGuard + http_parser — Core
-  runners/           # GatewayRunner, retry — Core
-  oracles/           # block_pass, canary, composite — Core
-  metrics/           # detection, leakage, grouping — Core
-  analysis/          # analyzer, compare — Core
+  runners/           # GatewayRunner、retry — Core
+  oracles/           # block_pass、canary、composite — Core
+  metrics/           # detection、leakage、grouping — Core
+  analysis/          # analyzer、compare — Core
   storage/           # ResultStore — Core
   reporting/         # markdown — Core
   cli/
     validate, render, run, analyze, report, compare, dataset, manifest — Core
-    dynamic          — Auxiliary (acquisition only)
+    dynamic          — Auxiliary（仅采集）
 
 config/v3/
   projects.yaml, targets.yaml, datasets.yaml, suites.yaml — Core
-  datasets/*.yaml    — per-dataset projection — Core
+  datasets/*.yaml    — 按数据集的投影配置 — Core
 
 cache/datasets_v3/
-  raw/<dataset>/              — pinned raw mirrors (gitignored, not benchmark identity)
-  normalized/<dataset>/       — frozen SecurityCase snapshots (produced by `dataset prepare`)
-  metadata/*.lock.json        — benchmark identity (committed)
+  raw/<dataset>/              — 已锁定的原始镜像（gitignored，非 benchmark 身份）
+  normalized/<dataset>/       — 已冻结的 SecurityCase 快照（由 `dataset prepare` 产生）
+  metadata/*.lock.json        — 基准身份（已提交）
 
 benchmarks/
-  manifests/   — frozen manifests (committed)
-  suites/      — suite snapshots (committed)
+  manifests/   — 已冻结 manifests（已提交）
+  suites/      — 套件快照（已提交）
   frozen/datasets/<dataset_id>/
-                 raw/reviews/reviewed_traces.jsonl + review_meta.json  (committed)
-                 normalized/cases.jsonl + prepare.json                 (committed)
+                 raw/reviews/reviewed_traces.jsonl + review_meta.json （已提交）
+                 normalized/cases.jsonl + prepare.json                 （已提交）
 
-The P4 Credential Flow's frozen dataset (`credential_dynamic_traces`) lives under
-`benchmarks/frozen/datasets/credential_dynamic_traces/` — NOT the gitignored
-`cache/datasets_v3/`. That is what lets a fresh clone run
-`validate → render → run → analyze → report` on the frozen P4 data with zero
-Docker / SkillsMP / SkillLeakBench / candidate / snapshot / credential binding.
+P4 Credential Flow 的已冻结数据集（`credential_dynamic_traces`）位于
+`benchmarks/frozen/datasets/credential_dynamic_traces/` —— 而非 gitignored 的
+`cache/datasets_v3/`。这使得全新克隆即可在零依赖 Docker / SkillsMP / SkillLeakBench / candidate / snapshot / credential binding 的情况下，对已冻结的 P4 数据执行
+`validate → render → run → analyze → report`。
 ```
 
-Rule for every future PR:
+对每个未来 PR 的规则：
 
-> Is this PR Benchmark Core or Dataset Acquisition? The two must not be mixed.
+> 这个 PR 属于 Benchmark Core 还是 Dataset Acquisition？两者不得混淆。
 
-## 3. Auxiliary acquisition boundary
+## 3. 辅助采集边界
 
-`src/demotest/datasets/dynamic/` and `src/demotest/cli/dynamic.py` are **retained and frozen**. They are not deleted, but they are not expanded.
+`src/demotest/datasets/dynamic/` 与 `src/demotest/cli/dynamic.py` **予以保留并冻结**。不删除，但不再扩展。
 
-Retained as auxiliary:
+作为辅助保留：
 
-- SkillLeakBench Docker sandbox (`sandbox.py`, `skillleak_collector.py`, `schemas.py`, `parser.py`)
-- SkillsMP crawler and `candidates.py` intake
-- `runtime_specs` sidecar, `materialize`, `snapshot`
-- `credential_bindings` source-bound profile (frozen; no further expansion)
-- `review.py`, `split.py`, `agents/` (Host-side AgentDriver — Extended only)
+- SkillLeakBench Docker 沙箱（`sandbox.py`、`skillleak_collector.py`、`schemas.py`、`parser.py`）
+- SkillsMP 爬虫与 `candidates.py` intake
+- `runtime_specs` sidecar、`materialize`、`snapshot`
+- `credential_bindings` 源码绑定配置（source-bound profile，已冻结；不再扩展）
+- `review.py`、`split.py`、`agents/`（Host 侧 AgentDriver —— 仅 Extended）
 
-Out of roadmap (do not implement, do not plan):
+不在路线图内（不实现、不规划）：
 
-- TLS MITM / HTTPS decryption
-- Node `fetch` transport interception
-- Generic dependency auto-installer
-- Generic Agent execution engine
+- TLS MITM / HTTPS 解密
+- Node `fetch` 传输拦截
+- 通用依赖自动安装器
+- 通用 Agent 执行引擎
 - Credential-format DSL
-- Full-Skill compatibility / 1000-trace scaling targets
-- Automatic vulnerability discovery platform
+- Full-Skill 兼容 / 1000-trace 规模目标
+- 自动漏洞发现平台
 
-## 4. Dataset integration roadmap (restored)
+## 4. 数据集集成路线图（已恢复）
 
-Order from the acceptance report §52:
+来自验收报告 §52 的顺序：
 
-| # | Source | Project | Artifact requirement |
+| # | 来源 | 项目 | 产物要求 |
 |---|--------|---------|----------------------|
-| 1 | LLMail-Inject | P1 | HF `microsoft/llmail-inject-challenge` @ pinned SHA |
-| 2 | AgentDojo | P1 (tool_result, Extended) + P2 | github `ethz-spylab/agentdojo` @ pinned SHA |
-| 3 | Credential Leakage | P4 | reviewed `DYNAMIC_TRACE` traces → `P4DatasetAdapter` → SecurityCase |
-| 4 | AuthBench | P2 | **pending** — official artifact confirmation required |
-| 5 | DCI `D_real` | P3 | **pending** — official artifact required; do not copy from PDF |
+| 1 | LLMail-Inject | P1 | HF `microsoft/llmail-inject-challenge` @ 已锁定 SHA |
+| 2 | AgentDojo | P1（tool_result，Extended）+ P2 | github `ethz-spylab/agentdojo` @ 已锁定 SHA |
+| 3 | Credential Leakage | P4 | 已复核的 `DYNAMIC_TRACE` traces → `P4DatasetAdapter` → SecurityCase |
+| 4 | AuthBench | P2 | **待定** — 需确认官方产物 |
+| 5 | DCI `D_real` | P3 | **待定** — 需官方产物；不得从 PDF 拷贝 |
 
-A dataset is accepted only when: source is real, official artifact location is known, version/revision is pinned, SHA/hash is recorded, ground truth is defined, license permits use. No synthetic/template/LLM expansion to pad counts.
+数据集仅在以下条件全部满足时被接受：来源真实、官方产物位置已知、版本/revision 已锁定、SHA/hash 已记录、ground truth 已定义、许可允许使用。不得通过合成/模板/LLM 扩展来填充数量。
 
-## 5. P4 first-version acceptance
+## 5. P4 首版验收
 
-- ≥20 human-reviewed real dynamic traces, ideally 20–100. No hard minimum of 1000.
-- Every Core trace must satisfy: `source_real && dynamic_execution_real && fake_credential_confirmed && marker_observed && sink_confirmed && gateway_projection_valid && expected_action_valid` (the 7 review gates, fail-closed).
-- Traces become benchmark data only after `review-apply` → `freeze-reviewed` → `P4DatasetAdapter` → `SecurityCase`. A frozen `p4_credential_flow_v1` artifact must run through `validate → render → run → analyze → report` without Docker/SkillsMP/SkillLeakBench/binding.
-- The frozen artifact is **committed** (`benchmarks/frozen/datasets/credential_dynamic_traces/`), so the benchmark never depends on the acquisition sidecar.
-- Headline gate: until the dataset holds ≥20 real reviewed traces, a P4 manifest stays `benchmark_track=core, headline_eligible=false`. `p4-core-bridge-v1` (1 real trace) is exactly that — core track, not headline. The formal headline P4 suite is created only after the ≥20-trace acceptance.
-- The synthetic catalog suite (`credential_catalog_synthetic`, quality C) is **Extended / framework-validation only** — it is never the real P4 headline and does not count toward the ≥20 real-traces target.
+- ≥20 条经人工复核的真实动态 traces，理想区间 20–100。无 1000 的硬性下限。
+- 每条 Core trace 必须满足：`source_real && dynamic_execution_real && fake_credential_confirmed && marker_observed && sink_confirmed && gateway_projection_valid && expected_action_valid`（7 项复核关卡，fail-closed）。
+- Traces 仅在 `review-apply` → `freeze-reviewed` → `P4DatasetAdapter` → `SecurityCase` 之后才成为基准数据。已冻结的 `p4_credential_flow_v1` 产物必须能在无 Docker/SkillsMP/SkillLeakBench/binding 的情况下完整走通 `validate → render → run → analyze → report`。
+- 已冻结产物为**已提交**状态（`benchmarks/frozen/datasets/credential_dynamic_traces/`），因此 benchmark 永不依赖采集 sidecar。
+- Headline 门槛：在数据集持有 ≥20 条真实已复核 traces 之前，P4 manifest 保持 `benchmark_track=core, headline_eligible=false`。`p4-core-bridge-v1`（1 条真实 trace）正是如此——属于 core track，而非 headline。正式的 headline P4 套件仅在满足 ≥20-trace 验收后创建。
+- 合成 catalog 套件（`credential_catalog_synthetic`，quality C）仅为 **Extended / 框架验证**——永不作为真实 P4 headline，也不计入 ≥20 真实 traces 目标。
 
-## 6. References
+## 6. 参考
 
-- `docs/V3_ACCEPTANCE_REPORT.md` — Phase 0 baseline; §52 is the only roadmap.
-- `docs/P1-P5_MAPPING.md` — channel/project/legacy mapping and F8–F13 boundaries.
-- `docs/P4_DYNAMIC_DATA_GUIDE.md`, `docs/P4_DYNAMIC_ROADMAP.md` — auxiliary acquisition guides (frozen; not benchmark spec).
+- `docs/V3_ACCEPTANCE_REPORT.md` —— Phase 0 基线；§52 为唯一路线图。
+- `docs/P1-P5_MAPPING.md` —— 通道/项目/legacy 映射及 F8–F13 边界。
+- `docs/P4_DYNAMIC_DATA_GUIDE.md`、`docs/P4_DYNAMIC_ROADMAP.md` —— 辅助采集合规指南（已冻结；非基准规范）。
