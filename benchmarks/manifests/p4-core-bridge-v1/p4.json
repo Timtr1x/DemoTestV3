@@ -14,12 +14,12 @@
     "credential_dynamic_traces": {
       "adapter": "credential_dynamic_traces",
       "adapter_version": "2.0.0",
-      "raw_sha256": "b20432389266dd2a34cdc91891fe40b6eeb6df56695546fab381dd8cbe7ad488",
+      "raw_sha256": "2d37a1dc4deb9e89945de723e0597295b2b859e37c0c0e5893b17a0ea8a38554",
       "revision": "682521a54f65045725e1e01076db449e402a78f9"
     }
   },
   "headline_eligible": false,
-  "manifest_sha256": "sha256:6503173c3a20789c7c7bd323f7ccb28a3db98f772e693dc2ee27a1e0345dcf79",
+  "manifest_sha256": "sha256:e37a3291141306fa121f065f2c67fbc55ee477be0a568e7f7b4866c6ee327586",
   "manifest_version": "v3.2",
   "n": 1,
   "project": "P4_credential_flow",
