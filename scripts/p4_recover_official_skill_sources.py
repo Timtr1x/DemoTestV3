@@ -25,7 +25,8 @@ Each row contains:
   official_skill_ids: list[str] (1 or 2 for dual-class skills)
   classifications, raw_issue_rows, sanitized_issue_keys, ...
   repo_url, commit_sha, skill_path, source_sha256  (from verified official evidence)
-  status: SOURCE_NOT_FOUND | CANDIDATE_SOURCE_VERIFIED | BOUND_AMBIGUOUS | BOUND_EXACT
+  status: SOURCE_NOT_FOUND | CANDIDATE_SOURCE_VERIFIED | OFFICIAL_SOURCE_DECLARED | BOUND_AMBIGUOUS | BOUND_EXACT
+          OFFICIAL_SOURCE_DECLARED = repo/commit/path declared but tree not yet acquired/verified (never BOUND_EXACT)
   binding_method, binding_confidence
   candidate_ids: list[str]
   evidence_count, distinct_evidence_keys
@@ -36,9 +37,11 @@ Semantics:
     924 collisions: evidence_key = sha256(sanitized_key|repo|revision|skill_path|file|ls|le)
   - is_candidate_source_verified requires repo+64hex+path; branch never counts.
     CANDIDATE_SOURCE_VERIFIED never yields BOUND_EXACT by itself.
-  - source_sha256 MUST be recomputed from the actual repo@commit/skill_path tree.
-    We verify against the tree if a local checkout exists; hash drift or missing
-    path -> fail-closed (no BOUND_EXACT). Trusting a sidecar sha alone is not enough.
+  - BOUND_EXACT requires DemoTest to actually acquire repo@immutable_commit and
+    recompute source_sha256 over the skill_path subtree. Sidecar repo/commit/path/source_sha
+    alone yields OFFICIAL_SOURCE_DECLARED, never BOUND_EXACT. Same (repo,commit,path) with
+    multiple distinct non-empty source_sha -> BOUND_AMBIGUOUS. Hash drift or missing path
+    under the acquired tree -> fail-closed.
   - official evidence aggregation: skill -> list[evidence]; distinct
     (repo,commit,path) keys are deduplicated; conflict -> BOUND_AMBIGUOUS.
 
@@ -256,6 +259,31 @@ def resolve_skill_source(
     distinct = len(tuple_to_count)
     # also consider logical identity (repo, commit, path) without sha
     logical_keys = {(t[0], t[1], t[2]) for t in tuple_to_count}
+    # Same (repo,commit,path) with multiple distinct non-empty source_sha -> ambiguous
+    _sha_by_logical: dict[tuple, set[str]] = {}
+    for _ev in evidence_list:
+        _rt = evidence_tuple(_ev)
+        _lk = (_rt[0], _rt[1], _rt[2])
+        # sha may be under source_sha256 or source_sha
+        _sha = (_ev.get("source_sha256") or _ev.get("source_sha") or "").strip().lower()
+        if _sha and _HEX64.fullmatch(_sha):
+            _sha_by_logical.setdefault(_lk, set()).add(_sha)
+    for _lk, _shas in _sha_by_logical.items():
+        if len(_shas) > 1:
+            return {
+                "official_skill_key": official_skill_key_val,
+                "status": "BOUND_AMBIGUOUS",
+                "binding_method": f"same repo/commit/path {_lk} has {len(_shas)} distinct non-empty source_sha values",
+                "binding_confidence": "ambiguous",
+                "repo_url": "",
+                "commit_sha": "",
+                "skill_path": "",
+                "source_sha256": "",
+                "candidate_ids": candidate_ids,
+                "evidence_count": evidence_count,
+                "distinct_evidence_keys": distinct,
+            }
+
     if len(logical_keys) > 1:
         return {
             "official_skill_key": official_skill_key_val,
@@ -369,26 +397,45 @@ def resolve_skill_source(
         # tree verified -> source_sha is computed
         final_sha = computed_sha
     else:
-        # no local tree to verify — if expected_sha is valid 64 hex we can accept as pending verification
-        # but per requirement we should not blindly trust sidecar; we keep pending until acquire
+        # No local tree acquired -> OFFICIAL_SOURCE_DECLARED, never BOUND_EXACT
         if expected_sha and _HEX64.fullmatch(expected_sha):
-            # Allow BOUND_EXACT with officially provided sha when tree not yet acquired,
-            # but mark as official-provided sha (acquire/verify pending if no tree)
-            # Requirement: source_sha must be recomputed eventually; for now we treat
-            # provided sha as the claimed value and will be verified on acquire.
-            final_sha = expected_sha.lower()
-            verify_reason = "tree not yet acquired; using official-provided sha pending verify"
-        else:
-            # no valid sha and no tree -> cannot bind
             return {
                 "official_skill_key": official_skill_key_val,
-                "status": "SOURCE_NOT_FOUND",
-                "binding_method": "official evidence has valid repo/commit/path but no valid source_sha256 and tree not acquired to recompute",
-                "binding_confidence": "unverified",
+                "status": "OFFICIAL_SOURCE_DECLARED",
+                "binding_method": "official repo/commit/path/source_sha declared but tree not yet acquired/verified (awaits acquire + recompute)",
+                "binding_confidence": "declared",
                 "repo_url": repo,
                 "commit_sha": commit,
                 "skill_path": skill_path,
-                "source_sha256": expected_sha,
+                "source_sha256": expected_sha.lower(),
+                "candidate_ids": candidate_ids,
+                "evidence_count": evidence_count,
+                "distinct_evidence_keys": distinct,
+            }
+        else:
+            if expected_sha:
+                return {
+                    "official_skill_key": official_skill_key_val,
+                    "status": "SOURCE_NOT_FOUND",
+                    "binding_method": "official evidence has valid repo/commit/path but source_sha256 invalid and tree not acquired",
+                    "binding_confidence": "unverified",
+                    "repo_url": repo,
+                    "commit_sha": commit,
+                    "skill_path": skill_path,
+                    "source_sha256": expected_sha,
+                    "candidate_ids": candidate_ids,
+                    "evidence_count": evidence_count,
+                    "distinct_evidence_keys": distinct,
+                }
+            return {
+                "official_skill_key": official_skill_key_val,
+                "status": "OFFICIAL_SOURCE_DECLARED",
+                "binding_method": "official repo/commit/path declared but no source_sha256 yet and tree not acquired (awaits recompute)",
+                "binding_confidence": "declared",
+                "repo_url": repo,
+                "commit_sha": commit,
+                "skill_path": skill_path,
+                "source_sha256": "",
                 "candidate_ids": candidate_ids,
                 "evidence_count": evidence_count,
                 "distinct_evidence_keys": distinct,
@@ -510,11 +557,12 @@ def main() -> int:
         "evidence_rows": sum(len(v) for v in official_by_skill_list.values()),
         "SOURCE_NOT_FOUND": c.get("SOURCE_NOT_FOUND", 0),
         "CANDIDATE_SOURCE_VERIFIED": c.get("CANDIDATE_SOURCE_VERIFIED", 0),
+        "OFFICIAL_SOURCE_DECLARED": c.get("OFFICIAL_SOURCE_DECLARED", 0),
         "BOUND_AMBIGUOUS": c.get("BOUND_AMBIGUOUS", 0),
         "BOUND_EXACT": c.get("BOUND_EXACT", 0),
         "official_bound_skill_count": c.get("BOUND_EXACT", 0),
         "official_issue_bound_DIRECT": 0,
-        "note": "OFFICIAL_SKILL_BOUND official-first: repo/commit/path verified, source_sha256 recomputed from tree when available; candidate cache never blocks BOUND_EXACT; list[evidence] aggregated, conflict->AMBIGUOUS; branch-only not bound; hash drift fail-closed.",
+        "note": "BOUND_EXACT requires DemoTest-actual acquire repo@commit and recomputed skill_path subtree SHA; declared without acquisition is OFFICIAL_SOURCE_DECLARED (no exact); same (repo,commit,path) multi non-empty sha -> BOUND_AMBIGUOUS; candidate never blocks.",
     }
 
     if args.check:
