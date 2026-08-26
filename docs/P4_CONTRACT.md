@@ -46,14 +46,17 @@ Real Skill -> runtime spec -> P4CANARY injection -> sandbox execution
 
 No `Official DIRECT >= 50` gate. Gates are evidence-count:
 
-- **10 `REAL_REPRODUCED`** — method stability
+- **10 `REAL_REPRODUCED`** — method-stability / Smoke gate (not headline)
 - **50 `REAL_REPRODUCED`** — distribution review (provider / channel / mechanism / dedup / family dominance), then decide 100–250
 
-`50` healthy real cases is sufficient; 150–250 is ample. No 1,000 target.
+`10` is the Smoke / method-stability threshold that proves the pipeline is not a single-case anecdote. `50` is the distribution-review decision point. `50` healthy real cases is sufficient; 150–250 is ample. No 1,000 target. Headline is only after distribution review, not at 10.
+
+`behavior_modified` means any skill behavior/control-flow change beyond canary injection — only the replacement of the credential value with a canary is allowed; the disclosure path, sink, and channel must be the skill's original behavior.
 
 ## 5. Publishing
 
-`benchmarks/frozen/datasets/credential_dynamic_traces/` remains the frozen artifact. Headline rule in `docs/PROJECT_SCOPE.md` §5 (≥20) is superseded by this contract: first headline at 10, formal review at 50.
+`benchmarks/frozen/datasets/credential_dynamic_traces/` remains the frozen artifact. `SkillLeakBench` official mapping is optional enrichment for `reference` metadata and never gates `Core` eligibility. Core Adapter only yields `REAL_REPRODUCED`; `PROJECTED` / quality `B` belongs to `Extended`. Quality `A/B` does not gate `Core` (see `src/demotest/datasets/core_eligibility.py` + `src/demotest/datasets/adapters/credential_dynamic_traces.py`).
 
 ---
-*Freezes: `src/demotest/datasets/core_eligibility.py` + 3 regression tests (`test_p4_core_eligibility.py`).*
+*Freezes: `src/demotest/datasets/core_eligibility.py` + `CredentialDynamicTracesAdapter` 6-gate wiring + `test_p4_core_eligibility.py` (pure-function) + `test_p4_adapter_core_gating.py` (Adapter integration, 3 cases).*
+*Contract version: contraction 2026-08-26 + P0 production enforcement (6-gate fail-closed, behavior_modified = only-canary, Core=REAL_REPRODUCED only, 10=Smoke / 50=distribution-review).*

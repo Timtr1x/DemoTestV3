@@ -1,9 +1,8 @@
-"""Credential dynamic traces adapter — P4 Core (DYNAMIC_TRACE only, guide §15).
+"""Credential dynamic traces adapter — P4 Core (contraction 2026-08-26).
 
-P4 Credential Leakage Core = real skill + original behavior + P4CANARY
-executed + Gateway-visible disclosure + human review (REAL_REPRODUCED).
-SkillLeakBench mapping is optional provenance (reference only) and MUST NOT
-gate Core eligibility — see demotest.datasets.core_eligibility.
+P4 Credential Leakage Core = REAL_REPRODUCED only (6 hard gates). See
+``demotest.datasets.core_eligibility``. SkillLeakBench mapping is optional
+provenance and MUST NOT gate eligibility.
 
 Publishing bridge: the FORMAL input is the human-frozen reviewed artifact
 ``<raw_dir>/reviews/reviewed_traces.jsonl`` + ``review_meta.json``, NOT the
@@ -15,12 +14,16 @@ artifact integrity before yielding any case:
   * accepted count consistent (n_accepted == lines in reviewed_traces.jsonl)
   * artifact SHA matches review_meta.sha256  (tamper/non-frozen refusal)
 
-After the integrity gate, per-trace projection keeps the same hard rules:
+After the integrity gate, per-trace rules:
   * evidence_type != DYNAMIC_TRACE → reject
   * dynamic_confirmed != True       → reject
   * missing trace_hash              → reject
-  * projected quality not in {A,B}  → reject (defense in depth; projection
-    already maps DYNAMIC_TRACE DIRECT→A / PROJECTED→B)
+  * derive CoreEligibilityInput deterministically from trace + review metadata
+    (``derive_eligibility_input``) and require REAL_REPRODUCED. Any gate
+    failure fail-closes — no Core case yielded. ``behavior_modified`` means
+    any skill behavior/control-flow change beyond canary injection.
+  * Core eligibility does NOT use quality A/B or SkillLeakBench mapping;
+    PROJECTED / quality B belongs to Extended only.
 
 Core rules (config/v3/datasets/credential_dynamic_traces.yaml):
   stdout → tool_result (DIRECT, quality A, original)
@@ -29,6 +32,8 @@ Core rules (config/v3/datasets/credential_dynamic_traces.yaml):
 
 Unit tests may inject ``trace_provider`` to exercise per-trace validation
 without materializing a reviewed artifact (bypasses the integrity gate only).
+When a provider is used, eligibility is still enforced via deterministic
+derive (review looked up from raw_dir if present, else metadata overrides).
 """
 from __future__ import annotations
 
@@ -44,6 +49,7 @@ from ...core.models import SecurityCase
 from ..base import DatasetAdapter, ValidationReport
 from ..registry import register_adapter
 from ..source_lock import load_source_lock
+from ..core_eligibility import derive_eligibility_input, evaluate_core_eligibility
 from ..traces.models import CredentialTrace
 from ..traces.projection import project_trace_to_case
 
@@ -168,6 +174,16 @@ class CredentialDynamicTracesAdapter(DatasetAdapter):
             pass
         return self.source_config.revision or ""
 
+    def _reviews_by_id(self) -> dict[str, Any]:
+        # Load human reviews if present (formal path). Trace-provider tests
+        # may not have a review file — return empty and rely on metadata overrides.
+        try:
+            from ..dynamic.review import load_reviews
+            reviews = load_reviews(self.raw_dir)
+            return {r.trace_id: r for r in reviews}
+        except Exception:
+            return {}
+
     def iter_cases(self) -> Iterator[SecurityCase]:
         src_rev = ""
         try:
@@ -176,6 +192,7 @@ class CredentialDynamicTracesAdapter(DatasetAdapter):
             src_rev = self.source_config.revision or ""
         raw_sha = self._raw_sha256()
         self._rejected.clear()
+        reviews_by_id = self._reviews_by_id()
         for tr in self._load_traces():
             # Guide §15: Core must not have a synthetic code path — hard rejects.
             if tr.evidence_type != "DYNAMIC_TRACE":
@@ -186,6 +203,21 @@ class CredentialDynamicTracesAdapter(DatasetAdapter):
                 continue
             if not tr.trace_hash:
                 self._reject(tr, "missing trace_hash")
+                continue
+            # P4 contraction 2026-08-26: derive 6 hard gates deterministically
+            # from trace + review (no new provenance system). Provenance fields
+            # (official mapping, quality A/B) MUST NOT gate eligibility.
+            # behavior_modified means any skill behavior/control-flow change
+            # beyond canary injection (see core_eligibility.derive_eligibility_input).
+            review = reviews_by_id.get(tr.trace_id)
+            try:
+                inp = derive_eligibility_input(tr, review)
+                res = evaluate_core_eligibility(inp)
+            except Exception as e:
+                self._reject(tr, f"eligibility derive failed: {e}")
+                continue
+            if not res.eligible:
+                self._reject(tr, f"Core eligibility {res.label}: {','.join(res.failed_gates)}")
                 continue
             meta = tr.metadata or {}
             is_allow = bool(
@@ -204,10 +236,6 @@ class CredentialDynamicTracesAdapter(DatasetAdapter):
                 )
             except ValueError as e:
                 self._reject(tr, str(e))
-                continue
-            quality = (case.metadata.get("source") or {}).get("quality_tier")
-            if quality not in ("A", "B"):
-                self._reject(tr, f"projected quality {quality!r} not in (A, B)")
                 continue
             yield case
 
