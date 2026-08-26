@@ -351,9 +351,12 @@ def resolve_skill_source(
             tree_root = None
             verify_reason = f"tree resolver error: {e}"
     else:
-        # default locations: cache/p4_official_clones/<official_skill_key> or cache/datasets_v3/raw/official_skill_sources/<skill_name>
+        # default locations: cache/p4_official_clones/<sanitized official_skill_key or skill_name>
+        # osk:xxx contains ':' which is not a valid Windows path, so use osk_xxx sanitized form as well.
+        sanitized_osk = official_skill_key_val.replace(":", "_")
         cand_roots = [
             ROOT / "cache" / "p4_official_clones" / official_skill_key_val,
+            ROOT / "cache" / "p4_official_clones" / sanitized_osk,
             ROOT / "cache" / "p4_official_clones" / skill_name.replace("/", "_"),
         ]
         for cr in cand_roots:
