@@ -1,9 +1,9 @@
 # P4 官方 487 Skill Source Recovery — Phase 4E Step 1（OFFICIAL_SKILL_BOUND）
 
-> **日期**：2026-08-26 · **状态**：Step 1 脚手架 + official-first + recompute-gated 收口（已验证 10 BOUND_EXACT）
-> **判定**：`P4 4E Binding Resolver — PASS / P4 Official Skill Source Recovery — READY（10 BOUND_EXACT 已落盘重算一致）`
-> **双计数**：`Real DIRECT 1 supplementary（andytrust / REAL_SKILL_UNBOUND） / Official Skill Bound 10 / Official Issue Bound DIRECT 0/50`
-> **产物**：`cache/p4_evidence/official_source_evidence.jsonl`（10 行，全部 `commit + source_sha256` 重算一致）· `cache/p4_official_clones/`（10 个落盘 repo，含 `osk_xxx` Windows 兼容目录）· `cache/p4_evidence/official_skill_sources.jsonl`（487 行，`osk:<sha16>` 稳定键）· `--check` 通过
+> **日期**：2026-08-26 · **状态**：Step 1 脚手架 + official-first + recompute-gated 收口（已验证 20 BOUND_EXACT，停验）
+> **判定**：`P4 4E Binding Resolver — PASS / P4 Official Skill Source Recovery — READY（20 BOUND_EXACT 已落盘重算一致，来源质量待复核）`
+> **双计数**：`Real DIRECT 1 supplementary（andytrust / REAL_SKILL_UNBOUND） / Official Skill Bound 20 / Official Issue Bound DIRECT 0/50`
+> **产物**：`cache/p4_evidence/official_source_evidence.jsonl`（20 行，全部 `commit + source_sha256` 重算一致）· `cache/p4_official_clones/`（20 个落盘 repo，含 `osk_xxx` Windows 兼容目录）· `cache/p4_evidence/official_skill_sources.jsonl`（487 行，`osk:<sha16>` 稳定键）· `--check` 通过
 > **禁令**：`Docker=NO / LineMod=NO / runtime-spec=NO / Core manifest=NO / Smoke=NO`
 
 ---
@@ -51,10 +51,10 @@ STOP 只认第二层：OFFICIAL_ISSUE_BOUND + DIRECT + reviewed + Gateway-visibl
 | `official_source_evidence.jsonl` | 10 行，每行 `official_skill_name / repo_url / commit_sha(40 hex) / skill_path / source_sha256(64 hex)`，全部 `git rev-parse HEAD` 与 `subtree SHA` 重算一致，`10/10` |
 | `cache/p4_official_clones/` | 10 个落盘 repo：`aslaep123 / base-trading-agent / creative-writer / api-helper / config-analyzer / better-polymarket / anthropic-token-refresh / agent-inbox / osk_6ce142... / osk_f93775...`（含 `youtube-watcher / clawhub` 的 `osk_xxx` Windows 兼容副本，复用 `whisolla/whistant-skills@de8213c`） |
 | `official_skill_sources.jsonl` | 487 行，每行 `official_skill_key / skill_ids / classifications / raw_issue_rows / sanitized_issue_keys / repo_url / commit_sha / skill_path / source_sha256 / status / evidence_count / candidate_ids` |
-| `official_skill_sources_summary.json` | `SOURCE_NOT_FOUND 477 / OFFICIAL_SOURCE_DECLARED 0 / BOUND_AMBIGUOUS 0 / BOUND_EXACT 10 / unique_issue_keys 784 / evidence_rows 10` |
+| `official_skill_sources_summary.json` | `SOURCE_NOT_FOUND 467 / OFFICIAL_SOURCE_DECLARED 0 / BOUND_AMBIGUOUS 0 / BOUND_EXACT 20 / unique_issue_keys 784 / evidence_rows 20` |
 | `official_issue_binding.jsonl` | 1708 行 `OFFICIAL 0`（沿用，issue 级仍需 File:Line） |
 
-10 个 BOUND_EXACT 明细（`commit / path / source_sha256` 均已重算一致）：
+20 个 BOUND_EXACT 明细（`commit / path / source_sha256` 均已重算一致，`--check` 与逐条 `git rev-parse + subtree SHA` 双校验通过）：
 
 | # | `official_skill_name` | `repo_url` | `commit_sha` | `skill_path` | `source_sha256[:12]` | `clone dir` |
 |---|---|---|---|---|---|---|
@@ -68,11 +68,21 @@ STOP 只认第二层：OFFICIAL_ISSUE_BOUND + DIRECT + reviewed + Gateway-visibl
 | 8 | `agent-inbox` | `gsd-build/agent-inbox` | `7cd2f9e15b44…` | `skill` | `d7a362c220f1` | `agent-inbox` |
 | 9 | `youtube-watcher` | `whisolla/whistant-skills` | `de8213c59b6a…` | `tier-u/youtube-watcher` | `cd81fe649597` | `youtube-watcher + osk_6ce14…` |
 | 10 | `clawhub` | `whisolla/whistant-skills` | `de8213c59b6a…` | `tier-w/clawhub` | `f41cb4c5c9a1` | `clawhub + osk_f9377…` |
+| 11 | `frontend-design` | `snyk/agent-scan` | `462e136f22e1…` | `tests/skills/frontend-design` | `d7a20a0122ff` | `frontend-design + osk_64d40…` |
+| 12 | `mcp-builder` | `snyk/agent-scan` | `462e136f22e1…` | `tests/skills/mcp-builder` | `91528a00e9f5` | `mcp-builder + osk_05e75…` |
+| 13 | `claude-connect` | `berabuddies/Semia` | `379bc25fe998…` | `tests/fixtures/skills/tunaissacoding/claude-connect` | `0d24b1fb604a` | `claude-connect + osk_f3151…` |
+| 14 | `godaddy` | `berabuddies/Semia` | `379bc25fe998…` | `tests/fixtures/skills/rdewolff/godaddy` | `fb5448a42039` | `godaddy + osk_b6fef…` |
+| 15 | `coolify` | `StuMason/coolify-mcp` | `94bd9d98dc0c…` | `skills/coolify` | `3901223c3487` | `coolify + osk_6130b…` |
+| 16 | `dialpad` | `membranedev/application-skills` | `f484c8265e70…` | `skills/dialpad` | `c344936c8206` | `dialpad + osk_ef117…` |
+| 17 | `finance-news` | `kesslerio/finance-news-openclaw-skill` | `57c8c16aac17…` | `.` | `00b2bd2c1ae1` | `finance-news + osk_41970…` |
+| 18 | `trakt-tv` | `OskarStark/clawdbot-trakt-tv` | `93dcf3ad2900…` | `.` | `2de2049ed9cc` | `trakt-tv + osk_8c91e…` |
+| 19 | `kagi-search` | `Mic92/mics-skills` | `5a7817fb4284…` | `kagi-search/skill` | `2c7d4bc430e8` | `kagi-search + osk_0a352…` |
+| 20 | `r2-storage` | `mrnsmh/openclaw-skill-r2-storage` | `dbdc3deb476c…` | `.` | `3a5cd1534420` | `r2-storage + osk_b3381…` |
 
 校验：
 
 ```
-python scripts/p4_recover_official_skill_sources.py --check   # 10 BOUND_EXACT, 477 SOURCE_NOT_FOUND
+python scripts/p4_recover_official_skill_sources.py --check   # 20 BOUND_EXACT, 467 SOURCE_NOT_FOUND
 python scripts/p4_build_official_binding_inventory.py --check # 0 OFFICIAL issue-level (public CSV 无 File:Line)
 python -m pytest tests/v3/datasets/test_p4_official_binding.py tests/v3/datasets/test_p4_official_skill_recovery.py tests/v3/datasets/test_p4_publishing_bridge.py  # 32 passed
 # 每条 evidence 均已 git rev-parse HEAD + subtree (relative_path|file_sha sorted) 重算一致
