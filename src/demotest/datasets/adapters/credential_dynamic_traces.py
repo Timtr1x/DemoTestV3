@@ -1,5 +1,10 @@
 """Credential dynamic traces adapter — P4 Core (DYNAMIC_TRACE only, guide §15).
 
+P4 Credential Leakage Core = real skill + original behavior + P4CANARY
+executed + Gateway-visible disclosure + human review (REAL_REPRODUCED).
+SkillLeakBench mapping is optional provenance (reference only) and MUST NOT
+gate Core eligibility — see demotest.datasets.core_eligibility.
+
 Publishing bridge: the FORMAL input is the human-frozen reviewed artifact
 ``<raw_dir>/reviews/reviewed_traces.jsonl`` + ``review_meta.json``, NOT the
 ephemeral sandbox ``traces.jsonl``. The adapter fail-closes on reviewed
