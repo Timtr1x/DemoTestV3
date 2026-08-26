@@ -3,7 +3,7 @@
 > **日期**：2026-08-26 · **状态**：计划冻结，执行中（不改已冻结契约、不跑真实网关、不做模式合成；`main@40ca2df` 复核后更新为双计数口径）
 > **前置**：`docs/P4_FROZEN_BOUNDARY.md`（Phase 4D 定性为 production-schema compatibility proof）· `docs/P4_VISIBILITY_CONTRACT.md` · `docs/P4_SANITIZATION_CONTRACT.md`（P4CANARY 一对一）· `config/v3/datasets/credential_dynamic_traces.yaml`（A/B + DYNAMIC_TRACE + structured headline）
 > **底数（双计数）**：`Real DIRECT evidence = 1`（`andytrust-portfolio-claude-code-skill-md / TELEGRAM_BOT_TOKEN / STDOUT_EXPOSURE / TOOL_RESULT / trace_hash sha256:6106329b…`，`exec-a72fb388451334f0`，`source_binding=REAL_SKILL_UNBOUND / quality A / supplementary`），`Official SkillLeakBench-bound DIRECT = 0/50`。`benchmarks/frozen/.../reviewed_traces.jsonl` 与 `normalized/cases.jsonl` 同步 1 例；`cache/datasets_v3/raw/credential_dynamic_traces_sourcebound` 同源 1/5，`cache/datasets_v3/raw/credential_dynamic_traces`（`snap-3e317468aa7c`）0 traces。
-> **绑定表**：`cache/p4_evidence/official_issue_binding.jsonl`（1708 行，`EXACT 0 / PROBABLE 0 / UNRESOLVED 1708`），`cache/p4_evidence/binding_summary.json`。现有 165 候选池与 520 官方 affected（`skill_name` 去重 487）精确 join 交集为 0，公开 CSV 无 `repo URL / source SHA / SKILL.md path`，`EXACT` 需 `private master File:Line` 或定向重爬。
+> **绑定表**：`cache/p4_evidence/official_issue_binding.jsonl`（由 `scripts/p4_build_official_binding_inventory.py` 可复现生成）（1708 行，`NAME_EXACT_MATCH 0 / OFFICIAL_BINDING_EXACT 0 / PROBABLE 0 / UNRESOLVED 1708`），`cache/p4_evidence/binding_summary.json`。现有 165 候选池与 520 官方 affected（`skill_name` 去重 487）精确 join 交集为 0，公开 CSV 无 `repo URL / source SHA / SKILL.md path`，`OFFICIAL_BINDING_EXACT` 需 `private master File:Line` 或定向重爬。
 > **STOP 门**：`Official-issue-bound DIRECT ≥50` 方可提 Full Core 冻结与真实 Smoke 评审（`Real DIRECT` 为补充轨，不计入 0/50）；未达门槛前不冻结、不跑 Smoke、不混入合成样本。
 
 ---
@@ -72,7 +72,7 @@
 
 ## 6. STOP gate 与交付物
 
-- **阈值**：`Official-issue-bound DIRECT ≥50` 为首个 STOP（`Real DIRECT` 为补充轨，`150–300` 足够第一版 Standard 的同为 Official 计数）。
+- **阈值**：`OFFICIAL_ISSUE_BOUND + DIRECT + reviewed + Gateway-visible ≥50` 为首个 STOP（`Real DIRECT` 为补充轨，`150–300` 足够第一版 Standard 的同为 Official 计数）。
 - **未达门槛前**：不冻结 Full Core（不写 `p4-core-smoke/standard` 套件 manifest）、不跑真实 Smoke、不生成 `headline_eligible=true`。
 - **达门时提交**（供复核，未经复核不冻结）：
   1. `docs/P4_EVIDENCE_INVENTORY.md`（双计数、绑定分布、失败原因直方图、逐案追溯含 `source_binding`）；
@@ -90,7 +90,7 @@ skill_id | skill_name | issue_id | source_binding | credential_name | canary | f
 
 ## 8. 下一步（按复核建议 A→B→C）
 
-1. **A. 建立 official ↔ real skill binding**（本版已完成初表）：以 1708/520 为主集，与 `candidate pool / snapshots / source-bound` 做精确 join，输出 `exact / runnable exact / non-runnable exact / unresolved`；当前 `EXACT 0`，需定向重爬或 private master 补强。
+1. **A. 建立 official ↔ real skill binding**（本版已完成初表）：以 1708/520 为主集，与 `candidate pool / snapshots / source-bound` 做精确 join，输出 `exact / runnable exact / non-runnable exact / unresolved`；当前 `OFFICIAL_BINDING_EXACT 0`，需定向重爬或 private master 补强。
 2. **B. 仅对 `OFFICIAL_ISSUE_BOUND + runnable` 小批回收**（`≤5 / 批`，`deterministic / docker_only_hardened`），只收 `TOOL_RESULT/TOOL_CALL/MODEL_OUTPUT` 的 Gateway-visible evidence。
 3. **C. 保留 `REAL_SKILL_UNBOUND` 轨**：`andytrust` 保留为 `supplementary`，若以 `creds_in_skills.xlsx File:Line` 证明，再升级为 `OFFICIAL_ISSUE_BOUND`。
 
