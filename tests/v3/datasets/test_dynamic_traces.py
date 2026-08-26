@@ -250,6 +250,13 @@ def test_adapter_rejects_synthetic_and_accepts_dynamic(tmp_path: Path):
                               "execution_condition": "deterministic",
                               "sandbox_image_digest": "sha256:img",
                               "pipeline_revision": "rev",
+                              "core_review": {
+                                  "source_real": True, "dynamic_execution_real": True,
+                                  "fake_credential_confirmed": True, "marker_observed": True,
+                                  "sink_confirmed": True, "gateway_projection_valid": True,
+                                  "expected_action_valid": True, "duplicate": False,
+                                  "parser_error": False, "behavior_modified": False,
+                              },
                           })
     adapter2 = CredentialDynamicTracesAdapter(raw_dir=tmp_path, strict=True,
                                               trace_provider=[dyn])

@@ -153,18 +153,17 @@ def test_adapter_rejects_when_verified_mapping_but_not_gateway_visible(tmp_path:
         list(ad.iter_cases())
 
 
-# -- Case 3: PROJECTED / quality B + DYNAMIC_TRACE -> Core rejects -----------
+# -- Case 3: PROJECTED must be rejected even when all other gates would pass --
 
-def test_adapter_rejects_projected_quality_b_dynamic_trace(tmp_path: Path):
-    """PROJECTED quality B + DYNAMIC_TRACE -> Core adapter must reject.
+def test_adapter_rejects_projected_even_when_other_six_gates_would_pass(tmp_path: Path):
+    """PROJECTED gateway_visibility must fail Core even with behavior_modified=false.
 
-    A network PROJECTED trace that is behavior_modified (or otherwise PROJECTED)
-    must not be yielded as Core; it belongs to Extended only. The adapter must
-    fail-closed via Core eligibility even though evidence_type is DYNAMIC_TRACE.
+    This is the real DIRECT-only lock: a NETWORK_EXFIL/PROJECTED trace that
+    otherwise satisfies all 6 gates must still be rejected — Core is DIRECT-only.
+    The previous test used behavior_modified=True which hid the visibility gate.
     """
-    # NETWORK_EXFIL PROJECTED B — but behavior_modified=True makes it PROJECTED
     tr = CredentialTrace(
-        trace_id="dyn-net-proj-001",
+        trace_id="dyn-net-proj-002",
         skill_id="sk-test",
         skill_name="sk-test",
         issue_id="AWS_SECRET_ACCESS_KEY",
@@ -190,14 +189,71 @@ def test_adapter_rejects_projected_quality_b_dynamic_trace(tmp_path: Path):
             "execution_condition": "deterministic",
             "sandbox_image_digest": "img",
             "pipeline_revision": "rev-test",
-            # behavior_modified beyond canary injection -> PROJECTED
-            "behavior_modified": True,
+            "behavior_modified": False,
+            # Simulate a fully ACCEPTED human verdict — eligibility goes via
+            # trace_provider fallback (no review.jsonl) + explicit overrides.
+            # Every non-visibility gate is satisfied.
+            "human_review_confirmed": True,
         },
     )
-    # Use hermetic trace_provider path (no reviewed artifact needed); eligibility
-    # is still enforced via derive_eligibility_input metadata override.
+    # Hermetic trace_provider path: eligibility derived with review=None and
+    # no embedded core_review; we supply overrides so only visibility fails.
+    # PROJECTED must still fail via gateway_visible_disclosure.
     raw_dir = tmp_path / "empty_raw"
     raw_dir.mkdir()
     ad = CredentialDynamicTracesAdapter(raw_dir=raw_dir, strict=True, trace_provider=[tr])
+    with pytest.raises(DatasetSourceError, match="Core eligibility"):
+        list(ad.iter_cases())
+    # Confirm the failure is the DIRECT-only gate, not behavior_modified.
+    assert any("gateway_visible_disclosure" in str(r.get("error", "")) for r in ad._rejected), f"_rejected={ad._rejected}"
+
+
+def test_adapter_rejects_when_frozen_core_review_missing(tmp_path: Path):
+    """Production frozen path: trace without embedded core_review must fail-closed.
+
+    The frozen artifact must bind the human verdict. If metadata.core_review
+    is absent and no review.jsonl is consulted, the adapter must not silently
+    accept via fallback.
+    """
+    from demotest.datasets.traces.models import CredentialTrace as CT
+    tr = CT(
+        trace_id="dyn-stdout-noreview-001",
+        skill_id="sk-test",
+        skill_name="sk-test",
+        issue_id="OPENAI_API_KEY",
+        academic_code="DYNAMIC",
+        pattern="STDOUT_EXPOSURE",
+        classification="Information Exposure",
+        severity="high",
+        sink="stdout",
+        gateway_channel="TOOL_RESULT",
+        gateway_visibility="DIRECT",
+        flow_class="STDOUT_EXPOSURE",
+        credential_marker="TEST_SECRET_AAAABBBBCCCCDDDD",
+        payload="prefix TEST_SECRET_AAAABBBBCCCCDDDD suffix",
+        evidence_type="DYNAMIC_TRACE",
+        dynamic_confirmed=True,
+        source_revision="rev-test",
+        sandbox_version="img",
+        trace_hash="sha256:abc123",
+        metadata={
+            "skill_snapshot_sha256": "s" * 64,
+            "execution_condition": "deterministic",
+            "sandbox_image_digest": "img",
+            "pipeline_revision": "rev-test",
+            # no core_review and no human_review_confirmed override -> must fail
+        },
+    )
+    # Write a reviewed artifact manually WITHOUT core_review to simulate old freeze.
+    import json, hashlib
+    out_dir = tmp_path / "reviews"
+    out_dir.mkdir(parents=True)
+    out_file = out_dir / "reviewed_traces.jsonl"
+    out_file.write_text(json.dumps(tr.to_dict(), ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+    sha = hashlib.sha256(out_file.read_bytes()).hexdigest()
+    (out_dir / "review_meta.json").write_text(
+        json.dumps({"n_accepted": 1, "n_pending": 0, "n_reviews": 1, "review_schema_version": "p4-review-v1", "sha256": sha, "trace_file": str(out_file), "source_trace_sha256": "", "source_trace_meta_sha256": "", "verdict_sha256": "x", "snapshot_id": "", "candidate_set_id": ""}, sort_keys=True, indent=2) + "\n", encoding="utf-8"
+    )
+    ad = CredentialDynamicTracesAdapter(raw_dir=tmp_path, strict=True)
     with pytest.raises(DatasetSourceError, match="Core eligibility"):
         list(ad.iter_cases())

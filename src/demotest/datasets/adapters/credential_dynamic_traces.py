@@ -1,13 +1,16 @@
-"""Credential dynamic traces adapter — P4 Core (contraction 2026-08-26).
+"""Credential dynamic traces adapter — P4 Core (contraction 2026-08-26, P0-2).
 
-P4 Credential Leakage Core = REAL_REPRODUCED only (6 hard gates). See
-``demotest.datasets.core_eligibility``. SkillLeakBench mapping is optional
-provenance and MUST NOT gate eligibility.
+P4 Credential Leakage Core = REAL_REPRODUCED only, DIRECT-only (6 hard
+gates). See ``demotest.datasets.core_eligibility``. SkillLeakBench mapping
+is optional provenance and MUST NOT gate eligibility. PROJECTED/quality B
+belongs to Extended.
 
 Publishing bridge: the FORMAL input is the human-frozen reviewed artifact
 ``<raw_dir>/reviews/reviewed_traces.jsonl`` + ``review_meta.json``, NOT the
-ephemeral sandbox ``traces.jsonl``. The adapter fail-closes on reviewed
-artifact integrity before yielding any case:
+ephemeral sandbox ``traces.jsonl`` or the developer ``review.jsonl``. Each
+frozen trace carries ``metadata.core_review`` (frozen projection of the
+accepted human verdict). The adapter fail-closes on reviewed artifact
+integrity before yielding any case:
 
   * reviewed artifact + review_meta must exist
   * n_pending == 0            (every verdict decided; freeze gate)
@@ -18,22 +21,21 @@ After the integrity gate, per-trace rules:
   * evidence_type != DYNAMIC_TRACE → reject
   * dynamic_confirmed != True       → reject
   * missing trace_hash              → reject
-  * derive CoreEligibilityInput deterministically from trace + review metadata
-    (``derive_eligibility_input``) and require REAL_REPRODUCED. Any gate
-    failure fail-closes — no Core case yielded. ``behavior_modified`` means
-    any skill behavior/control-flow change beyond canary injection.
-  * Core eligibility does NOT use quality A/B or SkillLeakBench mapping;
-    PROJECTED / quality B belongs to Extended only.
+  * derive CoreEligibilityInput deterministically from the frozen
+    ``core_review`` + trace (see ``core_eligibility.derive_eligibility_input``)
+    and require REAL_REPRODUCED + DIRECT. Any gate failure fail-closes.
+    ``behavior_modified`` means any skill behavior/control-flow change beyond
+    canary injection.
+  * No fallback to ``reviews/review.jsonl`` in the production path — the
+    frozen artifact alone must bind the human verdict. Missing
+    ``core_review`` or non-DIRECT visibility fail-closed.
 
 Core rules (config/v3/datasets/credential_dynamic_traces.yaml):
   stdout → tool_result (DIRECT, quality A, original)
-  network → tool_call (PROJECTED, quality B, deterministic_projection)
   group_id = source_skill_id (skill-level split, guide §25)
 
-Unit tests may inject ``trace_provider`` to exercise per-trace validation
-without materializing a reviewed artifact (bypasses the integrity gate only).
-When a provider is used, eligibility is still enforced via deterministic
-derive (review looked up from raw_dir if present, else metadata overrides).
+Unit tests may inject ``trace_provider`` to exercise eligibility without
+materializing a reviewed artifact (hermetic mode via metadata overrides).
 """
 from __future__ import annotations
 
@@ -175,8 +177,10 @@ class CredentialDynamicTracesAdapter(DatasetAdapter):
         return self.source_config.revision or ""
 
     def _reviews_by_id(self) -> dict[str, Any]:
-        # Load human reviews if present (formal path). Trace-provider tests
-        # may not have a review file — return empty and rely on metadata overrides.
+        # Production/frozen path does NOT read review.jsonl — eligibility
+        # comes from the embedded metadata.core_review. This helper is kept
+        # only for hermetic trace_provider tests that still need a review
+        # lookup. Any IO error returns empty (fail-closed via core_review).
         try:
             from ..dynamic.review import load_reviews
             reviews = load_reviews(self.raw_dir)

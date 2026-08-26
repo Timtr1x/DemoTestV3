@@ -275,6 +275,29 @@ def review_status_summary(
     }
 
 
+def _core_review_from_trace_review(r: TraceReview) -> dict[str, Any]:
+    """Minimal frozen projection of the human verdict needed for Core eligibility.
+
+    Only the 7 gates + duplicate/parser_error + behavior_modified are kept.
+    The frozen trace itself retains sink/channel/visibility/marker for
+    gateway visibility checks.
+    """
+    return {
+        "source_real": bool(r.source_real),
+        "dynamic_execution_real": bool(r.dynamic_execution_real),
+        "fake_credential_confirmed": bool(r.fake_credential_confirmed),
+        "marker_observed": bool(r.marker_observed),
+        "sink_confirmed": bool(r.sink_confirmed),
+        "gateway_projection_valid": bool(r.gateway_projection_valid),
+        "expected_action_valid": bool(r.expected_action_valid),
+        "duplicate": bool(r.duplicate),
+        "parser_error": bool(r.parser_error),
+        "behavior_modified": False,
+        "review_status": str(r.review_status),
+        "review_schema_version": str(r.review_schema_version),
+    }
+
+
 def freeze_reviewed_traces(
     accepted: list[CredentialTrace],
     *,
@@ -285,16 +308,28 @@ def freeze_reviewed_traces(
 
     Produces ``<raw_dir>/reviews/reviewed_traces.jsonl`` + ``review_meta.json``
     with hash binding to source traces, trace_meta, and verdicts.
+
+    Each accepted trace is written with an embedded ``metadata.core_review``
+    projection of its accepted TraceReview, so the frozen artifact alone is
+    sufficient for fail-closed Core eligibility without reading ``review.jsonl``.
     """
     raw_dir = Path(raw_dir)
     out_dir = raw_dir / REVIEW_DIRNAME
     out_dir.mkdir(parents=True, exist_ok=True)
     accepted = sorted(accepted, key=lambda t: t.trace_id)
+    review_by_id = {r.trace_id: r for r in reviews}
     out_path = out_dir / "reviewed_traces.jsonl"
-    out_path.write_text(
-        "".join(json.dumps(t.to_dict(), ensure_ascii=False, sort_keys=True) + "\n" for t in accepted),
-        encoding="utf-8",
-    )
+    # Embed core_review projection per trace.
+    lines: list[str] = []
+    for tr in accepted:
+        r = review_by_id.get(tr.trace_id)
+        d = tr.to_dict()
+        meta = dict(d.get("metadata") or {})
+        if r is not None:
+            meta["core_review"] = _core_review_from_trace_review(r)
+        d["metadata"] = meta
+        lines.append(json.dumps(d, ensure_ascii=False, sort_keys=True))
+    out_path.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
     blob = out_path.read_bytes()
     sha = hashlib.sha256(blob).hexdigest()
     # Bind source hashes

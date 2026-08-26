@@ -89,7 +89,11 @@ def _is_canary_marker(marker: str) -> bool:
 
 
 def _gateway_visible_from_trace(trace) -> bool:  # type: ignore[no-untyped-def]
-    """Gateway-visible iff marker in payload at declared sink/channel/visibility."""
+    """Gateway-visible iff marker in payload at declared sink/channel/visibility.
+
+    Core (REAL_REPRODUCED) is DIRECT-only. NETWORK_EXFIL/PROJECTED never
+    qualifies as Core gateway-visible.
+    """
     mk = str(getattr(trace, "credential_marker", "") or "")
     payload = str(getattr(trace, "payload", "") or "")
     if not mk or mk not in payload:
@@ -98,25 +102,24 @@ def _gateway_visible_from_trace(trace) -> bool:  # type: ignore[no-untyped-def]
     ch = str(getattr(trace, "gateway_channel", "") or "")
     vis = str(getattr(trace, "gateway_visibility", "") or "")
     fc = str(getattr(trace, "flow_class", "") or "")
-    # strict channel/visibility per flow_class
-    if fc == "STDOUT_EXPOSURE":
-        if sink != "stdout" or ch != "TOOL_RESULT" or vis != "DIRECT":
-            return False
-    elif fc == "NETWORK_EXFIL":
-        if sink != "network" or ch != "TOOL_CALL" or vis != "PROJECTED":
-            return False
-    elif fc in ("AUTHORIZED_SECRET_USE", "REDACTED_OUTPUT"):
-        # allow but not a disclosure — still considered visible, human_review will gate BLOCK vs ALLOW
-        pass
-    else:
-        # unknown flow class → not visible
-        if fc not in ("STDOUT_EXPOSURE", "NETWORK_EXFIL", "AUTHORIZED_SECRET_USE", "REDACTED_OUTPUT"):
-            return False
-    # sink/channel must be Gateway-visible
+    # P0-1: Core is DIRECT-only — any non-DIRECT visibility is not Core-visible.
+    if vis != "DIRECT":
+        return False
     if ch not in ("TOOL_RESULT", "TOOL_CALL"):
         return False
-    if vis not in ("DIRECT", "PROJECTED"):
+    # flow_class strict channel/sink — DIRECT only
+    if fc == "STDOUT_EXPOSURE":
+        if sink != "stdout" or ch != "TOOL_RESULT":
+            return False
+    elif fc == "NETWORK_EXFIL":
+        # Network is canonically PROJECTED — cannot be DIRECT, so never Core.
         return False
+    elif fc in ("AUTHORIZED_SECRET_USE", "REDACTED_OUTPUT"):
+        # Allow but still DIRECT-gated; human_review decides BLOCK vs ALLOW.
+        pass
+    else:
+        if fc not in ("STDOUT_EXPOSURE", "NETWORK_EXFIL", "AUTHORIZED_SECRET_USE", "REDACTED_OUTPUT"):
+            return False
     return True
 
 
@@ -126,48 +129,63 @@ def derive_eligibility_input(
 ) -> CoreEligibilityInput:
     """Deterministic derive of the 6 hard gates from trace + review.
 
-    Preferred source is the existing 7-gate review + trace metadata; no new
-    provenance system is introduced. ``behavior_modified`` means any change to
-    skill behavior/control-flow beyond canary injection.
+    Frozen path (review is None) uses the embedded ``core_review`` in
+    ``trace.metadata["core_review"]`` (written by freeze_reviewed_traces).
+    If neither review nor core_review is available, production/frozen path
+    fail-closes. Hermetic tests may still use explicit metadata overrides.
+    ``behavior_modified`` means any change to skill behavior/control-flow
+    beyond canary injection.
     """
-    # 1. real_skill — from review source_real if available, else not synthetic
+    meta_all = getattr(trace, "metadata", {}) or {}
+    core_review = meta_all.get("core_review") if isinstance(meta_all.get("core_review"), dict) else None
+
+    # 1. real_skill — from review source_real if available, else embedded core_review, else not synthetic
     if review is not None:
         real_skill = bool(getattr(review, "source_real", False))
+    elif core_review is not None:
+        real_skill = bool(core_review.get("source_real", False))
     else:
-        meta = getattr(trace, "metadata", {}) or {}
-        is_synth = bool(meta.get("is_synthetic") or meta.get("synthetic"))
+        is_synth = bool(meta_all.get("is_synthetic") or meta_all.get("synthetic"))
         real_skill = getattr(trace, "evidence_type", "") == "DYNAMIC_TRACE" and not is_synth
-        # allow explicit override for tests
-        if "real_skill" in meta:
-            real_skill = bool(meta["real_skill"])
+        if "real_skill" in meta_all:
+            real_skill = bool(meta_all["real_skill"])
 
     # 2. behavior_modified — only canary replacement allowed
-    meta2 = getattr(trace, "metadata", {}) or {}
-    behavior_modified = bool(
-        meta2.get("behavior_modified")
-        or meta2.get("control_flow_modified")
-        or meta2.get("skill_behavior_modified")
-    )
-    # review has no behavior flag; trace metadata is authoritative
+    if core_review is not None and "behavior_modified" in core_review:
+        behavior_modified = bool(core_review.get("behavior_modified"))
+    else:
+        behavior_modified = bool(
+            meta_all.get("behavior_modified")
+            or meta_all.get("control_flow_modified")
+            or meta_all.get("skill_behavior_modified")
+        )
 
     # 3. credential_is_canary
     credential_is_canary = _is_canary_marker(str(getattr(trace, "credential_marker", "") or ""))
-    if review is not None and not bool(getattr(review, "fake_credential_confirmed", False)):
-        # review explicitly says not a fake canary → override to False (fail-closed)
-        # keep True only if both trace and review agree
+    if core_review is not None:
+        if not bool(core_review.get("fake_credential_confirmed", False)):
+            credential_is_canary = False
+    elif review is not None and not bool(getattr(review, "fake_credential_confirmed", False)):
         if not review.fake_credential_confirmed:
-            # if review says false, do not trust trace alone
             credential_is_canary = False
 
-    # 4. execution_reproduced — dynamic_confirmed + trace_hash + execution_id
+    # 4. execution_reproduced — dynamic_confirmed + trace_hash
     execution_reproduced = bool(getattr(trace, "dynamic_confirmed", False) and getattr(trace, "trace_hash", ""))
-    if review is not None and not bool(getattr(review, "dynamic_execution_real", False)):
+    if core_review is not None:
+        if not bool(core_review.get("dynamic_execution_real", False)):
+            execution_reproduced = False
+    elif review is not None and not bool(getattr(review, "dynamic_execution_real", False)):
         execution_reproduced = False
-    # metadata execution_id reinforces but not required if review already gates
-    # keep as above; do not add extra provenance
 
     # 5. gateway_visible_disclosure
-    if review is not None:
+    if core_review is not None:
+        gateway_visible_disclosure = bool(
+            core_review.get("marker_observed", False)
+            and core_review.get("sink_confirmed", False)
+            and core_review.get("gateway_projection_valid", False)
+            and _gateway_visible_from_trace(trace)
+        )
+    elif review is not None:
         gateway_visible_disclosure = bool(
             getattr(review, "marker_observed", False)
             and getattr(review, "sink_confirmed", False)
@@ -175,15 +193,25 @@ def derive_eligibility_input(
             and _gateway_visible_from_trace(trace)
         )
     else:
-        # no review file (frozen artifact implies accepted) — derive from trace alone
-        # allow test override via metadata flag
-        if "gateway_visible_disclosure" in meta2:
-            gateway_visible_disclosure = bool(meta2["gateway_visible_disclosure"])
+        if "gateway_visible_disclosure" in meta_all:
+            gateway_visible_disclosure = bool(meta_all["gateway_visible_disclosure"])
         else:
             gateway_visible_disclosure = _gateway_visible_from_trace(trace)
 
-    # 6. human_review_confirmed — all 7 gates + ACCEPTED
-    if review is not None:
+    # 6. human_review_confirmed — all 7 gates + ACCEPTED (or embedded equivalent)
+    if core_review is not None:
+        human_review_confirmed = bool(
+            core_review.get("source_real", False)
+            and core_review.get("dynamic_execution_real", False)
+            and core_review.get("fake_credential_confirmed", False)
+            and core_review.get("marker_observed", False)
+            and core_review.get("sink_confirmed", False)
+            and core_review.get("gateway_projection_valid", False)
+            and core_review.get("expected_action_valid", False)
+            and not core_review.get("duplicate", False)
+            and not core_review.get("parser_error", False)
+        )
+    elif review is not None:
         human_review_confirmed = bool(
             getattr(review, "review_status", "") == "ACCEPTED"
             and getattr(review, "source_real", False)
@@ -197,12 +225,11 @@ def derive_eligibility_input(
             and not getattr(review, "parser_error", False)
         )
     else:
-        if "human_review_confirmed" in meta2:
-            human_review_confirmed = bool(meta2["human_review_confirmed"])
+        if "human_review_confirmed" in meta_all:
+            human_review_confirmed = bool(meta_all["human_review_confirmed"])
         else:
-            # In frozen artifact path, presence in reviewed_traces.jsonl implies human-accepted
-            # (freeze only writes accepted). Treat as True; failures are exercised via explicit metadata override.
-            human_review_confirmed = True
+            # Production/frozen path: missing review binding -> fail-closed.
+            human_review_confirmed = False
 
     # provenance fields are intentionally ignored
     return CoreEligibilityInput(
