@@ -2,7 +2,7 @@
 
 > **双计数口径**：`Real DIRECT evidence = 1`（`andytrust-portfolio-claude-code-skill-md / TELEGRAM_BOT_TOKEN / STDOUT_EXPOSURE / TOOL_RESULT / trace_hash sha256:6106329b…`，`exec-a72fb388451334f0`），`Official SkillLeakBench-bound DIRECT = 0/50`。`andytrust` 当前为 `REAL_SKILL_UNBOUND`（`quality A / supplementary`），不计入 0/50；其余 4 条 sourcebound 试点均未形成 DIRECT，已分类落因。`≥50` Official-bound STOP 未达成，不冻结 Full Core、不跑 Smoke、不混入合成样本。
 > **范围**：`snap-4b0876baa2eb`（`source-bound-v1`，5 技能，`deterministic / docker_only_hardened`）与 `snap-3e317468aa7c`（`official_forged_canary`，已跑 5/40）。`config/v3/datasets/credential_dynamic_traces.yaml` 门控：`DYNAMIC_TRACE + dynamic_confirmed + trace_hash + quality A/B`。
-> **绑定表**：`cache/p4_evidence/official_issue_binding.jsonl`（由 `scripts/p4_build_official_binding_inventory.py` 可复现生成，`--check` 校验 1708/487/165/162 与 `NAME_EXACT_MATCH 0`）（1708 行，`NAME_EXACT_MATCH 0 / OFFICIAL_BINDING_EXACT 0 / PROBABLE 0 / UNRESOLVED 1708`），`cache/p4_evidence/binding_summary.json`。与现有 165 候选池做 `skill_name` 精确 join，交集为 0（见 §1）。公开 CSV 仅含 `skill_name/classification/pattern`，无 `repo URL / SKILL.md path / source SHA`，`OFFICIAL_BINDING_EXACT` 需 `private master File:Line` 或定向重爬 520 官方 affected skills。
+> **绑定表**：`cache/p4_evidence/official_issue_binding.jsonl`（由 `scripts/p4_build_official_binding_inventory.py` 可复现生成，`--check` 校验 1708/487/165/162；`unique_issue_keys 784 / sanitized_identity_collisions 924 / duplicate_key_groups 366`，`OFFICIAL_BINDING_EXACT 0`；`--check` 输出 `Official 0/50 / Real 1 UNBOUND`）（1708 行，`UNRESOLVED 1708 / CANDIDATE_SOURCE_VERIFIED 0 / NAME_MATCH_ONLY 0 / AMBIGUOUS 0 / OFFICIAL 0`），`cache/p4_evidence/binding_summary.json`。与现有 165 候选池做 `skill_name` 精确 join，交集为 0（见 §1）。`is_candidate_source_verified` 需 `repo + 64hex source_sha256 + skill path`（`branch` 不算 immutable revision）；`OFFICIAL_BINDING_EXACT` 需 `official repo/path/revision(40/64 hex)/File:Line` 与 candidate 一致，缺 official 证据时单名匹配仅 `CANDIDATE_SOURCE_VERIFIED` 不得 EXACT；`official_issue_key` 为 `slb:<sha16>` 稳定键，P4CANARY 锚定该 key。
 
 ---
 
@@ -13,10 +13,14 @@
 | 官方 `issues.csv` | 1708 行，`skill_id` 去重 519，`skill_name` 去重 487 |
 | 官方 `skills_dataset.csv` | 520 行（`skill_name` 去重 487，与 issues 一致） |
 | 现有候选池 | `p4_skill_candidates` 165（`skill_name` 去重 162，`RUNTIME_READY 40 / AGENT_REQUIRED 123`） |
-| `NAME_EXACT_MATCH`（`skill_name` 精确一致，但不等于官方绑定） | **0** |
-| `OFFICIAL_BINDING_EXACT`（含 `repo URL / source SHA / SKILL.md path / File:Line` 强 provenance） | **0** |
-| `PROBABLE`（`repo URL / source SHA / SKILL.md path` 等强依据） | **0**（公开 CSV 无此类字段，未做 fuzzy） |
-| `UNRESOLVED` | **1708** |
+| `UNRESOLVED`（无候选名命中） | **1708** |
+| `NAME_MATCH_ONLY`（单名命中但候选自证不完整，`repo/64hex/path` 缺） | **0** |
+| `CANDIDATE_SOURCE_VERIFIED`（单名命中且 `is_candidate_source_verified` 通过，但缺 official 证据，不可 EXACT） | **0** |
+| `AMBIGUOUS_NAME_MATCH`（同名多候选） | **0** |
+| `OFFICIAL_BINDING_EXACT`（需 `official repo/path/revision(40/64 hex)/File:Line` 与 candidate 一致） | **0** |
+| `unique_issue_keys`（`slb:<sha16>` 去重） | **784** |
+| `sanitized_identity_collisions`（1708-784，重复行共享同 key，留待 private master 后消歧） | **924** |
+| `duplicate_key_groups` | **366** |
 | Frozen 1 条的 `skill_name` | `portfolio`（`candidate_id andytrust-portfolio-claude-code-skill-md`），**不在官方 487 名中**，故 `REAL_SKILL_UNBOUND` |
 
 **结论**：当前可验证的 `Official-issue-bound DIRECT = 0/50`；`Real DIRECT = 1` 为独立 `REAL_SKILL_UNBOUND` 轨道，不消失、不晋级，待以 `private master` 或定向重爬证明官方绑定后再升级为 `OFFICIAL_ISSUE_BOUND`。
@@ -79,7 +83,7 @@
 
 - **缺口**：`Official-issue-bound DIRECT 0/50`（`Real DIRECT 1` 为 UNBOUND 补充轨，不计入）。
 - **下一步**（不再盲跑剩余 35 `RUNTIME_READY`）：
-  1. **A. 建立绑定**（本版已完成初表 `cache/p4_evidence/official_issue_binding.jsonl`）：以 520 官方 affected skills 为主集，与现有快照/`candidate pool` 做精确 `skill_name / repo URL / source SHA / SKILL.md path` join，输出 `NAME_EXACT_MATCH / OFFICIAL_BINDING_EXACT / PROBABLE / UNRESOLVED` 与 `runnable exact` 队列；当前 `OFFICIAL_BINDING_EXACT 0`，需定向重爬或 `private master` 补强。
+  1. **A. 建立绑定**（本版已完成初表 `cache/p4_evidence/official_issue_binding.jsonl`，`unique 784 / collisions 924` 已输出留待消歧）：以 520 官方 affected skills 为主集，与现有快照/`candidate pool` 做精确 `skill_name` join（candidate `name → list` 不覆盖）；经 `is_candidate_source_verified(repo+64hex+path, branch 不算)` 校验后，无 official 证据仅 `CANDIDATE_SOURCE_VERIFIED` 不得 `OFFICIAL_BINDING_EXACT`，`official repo/path/revision(40/64 hex)/File:Line` 一致才 EXACT；Resolver 为纯函数，输出 `UNRESOLVED / NAME_MATCH_ONLY / CANDIDATE_SOURCE_VERIFIED / AMBIGUOUS_NAME_MATCH / OFFICIAL_BINDING_EXACT` 与 `skill SOURCE_NOT_FOUND / CANDIDATE_SOURCE_VERIFIED / BOUND_AMBIGUOUS / BOUND_EXACT`；当前 `OFFICIAL 0`，需定向重爬或 `private master` 补强。
   2. **B. 仅对 `OFFICIAL_ISSUE_BOUND + runnable` 小批回收**（`≤5 / 批`，`deterministic / docker_only_hardened`），只收 `TOOL_RESULT/TOOL_CALL/MODEL_OUTPUT` 的 Gateway-visible evidence。
   3. **C. 保留 `REAL_SKILL_UNBOUND` 轨**：`andytrust` 保留为 `supplementary`，若以 `creds_in_skills.xlsx File:Line` 证明官方绑定，可升级为 `OFFICIAL_ISSUE_BOUND`。
 

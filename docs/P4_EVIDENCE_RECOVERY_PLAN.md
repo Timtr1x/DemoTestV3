@@ -3,7 +3,7 @@
 > **日期**：2026-08-26 · **状态**：计划冻结，执行中（不改已冻结契约、不跑真实网关、不做模式合成；`main@40ca2df` 复核后更新为双计数口径）
 > **前置**：`docs/P4_FROZEN_BOUNDARY.md`（Phase 4D 定性为 production-schema compatibility proof）· `docs/P4_VISIBILITY_CONTRACT.md` · `docs/P4_SANITIZATION_CONTRACT.md`（P4CANARY 一对一）· `config/v3/datasets/credential_dynamic_traces.yaml`（A/B + DYNAMIC_TRACE + structured headline）
 > **底数（双计数）**：`Real DIRECT evidence = 1`（`andytrust-portfolio-claude-code-skill-md / TELEGRAM_BOT_TOKEN / STDOUT_EXPOSURE / TOOL_RESULT / trace_hash sha256:6106329b…`，`exec-a72fb388451334f0`，`source_binding=REAL_SKILL_UNBOUND / quality A / supplementary`），`Official SkillLeakBench-bound DIRECT = 0/50`。`benchmarks/frozen/.../reviewed_traces.jsonl` 与 `normalized/cases.jsonl` 同步 1 例；`cache/datasets_v3/raw/credential_dynamic_traces_sourcebound` 同源 1/5，`cache/datasets_v3/raw/credential_dynamic_traces`（`snap-3e317468aa7c`）0 traces。
-> **绑定表**：`cache/p4_evidence/official_issue_binding.jsonl`（由 `scripts/p4_build_official_binding_inventory.py` 可复现生成）（1708 行，`NAME_EXACT_MATCH 0 / OFFICIAL_BINDING_EXACT 0 / PROBABLE 0 / UNRESOLVED 1708`），`cache/p4_evidence/binding_summary.json`。现有 165 候选池与 520 官方 affected（`skill_name` 去重 487）精确 join 交集为 0，公开 CSV 无 `repo URL / source SHA / SKILL.md path`，`OFFICIAL_BINDING_EXACT` 需 `private master File:Line` 或定向重爬。
+> **绑定表**：`cache/p4_evidence/official_issue_binding.jsonl`（由 `scripts/p4_build_official_binding_inventory.py` 可复现生成，`--check` 校验 1708/487/165/162；`unique_issue_keys 784 / sanitized_identity_collisions 924 / duplicate_key_groups 366`，`OFFICIAL 0`）（1708 行，`UNRESOLVED 1708 / CANDIDATE_SOURCE_VERIFIED 0 / AMBIGUOUS 0 / OFFICIAL 0`），`cache/p4_evidence/binding_summary.json`。候选验证 `is_candidate_source_verified` 需 `repo + 64hex source_sha256 + skill path`（`branch` 不算 immutable revision）；缺 official 证据时单名匹配仅 `CANDIDATE_SOURCE_VERIFIED` 不得 EXACT；`OFFICIAL_BINDING_EXACT` 需 `official repo/path/revision(40/64 hex)/File:Line` 与 candidate 一致，公开 CSV 无此类字段，需 `private master` 或定向重爬。
 > **STOP 门**：`Official-issue-bound DIRECT ≥50` 方可提 Full Core 冻结与真实 Smoke 评审（`Real DIRECT` 为补充轨，不计入 0/50）；未达门槛前不冻结、不跑 Smoke、不混入合成样本。
 
 ---
@@ -37,7 +37,7 @@
 
 ### 路径 A — 官方 private master（首选，若可得）
 
-`File:Line / Code Snippet / IOC span`（`creds_in_skills.xlsx` 私有母表）→ 内存定位 span → `P4CANARY_<sha256(issue_id)[:16]>` 一对一替换 → 立即丢弃 raw secret，永不落地真实 secret。每 issue 最多一案，不扩写、不引新 skill；映射关系写入 `official_issue_binding.jsonl` 的 `EXACT / PROBABLE / UNRESOLVED` 与 `binding_method`。
+`File:Line / Code Snippet / IOC span`（`creds_in_skills.xlsx` 私有母表）→ 内存定位 span → `P4CANARY_<sha256(issue_id)[:16]>` 一对一替换 → 立即丢弃 raw secret，永不落地真实 secret。每 issue 最多一案，不扩写、不引新 skill；映射关系写入 `official_issue_binding.jsonl` 的 `OFFICIAL_BINDING_EXACT / CANDIDATE_SOURCE_VERIFIED / NAME_MATCH_ONLY / AMBIGUOUS_NAME_MATCH / UNRESOLVED` 与 `binding_method`（纯函数 `resolve_issue_binding` / `resolve_skill_binding` 判定，`candidate_source_verified` 仅自证不产生绑定；`unique_issue_keys / sanitized_identity_collisions` 留待 private master 后消歧）。
 
 ### 路径 B — pinned pipeline 最小动态复现（当前唯一可执行路径，但暂停盲跑）
 
