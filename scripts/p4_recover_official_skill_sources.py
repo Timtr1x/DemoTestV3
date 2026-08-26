@@ -25,21 +25,36 @@ Each row contains:
   official_skill_ids: list[str] (1 or 2 for dual-class skills)
   classifications, raw_issue_rows, sanitized_issue_keys, ...
   repo_url, commit_sha, skill_path, source_sha256  (from verified official evidence)
-  status: SOURCE_NOT_FOUND | CANDIDATE_SOURCE_VERIFIED | OFFICIAL_SOURCE_DECLARED | BOUND_AMBIGUOUS | BOUND_EXACT
-          OFFICIAL_SOURCE_DECLARED = repo/commit/path declared but tree not yet acquired/verified (never BOUND_EXACT)
+  status: SOURCE_NOT_FOUND | CANDIDATE_SOURCE_VERIFIED | OFFICIAL_SOURCE_DECLARED
+          | BOUND_AMBIGUOUS | SOURCE_OBJECT_VERIFIED
+          OFFICIAL_SOURCE_DECLARED = repo/commit/path declared but tree not yet acquired/verified (never verified)
+          SOURCE_OBJECT_VERIFIED = repo@immutable_commit acquired + skill_path exists + source_sha256 recomputed (object verified)
+                                    BUT mapping provenance not yet verified as OFFICIAL; use mapping_audit to promote.
+  mapping_provenance: {mapping_source_type, mapping_source_uri, mapping_source_revision,
+                       mapping_evidence_sha256, mapping_method, mapping_confidence}
+                      Required for promotion SOURCE_OBJECT_VERIFIED -> OFFICIAL_SKILL_BOUND.
+                      See docs/P4_MAPPING_PROVENANCE.md and cache/p4_evidence/mapping_audit.jsonl.
   binding_method, binding_confidence
   candidate_ids: list[str]
   evidence_count, distinct_evidence_keys
 
 Semantics:
-  - OFFICIAL_SKILL_BOUND only (skill -> repo/commit/path), not issue-level.
+  - Two-tier trust (see review 2026-08-26):
+    SOURCE_OBJECT_VERIFIED = DECLARED_MAPPING + SOURCE_VERIFIED (repo/commit/path/hash recomputed).
+    OFFICIAL_SKILL_BOUND   = VERIFIED_OFFICIAL_MAPPING + SOURCE_VERIFIED
+                           (mapping must come from private master / official metadata / Zenodo / author artifact
+                            or independently corroborated official source, recorded in mapping_provenance).
+    Resolver without external audit defaults to SOURCE_OBJECT_VERIFIED; promotion to
+    OFFICIAL_SKILL_BOUND requires a mapping_provenance record marked VERIFIED_OFFICIAL_MAPPING.
+  - OFFICIAL_SKILL_BOUND is still the skill -> repo/commit/path level (not issue-level).
     Issue-level requires File:Line/sink per evidence and expansion of
     924 collisions: evidence_key = sha256(sanitized_key|repo|revision|skill_path|file|ls|le)
+    and also requires OFFICIAL_SKILL_BOUND as prerequisite.
   - is_candidate_source_verified requires repo+64hex+path; branch never counts.
-    CANDIDATE_SOURCE_VERIFIED never yields BOUND_EXACT by itself.
-  - BOUND_EXACT requires DemoTest to actually acquire repo@immutable_commit and
+    CANDIDATE_SOURCE_VERIFIED never yields BOUND_EXACT/SOURCE_OBJECT_VERIFIED by itself.
+  - SOURCE_OBJECT_VERIFIED requires DemoTest to actually acquire repo@immutable_commit and
     recompute source_sha256 over the skill_path subtree. Sidecar repo/commit/path/source_sha
-    alone yields OFFICIAL_SOURCE_DECLARED, never BOUND_EXACT. Same (repo,commit,path) with
+    alone yields OFFICIAL_SOURCE_DECLARED, never verified. Same (repo,commit,path) with
     multiple distinct non-empty source_sha -> BOUND_AMBIGUOUS. Hash drift or missing path
     under the acquired tree -> fail-closed.
   - official evidence aggregation: skill -> list[evidence]; distinct
@@ -142,20 +157,45 @@ def compute_tree_sha_for_skill_path(tree_root: Path, skill_path: str) -> tuple[s
     """Hash the subtree at tree_root/skill_path (all files recursively).
 
     Returns (sha256 hex of sorted relative_path|file_sha, reason).
-    Mimics source_lock.hash_raw_snapshot for a subtree but without git filtering.
+    Aligned with demotest.datasets.source_lock.hash_raw_snapshot:
+      - symlink no-follow (is_symlink() skipped, rglob does not follow dir symlinks)
+      - exclude .git / __pycache__ at any depth
+      - blob = "\\n".join(f"{rel}|{sha256}") sorted by rel ("/" normalized)
     If skill_path does not exist -> (None, reason).
     """
     if not tree_root.exists():
         return None, f"tree root missing: {tree_root}"
     skill_dir = tree_root / skill_path if skill_path else tree_root
+    # symlink no-follow: skill_path itself must not be a symlink
+    if skill_dir.is_symlink():
+        return None, f"skill_path is a symlink (no-follow): {skill_path!r}"
     if not skill_dir.exists():
         return None, f"skill_path not found under tree: {skill_path!r}"
     if not skill_dir.is_dir():
-        # single file case
+        # single file case — file symlink already rejected above
+        if skill_dir.is_symlink():
+            return None, f"skill file is a symlink (no-follow): {skill_path!r}"
         data = skill_dir.read_bytes()
         return hashlib.sha256(data).hexdigest(), "single file"
-    # collect files
-    files: list[Path] = [p for p in skill_dir.rglob("*") if p.is_file() and ".git" not in p.parts]
+    # collect files — do not follow symlinks, skip excluded dirs
+    exclude = {".git", "__pycache__"}
+    files: list[Path] = []
+    for p in skill_dir.rglob("*"):
+        # no-follow: skip any symlink (file or dir)
+        try:
+            if p.is_symlink():
+                continue
+        except OSError:
+            continue
+        if not p.is_file():
+            continue
+        try:
+            rel_parts = p.relative_to(skill_dir).parts
+        except ValueError:
+            continue
+        if any(part in exclude for part in rel_parts):
+            continue
+        files.append(p)
     if not files:
         return None, f"skill_path has no files: {skill_path!r}"
     file_hashes: list[tuple[str, str]] = []
@@ -445,8 +485,8 @@ def resolve_skill_source(
             }
 
     # candidate consistency check: do NOT let candidate pollute official; just report mismatch but still allow official to succeed independently
-    # If candidate exists and differs, we still return BOUND_EXACT for official (official-first)
-    # Optionally add note about candidate mismatch in method
+    # If candidate exists and differs, we still return SOURCE_OBJECT_VERIFIED for object (official-first)
+    # Promotion to OFFICIAL_SKILL_BOUND requires external mapping_provenance.
     method = f"official repo/commit/path verified (evidence_count={evidence_count}, distinct={distinct})"
     if verify_reason:
         method += f"; {verify_reason}"
@@ -461,11 +501,79 @@ def resolve_skill_source(
         elif len(candidate_list) > 1:
             method += "; multiple candidates exist, official-first resolution not blocked"
 
-    return {
+    # Two-tier status: object verified (SOURCE_OBJECT_VERIFIED). Mapping provenance
+    # determines promotion to OFFICIAL_SKILL_BOUND; resolver alone stores provenance
+    # passthrough if present on the evidence.
+    mapping_prov = None
+    if rep_ev is not None:
+        # passthrough any mapping_provenance already attached to the representative evidence
+        mp = rep_ev.get("mapping_provenance") or rep_ev.get("mapping") or None
+        if isinstance(mp, dict) and mp:
+            mapping_prov = {k: mp.get(k) for k in [
+                "mapping_source_type", "mapping_source_uri", "mapping_source_revision",
+                "mapping_evidence_sha256", "mapping_method", "mapping_confidence",
+                "official_identity_fields", "candidate_identity_fields", "identity_match_basis",
+                "audit Verdict".lower(),
+            ] if mp.get(k) is not None}
+            # keep original keys as-is for audit Verdict etc
+            for k in ["audit_verdict", "auditVerdict", "verdict", "risk"]:
+                if mp.get(k) is not None and k not in mapping_prov:
+                    mapping_prov[k] = mp.get(k)
+            # also preserve raw mapping_provenance for transparency
+            mapping_prov["_raw"] = mp
+
+    # Determine status: without VERIFIED_OFFICIAL_MAPPING we stay at SOURCE_OBJECT_VERIFIED
+    status = "SOURCE_OBJECT_VERIFIED"
+    confidence = "source_object_verified"
+    # Look up external audit file cache/p4_evidence/mapping_audit.jsonl for upgrade
+    # (loaded lazily per-skill via helper below if available)
+    audit_verdict = None
+    try:
+        # rep_ev may carry explicit audit verdict
+        if rep_ev is not None:
+            audit_verdict = (rep_ev.get("mapping_provenance") or {}).get("audit_verdict") \
+                or (rep_ev.get("mapping_provenance") or {}).get("verdict")
+        if audit_verdict is None:
+            # try external audit registry (module-level cache)
+            from pathlib import Path as _P
+            _audit_path = ROOT / "cache/p4_evidence/mapping_audit.jsonl"
+            if _audit_path.exists():
+                # lightweight per-call scan (20 rows) — acceptable
+                for _line in _audit_path.read_text(encoding="utf-8").splitlines():
+                    if not _line.strip():
+                        continue
+                    try:
+                        _a = json.loads(_line)
+                    except Exception:
+                        continue
+                    if _a.get("official_skill_name") == skill_name and _a.get("repo_url"):
+                        # normalize compare
+                        if normalize_repo(_a.get("repo_url", "")) == normalize_repo(repo) \
+                                and (_a.get("commit_sha") or _a.get("revision") or "").strip().lower() == commit.lower() \
+                                and (_a.get("skill_path") or "").strip() == skill_path:
+                            audit_verdict = _a.get("audit_verdict") or _a.get("verdict")
+                            if audit_verdict:
+                                mapping_prov = _a.get("mapping_provenance") or mapping_prov or _a
+                            break
+    except Exception:
+        audit_verdict = None
+
+    if audit_verdict == "VERIFIED_OFFICIAL_MAPPING":
+        status = "OFFICIAL_SKILL_BOUND"
+        confidence = "official_mapping_verified"
+        method += "; mapping_provenance=VERIFIED_OFFICIAL_MAPPING"
+    else:
+        # explicit that mapping not yet verified
+        if audit_verdict in ("COPIED_FIXTURE", "INFERRED_MAPPING", "AMBIGUOUS", "REJECT"):
+            method += f"; mapping_audit={audit_verdict} (not OFFICIAL)"
+        else:
+            method += "; mapping_provenance pending (SOURCE_OBJECT_VERIFIED only)"
+
+    out = {
         "official_skill_key": official_skill_key_val,
-        "status": "BOUND_EXACT",
+        "status": status,
         "binding_method": method,
-        "binding_confidence": "exact",
+        "binding_confidence": confidence,
         "repo_url": repo,
         "commit_sha": commit,
         "skill_path": skill_path,
@@ -474,6 +582,11 @@ def resolve_skill_source(
         "evidence_count": evidence_count,
         "distinct_evidence_keys": distinct,
     }
+    if mapping_prov is not None:
+        out["mapping_provenance"] = mapping_prov
+    if audit_verdict is not None:
+        out["audit_verdict"] = audit_verdict
+    return out
 
 
 def main() -> int:
@@ -550,6 +663,9 @@ def main() -> int:
         })
 
     c = Counter(r["status"] for r in rows)
+    # Two-tier: SOURCE_OBJECT_VERIFIED = object recomputed; OFFICIAL_SKILL_BOUND = verified official mapping
+    sov = c.get("SOURCE_OBJECT_VERIFIED", 0)
+    osb = c.get("OFFICIAL_SKILL_BOUND", 0)
     summary = {
         "generated_at": "2026-08-26",
         "official_skills": 487,
@@ -563,9 +679,12 @@ def main() -> int:
         "OFFICIAL_SOURCE_DECLARED": c.get("OFFICIAL_SOURCE_DECLARED", 0),
         "BOUND_AMBIGUOUS": c.get("BOUND_AMBIGUOUS", 0),
         "BOUND_EXACT": c.get("BOUND_EXACT", 0),
-        "official_bound_skill_count": c.get("BOUND_EXACT", 0),
+        "SOURCE_OBJECT_VERIFIED": sov,
+        "OFFICIAL_SKILL_BOUND": osb,
+        "source_object_verified_count": sov + osb,
+        "official_bound_skill_count": osb,
         "official_issue_bound_DIRECT": 0,
-        "note": "BOUND_EXACT requires DemoTest-actual acquire repo@commit and recomputed skill_path subtree SHA; declared without acquisition is OFFICIAL_SOURCE_DECLARED (no exact); same (repo,commit,path) multi non-empty sha -> BOUND_AMBIGUOUS; candidate never blocks.",
+        "note": "SOURCE_OBJECT_VERIFIED = DemoTest-actual acquire repo@immutable_commit + recomputed skill_path subtree SHA (object verified); OFFICIAL_SKILL_BOUND = SOURCE_VERIFIED + VERIFIED_OFFICIAL_MAPPING (private master/official metadata/Zenodo/author artifact via mapping_provenance); declared without acquisition is OFFICIAL_SOURCE_DECLARED; same (repo,commit,path) multi non-empty sha -> BOUND_AMBIGUOUS; candidate never blocks; symlink no-follow aligned with source_lock.hash_raw_snapshot.",
     }
 
     if args.check:

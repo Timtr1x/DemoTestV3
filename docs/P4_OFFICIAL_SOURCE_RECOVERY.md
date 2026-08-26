@@ -1,62 +1,47 @@
-# P4 官方 487 Skill Source Recovery — Phase 4E Step 1（OFFICIAL_SKILL_BOUND）
+# P4 官方 487 Skill Source Recovery — Phase 4E（两层分层）
 
-> **日期**：2026-08-26 · **状态**：Step 1 脚手架 + official-first + recompute-gated 收口（已验证 20 BOUND_EXACT，停验）
-> **判定**：`P4 4E Binding Resolver — PASS / P4 Official Skill Source Recovery — READY（20 BOUND_EXACT 已落盘重算一致，来源质量待复核）`
-> **双计数**：`Real DIRECT 1 supplementary（andytrust / REAL_SKILL_UNBOUND） / Official Skill Bound 20 / Official Issue Bound DIRECT 0/50`
-> **产物**：`cache/p4_evidence/official_source_evidence.jsonl`（20 行，全部 `commit + source_sha256` 重算一致）· `cache/p4_official_clones/`（20 个落盘 repo，含 `osk_xxx` Windows 兼容目录）· `cache/p4_evidence/official_skill_sources.jsonl`（487 行，`osk:<sha16>` 稳定键）· `--check` 通过
+> **日期**：2026-08-26 · **框架**：`P4 4E Binding Resolver — PASS / P4 Recompute-gated Trust — PASS`
+> **对象层**：`Source objects verified 20 / 487`（`SOURCE_OBJECT_VERIFIED 20`，`repo@commit` 已落盘且 `source_sha256` 重算一致）
+> **映射层**：`Official Skill Bound 0 / 487`（尚无 `VERIFIED_OFFICIAL_MAPPING`，见 §4）
+> **Issue 层**：`Official Issue Bound DIRECT 0/50`（未进入 `File:Line` 回收，STOP）
+> **双计数**：`Real DIRECT 1 supplementary（andytrust / REAL_SKILL_UNBOUND）`
+> **产物**：`cache/p4_evidence/official_source_evidence.jsonl`（20 行）· `cache/p4_evidence/mapping_audit.jsonl`（20 行）· `cache/p4_official_clones/`（20 个落盘 repo，含 `osk_xxx` Windows 兼容副本）· `cache/p4_evidence/official_skill_sources.jsonl`（487 行，`osk:<sha16>` 稳定键）· `--check` 通过
 > **禁令**：`Docker=NO / LineMod=NO / runtime-spec=NO / Core manifest=NO / Smoke=NO`
 
 ---
 
-## 1. 为什么要先做这一步
+## 1. 为什么需要两层分层
 
-公开 `issues.csv / skills_dataset.csv` 只有 7 脱敏字段，无 `repo / commit / path / File:Line`。因此 `official_issue_key = slb:<sha16(7字段)>` 只是 **sanitized identity**（1708 → 784 keys，`924 collisions / 366 groups`），不能直接挂 P4CANARY。现有 165 候选池与 487 官方名交集 0，盲跑帮不了 0/50。
+公开 `issues.csv / skills_dataset.csv` 只有 7 脱敏字段，无 `repo / commit / path / File:Line`。`official_issue_key = slb:<sha16(7字段)>` 只是 **sanitized identity**（1708 → 784 keys，`924 collisions / 366 groups`），不能直接挂 P4CANARY。现有 165 候选池与 487 官方名交集 0，盲跑帮不了 0/50。
 
-必须先把 487 官方 skill 的 **repo / immutable commit / skill_path / source_sha256** 找回来（第一层），再展开 File:Line 级 evidence 并消解 924 collisions（第二层）。
-
-## 2. 两层绑定（本次定）
+本阶段先做 **skill → repo/commit/path**（第一层），再做 **File:Line evidence**（第二层）。但第一层中"对象是否可重算"与"`official_skill_name → repo/path` 是否为官方映射"是两类不同证据，必须分开计数：
 
 ```
-OFFICIAL_SKILL_BOUND（本阶段）
-  official_skill_key = osk:<sha16(sorted skill_ids | skill_name)>
-  skill -> repo_url + commit_sha(40/64 hex) + skill_path + source_sha256(64 hex)
-  产物：official_skill_sources.jsonl（487）
-  状态：
-    SOURCE_NOT_FOUND / CANDIDATE_SOURCE_VERIFIED
-    OFFICIAL_SOURCE_DECLARED（已声明 repo/commit/path/sha 但未 acquire/verify，never BOUND_EXACT）
-    BOUND_AMBIGUOUS / BOUND_EXACT（需落盘重算）
+SOURCE_OBJECT_VERIFIED = DECLARED_MAPPING + SOURCE_VERIFIED
+  repo@immutable_commit 已落盘clone，skill_path 存在，subtree hash 重算一致（20 条满足）
 
-OFFICIAL_ISSUE_BOUND（下一层，另起）
-  (sanitized_key|repo|revision|skill_path|file|ls|le) -> evidence_key
-  每个 evidence 独立 P4CANARY，叠加 Gateway visibility 才计 STOP
+OFFICIAL_SKILL_BOUND   = VERIFIED_OFFICIAL_MAPPING + SOURCE_VERIFIED
+  上述对象验证 + 映射来源被证明来自 private master / 官方 pipeline 产物 / Zenodo / 作者 artifact
+  或其他可独立复核的官方来源，并记录 mapping_provenance（当前 20 条均未满足，故 0）
 
 STOP 只认第二层：OFFICIAL_ISSUE_BOUND + DIRECT + reviewed + Gateway-visible >= 50
 ```
 
-`official_skill_key` 不以 `skill_name` 本身为最终身份，保留多 `skill_id`（如 `creative-writer` 双 id）场景。
+`official_skill_key = osk:<sha16(sorted skill_ids | skill_name)>` 不以单一 `skill_name` 为最终身份，保留多 `skill_id` 场景（如 `creative-writer` 双 id）。
 
-## 3. Official-first + recompute-gated 约束（本次收口）
+## 2. 约束（已收口，不再 hardening）
 
-- **`BOUND_EXACT` 仅当 DemoTest 实际 `acquire repo@immutable_commit` 并对 `skill_path` 子树重新计算 `source_sha256` 且校验通过。** 仅有 official metadata 的 `repo/commit/path/source_sha` 时标为 `OFFICIAL_SOURCE_DECLARED`，不得 exact；同 `repo/commit/path` 出现多个非空不同 `source_sha` 先标 `BOUND_AMBIGUOUS`。
-- `p4_recover_official_skill_sources` 不以 165 candidate pool 为 `BOUND_EXACT` 前置条件；缺失不阻止 recovery；`resolve_skill_source` 为纯函数，candidate 缓存不一致仅在 `binding_method` 注明，不污染 official。
-- `official_source_evidence.jsonl` 为 `skill -> list[evidence]` 聚合；同 skill 逻辑 key 冲突或同 key 多非空 sha -> `BOUND_AMBIGUOUS`，不做 last-write-wins；`source_sha256` 由子树散列重算，`hash drift / path missing -> fail closed`。
-- `branch`（如 `main`）永不算 immutable revision；`commit_sha` 限 `40/64 hex`。
-- Issue 级 `OFFICIAL_BINDING_EXACT` 仍需 `File:Line`，禁止用 `skill_name` fallback 产生 issue EXACT。
-- 其他 4A-4E 架构、P4CANARY、`candidate cache` 语义、`Docker/LineMod` 禁令全部不动。
+- `SOURCE_OBJECT_VERIFIED` / `OFFICIAL_SKILL_BOUND` 仅当 DemoTest 实际 `acquire repo@immutable_commit` 并对 `skill_path` 子树重算 `source_sha256` 且通过；仅有 sidecar 声明时为 `OFFICIAL_SOURCE_DECLARED`。同 `(repo,commit,path)` 多个非空不同 `source_sha` → `BOUND_AMBIGUOUS`。
+- `branch` 永不算 immutable；`commit_sha` 限 `40/64 hex`；`symlink no-follow`（与 `demotest.datasets.source_lock.hash_raw_snapshot` 对齐，排除 `.git/__pycache__`，`blob = sorted(rel|sha256)`）。
+- `resolve_skill_source` 为纯函数，candidate 缓存不一致仅在 `binding_method` 注明，不污染 official；`official_source_evidence.jsonl` 按 `skill -> list[evidence]` 聚合，冲突不静默覆盖。
+- Issue 级 `OFFICIAL_BINDING_EXACT` 仍需 `File:Line`，禁止用 `skill_name` fallback。
+- 映射晋升由 `cache/p4_evidence/mapping_audit.jsonl` 的 `audit_verdict == VERIFIED_OFFICIAL_MAPPING` 驱动；resolver 不自行推断官方映射。
 
-## 4. 本轮产物与校验
+## 3. 20 个 SOURCE_OBJECT_VERIFIED 明细（对象已重算一致）
 
-| 项 | 值 |
-|---|---|
-| `official_source_evidence.jsonl` | 10 行，每行 `official_skill_name / repo_url / commit_sha(40 hex) / skill_path / source_sha256(64 hex)`，全部 `git rev-parse HEAD` 与 `subtree SHA` 重算一致，`10/10` |
-| `cache/p4_official_clones/` | 10 个落盘 repo：`aslaep123 / base-trading-agent / creative-writer / api-helper / config-analyzer / better-polymarket / anthropic-token-refresh / agent-inbox / osk_6ce142... / osk_f93775...`（含 `youtube-watcher / clawhub` 的 `osk_xxx` Windows 兼容副本，复用 `whisolla/whistant-skills@de8213c`） |
-| `official_skill_sources.jsonl` | 487 行，每行 `official_skill_key / skill_ids / classifications / raw_issue_rows / sanitized_issue_keys / repo_url / commit_sha / skill_path / source_sha256 / status / evidence_count / candidate_ids` |
-| `official_skill_sources_summary.json` | `SOURCE_NOT_FOUND 467 / OFFICIAL_SOURCE_DECLARED 0 / BOUND_AMBIGUOUS 0 / BOUND_EXACT 20 / unique_issue_keys 784 / evidence_rows 20` |
-| `official_issue_binding.jsonl` | 1708 行 `OFFICIAL 0`（沿用，issue 级仍需 File:Line） |
+每条均已 `git rev-parse HEAD + subtree (relative_path|file_sha sorted) SHA` 双校验通过，20/20 OK。下表 `official_skill_name / repo_url / commit / path / sha[:12] / clone dir`：
 
-20 个 BOUND_EXACT 明细（`commit / path / source_sha256` 均已重算一致，`--check` 与逐条 `git rev-parse + subtree SHA` 双校验通过）：
-
-| # | `official_skill_name` | `repo_url` | `commit_sha` | `skill_path` | `source_sha256[:12]` | `clone dir` |
+| # | skill | repo | commit | path | sha12 | clone dir |
 |---|---|---|---|---|---|---|
 | 1 | `aslaep123` | `whisolla/whistant-skills` | `de8213c59b6a…` | `tier-w/caldav-calendar` | `96d68ad38352` | `aslaep123` |
 | 2 | `base-trading-agent` | `snyk/agent-scan` | `462e136f22e1…` | `tests/skills/malicious-skill` | `bedd41464a9c` | `base-trading-agent` |
@@ -79,24 +64,31 @@ STOP 只认第二层：OFFICIAL_ISSUE_BOUND + DIRECT + reviewed + Gateway-visibl
 | 19 | `kagi-search` | `Mic92/mics-skills` | `5a7817fb4284…` | `kagi-search/skill` | `2c7d4bc430e8` | `kagi-search + osk_0a352…` |
 | 20 | `r2-storage` | `mrnsmh/openclaw-skill-r2-storage` | `dbdc3deb476c…` | `.` | `3a5cd1534420` | `r2-storage + osk_b3381…` |
 
+## 4. 映射审计（`mapping_audit.jsonl`）— 为什么 OFFICIAL 仍为 0
+
+20 条的 `mapping_audit.jsonl` 每行包含 `mapping_source_type / mapping_source_uri / mapping_source_revision / mapping_evidence_sha256 / mapping_method / mapping_confidence / audit_verdict / audit_reason / leaf_match / risk_flag`。评审结论：全部为 `skillsmp exact name match + github clone + subtree hash verify` 的**启发式映射**，未追溯到 `creds_in_skills.xlsx / 官方 pipeline 元数据 / Zenodo` 等可验证官方来源，因此**对象验证通过，但官方映射未验证**，按规则不得晋升为 `OFFICIAL_SKILL_BOUND`。
+
+| 段 | 数量 | 代表 | 处置 |
+|---|---|---|---|
+| `COPIED_FIXTURE`（`FIXTURE/EVAL`） | 9 | `base-trading-agent / creative-writer / api-helper / config-analyzer / better-polymarket / frontend-design / mcp-builder / claude-connect / godaddy`（路径含 `tests/fixtures/evals/evasive/malicious`） | 优先复核，无法证明原始 provenance 则排除，不进入下一层 |
+| `INFERRED_MAPPING` | 10 | `anthropic-token-refresh / agent-inbox / youtube-watcher / clawhub / coolify / dialpad / finance-news / trakt-tv / kagi-search / r2-storage` | 保留对象验证，需补官方 manifest 后再议 |
+| `AMBIGUOUS` | 1 | `aslaep123`（`whisolla` 大仓 `tier-w/caldav-calendar`，与 `skill_name` 无 `leaf` 相关性） | 暂不晋升 |
+
+当前最可能接近原始来源的为 `anthropic-token-refresh / finance-news / trakt-tv / r2-storage`（`leaf EXACT/PARTIAL` 且非 fixture），也仍需补官方 provenance 才能晋升。
+
+## 5. 汇总与校验
+
+| 项 | 值 |
+|---|---|
+| `official_source_evidence.jsonl` | 20 行，全部 `commit + source_sha256` 重算一致 |
+| `mapping_audit.jsonl` | 20 行（`INFERRED 10 / COPIED_FIXTURE 9 / AMBIGUOUS 1 / VERIFIED_OFFICIAL 0`） |
+| `cache/p4_official_clones/` | 20 个落盘 repo（含 `osk_xxx` Windows 兼容副本） |
+| `official_skill_sources.jsonl` | 487 行（`SOURCE_NOT_FOUND 467 / SOURCE_OBJECT_VERIFIED 20 / OFFICIAL_SKILL_BOUND 0`；`--check` 同值） |
+| `official_skill_sources_summary.json` | `source_object_verified_count 20 / official_bound_skill_count 0 / official_issue_bound_DIRECT 0` |
+| `official_issue_binding.jsonl` | 1708 行 `OFFICIAL 0`（沿用，issue 级仍需 File:Line） |
+
 校验：
 
 ```
-python scripts/p4_recover_official_skill_sources.py --check   # 20 BOUND_EXACT, 467 SOURCE_NOT_FOUND
-python scripts/p4_build_official_binding_inventory.py --check # 0 OFFICIAL issue-level (public CSV 无 File:Line)
-python -m pytest tests/v3/datasets/test_p4_official_binding.py tests/v3/datasets/test_p4_official_skill_recovery.py tests/v3/datasets/test_p4_publishing_bridge.py  # 32 passed
-# 每条 evidence 均已 git rev-parse HEAD + subtree (relative_path|file_sha sorted) 重算一致
-```
-
-`test_p4_official_skill_recovery.py` 13 项：未 acquire 不 exact（`OFFICIAL_SOURCE_DECLARED`）、`acquire+hash match` exact、同 `logical source` 多 `source_sha` 冲突 `ambiguous`、一致 exact、不一致不污染、多 evidence 合并、`branch-only` 不绑定、`path missing / hash drift` fail closed、`osk` 稳定与多 id / 重算；`test_p4_official_binding.py` 12 项、`test_p4_publishing_bridge.py` 7 项均通过。Windows 上 `osk:xxx` 含 `:`，解析器已同时支持 `osk:xxx` 与 `osk_xxx` 目录。
-
-## 5. 下一步（按优先级，不执行）
-
-1. **private master** `creds_in_skills.xlsx` 的 File:Line（最高，能直接消 collision）；
-2. 官方 pipeline 的 `phase1/phase2` 元数据；
-3. Zenodo 补充；
-4. 定向 SkillsMP 重爬 487 名补 `repo/commit/path/sha`，每条 `acquire` 后重算 `source_sha`，`OFFICIAL_SOURCE_DECLARED -> BOUND_EXACT`，再进入第二层 File:Line 回收。
-
----
-
-*输入 SHA：`issues.csv 5da5ffc4… / skills_dataset.csv 0a77fc53… / candidates.jsonl 6acf0a10…`；487 已以 `osk` 稳定键落地。*
+python scripts/p4_recover_official_skill_sources.py --check   # 487: SOURCE_NOT_FOUND 467 / SOURCE_OBJECT_VERIFIED 20
+python scripts/p4_build_official_binding_inventory.py --check # 0 OFFICIAL issue-level (p
