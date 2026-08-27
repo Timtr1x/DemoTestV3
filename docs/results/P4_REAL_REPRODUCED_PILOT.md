@@ -114,7 +114,7 @@ The data-limited close is therefore a **technical necessity**, not a schedule cu
 ## 8. Publishing state
 
 ```
-P4 Core Framework            COMPLETE  (6-gate, DIRECTORY-only, core_review fail-closed)
+P4 Core Framework            COMPLETE  (6-gate, DIRECT-only, core_review fail-closed)
 P4 DIRECT-only Gate          COMPLETE  (0b83d362)
 P4 Frozen core_review        COMPLETE  (metadata.core_review, behavior_modified=canary-only)
 P4 REAL_REPRODUCED Pilot     COMPLETE,  n=1   (AndyTrust — the only natural DIRECT in this pool)
@@ -124,4 +124,4 @@ P4 Status                    CLOSED AS DATA-LIMITED PILOT — framework proved, 
 
 - **Headline note**: outside this pilot file, do **not** write `continuing toward 10`. The correct phrasing for any external summary is: **`attempted toward 10, but after auditing the full 165 real-skill pool for DIRECT disclosure, only 1 naturally reproducible DIRECT credential disclosure was found`**.
 - **Benchmark hygiene**: This pilot does **not** produce or claim a `p4_credential_flow_v1` **Standard** — no LineMod `standard` suites were built against it, and it must not be conflated with `P1/P2/P3/P5` Standard runs or their `live-*` manifests. Experimental raws always went to isolated `cache/p4_isolated_*` dirs and **never overwrote** `benchmarks/frozen`; the frozen zero-trace raws (`trace_meta.json` / `executions/`) from `snap-75bb93333308` were removed before this report was written.
-- **Blocked for now** (and correct to keep blocked): `Docker=`NO, `LineMod=`NO, `runtime-spec=`NO, `Core manifest=`NO, `Smoke=`NO — unless explicitly re-authorized in a future charter. The framework is intact and ready to resume when an additional natural DIRECT is found; it does not need to pretend to hit 10 in this pool.
+- **Further execution blocked for now** (and correct to keep blocked): `new Docker runs=`NO / `LineMod benchmark=`NO / `new runtime-spec changes=`NO / `Core manifest=`NO / `Smoke=`NO — unless explicitly re-authorized in a future charter. Docker/runtime-spec were used during acquisition; this freeze is forward-looking. The framework is intact and ready to resume when an additional natural DIRECT is found; it does not need to pretend to hit 10 in this pool.
