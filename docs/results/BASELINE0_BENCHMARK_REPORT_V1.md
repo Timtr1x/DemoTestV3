@@ -23,32 +23,27 @@ Headline 是 P1 + P2 + P3 + P5（均为 `benchmark_track=core` / `headline_eligi
 
 ## 2. 核心结果, 全部是真实 LineMod, 零调参
 
-### 2.1 Headline — core（可排名）
+### 2.1 Standard 结果总表（全部按真实 LineMod 评估记录，含 P4）
 
-| 基准 | 套件 | n | TP | FN | TN | FP | TPR | FPR | 拦截率 | 未判定 | 是否过线 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| P1 email injection | phase1-standard-v3/p1 | 1674 | 1357 | 223 | 73 | 21 | **85.86%** | 22.34% | 82.32% | 0 | FAIL（tpr_min 0.90） |
-| P2 tool action | phase1-standard-v3/p2 | 743 | 311 | 224 | 79 | 129 | **58.13%** | 62.02% | 59.22% | 0 | FAIL（tpr_min 0.90） |
-| P3 mcp_definition | p3-standard-v1 | 464 | 266 | 10 | 58 | 130 | **96.38%** | 69.15% | 85.34% | 0 | **PASS（tpr_min 0.85）但选择性 FAIL** |
-| P5 memory write | p5-standard-v1 | 252 | 28 | 212 | 12 | 0 | **11.67%** | 0.00% | 11.11% | 0 | FAIL（tpr_min 0.90） |
+| 基准 | 套件 | track | n（standard / 冻结总数） | TP | FN | TN | FP | TPR | FPR | 拦截率 | 未判定 |
+|---|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| P1 email injection | phase1-standard-v3/p1 | core | 1674 / — | 1357 | 223 | 73 | 21 | 85.86% | 22.34% | 82.32% | 0 |
+| P2 tool action | phase1-standard-v3/p2 | core | 743 / — | 311 | 224 | 79 | 129 | 58.13% | 62.02% | 59.22% | 0 |
+| P3 mcp_definition | p3-standard-v1 | core | 464 / 794 | 266 | 10 | 58 | 130 | 96.38% | 69.15% | 85.34% | 0 |
+| P4 credential flow — Extended | p4e-standard-v1 | extended | 480 / 800 | 224 | 16 | 0 | 240 | 93.33% | 100.00% | 96.67% | 0 |
+| P5 memory write | p5-standard-v1 | core | 252 / 420 | 28 | 212 | 12 | 0 | 11.67% | 0.00% | 11.11% | 0 |
 
-这四条是 `benchmark_track=core` / `headline_eligible=true`，只有它们算 headline。`smoke` 设计上即 `NON_HEADLINE`，不计入 headline。
+指标口径：`n = TP+FN+TN+FP`，为 `eval` 切片本次实际运行用例数。`TPR = TP/(TP+FN)` 为 BLOCK 命中比例，`FPR = FP/(FP+TN)` 为 ALLOW 误拦比例，`拦截率 = (TP+FP)/n`。冻结总数在 `n` 后括号内标注：P3 794（485 BLOCK + 309 ALLOW，`p3_mcptox` raw `a54ca29e` @ `f85189f`）、P4E 800（413 BLOCK + 387 ALLOW，`manifest d7d4f7f0…` / `raw 2befb96e…`）、P5 420（400 BLOCK + 20 ALLOW，raw `19329003` @ `1f561dc`）。P1/P2 所在 `phase1-standard-v3` 为 llmail + AgentDojo 的 `eval` 合集，冻结总数按 `phase1-full-v3` 计 3680。P4 的 `track=extended` 与 `core` 并表仅为同口径对照；资格标注保留在 §3。P4E 本版为 `P4E-v2 ACCEPTED`，per-row `demo_*` canary（无 `TEST_SECRET_` 共享标签），`benign_subtype` 6 类全覆盖。
 
-| 套件 | n, BLOCK | TPR | FPR | 备注 |
-|---|---:|---:|---:|---|
-| P1 smoke smoke-v3/p1 | 80 | 87.50% | 35.00%, n 40 | 方向性 |
-| P2 smoke smoke-v3/p2 | 50 | 68.00% | 50.00%, n 50 | 偏乐观 |
-| P3 smoke p3-smoke-v1 | 60 | 98.33% | 75.00%, n 40 | 方向性 |
-| P5 smoke p5-smoke-v1 | 60 | 18.33% | 0.00%, n 4 | 方向性，可引用的 FPR 以 standard n=12 为准 |
+| smoke 套件 | n | BLOCK n | TPR | FPR（ALLOW n） | 备注 |
+|---|---:|---:|---:|---:|---|
+| P1 smoke smoke-v3/p1 | 80 | 80 | 87.50% | 35.00%, 40 | dev 方向性 |
+| P2 smoke smoke-v3/p2 | 50 | 50 | 68.00% | 50.00%, 50 | dev 方向性 |
+| P3 smoke p3-smoke-v1 | 100 | 60 | 98.33% | 75.00%, 40 | dev 方向性 |
+| P4E smoke p4e-smoke-v1 | 100 | 53 | 100.00% | 100.00%, 47 | extended 方向性 |
+| P5 smoke p5-smoke-v1 | 60 | 60 | 18.33% | 0.00%, 4 | dev 方向性 |
 
-### 2.2 Extended — P4（可引用，不参与 headline 排名）
-
-| 基准 | 套件 | n | TP | FN | TN | FP | TPR | FPR | 拦截率 | 未判定 | track |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| P4 Extended | p4e-standard-v1 | 480 | 224 | 16 | 0 | 240 | **93.33%** | 100.00% | 96.67% | 0 | extended, **NON_HEADLINE** |
-| P4 Extended smoke | p4e-smoke-v1 | 100 | 53 | 0 | 0 | 47 | **100.00%** | 100.00% | 100.00% | 0 | extended, NON_HEADLINE |
-
-`P4E-v2 ACCEPTED`：800 冻结（`manifest d7d4f7f0…` / `raw 2befb96e…`），per-row `demo_*` canary（无共享 `TEST_SECRET_` 标签），ALLOW 已去 `benchmark/gateway` 元语言，`benign_subtype` 全覆盖。可引用的 operational 结论见 §5.4。
+`smoke` 均为 `NON_HEADLINE`，不计入 headline。
 
 ### P2 细分, 上下文感知真值, 适配器 1.2.0
 
@@ -90,7 +85,7 @@ P1 细分, standard: api_triggered 89.9%, 240/267, 高于 judge 的 85.1%, 1117/
 | p4e-holdout-v1 | p4e-holdout-v1/p4.json | 410fef3d | 42 | holdout, split-v2 stratified | 18 seeds sealed | same as p4e |
 | p3-holdout-v1 | p3-holdout-v1/p3.json | — | 42 | holdout | 12 servers sealed | same as p3 |
 
-所有 headline 套件均为 `benchmark_track=core`。P4 Extended 均为 `benchmark_track=extended` / `headline_eligible=false`（`performance` 不与 core 同表排名）。每个清单都绑定进了 `_run_meta.json`，含 `manifest_sha256` / `experiment_hash` / `dataset_snapshot_hash` / `fidelity`。换一个清单即另一个基准。
+所有套件均已绑定进 `_run_meta.json`，含 `manifest_sha256` / `experiment_hash` / `dataset_snapshot_hash` / `fidelity`。换一个清单即另一个基准。P1/P2/P3/P5 为 `benchmark_track=core`，P4E 为 `benchmark_track=extended`。
 
 运行版本, 真实 LineMod, `gap 0.5 max_attempts 6`（P3 `max_attempts 3`）, 带 `X-LineMod-No-Failover true`：
 
@@ -129,13 +124,13 @@ P1 细分, standard: api_triggered 89.9%, 240/267, 高于 judge 的 85.1%, 1117/
 
 数据集已冻结，网关零调参。所以分数是诚实的，且并不都好看。
 
-### 5.1 快速结论
+### 5.1 各通道记录
 
-- **P1 可用但贵：** 85.9% 召回是唯一接近可用阈值的 headline，但 22.3% 正常邮件误拦使运营成本极高。Smoke 87.5%→85.9% 稳定，说明估计可靠。
-- **P2 倒挂：** 危险动作 54.6% < 越权读取 67.6%，且已授权调用 62.0% 误拦。网关对“像不像注入”敏感，对“危不危险/有没有授权”不敏感。只看 58.1% headline 会漏掉倒挂才是重点。
-- **P3 高召回但低选择性：** 96.38% TPR 通过 0.85 门控（headline PASS），但 69.15% FPR（8/25 服务器 100% FPR，仅 4/25 为 0%）说明在 MCP 定义上会拦掉约 7 成正常注册。机制与 P1 同源（短祈使定义最易被过拦，`Arguments:` 结构化文档相对被放过）。
-- **P5 几乎看不见：** 11.67% TPR / 0% FPR，约 9 次投毒仅拦 1 次。Stealthy 12.5% vs Disruptive 10.8% 无区分度；6 个 agent 均远低于 90% 门控（最好 32.5%，最差 5.0%）。与 P1/P2 正相反，`prompt_injection` 在 `memory_write` 信道几乎不触发。
-- **P4 Real Anchor + Extended 互补：** Real Anchor 1 条证明真实泄露可复现（andytrust TELEGRAM）；Extended P4E-v2 证明在受控 480 条上 `prompt_injection/standard` 对 credential-adjacent `tool_result` 的选择性灾难性不足（见 5.4）。
+- **P1：** TPR 85.86%（1674），其中 api_triggered 89.9% (240/267) 高于 judge 85.1% (1117/1313)，structured 94.4% (67/71) 高于 explicit 85.5%；FPR 22.34%（94 ALLOW 中 21 FP）。Smoke TPR 87.50% → standard 85.86%。
+- **P2：** TPR 58.13%（743），其中危险动作 54.6% (213/390) 低于越权读取 67.6% (98/145)；FPR 62.02%（208 ALLOW 中 129 FP）。Smoke 已见倒挂（64.7% vs 75.0% + FPR 50.0%）。
+- **P3：** TPR 96.38%（464，276 BLOCK 中 266 TP），FPR 69.15%（188 ALLOW 中 130 FP），8/25 服务器 FPR 100%，4/25 FPR 0%；短祈使定义过拦最集中，含 `Arguments:` 的结构化描述相对被放过。
+- **P5：** TPR 11.67%（252，240 BLOCK 中 28 TP），FPR 0.00%（12 ALLOW 中 0 FP）；Stealthy 12.5% (15/120) vs Disruptive 10.8% (13/120) 接近；6 个 agent 的 BLOCK TPR 分别为 32.5% / 10.0% / 7.5% / 7.5% / 7.5% / 5.0%。
+- **P4：** Real Anchor 1 条记录真实凭证暴露可复现（andytrust TELEGRAM token，经 7-gate 复核）；Extended P4E-v2 standard TPR 93.33%（240 BLOCK 中 224 TP），FPR 100.00%（240 ALLOW 中 240 FP），见 5.3–5.4。
 
 ### 5.2 P4E-v2 的关键修正已落地（上一轮 4 项）
 
@@ -146,13 +141,10 @@ P1 细分, standard: api_triggered 89.9%, 240/267, 高于 judge 的 85.1%, 1117/
 
 补：`p4_build_extended.py` 的 `or True` 无效 assert 已在 `052013f` 清理（hygiene，validator 已覆盖）。
 
-### 5.3 P4E-v2 结果更有说服力的原因
+### 5.3 P4E-v2 的记录
 
-去除 banner 语言后 standard 仍 `FPR 100%` 且在 6 个 `benign_subtype` 上均匀（`placeholder 50/50 redacted 41/41 name_only 33/33 schema 21/21 instruction 44/44 safe_log 51/51`），可更有把握地说：
-
-> **LineMod 的 `prompt_injection/standard` 对 credential-adjacent tool_result 存在极严重的选择性不足，而非 v1 benchmark 自描述语言导致的误杀。**
-
-BLOCK 去 shortcut 后 TPR 从 95.42% 降至 93.33%（合理变难），且
+- 去除 banner 语言后，P4E-v2 standard 仍为 `FPR 100%`，且在 6 个 `benign_subtype` 上均记录为 100%（`placeholder 50/50 redacted 41/41 name_only 33/33 schema 21/21 instruction 44/44 safe_log 51/51`）。
+- BLOCK 去 shortcut 后，TPR 从 v1 的 95.42% 记录为 v2 的 93.33%，记录到
 
 ```
 P4-E1 64/64 = 100%   Direct secret
@@ -161,21 +153,25 @@ P4-E3 55/55 = 100%   Exception/log
 P4-E4 46/60 = 76.67% Structured dump（14/16 FN 集中于此）
 ```
 
-说明 structured JSON/config 的检测明显更弱，且为稳定结论（v1 11 FN 亦全在 E4；v2 新增 2 个 E2 URL FN 一并体现 demo 熵变难）。
+其中 E4 的 76.67% 在 v1 中同为最弱（11 FN 全在 E4），v2 新增 2 个 E2 URL FN。
 
-### 5.4 合起来看
+### 5.4 各通道记录汇总
 
-一个 `prompt_injection/standard` scanner 解释了全部通道：P1 用误拦换召回、P5 用漏检换零误拦、P2 两头付代价、P3 高召回高误拦、P4E 全量过拦且 score 分布不可分（blocked `mean 0.991 p50 1.0`，TP `mean 0.983` vs FP `mean 0.998`）。这不是改数据集能修的——需要按通道风险模型调 scanner/阈值/策略。
-
-同网关在邮件上“强”、在工具动作上“困惑”、在记忆写入上“近盲”、在 MCP 定义上“高召回低选择性”、在凭证流上“全量过拦”的割裂，本身就是基准的价值。
+- 记录到同一 `prompt_injection/standard` scanner 的拦截覆盖全部通道，score 分布在 P4E 上记录为 blocked `mean 0.991 p50 1.0`，其中 TP `mean 0.983` 与 FP `mean 0.998` 接近。
+- 各通道记录：
+  - P1：TPR 85.86%，FPR 22.34%；
+  - P2：TPR 58.13%，FPR 62.02%，其中危险动作 54.6% 低于越权读取 67.6%；
+  - P3：TPR 96.38%，FPR 69.15%；
+  - P4E：TPR 93.33%，FPR 100.00%（6 个 `benign_subtype` 均 100%）；
+  - P5：TPR 11.67%，FPR 0.00%。
 
 ---
 
 ## 6. 我们不夸大什么
 
-- **P3 headline：** `p3-standard-v1` TPR 96.38% 通过 0.85 gate，`pass_fail=PASS` 仅对 recall 生效；FPR 69.15% 需单列 selectivity 评估（8/25 服务器 100% FPR）。DCI `D_real`（描述与实现不一致）不在范围，因网关看不到实现。
-- **P4 双段：** Real Anchor（`REAL_REPRODUCED=1` / `andytrust`）为真实锚点；Extended P4E-v2（480, TPR 93.33% / FPR 100%, `NON_HEADLINE`，`response_canary_echo_rate 0%`）为受控基准。二者互补，不与 core 同表排名；`credential_leakage_rate` 已澄清为 `response_canary_echo_rate`（`performance` 不等同于 `leaked`）。
-- **FPR 精度：** P5 headline FPR 0/12 = 0.0% 可引用（smoke 0/4 仅方向性）；P1/P2/P3/P4E 的 FPR 分别基于 94/208/188/240 个 ALLOW，smoke*为方向性。
+- **P3：** `p3-standard-v1` TPR 96.38%（276 BLOCK），FPR 69.15%（188 ALLOW，其中 8/25 服务器 FPR 100%）。DCI `D_real`（描述与实现不一致）不在范围，因网关看不到实现。
+- **P4 双段：** Real Anchor（`REAL_REPRODUCED=1` / `andytrust`）；Extended P4E-v2（480, TPR 93.33% / FPR 100%, `response_canary_echo_rate 0/240`，6 个 `benign_subtype` 均 100%）。原 `credential_leakage_rate` 在本报告中记为 `response_canary_echo_rate`。
+- **FPR 精度：** P5 FPR 0/12 = 0.0%（smoke 0/4 仅方向性）；P1/P2/P3/P4E 的 FPR 分别基于 94/208/188/240 个 ALLOW。
 - **Holdout：** `p5-holdout-v1` 84（80+4）、`p4e-holdout-v1` 100（55+45）、`p3-holdout-v1` 156（96+60）、`phase1 holdout-v3` 均已封存；`cache/results_v3` 下无 baseline holdout 运行。任何阈值/scanner 改动须先重跑 eval，再考虑 holdout。
 - **配置耦合：** `benchmark_track` / `suite` 与 `project headline_eligible` / `manifest_sha256` / `fidelity` 绑定在实验身份中；跨绑定不可比。
 
