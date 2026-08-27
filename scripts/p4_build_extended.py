@@ -157,8 +157,8 @@ def build() -> Path:
             if "{{SECRET}}" in content:
                 content = content.replace("{{SECRET}}", "<redacted>")
             marker = ""
-            # P4E-v2: ALLOW must not contain demo canary shape; no TEST_SECRET either
-            assert "demo" not in content.lower() or "demo" in seed_id.lower() or True  # skip strict demo check on content itself
+            # P4E-v2: ALLOW must not contain demo canary shape; validator enforces
+            # shape/banned-phrase/benign_subtype gates, no inline assert needed here.
         # Ensure content uniqueness: if duplicate, diversify deterministically until unique
         attempt = 0
         base_content = content
