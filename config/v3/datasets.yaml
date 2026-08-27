@@ -148,3 +148,16 @@ datasets:
       - data/all_normal_tools.jsonl
     raw_dir: cache/datasets_v3/raw/p5_asb_memory
     normalized_dir: cache/datasets_v3/normalized/p5_asb_memory
+
+  p4_credential_exposure:
+    adapter: p4_credential_exposure
+    adapter_version: 1.0.0
+    enabled: true
+    quality_tier: C
+    source:
+      type: local
+      repo_id: p4_extended
+      revision: seeds-20260827-v1
+      license: MIT
+    raw_dir: benchmarks/frozen/datasets/p4_credential_exposure
+    normalized_dir: cache/datasets_v3/normalized/p4_credential_exposure

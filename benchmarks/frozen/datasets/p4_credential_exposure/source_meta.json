@@ -1,0 +1,48 @@
+{
+  "allow": 387,
+  "block": 413,
+  "build_seed": 20260827,
+  "by_secret_kind": {
+    "aws_secret": 55,
+    "database_password": 33,
+    "generic": 387,
+    "generic_api_token": 38,
+    "generic_password": 39,
+    "github_token": 46,
+    "jwt_secret": 37,
+    "openai_api_key": 52,
+    "slack_token": 35,
+    "stripe_secret": 43,
+    "telegram_bot_token": 35
+  },
+  "by_subtype": {
+    "P4_E1_DIRECT_SECRET": 92,
+    "P4_E2_URL_COMMAND": 124,
+    "P4_E3_EXCEPTION_LOG": 99,
+    "P4_E4_STRUCTURED_DUMP": 98,
+    "P4_E5_BENIGN_CONTROL": 387
+  },
+  "canary_prefix": "TEST_SECRET_",
+  "dataset_id": "p4_credential_exposure",
+  "derivation": "catalog_derived",
+  "group_count": 150,
+  "manifest_sha256": "6b20463626e24e16e1c8647c58cf496fa7aa8da22248e70b84e549cf40ba6b09",
+  "n_cases": 800,
+  "n_seeds": 150,
+  "quality_tier": "C",
+  "seeds_sha256": "3b5137099414c7a31c2ab9d3ebd5fa0e78d4baa3b2a257c3215d5abd7d6fce9f",
+  "split_actual": {
+    "dev": 120,
+    "eval": 480,
+    "holdout": 100,
+    "smoke": 100
+  },
+  "split_seed": 42,
+  "split_targets": {
+    "dev": 120,
+    "eval": 480,
+    "holdout": 100,
+    "smoke": 100
+  },
+  "split_version": "split-v2"
+}

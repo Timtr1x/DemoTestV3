@@ -10,5 +10,6 @@ from . import credential_dynamic_traces  # noqa: F401  (registers CredentialDyna
 from . import skillleakbench  # noqa: F401  (registers SkillLeakbench adapters)
 from . import mcptox  # noqa: F401  (registers P3MCPToxAdapter)
 from . import asb_memory  # noqa: F401  (registers AsbMemoryAdapter)
+from . import p4_credential_exposure  # noqa: F401  (registers P4CredentialExposureAdapter)
 
-__all__ = ["legacy_v2", "llmail", "agentdojo", "credential_traces", "credential_catalog_synthetic", "credential_dynamic_traces", "skillleakbench", "mcptox", "asb_memory"]
+__all__ = ["legacy_v2", "llmail", "agentdojo", "credential_traces", "credential_catalog_synthetic", "credential_dynamic_traces", "skillleakbench", "mcptox", "asb_memory", "p4_credential_exposure"]

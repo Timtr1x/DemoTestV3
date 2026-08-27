@@ -1,0 +1,32 @@
+{
+  "headline_eligible": false,
+  "projects": {
+    "P4_credential_flow": {
+      "benchmark_track": "extended",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/p4e-smoke-v1/p4.json",
+      "manifest_sha256": "sha256:02f7527b17766bc184097a892250726a84380f2fb964844cbb54f2b6b6847ec4",
+      "n": 100,
+      "split": [
+        "smoke"
+      ],
+      "target": 100
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "p4_credential_exposure": {
+      "adapter": "p4_credential_exposure",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "28ea56d64c93b9892799cd9d43122b1a75b899ff66b20059d341a439c68a4da4",
+      "revision": "seeds-20260827-v1"
+    }
+  },
+  "split": [
+    "smoke"
+  ],
+  "suite_config_hash": "sha256:77ef69836cd51162764c7be67588bfb6eef988e5b6288bb5d14fff43527d5d8d",
+  "suite_id": "p4e-smoke-v1",
+  "total_cases": 100,
+  "track": "extended"
+}

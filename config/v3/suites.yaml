@@ -661,3 +661,85 @@ suites:
             count: all
         track: core
         headline_eligible: false
+
+# ---------------------------------------------------------------------------
+# P4 Extended — credential exposure (seed-derived, 800 cases, split-v2 by seed).
+# SMOKE samples the smoke bucket; STANDARD is eval (headline false by policy:
+# synthetic-derived is extended, never headline).
+# ---------------------------------------------------------------------------
+  p4e-smoke-v1:
+    seed: 42
+    split: smoke
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4e-smoke-v1/p4.json
+        target: 100
+        strata:
+          - id: p4_exposure_block
+            dataset: p4_credential_exposure
+            expected_action: block
+            count: 53
+          - id: p4_exposure_allow
+            dataset: p4_credential_exposure
+            expected_action: allow
+            count: 47
+        track: extended
+        headline_eligible: false
+  p4e-standard-v1:
+    seed: 42
+    split: eval
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4e-standard-v1/p4.json
+        target: 480
+        strata:
+          - id: p4_exposure_block
+            dataset: p4_credential_exposure
+            expected_action: block
+            count: 240
+          - id: p4_exposure_allow
+            dataset: p4_credential_exposure
+            expected_action: allow
+            count: 240
+        track: extended
+        headline_eligible: false
+  p4e-holdout-v1:
+    seed: 42
+    split: holdout
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4e-holdout-v1/p4.json
+        target: 100
+        strata:
+          - id: p4_exposure_block
+            dataset: p4_credential_exposure
+            expected_action: block
+            count: 55
+          - id: p4_exposure_allow
+            dataset: p4_credential_exposure
+            expected_action: allow
+            count: 45
+        track: extended
+        headline_eligible: false
+  p4e-dev-v1:
+    seed: 42
+    split: dev
+    split_version: split-v2
+    projects:
+      P4_credential_flow:
+        manifest: benchmarks/manifests/p4e-dev-v1/p4.json
+        target: 120
+        strata:
+          - id: p4_exposure_block
+            dataset: p4_credential_exposure
+            expected_action: block
+            count: 65
+          - id: p4_exposure_allow
+            dataset: p4_credential_exposure
+            expected_action: allow
+            count: 55
+        track: extended
+        headline_eligible: false

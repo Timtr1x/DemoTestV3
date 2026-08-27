@@ -1,0 +1,32 @@
+{
+  "headline_eligible": false,
+  "projects": {
+    "P4_credential_flow": {
+      "benchmark_track": "extended",
+      "headline_eligible": false,
+      "manifest": "benchmarks/manifests/p4e-holdout-v1/p4.json",
+      "manifest_sha256": "sha256:339e1694fad415138f06c5f2160288f93ee5f705678868d2d620a0a14634b327",
+      "n": 100,
+      "split": [
+        "holdout"
+      ],
+      "target": 100
+    }
+  },
+  "seed": 42,
+  "source_locks": {
+    "p4_credential_exposure": {
+      "adapter": "p4_credential_exposure",
+      "adapter_version": "1.0.0",
+      "raw_sha256": "28ea56d64c93b9892799cd9d43122b1a75b899ff66b20059d341a439c68a4da4",
+      "revision": "seeds-20260827-v1"
+    }
+  },
+  "split": [
+    "holdout"
+  ],
+  "suite_config_hash": "sha256:33a8c2dd40302fc6f079945d78d03aeb02b320d357a93501217154b342ea114f",
+  "suite_id": "p4e-holdout-v1",
+  "total_cases": 100,
+  "track": "extended"
+}
