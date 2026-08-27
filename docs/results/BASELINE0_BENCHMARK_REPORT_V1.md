@@ -35,13 +35,13 @@ Headline 是 P1 + P2 + P3 + P5（均为 `benchmark_track=core` / `headline_eligi
 
 指标口径：`n = TP+FN+TN+FP`，为 `eval` 切片本次实际运行用例数。`TPR = TP/(TP+FN)` 为 BLOCK 命中比例，`FPR = FP/(FP+TN)` 为 ALLOW 误拦比例，`拦截率 = (TP+FP)/n`。冻结总数在 `n` 后括号内标注：P3 794（485 BLOCK + 309 ALLOW，`p3_mcptox` raw `a54ca29e` @ `f85189f`）、P4E 800（413 BLOCK + 387 ALLOW，`manifest d7d4f7f0…` / `raw 2befb96e…`）、P5 420（400 BLOCK + 20 ALLOW，raw `19329003` @ `1f561dc`）。P1/P2 所在 `phase1-standard-v3` 为 llmail + AgentDojo 的 `eval` 合集，冻结总数按 `phase1-full-v3` 计 3680。P4 的 `track=extended` 与 `core` 并表仅为同口径对照；资格标注保留在 §3。P4E 本版为 `P4E-v2 ACCEPTED`，per-row `demo_*` canary（无 `TEST_SECRET_` 共享标签），`benign_subtype` 6 类全覆盖。
 
-| smoke 套件 | n | BLOCK n | TPR | FPR（ALLOW n） | 备注 |
-|---|---:|---:|---:|---:|---|
-| P1 smoke smoke-v3/p1 | 80 | 80 | 87.50% | 35.00%, 40 | dev 方向性 |
-| P2 smoke smoke-v3/p2 | 50 | 50 | 68.00% | 50.00%, 50 | dev 方向性 |
-| P3 smoke p3-smoke-v1 | 100 | 60 | 98.33% | 75.00%, 40 | dev 方向性 |
-| P4E smoke p4e-smoke-v1 | 100 | 53 | 100.00% | 100.00%, 47 | extended 方向性 |
-| P5 smoke p5-smoke-v1 | 60 | 60 | 18.33% | 0.00%, 4 | dev 方向性 |
+| smoke 套件 | n | BLOCK n | ALLOW n | TPR | FPR | 备注 |
+|---|---:|---:|---:|---:|---:|---|
+| P1 smoke smoke-v3/p1 | 120 | 80 | 40 | 87.50% | 35.00% | dev 方向性 |
+| P2 smoke smoke-v3/p2 | 100 | 50 | 50 | 68.00% | 50.00% | dev 方向性 |
+| P3 smoke p3-smoke-v1 | 100 | 60 | 40 | 98.33% | 75.00% | dev 方向性 |
+| P4E smoke p4e-smoke-v1 | 100 | 53 | 47 | 100.00% | 100.00% | extended 方向性 |
+| P5 smoke p5-smoke-v1 | 64 | 60 | 4 | 18.33% | 0.00% | dev 方向性 |
 
 `smoke` 均为 `NON_HEADLINE`，不计入 headline。
 
@@ -114,7 +114,7 @@ P1 细分, standard: api_triggered 89.9%, 240/267, 高于 judge 的 85.1%, 1117/
 | P4E standard 480 | 480 of 480, 464 blocked | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1.73s, 1.93s, 2.05s, 6.97s |
 | P5 standard 252 | 252 of 252, 28 blocked | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2.91s, 3.12s, 3.18s, 3.36s |
 
-- Baseline-0 headline 2637 条 + P3 464 条 + P4E 480 条（合计 3581 条 standard）全部达到明确结果；无 429/5xx/error/cooldown/rate_limited/unjudged/重试。
+- 5 套 standard 合计 3613 条（P1 1674 + P2 743 + P3 464 + P4E 480 + P5 252，其中 P1/P2/P3/P5 headline 核心 3133 条 + P4E extended 480 条）全部达到明确结果；无 429/5xx/error/cooldown/rate_limited/unjudged/重试。
 - 所有被拦用例均为 `code SECURITY_BLOCKED / scanner prompt_injection / policy standard`（HTTP 403）。同一 scanner 解释了全部拦截（P4E 464/464、P3 396/396、P1/P2/P5 亦同）。`by_scanner=none` 为传输层 artefact（`security_flag.error.details` 内才有 scanner）。
 - P4E 泄漏轴（F13）：`response_canary_echo_rate 0/240 = 0%`（原 `credential_leakage_rate` 更名为 `response_canary_echo_rate`；passed ≠ leaked），`leakage_n_judged 240`。
 
@@ -211,6 +211,6 @@ python -m demotest.cli.main analyze   --project P4_credential_flow --target line
 
 ## 8. 下一步是什么
 
-Baseline-0 工程到此 STOP。本项已覆盖 4 条 headline（P1/P2/P3/P5）+ P4 双段（Real Anchor + P4E-v2 ACCEPTED），合计 3581 条 standard 真实 LineMod 评估 + 394 条 smoke。holdout 保持封存。下一阶段为论文与分析，不再为分数重建数据集或调参循环；若 LineMod 迭代 scanner/阈值，重跑顺序为先 eval，再考虑 holdout，并出新报告。
+Baseline-0 工程到此 STOP。本项已覆盖 4 条 headline（P1/P2/P3/P5）+ P4 双段（Real Anchor + P4E-v2 ACCEPTED），合计 3613 条 standard 真实 LineMod 评估（其中 headline 核心 3133 条 + P4E 480 条）+ 484 条 smoke。holdout 保持封存。下一阶段为论文与分析，不再为分数重建数据集或调参循环；若 LineMod 迭代 scanner/阈值，重跑顺序为先 eval，再考虑 holdout，并出新报告。
 
 **P4E 状态：** `P4E-v1 PASS WITH ISSUES` → **`P4E-v2 ACCEPTED / COMPLETE`**（`main@052013f`）。无需第三版；术语 `credential_leakage_rate` 建议在全项目收尾时统一更名为 `response_canary_echo_rate`，已在正文中澄清。
