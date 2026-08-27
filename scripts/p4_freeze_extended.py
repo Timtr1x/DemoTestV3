@@ -1,4 +1,4 @@
-"""Freeze P4 Extended manifest -> benchmarks/frozen/datasets/p4_credential_exposure.
+"""Freeze P4 Extended manifest -> benchmarks/frozen/datasets/p4_credential_exposure (P4E-v2).
 
 Inputs:
   data/p4_extended/manifest.jsonl  (800, validated)
@@ -11,7 +11,9 @@ Outputs (benchmarks/frozen/datasets/p4_credential_exposure/):
   split_manifest.json      (group-aware DEV/EVAL/HOLDOUT assignment for 800)
 
 Split: group by seed_id (p4_extended:seed:<seed_id>), seed=42, version split-v2
-  DEV 120, SMOKE 100, STANDARD 480, HOLDOUT 100 = 800 total per spec.
+  Stratified by expected_action: BLOCK groups (80) and ALLOW groups (70) are
+  split independently to hit per-split block/allow quotas.
+  DEV 65B+55A=120, SMOKE 53B+47A=100, EVAL 240B+240A=480, HOLDOUT 55B+45A=100.
   Assignment is group-isolated: one seed never spans splits.
 
 The freeze also validates (Phase 8).
@@ -30,21 +32,17 @@ OUT_DIR = REPO_ROOT / "benchmarks" / "frozen" / "datasets" / "p4_credential_expo
 BUILD_SEED = 20260827
 SPLIT_SEED = 42
 
-# Target counts per split (Phase 9) — must sum to 800
 SPLIT_TARGETS = {
     "dev": 120,
-    "smoke": 100,   # NOTE: smoke here is its own split file, not the HOLDOUT scheme
-    "eval": 480,    # STANDARD is eval
+    "smoke": 100,
+    "eval": 480,
     "holdout": 100,
 }
-# For the split_manifest.json we record group assignment (dev/eval/holdout) plus
-# smoke selection as a subset of dev (seed-isolated). The spec says:
-#   DEV 120, SMOKE 100, STANDARD 480, HOLDOUT 100
-# Interpretation: dev pool is 120, smoke is 100 sampled from dev-eval boundary?
-# But spec Phase 9 says DEV 120 / SMOKE 100 / STANDARD 480 / HOLDOUT 100 frozen.
-# We implement: all 800 are partitioned into dev:120, eval:480, holdout:100, smoke:100
-# by taking smoke as the dev subset scaled down. Simpler: treat smoke as dev's
-# first 100 after hash-rank. The split_manifest will have 4 buckets summing to 800.
+
+# Per-split block/allow quotas (must sum to totals 413B/387A and to SPLIT_TARGETS)
+PER_SPLIT_BLOCK = {"dev": 65, "smoke": 53, "eval": 240, "holdout": 55}
+PER_SPLIT_ALLOW = {"dev": 55, "smoke": 47, "eval": 240, "holdout": 45}
+
 
 def _sha(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
@@ -62,83 +60,75 @@ def run_validator() -> None:
         raise SystemExit("validator failed — abort freeze")
 
 def build_split(rows: list[dict]) -> dict:
-    # Group by group_id, assign split via split-v2 case-weighted (like sampler)
-    # We have 150 groups (one per seed). Each group's size varies (some seeds more frequent).
-    from collections import defaultdict
     group_sizes: dict[str,int] = Counter(r["group_id"] for r in rows)
-    # Use sampler logic: sorted by split_key then accumulate case counts
-    import hashlib as hl
-    def split_key(gid: str) -> str:
-        return hl.sha256(f"split-v2|{SPLIT_SEED}|{gid}".encode()).hexdigest()[:16]
-    sorted_groups = sorted(group_sizes.keys(), key=split_key)
-    total = len(rows)
-    # Targets per spec: dev 120, smoke 100, eval 480, holdout 100
-    # We do 4-way case-weighted cut.
-    dev_target = 120
-    smoke_target = 100
-    eval_target = 480
-    holdout_target = 100
-    assert dev_target+smoke_target+eval_target+holdout_target == total == 800
-    # Order: dev, smoke, eval, holdout along sorted list accumulating counts
-    cuts = [dev_target, dev_target+smoke_target, dev_target+smoke_target+eval_target]
-    group_to_split: dict[str,str] = {}
-    cum = 0
-    bucket_idx = 0
-    labels = ["dev","smoke","eval","holdout"]
-    for gid in sorted_groups:
-        sz = group_sizes[gid]
-        # Decide bucket based on cum before adding
-        # If cum would cross a cut, assign to next bucket
-        # Use cumulative count cut
-        if bucket_idx < 3 and cum >= cuts[bucket_idx]:
-            bucket_idx += 1
-        # If adding this group would overshoot the bucket target, see if next bucket is closer
-        # Simple: if cum+sz exceeds cut and distance to cut is larger than to next cum, spill to next
-        if bucket_idx < 3 and cum + sz > cuts[bucket_idx]:
-            dist_stay = abs(cum + sz - cuts[bucket_idx])
-            dist_next = abs(cum - cuts[bucket_idx])
-            if dist_stay > dist_next and cum < cuts[bucket_idx]:
-                # stay in current bucket, even though we overshoot a bit
-                pass
-            else:
-                # spill: but we still assign to current bucket this group
-                pass
-        group_to_split[gid] = labels[bucket_idx]
-        cum += sz
-        # Advance bucket if cum reached cut
-        while bucket_idx < 3 and cum >= cuts[bucket_idx]:
-            bucket_idx += 1
-    # Validate
-    split_counts = Counter(group_to_split[r["group_id"]] for r in rows)
-    # Due to group indivisibility, exact 120/100/480/100 may not be hit; adjust by moving smallest groups if needed
-    # We'll greedily rebalance if off by >5
-    for _ in range(20):
-        split_counts = Counter(group_to_split[r["group_id"]] for r in rows)
-        if all(split_counts.get(k,0)==v for k,v in [("dev",120),("smoke",100),("eval",480),("holdout",100)]):
-            break
-        # Find over and under
-        targets = {"dev":120,"smoke":100,"eval":480,"holdout":100}
-        over = [(k, split_counts.get(k,0)-targets[k]) for k in targets if split_counts.get(k,0)>targets[k]]
-        under = [(k, targets[k]-split_counts.get(k,0)) for k in targets if split_counts.get(k,0)<targets[k]]
-        if not over or not under:
-            break
-        over.sort(key=lambda x: x[1], reverse=True)
-        under.sort(key=lambda x: x[1], reverse=True)
-        ok, ok2 = over[0][0], under[0][0]
-        # Move smallest group from over to under
-        candidates = [g for g,s in group_to_split.items() if s==ok]
-        candidates.sort(key=lambda g: group_sizes[g])
-        if not candidates:
-            break
-        g_move = candidates[0]
-        group_to_split[g_move] = ok2
-    split_counts = Counter(group_to_split[r["group_id"]] for r in rows)
-    print(f"split groups: {len(group_sizes)} split_counts={dict(split_counts)}")
-    # Fail-closed if not exact
+    group_to_ea: dict[str,str] = {}
+    for r in rows:
+        gid = r["group_id"]
+        ea = r["expected_action"]
+        if gid in group_to_ea:
+            assert group_to_ea[gid] == ea, f"mixed group {gid}"
+        else:
+            group_to_ea[gid] = ea
+    block_groups = {g: sz for g, sz in group_sizes.items() if group_to_ea[g] == "block"}
+    allow_groups = {g: sz for g, sz in group_sizes.items() if group_to_ea[g] == "allow"}
+    print(f"groups: block {len(block_groups)} allow {len(allow_groups)} (total {len(group_sizes)})")
+
+    def split_one(sizes: dict[str,int], targets: dict[str,int], seed: int) -> dict[str,str]:
+        order = ["dev","smoke","eval","holdout"]
+        cuts = []
+        cum = 0
+        for lab in order:
+            cum += targets[lab]
+            cuts.append(cum)
+        sorted_groups = sorted(sizes.keys(), key=lambda gid: hashlib.sha256(f"split-v2|{seed}|{gid}".encode()).hexdigest()[:16])
+        g2s: dict[str,str] = {}
+        cum = 0
+        bucket_idx = 0
+        for gid in sorted_groups:
+            sz = sizes[gid]
+            if bucket_idx < 3 and cum >= cuts[bucket_idx]:
+                bucket_idx += 1
+            g2s[gid] = order[bucket_idx]
+            cum += sz
+            while bucket_idx < 3 and cum >= cuts[bucket_idx]:
+                bucket_idx += 1
+        # Greedy rebalance to hit exact case counts
+        for _ in range(30):
+            case_cnt = Counter()
+            for g in sizes:
+                case_cnt[g2s[g]] += sizes[g]
+            if all(case_cnt.get(k,0) == v for k,v in targets.items()):
+                break
+            over = [(k, case_cnt.get(k,0)-targets[k]) for k in targets if case_cnt.get(k,0) > targets[k]]
+            under = [(k, targets[k]-case_cnt.get(k,0)) for k in targets if case_cnt.get(k,0) < targets[k]]
+            if not over or not under:
+                break
+            over.sort(key=lambda x: x[1], reverse=True)
+            under.sort(key=lambda x: x[1], reverse=True)
+            ok, ok2 = over[0][0], under[0][0]
+            cands = [g for g,s in g2s.items() if s == ok]
+            cands.sort(key=lambda g: sizes[g])
+            if not cands:
+                break
+            g2s[cands[0]] = ok2
+        return g2s
+
+    bg = split_one(block_groups, PER_SPLIT_BLOCK, SPLIT_SEED)
+    ag = split_one(allow_groups, PER_SPLIT_ALLOW, SPLIT_SEED)
+    merged = {**bg, **ag}
+    # Validate totals
+    actual = Counter(merged[r["group_id"]] for r in rows)
+    print(f"split groups: {len(group_sizes)} split_counts={dict(actual)} (stratified)")
     for k,v in [("dev",120),("smoke",100),("eval",480),("holdout",100)]:
-        if split_counts.get(k,0) != v:
-            raise SystemExit(f"split target not met: {k} has {split_counts.get(k,0)} != {v}; need group indivisible fix")
-    return group_to_split
+        if actual.get(k,0) != v:
+            raise SystemExit(f"split target not met: {k} has {actual.get(k,0)} != {v}")
+    # Validate per-split block/allow
+    for sp in ["dev","smoke","eval","holdout"]:
+        b = sum(1 for r in rows if merged[r["group_id"]] == sp and r["expected_action"] == "block")
+        a = sum(1 for r in rows if merged[r["group_id"]] == sp and r["expected_action"] == "allow")
+        if b != PER_SPLIT_BLOCK[sp] or a != PER_SPLIT_ALLOW[sp]:
+            raise SystemExit(f"stratified split mismatch {sp}: block {b}!={PER_SPLIT_BLOCK[sp]} allow {a}!={PER_SPLIT_ALLOW[sp]}")
+    return merged
 
 
 def main() -> None:
@@ -152,14 +142,10 @@ def main() -> None:
     if len(rows) != 800:
         raise SystemExit(f"manifest n={len(rows)} != 800")
     group_to_split = build_split(rows)
-    # Write out
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    # 1 manifest.jsonl (byte-identical copy)
     import shutil
     shutil.copy2(SRC_MANIFEST, OUT_DIR / "manifest.jsonl")
-    # also seeds
     shutil.copy2(SRC_SEEDS, OUT_DIR / "seeds.jsonl")
-    # 2 source_meta.json
     manifest_sha = hashlib.sha256((OUT_DIR / "manifest.jsonl").read_bytes()).hexdigest()
     seeds_sha = hashlib.sha256((OUT_DIR / "seeds.jsonl").read_bytes()).hexdigest()
     meta = {
@@ -175,27 +161,34 @@ def main() -> None:
         "allow": sum(1 for r in rows if r["expected_action"]=="allow"),
         "by_subtype": dict(Counter(r["subtype"] for r in rows)),
         "by_secret_kind": dict(Counter(r["secret_kind"] for r in rows)),
+        "by_benign_subtype": dict(Counter(r.get("benign_subtype","") for r in rows if r.get("expected_action")=="allow")),
         "split_targets": {"dev":120,"smoke":100,"eval":480,"holdout":100},
         "split_actual": dict(Counter(group_to_split[r["group_id"]] for r in rows)),
+        "split_block": dict(PER_SPLIT_BLOCK),
+        "split_allow": dict(PER_SPLIT_ALLOW),
         "group_count": len(set(r["group_id"] for r in rows)),
-        "canary_prefix": "TEST_SECRET_",
+        "canary_mode": "per_row_demo_marker",
         "quality_tier": "C",
         "derivation": "catalog_derived",
     }
     (OUT_DIR / "source_meta.json").write_text(json.dumps(meta, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    # 3 split_manifest.json — case_id -> split
     split_manifest = {
         "split_version": "split-v2",
         "split_seed": SPLIT_SEED,
         "groups": group_to_split,
         "cases": {r["case_id"]: group_to_split[r["group_id"]] for r in rows},
         "counts": dict(Counter(group_to_split[r["group_id"]] for r in rows)),
+        "counts_by_action": {
+            sp: {"block": sum(1 for r in rows if group_to_split[r["group_id"]] == sp and r["expected_action"]=="block"),
+                 "allow": sum(1 for r in rows if group_to_split[r["group_id"]] == sp and r["expected_action"]=="allow")}
+            for sp in ["dev","smoke","eval","holdout"]
+        },
     }
     (OUT_DIR / "split_manifest.json").write_text(json.dumps(split_manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"frozen -> {OUT_DIR}")
     print(f"  manifest {OUT_DIR / 'manifest.jsonl'} sha256={manifest_sha}")
     print(f"  source_meta {OUT_DIR / 'source_meta.json'}")
-    print(f"  split_manifest dev={split_manifest['counts'].get('dev')} smoke={split_manifest['counts'].get('smoke')} eval={split_manifest['counts'].get('eval')} holdout={split_manifest['counts'].get('holdout')}")
+    print(f"  split_manifest {split_manifest['counts']} by_action={split_manifest['counts_by_action']}")
 
 if __name__ == "__main__":
     main()

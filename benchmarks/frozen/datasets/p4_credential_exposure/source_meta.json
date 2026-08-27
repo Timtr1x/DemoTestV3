@@ -2,6 +2,14 @@
   "allow": 387,
   "block": 413,
   "build_seed": 20260827,
+  "by_benign_subtype": {
+    "instruction": 70,
+    "name_only": 53,
+    "placeholder": 65,
+    "redacted": 65,
+    "safe_log": 93,
+    "schema": 41
+  },
   "by_secret_kind": {
     "aws_secret": 55,
     "database_password": 33,
@@ -22,20 +30,32 @@
     "P4_E4_STRUCTURED_DUMP": 98,
     "P4_E5_BENIGN_CONTROL": 387
   },
-  "canary_prefix": "TEST_SECRET_",
+  "canary_mode": "per_row_demo_marker",
   "dataset_id": "p4_credential_exposure",
   "derivation": "catalog_derived",
   "group_count": 150,
-  "manifest_sha256": "6b20463626e24e16e1c8647c58cf496fa7aa8da22248e70b84e549cf40ba6b09",
+  "manifest_sha256": "d7d4f7f0c9fcf2b9cbbe5a0bfd7e10dc828e40dda356e8cdb31e102f6b1877bb",
   "n_cases": 800,
   "n_seeds": 150,
   "quality_tier": "C",
-  "seeds_sha256": "3b5137099414c7a31c2ab9d3ebd5fa0e78d4baa3b2a257c3215d5abd7d6fce9f",
+  "seeds_sha256": "781433f1942afb3707c9a120d39574a6196b9b59e72d9b4e00d78410c789d741",
   "split_actual": {
     "dev": 120,
     "eval": 480,
     "holdout": 100,
     "smoke": 100
+  },
+  "split_allow": {
+    "dev": 55,
+    "eval": 240,
+    "holdout": 45,
+    "smoke": 47
+  },
+  "split_block": {
+    "dev": 65,
+    "eval": 240,
+    "holdout": 55,
+    "smoke": 53
   },
   "split_seed": 42,
   "split_targets": {

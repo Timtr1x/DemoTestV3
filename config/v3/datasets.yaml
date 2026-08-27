@@ -157,7 +157,7 @@ datasets:
     source:
       type: local
       repo_id: p4_extended
-      revision: seeds-20260827-v1
+      revision: seeds-20260827-v2
       license: MIT
     raw_dir: benchmarks/frozen/datasets/p4_credential_exposure
     normalized_dir: cache/datasets_v3/normalized/p4_credential_exposure

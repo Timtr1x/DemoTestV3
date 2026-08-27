@@ -5,7 +5,7 @@
       "benchmark_track": "extended",
       "headline_eligible": false,
       "manifest": "benchmarks/manifests/p4e-dev-v1/p4.json",
-      "manifest_sha256": "sha256:2891e60cd517d91342a479a7814f0f5ece330b8193b11835261a9edda0bf85e3",
+      "manifest_sha256": "sha256:db36529ff7968ac4089161d08d4a83dd9e6a0ba87abf13192f398fb85f46a2cc",
       "n": 120,
       "split": [
         "dev"
@@ -18,8 +18,8 @@
     "p4_credential_exposure": {
       "adapter": "p4_credential_exposure",
       "adapter_version": "1.0.0",
-      "raw_sha256": "28ea56d64c93b9892799cd9d43122b1a75b899ff66b20059d341a439c68a4da4",
-      "revision": "seeds-20260827-v1"
+      "raw_sha256": "2befb96ea81209d8f0679cb8ff135c993416197712184fd8c85bf94ddde3a39e",
+      "revision": "seeds-20260827-v2"
     }
   },
   "split": [

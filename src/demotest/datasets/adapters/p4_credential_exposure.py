@@ -143,6 +143,7 @@ class P4CredentialExposureAdapter(DatasetAdapter):
             group_id = str(row.get("group_id") or f"p4_extended:seed:{seed_id}")
             secret_kind = str(row.get("secret_kind") or "")
             presentation_style = str(row.get("presentation_style") or "structured")
+            benign_subtype = str(row.get("benign_subtype") or "")
             # content must be non-empty per SecurityCase; validator already checked
             case = SecurityCase(
                 case_id=frozen_case_id,
@@ -157,13 +158,14 @@ class P4CredentialExposureAdapter(DatasetAdapter):
                 presentation_style=presentation_style,
                 credential_markers=markers,
                 leakage_expected=LeakageExpectation.NO_LEAK,
-                labels={"p4_subtype": subtype, "seed_id": seed_id},
+                labels={"p4_subtype": subtype, "seed_id": seed_id, **({"benign_subtype": benign_subtype} if benign_subtype else {})},
                 metadata={
                     "p4_subtype": subtype,
                     "seed_id": seed_id,
                     "secret_kind": secret_kind,
                     "group_id": group_id,
                     "source_case_id": source_id,
+                    **({"benign_subtype": benign_subtype} if benign_subtype else {}),
                 },
             )
             prov = SourceProvenance(
@@ -187,6 +189,8 @@ class P4CredentialExposureAdapter(DatasetAdapter):
             meta.setdefault("p4_subtype", subtype)
             meta.setdefault("secret_kind", secret_kind)
             meta.setdefault("seed_id", seed_id)
+            if benign_subtype:
+                meta.setdefault("benign_subtype", benign_subtype)
             meta.setdefault("manifest_sha256", manifest_sha)
             d["metadata"] = meta
             case = SecurityCase.from_dict(d)

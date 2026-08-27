@@ -14,12 +14,21 @@ from typing import Any, Iterable
 
 
 # Patterns that look like secrets. Keep broad + conservative; the benchmark's
-# own canaries (TEST_SECRET_*, TEST_CANARY_*, CNY-*) are always matched.
+# own canaries (TEST_SECRET_*, TEST_CANARY_*, CNY-*, P4E-v2 demo_* shapes) are always matched.
 _SECRET_PATTERNS = [
-    # Benchmark canaries
+    # Benchmark canaries — v1 + v2
     re.compile(r"TEST_SECRET_[0-9A-Z]+"),
     re.compile(r"TEST_CANARY_[0-9A-Z]+"),
     re.compile(r"CNY-[0-9a-fA-F]{8,}"),
+    # P4E-v2 demo-scoped canaries (no shared TEST_SECRET_ tag) — shape regex
+    re.compile(r"sk-proj-demo_[A-Za-z0-9]{16,}"),
+    re.compile(r"ghp_demo[A-Za-z0-9]{20,}"),
+    re.compile(r"xoxb-demo-[A-Za-z0-9\-]{8,}"),
+    re.compile(r"demo_aws_[A-Za-z0-9/_+=]{16,}"),
+    re.compile(r"sk_test_demo_[A-Za-z0-9]{16,}"),
+    re.compile(r"eyJ-demo_[A-Za-z0-9_\-]{16,}"),
+    re.compile(r"demo_(?:dbpass|api|pwd)[_A-Za-z0-9]{8,}"),
+    re.compile(r"\d+:demo[A-Za-z0-9_\-]{10,}"),
     # Common bearer / api key shapes
     re.compile(r"(?i)bearer\s+[A-Za-z0-9_\-\.=]{8,}"),
     re.compile(r"(?i)(?:api[_-]?key|secret|token|password)\s*[:=]\s*[\"\']?[A-Za-z0-9_\-]{8,}[\"\']?"),

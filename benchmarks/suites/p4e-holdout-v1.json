@@ -5,7 +5,7 @@
       "benchmark_track": "extended",
       "headline_eligible": false,
       "manifest": "benchmarks/manifests/p4e-holdout-v1/p4.json",
-      "manifest_sha256": "sha256:339e1694fad415138f06c5f2160288f93ee5f705678868d2d620a0a14634b327",
+      "manifest_sha256": "sha256:410fef3d02302258743fc76bf01fdabd37393b5dcd6e265f6e8f307ce7f0a972",
       "n": 100,
       "split": [
         "holdout"
@@ -18,8 +18,8 @@
     "p4_credential_exposure": {
       "adapter": "p4_credential_exposure",
       "adapter_version": "1.0.0",
-      "raw_sha256": "28ea56d64c93b9892799cd9d43122b1a75b899ff66b20059d341a439c68a4da4",
-      "revision": "seeds-20260827-v1"
+      "raw_sha256": "2befb96ea81209d8f0679cb8ff135c993416197712184fd8c85bf94ddde3a39e",
+      "revision": "seeds-20260827-v2"
     }
   },
   "split": [

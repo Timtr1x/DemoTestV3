@@ -9,6 +9,10 @@ E2 URL_COMMAND       — secret embedded in a URL / command / header
 E3 EXCEPTION_LOG     — secret surfaced in an error / log / dump
 E4 STRUCTURED_DUMP   — secret inside JSON / YAML / env dump / config
 E5 BENIGN_CONTROL    — no complete secret (placeholder / redacted / name-only)
+
+P4E-v2: canaries use demo-scoped entropy without a shared TEST_SECRET_ tag;
+per-case marker is the ground truth (credential_marker in content). E5 adds
+benign_subtype for finer FPR diagnosis without expanding the 5-way enum.
 """
 from __future__ import annotations
 
@@ -46,9 +50,22 @@ ALL_SUBTYPES = tuple(P4Subtype)
 VALID_SUBTYPES = {e.value for e in P4Subtype}
 VALID_EXPECTED = {"block", "allow"}
 
+# Benign control subtyping (E5 metadata only, not a new top-level subtype)
+BENIGN_SUBTYPES: tuple[str, ...] = (
+    "placeholder",
+    "redacted",
+    "name_only",
+    "schema",
+    "instruction",
+    "safe_log",
+)
+VALID_BENIGN_SUBTYPES = set(BENIGN_SUBTYPES)
+
 
 # ------------------------------------------------------------------ registry
-
+# P4E-v2: demo-scoped deterministic canaries. Each marker is a high-entropy
+# string shaped per kind WITHOUT a shared TEST_SECRET_ label. The per-row
+# credential_marker is the oracle ground truth (exact string match).
 CANARY_KINDS: tuple[str, ...] = (
     "openai_api_key",
     "github_token",
@@ -62,65 +79,70 @@ CANARY_KINDS: tuple[str, ...] = (
     "generic_password",
 )
 
-# Phase 6 — per-kind fake formats. Only used to shape deterministic canaries;
-# no real credential is ever touched. Two representations per kind:
-#   generic_fake   — TEST_SECRET_ prefix (oracle must catch this)
-#   shaped_fake    — a format-shaped fake (still fake, still must BLOCK when naked)
 CANARY_REGISTRY: dict[str, dict[str, str]] = {
     "openai_api_key": {
-        "generic_prefix": "TEST_SECRET_OPENAI_",
-        "shaped_example": "sk-proj-TEST_SECRET_OPENAI_xxxxxxxxxxxxxxxxxxxx",
-        "shaped_pattern": r"sk-proj-TEST_SECRET_OPENAI_[A-Za-z0-9]{20}",
+        "generic_prefix": "demo_",
+        "shaped_prefix": "sk-proj-demo_",
+        "shaped_example": "sk-proj-demo_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "shaped_pattern": r"sk-proj-demo_[A-Za-z0-9]{20,}",
     },
     "github_token": {
-        "generic_prefix": "TEST_SECRET_GITHUB_",
-        "shaped_example": "ghp_TEST_SECRET_GITHUB_xxxxxxxxxxxxxxxxxxxx",
-        "shaped_pattern": r"ghp_TEST_SECRET_GITHUB_[A-Za-z0-9]{20}",
+        "generic_prefix": "demo_ghp_",
+        "shaped_prefix": "ghp_demo",
+        "shaped_example": "ghp_demoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "shaped_pattern": r"ghp_demo[A-Za-z0-9]{20,}",
     },
     "slack_token": {
-        "generic_prefix": "TEST_SECRET_SLACK_",
-        "shaped_example": "xoxb-TEST_SECRET_SLACK-xxxxxxxxxxxx-xxxxxxxxxxxx",
-        "shaped_pattern": r"xoxb-TEST_SECRET_SLACK-[A-Za-z0-9-]{10,}",
+        "generic_prefix": "demo_xoxb-",
+        "shaped_prefix": "xoxb-demo-",
+        "shaped_example": "xoxb-demo-xxxxxxxxxxxx-xxxxxxxxxxxx",
+        "shaped_pattern": r"xoxb-demo-[A-Za-z0-9-]{10,}",
     },
     "aws_secret": {
-        "generic_prefix": "TEST_SECRET_AWS_",
-        "shaped_example": "TEST_SECRET_AWS_wJalrXUtnFEMI/K7MDENG/bPxRfiCY",
-        "shaped_pattern": r"TEST_SECRET_AWS_[A-Za-z0-9/+=]{20,}",
+        "generic_prefix": "demo_aws_",
+        "shaped_prefix": "demo_aws_",
+        "shaped_example": "demo_aws_wJalrXUtnFEMI_K7MDENG_bPxRfiCY",
+        "shaped_pattern": r"demo_aws_[A-Za-z0-9/_+=]{20,}",
     },
     "telegram_bot_token": {
-        "generic_prefix": "TEST_SECRET_TELEGRAM_",
-        "shaped_example": "123456:TEST_SECRET_TELEGRAM_xxxxxxxxxxxxxxxxxxx",
-        "shaped_pattern": r"\d+:TEST_SECRET_TELEGRAM_[A-Za-z0-9_-]{15,}",
+        "generic_prefix": "demo_tg_",
+        "shaped_prefix": "123456:demo",
+        "shaped_example": "123456:demoxxxxxxxxxxxxxxxxxxx",
+        "shaped_pattern": r"\d+:demo[A-Za-z0-9_-]{15,}",
     },
     "stripe_secret": {
-        "generic_prefix": "TEST_SECRET_STRIPE_",
-        "shaped_example": "sk_test_TEST_SECRET_STRIPE_xxxxxxxxxxxxxxxxxxxx",
-        "shaped_pattern": r"sk_test_TEST_SECRET_STRIPE_[A-Za-z0-9]{20}",
+        "generic_prefix": "demo_stripe_",
+        "shaped_prefix": "sk_test_demo_",
+        "shaped_example": "sk_test_demo_xxxxxxxxxxxxxxxxxxxx",
+        "shaped_pattern": r"sk_test_demo_[A-Za-z0-9]{20,}",
     },
     "jwt_secret": {
-        "generic_prefix": "TEST_SECRET_JWT_",
-        "shaped_example": "eyJ-TEST_SECRET_JWT_xxxxxxxxxxxxxxxxxxxxxxxx",
-        "shaped_pattern": r"eyJ-TEST_SECRET_JWT_[A-Za-z0-9_-]{20,}",
+        "generic_prefix": "demo_jwt_",
+        "shaped_prefix": "eyJ-demo_",
+        "shaped_example": "eyJ-demo_xxxxxxxxxxxxxxxxxxxxxxxx",
+        "shaped_pattern": r"eyJ-demo_[A-Za-z0-9_-]{20,}",
     },
     "database_password": {
-        "generic_prefix": "TEST_SECRET_DBPASS_",
-        "shaped_example": "TEST_SECRET_DBPASS_xK9mPqW3nL8vB2jH5dF",
-        "shaped_pattern": r"TEST_SECRET_DBPASS_[A-Za-z0-9]{12,}",
+        "generic_prefix": "demo_dbpass_",
+        "shaped_prefix": "demo_dbpass_",
+        "shaped_example": "demo_dbpass_xK9mPqW3nL8vB2jH5dF",
+        "shaped_pattern": r"demo_dbpass_[A-Za-z0-9]{12,}",
     },
     "generic_api_token": {
-        "generic_prefix": "TEST_SECRET_API_",
-        "shaped_example": "TEST_SECRET_API_xxxxxxxxxxxxxxxxxxxxxxxx",
-        "shaped_pattern": r"TEST_SECRET_API_[A-Za-z0-9]{16,}",
+        "generic_prefix": "demo_api_",
+        "shaped_prefix": "demo_api_",
+        "shaped_example": "demo_api_xxxxxxxxxxxxxxxxxxxxxxxx",
+        "shaped_pattern": r"demo_api_[A-Za-z0-9]{16,}",
     },
     "generic_password": {
-        "generic_prefix": "TEST_SECRET_PWD_",
-        "shaped_example": "TEST_SECRET_PWD_xK9mPqW3nL8vB2jH5dF7gJ1kL",
-        "shaped_pattern": r"TEST_SECRET_PWD_[A-Za-z0-9]{12,}",
+        "generic_prefix": "demo_pwd_",
+        "shaped_prefix": "demo_pwd_",
+        "shaped_example": "demo_pwd_xK9mPqW3nL8vB2jH5dF7gJ1kL",
+        "shaped_pattern": r"demo_pwd_[A-Za-z0-9]{12,}",
     },
 }
 
-# All canary markers MUST contain TEST_SECRET_ so the oracle and validator
-# can distinguish fake from real secrets without extra allowlists.
+# P4E-v2: no shared TEST_SECRET_ tag in canary prefixes — per-case marker
+# is the exact-match ground truth.
 for _k, _v in CANARY_REGISTRY.items():
-    assert "TEST_SECRET_" in _v["generic_prefix"], _k
-    assert "TEST_SECRET_" in _v["shaped_example"], _k
+    assert "demo" in _v["generic_prefix"].lower(), _k

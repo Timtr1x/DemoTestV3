@@ -2,127 +2,119 @@
   "benchmark_track": "extended",
   "cases": [
     {
-      "case_fingerprint": "fp-fd0940e59b822431",
-      "case_id": "case-p4e-0170565d1049c2ad",
+      "case_fingerprint": "fp-1fcbe48c8f67dd8a",
+      "case_id": "case-p4e-012465dd6127baf2",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0744",
+      "group_id": "p4_extended:seed:p4s_e2_001",
+      "source_id": "p4_extended:p4s_e2_001:0236",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d7dad201e6364ae7",
-      "case_id": "case-p4e-03450392c6131946",
+      "case_fingerprint": "fp-47ca59bf322adea8",
+      "case_id": "case-p4e-0719d24cb5574b19",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_010",
-      "source_id": "p4_extended:p4s_e5_010:0655",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0179",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5811202673528649",
-      "case_id": "case-p4e-03f363d44d9c2824",
+      "case_fingerprint": "fp-fff63e6dd0a7763a",
+      "case_id": "case-p4e-08f7f4c4f509c73c",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0782",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bef5519281b52924",
+      "case_id": "case-p4e-0b3db17140fba176",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_009",
+      "source_id": "p4_extended:p4s_e2_009:0323",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-118845a50d22cf41",
+      "case_id": "case-p4e-0d1a6fd1b58b9b13",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e3_010",
+      "source_id": "p4_extended:p4s_e3_010:0123",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ed40e5f6d423f6b2",
+      "case_id": "case-p4e-0f6b5c27f038cc7b",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_001",
+      "source_id": "p4_extended:p4s_e2_001:0351",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5c111b356a7e8c14",
+      "case_id": "case-p4e-100378f62d18bffe",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_001",
+      "source_id": "p4_extended:p4s_e2_001:0771",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-505a344723918d81",
+      "case_id": "case-p4e-11956a591967a99e",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e3_020",
+      "source_id": "p4_extended:p4s_e3_020:0199",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-3b58d6bb417453fe",
+      "case_id": "case-p4e-1628e43a0e02f34b",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_017",
       "source_id": "p4_extended:p4s_e2_017:0114",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-653e4ca9d01e3c8c",
-      "case_id": "case-p4e-040bced1a2061f3c",
+      "case_fingerprint": "fp-7bbe18a9dddf4e0f",
+      "case_id": "case-p4e-17cdadbeb88ed385",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_050",
-      "source_id": "p4_extended:p4s_e5_050:0379",
+      "group_id": "p4_extended:seed:p4s_e3_010",
+      "source_id": "p4_extended:p4s_e3_010:0026",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-aad7ca1cc8f6d489",
-      "case_id": "case-p4e-062aa8c8c3a1dd47",
+      "case_fingerprint": "fp-72391117747bba90",
+      "case_id": "case-p4e-19f752ea22dce619",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_031",
-      "source_id": "p4_extended:p4s_e5_031:0454",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0316",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-18880ca1106e5af7",
-      "case_id": "case-p4e-09ac9945ede5fd83",
+      "case_fingerprint": "fp-caa0458898bb9dd8",
+      "case_id": "case-p4e-1a4278db8398f9c1",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0610",
+      "group_id": "p4_extended:seed:p4s_e5_006",
+      "source_id": "p4_extended:p4s_e5_006:0613",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5432414b1ef2bce4",
-      "case_id": "case-p4e-0a0a7254b3b2c749",
+      "case_fingerprint": "fp-a48c9631e5ea3233",
+      "case_id": "case-p4e-1eb6225173eaa077",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_016",
-      "source_id": "p4_extended:p4s_e4_016:0458",
+      "group_id": "p4_extended:seed:p4s_e3_020",
+      "source_id": "p4_extended:p4s_e3_020:0134",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-278519c31a333187",
-      "case_id": "case-p4e-0aef847df6d60d3c",
+      "case_fingerprint": "fp-6e8c5bcb0e2b116f",
+      "case_id": "case-p4e-21fefbe8c0c30dd0",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_031",
-      "source_id": "p4_extended:p4s_e5_031:0277",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0516",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-907e1f4f2424ef21",
-      "case_id": "case-p4e-0cb27b20eff17290",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_017",
-      "source_id": "p4_extended:p4s_e2_017:0040",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-23b9b0ed19582b6a",
-      "case_id": "case-p4e-0eff8bb615a8fb4b",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0704",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-765f4a02006b0d23",
-      "case_id": "case-p4e-106639e72c7a3d73",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0641",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-d3d275c418bd8024",
-      "case_id": "case-p4e-1168851a0e66a00b",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0602",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-9fccc58cfd331586",
-      "case_id": "case-p4e-12b5e01ed8629402",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0147",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-1d8f0b2cc7a61e2a",
-      "case_id": "case-p4e-1a58d6e9735a86f3",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0539",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-b0c07aff98afe2dc",
-      "case_id": "case-p4e-1e3ee5d638dcd551",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0296",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-b59d87a02076b5ca",
+      "case_fingerprint": "fp-bd1f908f97066134",
       "case_id": "case-p4e-24b9679b85dfcb3d",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_031",
@@ -130,39 +122,127 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-35cbe2653c371d32",
-      "case_id": "case-p4e-26bae5b81d754aee",
+      "case_fingerprint": "fp-d36aa3dc76d1e8f7",
+      "case_id": "case-p4e-26aac2e695abce87",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0030",
+      "group_id": "p4_extended:seed:p4s_e3_010",
+      "source_id": "p4_extended:p4s_e3_010:0775",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-9e880e3476eeb8e6",
-      "case_id": "case-p4e-2b304c81bde18e1e",
+      "case_fingerprint": "fp-449dabf2d7c46831",
+      "case_id": "case-p4e-271257666e762b2b",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_050",
+      "source_id": "p4_extended:p4s_e5_050:0556",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-997d68e854a7fdaa",
+      "case_id": "case-p4e-286b2afade2792b0",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_050",
+      "source_id": "p4_extended:p4s_e5_050:0379",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d282cbda2b672d93",
+      "case_id": "case-p4e-2a7b80830ec8d465",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0121",
+      "source_id": "p4_extended:p4s_e2_011:0743",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-b4eada3e481507f9",
-      "case_id": "case-p4e-322873fc9636152a",
+      "case_fingerprint": "fp-3cfa06fda180a4ff",
+      "case_id": "case-p4e-2a7c314a186feef5",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_018",
-      "source_id": "p4_extended:p4s_e4_018:0381",
+      "group_id": "p4_extended:seed:p4s_e5_031",
+      "source_id": "p4_extended:p4s_e5_031:0350",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-c901a185e978ac76",
-      "case_id": "case-p4e-35c86bd7660b8cf1",
+      "case_fingerprint": "fp-21541a1925e3bf80",
+      "case_id": "case-p4e-2a9db3de50b99fa2",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_009",
-      "source_id": "p4_extended:p4s_e2_009:0599",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0171",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-cc29b61f82e77d28",
+      "case_fingerprint": "fp-37d84d561d4fa027",
+      "case_id": "case-p4e-2adad6e951d49e56",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e1_007",
+      "source_id": "p4_extended:p4s_e1_007:0205",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-14df2f5031812673",
+      "case_id": "case-p4e-2bc7ff2cdb13b7f3",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0147",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-27d265e7f547e7b7",
+      "case_id": "case-p4e-2be0996e51f9b2ff",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_024",
+      "source_id": "p4_extended:p4s_e5_024:0274",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-2d09090a9f041091",
+      "case_id": "case-p4e-2bf2496807ff9ab4",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_020",
+      "source_id": "p4_extended:p4s_e5_020:0250",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-96159d6fdc3c0f06",
+      "case_id": "case-p4e-2ce5d0fcd9530535",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_006",
+      "source_id": "p4_extended:p4s_e5_006:0313",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-51db755971eb551c",
+      "case_id": "case-p4e-2e200764ad13c93b",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e3_020",
+      "source_id": "p4_extended:p4s_e3_020:0052",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-1ed7bde6e9e43d22",
+      "case_id": "case-p4e-2e4f38c8066ee93f",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_020",
+      "source_id": "p4_extended:p4s_e5_020:0319",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fa463b0308125437",
+      "case_id": "case-p4e-35b0fcf1a2feb8d7",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_020",
+      "source_id": "p4_extended:p4s_e5_020:0367",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ac8d614c57dd800e",
+      "case_id": "case-p4e-35cd053281a3c6f6",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e3_020",
+      "source_id": "p4_extended:p4s_e3_020:0566",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ab9bf3a8212812b0",
       "case_id": "case-p4e-36508754e9faab85",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_031",
@@ -170,7 +250,7 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-34a509975d21f8c1",
+      "case_fingerprint": "fp-5e231b7bac45a329",
       "case_id": "case-p4e-368c53d4f0baa916",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_033",
@@ -178,103 +258,71 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-5cd6cc1b9146f3c3",
-      "case_id": "case-p4e-3833bf2e4f1b06be",
+      "case_fingerprint": "fp-3b8cc61349f780d2",
+      "case_id": "case-p4e-373553040d144297",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_009",
-      "source_id": "p4_extended:p4s_e2_009:0467",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0483",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ab7385ee3c48a1ed",
-      "case_id": "case-p4e-3961a5ac48b4dd70",
+      "case_fingerprint": "fp-643e8f96af8e0b18",
+      "case_id": "case-p4e-3ff7f12a625b8342",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0248",
+      "group_id": "p4_extended:seed:p4s_e4_018",
+      "source_id": "p4_extended:p4s_e4_018:0100",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7397d96fc9db8e18",
-      "case_id": "case-p4e-3b4c019db3f75b48",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_001",
-      "source_id": "p4_extended:p4s_e2_001:0264",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-f3b8344b64d4fc16",
-      "case_id": "case-p4e-3bbafcbb574403b6",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0144",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-83c02eb91669ad92",
-      "case_id": "case-p4e-3eda29e85cdb3117",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0417",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-4a09139e07612db2",
-      "case_id": "case-p4e-4616aa6fa4e2205d",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0587",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-9bc3baee06d2f746",
-      "case_id": "case-p4e-46f615592347b2b2",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_010",
-      "source_id": "p4_extended:p4s_e5_010:0747",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-35b80326672a64e9",
-      "case_id": "case-p4e-481b55de2dbaeba5",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_013",
-      "source_id": "p4_extended:p4s_e4_013:0563",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-2d8fb133344f7947",
-      "case_id": "case-p4e-4aac08b7bb73f84b",
+      "case_fingerprint": "fp-9012f75bd9232d4a",
+      "case_id": "case-p4e-442237f66cab7427",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e4_018",
       "source_id": "p4_extended:p4s_e4_018:0649",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-1c3afd202ef2152b",
-      "case_id": "case-p4e-4b2809d20db93fce",
+      "case_fingerprint": "fp-b44368d2ca0ad282",
+      "case_id": "case-p4e-44b5b676a85bf93b",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_017",
-      "source_id": "p4_extended:p4s_e2_017:0703",
+      "group_id": "p4_extended:seed:p4s_e5_045",
+      "source_id": "p4_extended:p4s_e5_045:0780",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-d15b2b1c6934ec4d",
-      "case_id": "case-p4e-4e0f8d4b10ba6ab5",
+      "case_fingerprint": "fp-2b09aee1ceac3915",
+      "case_id": "case-p4e-45027acafcd5e9fe",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0542",
+      "group_id": "p4_extended:seed:p4s_e2_011",
+      "source_id": "p4_extended:p4s_e2_011:0471",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-bd3e389c9ca0e5ca",
-      "case_id": "case-p4e-5287761dde333719",
+      "case_fingerprint": "fp-a0e34595fe26b3ea",
+      "case_id": "case-p4e-499e6c8332186215",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_017",
-      "source_id": "p4_extended:p4s_e2_017:0356",
+      "group_id": "p4_extended:seed:p4s_e5_045",
+      "source_id": "p4_extended:p4s_e5_045:0047",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4ba0190a3620b871",
+      "case_fingerprint": "fp-7c9394c1d4f3ab8b",
+      "case_id": "case-p4e-4a7ba670e6148c92",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_050",
+      "source_id": "p4_extended:p4s_e5_050:0472",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-45a5a235132434ee",
+      "case_id": "case-p4e-578b896db7f61103",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_020",
+      "source_id": "p4_extended:p4s_e5_020:0412",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-641e1101a156e916",
       "case_id": "case-p4e-57984747feda01ff",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_050",
@@ -282,87 +330,127 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-578f6e1b0617b9a9",
-      "case_id": "case-p4e-5ca521b933c9f8c5",
+      "case_fingerprint": "fp-270067c671a1b226",
+      "case_id": "case-p4e-58827a75525eedda",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0067",
+      "group_id": "p4_extended:seed:p4s_e3_010",
+      "source_id": "p4_extended:p4s_e3_010:0366",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f5dda84cda253aca",
-      "case_id": "case-p4e-5e251174610d60a0",
+      "case_fingerprint": "fp-ffc4b97dea03f387",
+      "case_id": "case-p4e-5cb0879ee202123f",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0343",
+      "group_id": "p4_extended:seed:p4s_e2_017",
+      "source_id": "p4_extended:p4s_e2_017:0040",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e51ac6c4bd3693ed",
-      "case_id": "case-p4e-65ec1966b493d822",
+      "case_fingerprint": "fp-8443226c288e0db2",
+      "case_id": "case-p4e-5daea8064d13714e",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_009",
-      "source_id": "p4_extended:p4s_e2_009:0004",
+      "group_id": "p4_extended:seed:p4s_e2_001",
+      "source_id": "p4_extended:p4s_e2_001:0264",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7413f9758e3b95f3",
-      "case_id": "case-p4e-661559f85274bdd3",
+      "case_fingerprint": "fp-ce71b1dbb4b530e6",
+      "case_id": "case-p4e-618338985e8089ac",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_006",
+      "source_id": "p4_extended:p4s_e5_006:0653",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d7de539d76a4187d",
+      "case_id": "case-p4e-6386d70319ae5f55",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_017",
+      "source_id": "p4_extended:p4s_e2_017:0703",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-7dda5a93d938ba60",
+      "case_id": "case-p4e-645c2e7fc4a3a2bb",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_033",
       "source_id": "p4_extended:p4s_e5_033:0155",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-c016022259ab9f41",
-      "case_id": "case-p4e-67c7783bde218141",
+      "case_fingerprint": "fp-d2a1a59e76861d10",
+      "case_id": "case-p4e-64ee63a1f702fe5f",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0539",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-8b007a0e4a2a64c1",
+      "case_id": "case-p4e-66277baf1d210d90",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_009",
+      "source_id": "p4_extended:p4s_e2_009:0004",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-78299aab4a723375",
+      "case_id": "case-p4e-6908d3ce7e497a6c",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_018",
+      "source_id": "p4_extended:p4s_e4_018:0720",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-ef4e32a26602117d",
+      "case_id": "case-p4e-69a4f827f6e90f87",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_013",
+      "source_id": "p4_extended:p4s_e4_013:0563",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-030e8ec82cc25f80",
+      "case_id": "case-p4e-6a923bfb90ed3baf",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_050",
+      "source_id": "p4_extended:p4s_e5_050:0552",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d3f6dae695b2b37e",
+      "case_id": "case-p4e-6de4598a0d421146",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0779",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-5201b213f549889c",
+      "case_id": "case-p4e-6e0c8a010cdeee24",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0423",
+      "source_id": "p4_extended:p4s_e2_011:0144",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-0627f90dc6cb48f5",
-      "case_id": "case-p4e-68976c1e3f3b919a",
+      "case_fingerprint": "fp-d14156a7c5441332",
+      "case_id": "case-p4e-6f1f6afa0c6384b3",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0073",
+      "group_id": "p4_extended:seed:p4s_e2_009",
+      "source_id": "p4_extended:p4s_e2_009:0467",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-4ae22158fdffe733",
-      "case_id": "case-p4e-6afee59a3088b64b",
+      "case_fingerprint": "fp-0a4661d0aad03ddd",
+      "case_id": "case-p4e-745623e38ba565d4",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_020",
       "source_id": "p4_extended:p4s_e5_020:0396",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-e1efb45cf245164e",
-      "case_id": "case-p4e-6ef601985af86697",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e3_020",
-      "source_id": "p4_extended:p4s_e3_020:0566",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-5ff0f24c4f670d00",
-      "case_id": "case-p4e-72c0232683550413",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0316",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-06b57f428b446305",
-      "case_id": "case-p4e-748464df796c5af3",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0110",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-d110a6b36e05a066",
+      "case_fingerprint": "fp-ca1012c774ba7038",
       "case_id": "case-p4e-750d2ab81c679d07",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_031",
@@ -370,39 +458,47 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-576a4a3d09e4e1a3",
-      "case_id": "case-p4e-774efa88b2680af3",
+      "case_fingerprint": "fp-f1a8d698a5e32a27",
+      "case_id": "case-p4e-76a0e83202c376e9",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_018",
-      "source_id": "p4_extended:p4s_e4_018:0273",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0778",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-fd439f5ba675d982",
-      "case_id": "case-p4e-7ad977773acf1666",
+      "case_fingerprint": "fp-af4b79eddc15687f",
+      "case_id": "case-p4e-7a94b938f873bfaa",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_011",
+      "source_id": "p4_extended:p4s_e2_011:0423",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-fe97c2ffd046e099",
+      "case_id": "case-p4e-7b90220ac7c4d610",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_020",
-      "source_id": "p4_extended:p4s_e5_020:0412",
+      "source_id": "p4_extended:p4s_e5_020:0202",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-47851cbca89b355d",
-      "case_id": "case-p4e-7b01e072ebbd794d",
+      "case_fingerprint": "fp-15a6359707ffe2a5",
+      "case_id": "case-p4e-7c49ead46423f899",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0179",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0296",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-3b98bebfaf15c96a",
-      "case_id": "case-p4e-806b1638aa3cafd1",
+      "case_fingerprint": "fp-93dec4a86bcdd2d9",
+      "case_id": "case-p4e-7e8efa06bd1b8707",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0754",
+      "group_id": "p4_extended:seed:p4s_e5_010",
+      "source_id": "p4_extended:p4s_e5_010:0747",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-9bfabc5e0c44ec41",
+      "case_fingerprint": "fp-1e4b3fb0c312ee70",
       "case_id": "case-p4e-80946885dd7aca98",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_010",
@@ -410,151 +506,87 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f3bcf8b216fd8de4",
-      "case_id": "case-p4e-8127fed168aec560",
+      "case_fingerprint": "fp-649ec8c5cc5669eb",
+      "case_id": "case-p4e-83368c32f2c53bb1",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_017",
+      "source_id": "p4_extended:p4s_e2_017:0356",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-cebafebf299a1080",
+      "case_id": "case-p4e-849804927026a43e",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_005",
+      "source_id": "p4_extended:p4s_e4_005:0699",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c0ed1da95b8f925f",
+      "case_id": "case-p4e-86f9bcae7a0d8b2f",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_024",
+      "source_id": "p4_extended:p4s_e5_024:0083",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-4c614e6e6cfe6eea",
+      "case_id": "case-p4e-89e6793973fa1497",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_009",
-      "source_id": "p4_extended:p4s_e2_009:0302",
+      "source_id": "p4_extended:p4s_e2_009:0599",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-6fc7a11741308280",
-      "case_id": "case-p4e-823362480e3ea757",
+      "case_fingerprint": "fp-3435339f979a0f97",
+      "case_id": "case-p4e-8a1e54fe7dd29f8c",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0290",
+      "group_id": "p4_extended:seed:p4s_e3_002",
+      "source_id": "p4_extended:p4s_e3_002:0596",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f1cd5da1764efb84",
-      "case_id": "case-p4e-82e6f8c2d6d0c653",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e3_020",
-      "source_id": "p4_extended:p4s_e3_020:0572",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-1c0278aa409c8668",
-      "case_id": "case-p4e-84559f00987c507e",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0586",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-61efd67579bcdf40",
-      "case_id": "case-p4e-8598d77174d93ea7",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0743",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-91e3b5bbbe64871e",
-      "case_id": "case-p4e-880123b38c74203e",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0168",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-c43e2641d116ba23",
-      "case_id": "case-p4e-8b660c9158da5fa4",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e3_020",
-      "source_id": "p4_extended:p4s_e3_020:0199",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-2d29bc500804e3b6",
-      "case_id": "case-p4e-8c46238134bd35f8",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0571",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-c8889ba2292803cb",
-      "case_id": "case-p4e-8f5e12e73b69291b",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_050",
-      "source_id": "p4_extended:p4s_e5_050:0472",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-2ea57312859ba105",
-      "case_id": "case-p4e-90e091a84a773872",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0676",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-5c31838dbf807779",
-      "case_id": "case-p4e-911e57acbaf8629c",
+      "case_fingerprint": "fp-672628ffc5ded0af",
+      "case_id": "case-p4e-8ae6c91181d3accf",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_020",
       "source_id": "p4_extended:p4s_e5_020:0456",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f2806a540f485fd4",
-      "case_id": "case-p4e-964a6f3e45125f07",
+      "case_fingerprint": "fp-86a6d5335e4d907f",
+      "case_id": "case-p4e-8b4aa2ce9f246651",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0122",
+      "group_id": "p4_extended:seed:p4s_e2_001",
+      "source_id": "p4_extended:p4s_e2_001:0207",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-3f0576d37e1339a2",
-      "case_id": "case-p4e-96dbcae2e015b951",
+      "case_fingerprint": "fp-faf2b3b6e6fdc088",
+      "case_id": "case-p4e-8c387f1dada15bd4",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e3_020",
-      "source_id": "p4_extended:p4s_e3_020:0052",
+      "source_id": "p4_extended:p4s_e3_020:0572",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-ee895018bb3c0705",
-      "case_id": "case-p4e-9c2920de1be39e1b",
+      "case_fingerprint": "fp-fa6afb55292792aa",
+      "case_id": "case-p4e-9cedbee47dbef1a6",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0171",
+      "group_id": "p4_extended:seed:p4s_e5_024",
+      "source_id": "p4_extended:p4s_e5_024:0433",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-11b4928124760a18",
-      "case_id": "case-p4e-9e701edafedf3f3e",
+      "case_fingerprint": "fp-36b6f3caed03ad5e",
+      "case_id": "case-p4e-a1a2d361a2ca6dc8",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0778",
+      "group_id": "p4_extended:seed:p4s_e5_029",
+      "source_id": "p4_extended:p4s_e5_029:0413",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-cb0b3dc3cfd0a715",
-      "case_id": "case-p4e-a0b35e5ee8acddc0",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_018",
-      "source_id": "p4_extended:p4s_e4_018:0720",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-30ce6ec20a163bea",
-      "case_id": "case-p4e-a38cc631808392c4",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0782",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-901e947173106461",
-      "case_id": "case-p4e-a4de5947312a4dd3",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_031",
-      "source_id": "p4_extended:p4s_e5_031:0350",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-db2f30a3933f5cd2",
+      "case_fingerprint": "fp-7980766568e5b3d1",
       "case_id": "case-p4e-a8ebca4d83d83f71",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_010",
@@ -562,71 +594,71 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-97e9b1a23ad0b8f2",
-      "case_id": "case-p4e-ac72164df76d1418",
+      "case_fingerprint": "fp-02f3e1feb7676f70",
+      "case_id": "case-p4e-aa88b34c073927a8",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_001",
-      "source_id": "p4_extended:p4s_e2_001:0351",
+      "group_id": "p4_extended:seed:p4s_e2_011",
+      "source_id": "p4_extended:p4s_e2_011:0676",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-564d983a0385feb2",
-      "case_id": "case-p4e-b3769caea315581b",
+      "case_fingerprint": "fp-7aeea5ac8c91029d",
+      "case_id": "case-p4e-aa972a3dfd7e2f8c",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_017",
-      "source_id": "p4_extended:p4s_e2_017:0333",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0622",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-061f9461b3f71513",
-      "case_id": "case-p4e-b3ece6c6bc3df510",
+      "case_fingerprint": "fp-9b986995f493720a",
+      "case_id": "case-p4e-af7f800c52f60615",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e3_020",
-      "source_id": "p4_extended:p4s_e3_020:0134",
+      "group_id": "p4_extended:seed:p4s_e3_002",
+      "source_id": "p4_extended:p4s_e3_002:0107",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-218688864845fc3b",
-      "case_id": "case-p4e-b4b3e24237137109",
+      "case_fingerprint": "fp-a525a6daf1af6b66",
+      "case_id": "case-p4e-b1f6299138b102d9",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0696",
+      "group_id": "p4_extended:seed:p4s_e2_011",
+      "source_id": "p4_extended:p4s_e2_011:0121",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-f8ef028c73f6edb7",
-      "case_id": "case-p4e-b88123aee0481e67",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_050",
-      "source_id": "p4_extended:p4s_e5_050:0556",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-03db695b575c60a6",
-      "case_id": "case-p4e-b9bcad53d45e22fa",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0516",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-ec97f80a2b9f2500",
-      "case_id": "case-p4e-bd0ba952abd372ae",
+      "case_fingerprint": "fp-c362f0990f237949",
+      "case_id": "case-p4e-b315620b7869b563",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e4_018",
       "source_id": "p4_extended:p4s_e4_018:0263",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-3f598b5cb6baa326",
-      "case_id": "case-p4e-be17dfcaad851920",
+      "case_fingerprint": "fp-fab7d71ca0971be9",
+      "case_id": "case-p4e-b3e8e4588bef72da",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0571",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bc4062eb7ba712cf",
+      "case_id": "case-p4e-b6cd0138bfa53980",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_001",
       "source_id": "p4_extended:p4s_e2_001:0287",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-47b8f045ce2e81a8",
+      "case_fingerprint": "fp-aef0715e3e28a490",
+      "case_id": "case-p4e-b94a5d043245cacb",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_031",
+      "source_id": "p4_extended:p4s_e5_031:0277",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-bf146642b823838a",
       "case_id": "case-p4e-c13985f23298640a",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e5_020",
@@ -634,171 +666,139 @@
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-08d7b6543d38f84e",
-      "case_id": "case-p4e-c4d35748730afc42",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0483",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-517e56458acd5820",
-      "case_id": "case-p4e-c5972fa84e3b1f86",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0768",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-420bbcabaf0cb565",
-      "case_id": "case-p4e-c627cc9c8d7ff7c9",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0622",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-5200e038d8691f35",
-      "case_id": "case-p4e-c68aa51ba2df3242",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_050",
-      "source_id": "p4_extended:p4s_e5_050:0552",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-109bf87a8730c829",
-      "case_id": "case-p4e-c7ef1f6b9c9c8008",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_020",
-      "source_id": "p4_extended:p4s_e5_020:0250",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-721a911e1d98d828",
-      "case_id": "case-p4e-cd264df1defe2493",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_001",
-      "source_id": "p4_extended:p4s_e2_001:0207",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-7ddc9bc5c6f3231b",
-      "case_id": "case-p4e-cf6c05fa3f8ffde0",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0180",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-1969c21b94fb9002",
-      "case_id": "case-p4e-d498278316ce9a39",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_001",
-      "source_id": "p4_extended:p4s_e2_001:0771",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-6d7673caf978e27c",
-      "case_id": "case-p4e-d8dd8f2749a31e89",
+      "case_fingerprint": "fp-1eeba92555782e08",
+      "case_id": "case-p4e-cb9b4072393f0d04",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e4_002",
-      "source_id": "p4_extended:p4s_e4_002:0038",
+      "source_id": "p4_extended:p4s_e4_002:0030",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-84ca4942bb65dc6c",
-      "case_id": "case-p4e-d96fcdd5178c61a1",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_003",
-      "source_id": "p4_extended:p4s_e2_003:0347",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-ad21d2880a66d042",
-      "case_id": "case-p4e-d9d23bbcca59f643",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_033",
-      "source_id": "p4_extended:p4s_e5_033:0779",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-eaccabeb961b5020",
-      "case_id": "case-p4e-d9fbc3315f52e2a3",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_001",
-      "source_id": "p4_extended:p4s_e2_001:0236",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-15f98e5597079e3f",
-      "case_id": "case-p4e-dfa4fd1831823118",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_020",
-      "source_id": "p4_extended:p4s_e5_020:0319",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-e5465127a4ae5c7e",
-      "case_id": "case-p4e-dfe858f458aeacc7",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e2_009",
-      "source_id": "p4_extended:p4s_e2_009:0323",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-b4aef6acd49a8bb3",
-      "case_id": "case-p4e-e5909c81629340db",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_020",
-      "source_id": "p4_extended:p4s_e5_020:0202",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-3a0e0b72d21266d1",
-      "case_id": "case-p4e-ec55fdf8fded75c9",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_020",
-      "source_id": "p4_extended:p4s_e5_020:0367",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-2ed3fab2a674e545",
-      "case_id": "case-p4e-f13091c0a9bb34de",
+      "case_fingerprint": "fp-723fca6a25aaf1da",
+      "case_id": "case-p4e-cc22cfe82189b2fd",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_017",
       "source_id": "p4_extended:p4s_e2_017:0174",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-aec71f0867c8e616",
-      "case_id": "case-p4e-f237fc7283360219",
+      "case_fingerprint": "fp-53de71a58d487f8f",
+      "case_id": "case-p4e-ce8c8787de0f0fd2",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_010",
+      "source_id": "p4_extended:p4s_e5_010:0655",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-d2755e6e2df804e8",
+      "case_id": "case-p4e-d67c645385a1e4c4",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e2_011",
-      "source_id": "p4_extended:p4s_e2_011:0471",
+      "source_id": "p4_extended:p4s_e2_011:0587",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-43450edcd1e247f8",
-      "case_id": "case-p4e-f470de4248dc56e3",
+      "case_fingerprint": "fp-61d9a82240005346",
+      "case_id": "case-p4e-d81de01d2013408d",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_011",
+      "source_id": "p4_extended:p4s_e2_011:0641",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-907cec51ba357e86",
+      "case_id": "case-p4e-ded9d08764ebcb6a",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_017",
+      "source_id": "p4_extended:p4s_e2_017:0333",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0ddd4f3c2532520d",
+      "case_id": "case-p4e-e2fda279c3584009",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_033",
+      "source_id": "p4_extended:p4s_e5_033:0290",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-763e5e92c62a3ea4",
+      "case_id": "case-p4e-e31dcbdccb3e8389",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_009",
+      "source_id": "p4_extended:p4s_e2_009:0302",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-c1e1cedfca73c2a3",
+      "case_id": "case-p4e-e50c536ae82861f9",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_029",
+      "source_id": "p4_extended:p4s_e5_029:0517",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-517e41bf9c7c7f6a",
+      "case_id": "case-p4e-e8a94b132b510b0e",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e5_031",
+      "source_id": "p4_extended:p4s_e5_031:0454",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0bcb078f55dd07b7",
+      "case_id": "case-p4e-e916af59cda173b1",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e2_011",
+      "source_id": "p4_extended:p4s_e2_011:0343",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-b414dab35386deca",
+      "case_id": "case-p4e-ebad3767d92891ac",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0038",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-309f716bf511a956",
+      "case_id": "case-p4e-ec4e58a6b6d8ed39",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0754",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-0d4fd63837f17c22",
+      "case_id": "case-p4e-f489a903b3d4f59e",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_005",
+      "source_id": "p4_extended:p4s_e4_005:0429",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-eb48cc3940045ccc",
+      "case_id": "case-p4e-fb819570cae10b95",
+      "dataset_id": "p4_credential_exposure",
+      "group_id": "p4_extended:seed:p4s_e4_002",
+      "source_id": "p4_extended:p4s_e4_002:0696",
+      "split": "holdout"
+    },
+    {
+      "case_fingerprint": "fp-faea2678786f0fbf",
+      "case_id": "case-p4e-fd3a4ae7dd760ddc",
       "dataset_id": "p4_credential_exposure",
       "group_id": "p4_extended:seed:p4s_e4_018",
-      "source_id": "p4_extended:p4s_e4_018:0100",
+      "source_id": "p4_extended:p4s_e4_018:0381",
       "split": "holdout"
     },
     {
-      "case_fingerprint": "fp-7f539facdb390071",
-      "case_id": "case-p4e-fd80d8b93e990d07",
+      "case_fingerprint": "fp-551796749614d3f8",
+      "case_id": "case-p4e-fd96818ea0458b83",
       "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e1_017",
-      "source_id": "p4_extended:p4s_e1_017:0281",
-      "split": "holdout"
-    },
-    {
-      "case_fingerprint": "fp-ffdc2be758f12938",
-      "case_id": "case-p4e-feab858a1c8e1965",
-      "dataset_id": "p4_credential_exposure",
-      "group_id": "p4_extended:seed:p4s_e5_037",
-      "source_id": "p4_extended:p4s_e5_037:0065",
+      "group_id": "p4_extended:seed:p4s_e4_018",
+      "source_id": "p4_extended:p4s_e4_018:0273",
       "split": "holdout"
     }
   ],
@@ -806,12 +806,12 @@
     "p4_credential_exposure": {
       "adapter": "p4_credential_exposure",
       "adapter_version": "1.0.0",
-      "raw_sha256": "28ea56d64c93b9892799cd9d43122b1a75b899ff66b20059d341a439c68a4da4",
-      "revision": "seeds-20260827-v1"
+      "raw_sha256": "2befb96ea81209d8f0679cb8ff135c993416197712184fd8c85bf94ddde3a39e",
+      "revision": "seeds-20260827-v2"
     }
   },
   "headline_eligible": false,
-  "manifest_sha256": "sha256:339e1694fad415138f06c5f2160288f93ee5f705678868d2d620a0a14634b327",
+  "manifest_sha256": "sha256:410fef3d02302258743fc76bf01fdabd37393b5dcd6e265f6e8f307ce7f0a972",
   "manifest_version": "v3.2",
   "n": 100,
   "project": "P4_credential_flow",
